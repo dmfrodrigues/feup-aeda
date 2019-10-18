@@ -4,11 +4,14 @@
 
 ### Classes
 
+* VAT
 * Address
+* PhoneNumber
 * Person
 * Service
 * Action
 * Bill
+
 
 ## Telmo
 

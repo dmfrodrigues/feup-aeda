@@ -1,17 +1,21 @@
 # Hierarchy
 
-## Person
-* Name
-* Address
-* VAT
-* Cell phone number(s)
-
 ## Address
 * Street, house number
 * Postal code
 * City (in Caps)
 * District/Province/State
 * Country
+
+## VAT
+
+## PhoneNumber
+
+## Person
+* Name
+* Address
+* VAT
+* Cell phone number(s)
 
 ## Company
 * Is a person

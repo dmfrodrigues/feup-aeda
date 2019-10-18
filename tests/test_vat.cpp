@@ -1,0 +1,4 @@
+TEST_CASE("VAT", "[vat]"){
+    REQUIRE_THROWS_AS(VAT("0123456789abcdef"), VAT::VATTooLong);
+    REQUIRE_NOTHROW(VAT("0123456789abcde"));
+}
