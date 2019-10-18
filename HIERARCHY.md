@@ -22,6 +22,7 @@
 * List of bills
 
 ### Truck
+* Log of truck events (repairings, inspections,...)
 * Maximum transport capacity
 * Price
 * Maximum reach
@@ -41,12 +42,15 @@
 ### Client
 * Is a person
 
-### Manager
+### Employee
 * Is a person
+
+#### Manager
+* Is an employee
 * Salary
 
-### Driver
-* Is a person
+#### Driver
+* Is an employee
 * Salary
 
 ### Service
