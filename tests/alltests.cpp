@@ -1,5 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+
 	#include "../src/address.cpp"
 #include "test_address.cpp"
 	#include "../src/person.cpp"

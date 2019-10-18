@@ -48,14 +48,13 @@
 
 ### Employee
 * Is a person
+* Salary
 
 #### Manager
 * Is an employee
-* Salary
 
 #### Driver
 * Is an employee
-* Salary
 
 ### Service
 * Cargo type
