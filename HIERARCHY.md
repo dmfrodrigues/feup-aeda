@@ -30,14 +30,9 @@
 #### Refrigerator truck
 * Temperature range
 
-#### Liquid transport truck
-
-##### Flammables truck
-
-##### Non-Flammables truck
-
-#### Dangerous transport
+#### Dangerous cargo truck
 * Danger level
+* Can transport solids, liquids or gas?
 
 #### Animals truck
 
