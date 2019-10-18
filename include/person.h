@@ -4,8 +4,9 @@
 #include "address.h"
 #include "vat.h"
 #include "phonenumber.h"
+#include "currency.h"
 
-class Person{
+class Person {
 private:
     std::string name_;
     Address address_;
@@ -17,14 +18,28 @@ public:
 
 typedef Person Client;
 
-typedef Person Employee;
-
-class Manager: public Employee{
-
+class Employee: public Person {
+private:
+    Currency base_salary_;
+public:
+    Employee(const std::string &name, const Address &address, const VAT &vat, const PhoneNumber &phonenumber, const Currency &base_salary_);
+    enum Type{
+        Manager,
+        Driver
+    };
+    virtual Employee::Type get_type() const = 0;
 };
 
-class Driver: public Employee{
+class Manager: public Employee {
+public:
+    Manager(const std::string &name, const Address &address, const VAT &vat, const PhoneNumber &phonenumber, const Currency &base_salary_);
+    Employee::Type get_type() const;
+};
 
+class Driver: public Employee {
+public:
+    Driver(const std::string &name, const Address &address, const VAT &vat, const PhoneNumber &phonenumber, const Currency &base_salary_);
+    Employee::Type get_type() const;
 };
 
 #endif //PERSON_H_INCLUDED

@@ -1,8 +1,9 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-
 	#include "../src/address.cpp"
 #include "test_address.cpp"
+	#include "../src/currency.cpp"
+#include "test_currency.cpp"
 	#include "../src/person.cpp"
 #include "test_person.cpp"
 	#include "../src/phonenumber.cpp"
