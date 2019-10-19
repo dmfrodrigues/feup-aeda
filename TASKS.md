@@ -9,7 +9,7 @@
 * PhoneNumber
 * Person
 * Service
-* Action
+* Service event
 * Bill
 
 

@@ -5,5 +5,5 @@ std::string itos(const long long int &i){
     std::stringstream ss;
     ss << i;
     ss >> ret;
-    return ret; 
+    return ret;
 }

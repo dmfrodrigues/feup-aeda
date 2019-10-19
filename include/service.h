@@ -1,35 +1,26 @@
 #ifndef SERVICE_H_INCLUDED
 #define SERVICE_H_INCLUDED
 
-#include "address.h"
-#include "vat.h"
-#include "phonenumber.h"
+#include "person.h"
+#include "Time.h"
 
 class Service{
 private:
-    class Event;
-    std::vector<Event*> events_;
-public:
-    Service();
-};
-
-class Service::Event{
-private:
-    std::chrono::time_point t_begin_est_;
-    std::chrono::time_point t_end_est_;
-    std::chrono::time_point t_begin_real_;
-    std::chrono::time_point t_end_real_;
+    const Client *client_;
+    const Person *person_to_contact_;
+    std::string cargo_type_;
+    double cargo_ammount_;
+    int cargo_danger_;
+    Time t_begin_;
+    Time t_end_;
     Address a_begin_;
     Address a_end_;
-    bool done_ = false;
-    enum Type{
-        Load,
-        Unload,
-        Wait
-    }
-    Type type_;
+    //std::vector<Truck*> trucks_;
 public:
-    Service::Event::Type get_type() const;
+    Service(const Client *client, const Person *person_to_contact,
+            const std::string &cargo_type, double cargo_ammount, int cargo_danger,
+            const Time &t_begin, const Time &t_end,
+            const Address &a_begin, const Address &a_end);
 };
 
 #endif //SERVICE_H_INCLUDED
