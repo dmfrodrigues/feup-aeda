@@ -9,20 +9,37 @@
 class Person {
 private:
     std::string name_;
-    Address address_;
-    VAT vat_;
     PhoneNumber phonenumber_;
 public:
-    Person(const std::string &name, const Address &address, const VAT &vat, const PhoneNumber &phonenumber);
+    Person(const std::string &name, const PhoneNumber &phonenumber);
 };
 
-typedef Person Client;
+class User : public Person{
+private:
+    std::string user_;
+    std::string pswd_;
+public:
+    User(const std::string &name, const PhoneNumber &phonenumber,
+         const std::string &user, const std::string &pswd       );
+};
 
-class Employee: public Person {
+class Client: public User {
+private:
+    Address address_;
+    VAT vat_;
+public:
+    Client(const std::string &name   , const PhoneNumber &phonenumber,
+           const std::string &user   , const std::string &pswd       ,
+           const Address     &address, const VAT         &vat        );
+};
+
+class Employee: public User {
 private:
     Currency base_salary_;
 public:
-    Employee(const std::string &name, const Address &address, const VAT &vat, const PhoneNumber &phonenumber, const Currency &base_salary_);
+    Employee(const std::string &name, const PhoneNumber &phonenumber,
+             const std::string &user, const std::string &pswd,
+             const Currency    &base_salary);
     enum Type{
         Manager,
         Driver
@@ -32,13 +49,17 @@ public:
 
 class Manager: public Employee {
 public:
-    Manager(const std::string &name, const Address &address, const VAT &vat, const PhoneNumber &phonenumber, const Currency &base_salary_);
+    Manager(const std::string &name, const PhoneNumber &phonenumber,
+            const std::string &user, const std::string &pswd,
+            const Currency    &base_salary_);
     Employee::Type get_type() const;
 };
 
 class Driver: public Employee {
 public:
-    Driver(const std::string &name, const Address &address, const VAT &vat, const PhoneNumber &phonenumber, const Currency &base_salary_);
+    Driver(const std::string &name, const PhoneNumber &phonenumber,
+           const std::string &user, const std::string &pswd,
+           const Currency    &base_salary_);
     Employee::Type get_type() const;
 };
 

@@ -9,7 +9,6 @@
 * PhoneNumber
 * Person
 * Service
-* Service event
 * Bill
 
 
