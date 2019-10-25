@@ -9,12 +9,12 @@ private:
     static const std::regex  regex_;
     std::string number_;
 public:
-    PhoneNumber(string number);
+    PhoneNumber(const std::string &number);
     class InvalidPhoneNumber: public invalid_argument{
     private:
         string number_;
     public:
-        InvalidPhoneNumber(string number);
+        InvalidPhoneNumber(const std::string &number);
         string get_number()const;
     };
 };
