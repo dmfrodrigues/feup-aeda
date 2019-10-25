@@ -13,6 +13,6 @@ PhoneNumber::InvalidPhoneNumber::InvalidPhoneNumber(const std::string &number):
     std::invalid_argument("Phone number had at least one invalid character (regex format is '"+PhoneNumber::regex_str_+"')"),
     number_(number){}
 
-string PhoneNumber::InvalidPhoneNumber::get_number()const{
+const std::string& PhoneNumber::InvalidPhoneNumber::get_number()const{
     return number_;
 }

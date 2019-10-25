@@ -1,7 +1,7 @@
 #include "service.h"
 
 Service::Service(const Client *client, const Person *person_to_contact,
-                 string cargo_type, double cargo_ammount, int cargo_danger,
+                 const std::string &cargo_type, double cargo_ammount, int cargo_danger,
                  Time t_begin, Time t_end,
                  Address a_begin, Address a_end):
                  client_(client), person_to_contact_(person_to_contact),

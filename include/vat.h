@@ -1,19 +1,17 @@
 #ifndef VAT_H_INCLUDED
 #define VAT_H_INCLUDED
 
-using namespace std;
-
 class VAT{
 private:
-    string vat_;
+    std::string vat_;
 public:
-    VAT(string vat);
-    class VATTooLong: public invalid_argument{
+    VAT(const std::string &vat);
+    class VATTooLong: public std::invalid_argument{
     private:
-        string vat_;
+        std::string vat_;
     public:
-        VATTooLong(string vat);
-        string get_vat() const;
+        VATTooLong(const std::string &vat);
+        std::string get_vat() const;
     };
 };
 

@@ -1,21 +1,14 @@
 #ifndef UTILS_H_INCLUDED
 #define UTILS_H_INCLUDED
 
-using namespace std;
-
 /**
  * Integer to string
  */
-string itos(const long long int &i);
+std::string itos(const long long int &i);
 
 /**
- * String to time
+ * Replace string by another string
  */
-chrono::system_clock::time_point stot(string s);
-
-/**
- * Time to string
- */
-string ttos(const chrono::system_clock::time_point &tp);
+std::string strrep(const std::string &s, const std::string &fr, const std::string &to);
 
 #endif //UTILS_H_INCLUDED
