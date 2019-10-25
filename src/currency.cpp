@@ -1,9 +1,35 @@
 #include "currency.h"
 
+Currency::Currency(){}
 Currency::Currency(double ammount):cents_(100.0L*ammount+(ammount > 0.0L ? 0.5L : -0.5L)){}
+
+bool Currency::operator==(const Currency &c) const {
+    return (cents_ == c.cents_);
+}
 
 std::ostream& operator<<(std::ostream &os, const Currency &c){
     std::stringstream ss;
-    ss << c.cents_/100 << "." << std::setw(2) << std::setfill('0') << c.cents_%100;
+    if(c.cents_ < 0) ss << "-";
+    ss << abs(c.cents_/100) << "." << std::setw(2) << std::setfill('0') << abs(c.cents_%100);
     return (os << ss.str());
+}
+
+std::istream& operator>>(std::istream &is,       Currency &c){
+    std::string s;
+    is >> s;
+    try{
+        auto i = s.find(".");
+        if(i != std::string::npos){
+            c.cents_ = 100*stol(s.substr(0,i));
+            s = s.substr(i+1,i+3);
+            while(s.size() < 2) s += "0";
+            long long int n = stol(s);
+            c.cents_ += (c.cents_ >= 0 ? n : -n);
+        }else{
+            c.cents_ = 100*stol(s);
+        }
+    }catch(...){
+        is.setstate(std::ios::failbit);
+    }
+    return is;
 }

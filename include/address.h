@@ -10,8 +10,11 @@ private:
     std::string country_;
     static const std::string DEFAULT_FORMAT;
 public:
+    Address();
     Address(std::string street, std::string postal_code, std::string city, std::string district, std::string country);
     std::string format(const std::string &s = DEFAULT_FORMAT) const;
+
+    friend std::istream& operator>>(std::istream &is, Address &a);
 };
 
 std::ostream& operator<<(std::ostream &os, const Address &a);
