@@ -3,8 +3,8 @@
 
 class PhoneNumber{
 private:
-    static const std::string regex_str;
-    static const std::regex  regex;
+    static const std::string regex_str_;
+    static const std::regex  regex_;
     std::string number_;
 public:
     PhoneNumber(const std::string &number);
