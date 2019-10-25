@@ -1,12 +1,14 @@
 #ifndef TIME_H_INCLUDED
 #define TIME_H_INCLUDED
 
+using namespace std;
+
 class Time {
 private:
-    std::tm t_;
+    tm t_;
 public:
-    Time(const std::string &s);
-    friend std::ostream& operator<<(std::ostream &os, const Time &t);
+    Time(string s);
+    friend ostream& operator<<(ostream &os, const Time &t);
 };
 
 #endif //TIME_H_INCLUDED

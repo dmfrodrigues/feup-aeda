@@ -1,6 +1,8 @@
 #ifndef ADDRESS_H_INCLUDED
 #define ADDRESS_H_INCLUDED
 
+using namespace std;
+
 class Address{
 private:
     std::string street_;
