@@ -1,7 +1,6 @@
 #include "currency.h"
 
-Currency::Currency(){}
-Currency::Currency(double ammount):cents_(100.0L*ammount+(ammount > 0.0L ? 0.5L : -0.5L)){}
+Currency::Currency(double amount):cents_(100.0L*amount+(amount > 0.0L ? 0.5L : -0.5L)){}
 
 bool Currency::operator==(const Currency &c) const {
     return (cents_ == c.cents_);

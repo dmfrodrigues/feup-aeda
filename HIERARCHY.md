@@ -57,12 +57,15 @@
 * Is an employee
 
 ### Service
-* Cargo type
-* Cargo ammount
-* Cargo danger level
+* Cargo
 * Trucks to transport
 * List of actions
 * Bill pointer
+
+#### Cargo
+* Cargo type
+* Cargo amount
+* Cargo danger level
 
 #### Action
 
