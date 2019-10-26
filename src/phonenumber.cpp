@@ -16,3 +16,18 @@ PhoneNumber::InvalidPhoneNumber::InvalidPhoneNumber(const std::string &number):
 const std::string& PhoneNumber::InvalidPhoneNumber::get_number()const{
     return number_;
 }
+
+std::ostream& operator<<(std::ostream &os, const PhoneNumber &p){
+    return (os << p.number_);
+}
+
+std::istream& operator>>(std::istream &is,       PhoneNumber &p){
+    std::string s;
+    std::getline(is, s);
+    try{
+        p = PhoneNumber(s);
+    }catch(...){
+        is.setstate(std::ios::failbit);
+    }
+    return is;
+}
