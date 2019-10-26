@@ -23,7 +23,7 @@ private:
 public:
     /**
      * @brief Constructor that accepts all the information concerning a transport service.
-     * @param   client          Pointer to @Client to which the service will be provided
+     * @param   client          Pointer to @ref Client to which the service will be provided
      * @param   contact1        @ref Person that should be contacted on loading
      * @param   contact2        @ref Person that should be contacted on arrival and unloading
      * @param   cargo_type      String denoting the type of cargo

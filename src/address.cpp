@@ -8,11 +8,11 @@ Address::Address(const std::string &street, const std::string &postal_code, cons
 
 std::string Address::format(const std::string &s) const{
     std::string ret = s;
-    ret = strrep(ret, "%street", street_);
-    ret = strrep(ret, "%postal", postal_code_);
-    ret = strrep(ret, "%city", city_);
-    ret = strrep(ret, "%district", district_);
-    ret = strrep(ret, "%country", country_);
+    ret = utils::strrep(ret, "%street", street_);
+    ret = utils::strrep(ret, "%postal", postal_code_);
+    ret = utils::strrep(ret, "%city", city_);
+    ret = utils::strrep(ret, "%district", district_);
+    ret = utils::strrep(ret, "%country", country_);
     return ret;
 }
 

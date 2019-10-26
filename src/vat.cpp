@@ -8,7 +8,7 @@ VAT::VAT(const std::string &vat){
 }
 
 VAT::VATTooLong::VATTooLong(const std::string &vat):
-    invalid_argument("VAT too long ("+vat+" has size "+itos(vat.size())+">15)"){}
+    invalid_argument("VAT too long ("+vat+" has size "+utils::itos(vat.size())+">15)"){}
 
 std::string VAT::VATTooLong::get_vat() const{
     return vat_;

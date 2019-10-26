@@ -24,18 +24,12 @@ public:
     bool operator==(const Currency &c) const;
 
     /**
-     * @brief       Overload of <em> operator>> </em>.
-     * @param   is  Input stream to read from.
-     * @param   c   Currency to write read information to.
-     * @return      The same as \a is.
+     * @brief   Overload of <em> operator>> </em>.
      */
     friend std::istream& operator>>(std::istream &is,       Currency &c);
 
     /**
-     * @brief       Overload of <em> operator<< </em>.
-     * @param   os  Output stream to write to.
-     * @param   c   Currency to read information from.
-     * @return      The same as \a os.
+     * @brief   Overload of <em> operator<< </em>.
      */
     friend std::ostream& operator<<(std::ostream &os, const Currency &c);
 

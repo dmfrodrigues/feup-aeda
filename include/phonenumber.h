@@ -43,17 +43,11 @@ public:
     };
 
     /**
-     * @brief       Overload of <em> operator>> </em>.
-     * @param   is  Input stream to read from.
-     * @param   p   Phone number to write read information to.
-     * @return      The same as \a is.
+     * @brief       Overload of <em> operator>> </em>. Reads an entire line and expects it to be a phone number.
      */
     friend std::istream& operator>>(std::istream &is,       PhoneNumber &p);
     /**
      * @brief       Overload of <em> operator<< </em>.
-     * @param   os  Output stream to write to.
-     * @param   p   Phone number to read information from.
-     * @return      The same as \a os.
      */
     friend std::ostream& operator<<(std::ostream &os, const PhoneNumber &p);
 };

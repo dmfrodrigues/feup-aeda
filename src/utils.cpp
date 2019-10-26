@@ -1,12 +1,12 @@
 #include "utils.h"
 
-std::string itos(const long long int &i){
+std::string utils::itos(const long long int &i){
     std::stringstream ss;
     ss << i;
     return ss.str();
 }
 
-std::string strrep(const std::string &s, const std::string &fr, const std::string &to){
+std::string utils::strrep(const std::string &s, const std::string &fr, const std::string &to){
     std::string ret = s;
     size_t i;
     do{

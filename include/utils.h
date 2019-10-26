@@ -2,13 +2,23 @@
 #define UTILS_H_INCLUDED
 
 /**
- * Integer to string
+ * @brief Utilities
  */
-std::string itos(const long long int &i);
+namespace utils{
+    /**
+     * @brief       Convert integer to string.
+     * @param   i   Integer to convert
+     * @return      String that resulted from converting \a i.
+     */
+    std::string itos(const long long int &i);
 
-/**
- * Replace string by another string
- */
-std::string strrep(const std::string &s, const std::string &fr, const std::string &to);
+    /**
+     * @brief       Replace all occurences of a string.
+     * @param   s   Original string
+     * @param   fr  String to be replaced
+     * @param   to  String to replace \a fr.
+     */
+    std::string strrep(const std::string &s, const std::string &fr, const std::string &to);
+};
 
 #endif //UTILS_H_INCLUDED

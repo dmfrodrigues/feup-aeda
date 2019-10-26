@@ -13,7 +13,7 @@ private:
     std::string country_;
 public:
     /**
-     * @brief Default format to be used by @ref format(const std::string &s = DEFAULT_FORMAT).
+     * @brief Default address format.
      */
     static const std::string DEFAULT_FORMAT;
     /**
@@ -48,18 +48,12 @@ public:
     std::string format(const std::string &fmt = DEFAULT_FORMAT) const;
 
     /**
-     * @brief       Overload of <em> operator>> </em>.
-     * @param   is  Input stream to read from.
-     * @param   a   Address to write read information to.
-     * @return      The same as \a is.
+     * @brief   Overload of <em> operator>> </em>. Expects input in @ref Address::DEFAULT_FORMAT.
      */
     friend std::istream& operator>>(std::istream &is, Address &a);
 
     /**
-     * @brief       Overload of <em> operator<< </em>.
-     * @param   os  Output stream to write to.
-     * @param   a   Address to read information from.
-     * @return      The same as \a os.
+     * @brief   Overload of <em> operator<< </em>. Prints in @ref Address::DEFAULT_FORMAT.
      */
     friend std::ostream& operator<<(std::ostream &os, const Address &a);
 };
