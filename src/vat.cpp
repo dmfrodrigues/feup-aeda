@@ -2,14 +2,18 @@
 
 #include "utils.h"
 
+const std::regex  VAT::regex_(VAT::REGEX_STR);
+
 VAT::VAT(const std::string &vat){
-    if(vat.size() > 15) throw VAT::VATTooLong(vat);
+    if(!std::regex_match(vat, VAT::regex_))
+        throw VAT::InvalidVAT(vat);
     vat_ = vat;
 }
 
-VAT::VATTooLong::VATTooLong(const std::string &vat):
-    invalid_argument("VAT too long ("+vat+" has size "+utils::itos(vat.size())+">15)"){}
+VAT::InvalidVAT::InvalidVAT(const std::string &vat):
+    std::invalid_argument("VAT has at least one invalid character (regex format is '"+VAT::REGEX_STR+"')"),
+    vat_(vat){}
 
-std::string VAT::VATTooLong::get_vat() const{
+std::string VAT::InvalidVAT::get_vat() const{
     return vat_;
 }
