@@ -14,6 +14,10 @@ public:
      */
     static const std::string REGEX_STR;
     /**
+     * @brief   Empty constructor.
+     */
+    PhoneNumber();
+    /**
      * @brief   Constructs from string containing phone number.
      *
      * @param   number  String with phone number
@@ -42,6 +46,10 @@ public:
         const std::string& get_number()const;
     };
 
+    /**
+     * @brief       Overload of <em> operator== </em>.
+     */
+    bool operator==(const PhoneNumber &p) const;
     /**
      * @brief       Overload of <em> operator>> </em>. Reads an entire line and expects it to be a phone number.
      */

@@ -5,6 +5,9 @@ TEST_CASE("Currency", "[currency]") {
     {
         Currency c(620);
     }
+}
+
+TEST_CASE("Currency input/output", "[currency-io]") {
     {
         Currency c(620.33);
         std::stringstream ss;

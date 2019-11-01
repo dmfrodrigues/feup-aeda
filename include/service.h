@@ -9,7 +9,7 @@
  */
 class Service{
 private:
-    const Client *client_;
+    Client::UserName client_user_;
     Person contact1_;
     Person contact2_;
     std::string cargo_type_;
@@ -23,7 +23,7 @@ private:
 public:
     /**
      * @brief Constructor that accepts all the information concerning a transport service.
-     * @param   client          Pointer to @ref Client to which the service will be provided
+     * @param   client_user     Pointer to @ref Client to which the service will be provided
      * @param   contact1        @ref Person that should be contacted on loading
      * @param   contact2        @ref Person that should be contacted on arrival and unloading
      * @param   cargo_type      String denoting the type of cargo
@@ -34,10 +34,15 @@ public:
      * @param   a_begin         @ref Address at which the cargo should be loaded
      * @param   a_end           @ref Address at which the cargo should be unloaded
      */
-    Service(const Client *client, const Person &contact1, const Person &contact2,
+    Service(const Client::UserName &client_user, const Person &contact1, const Person &contact2,
             const std::string &cargo_type, double cargo_amount, int cargo_danger,
             Time t_begin, Time t_end,
             Address a_begin, Address a_end);
+
+    /** @brief Overload of <em> operator>> </em>. */
+    friend std::istream& operator>>(std::istream &is,       Service &s);
+    /** @brief Overload of <em> operator<< </em>. */
+    friend std::ostream& operator<<(std::ostream &os, const Service &s);
 };
 
 #endif //SERVICE_H_INCLUDED
