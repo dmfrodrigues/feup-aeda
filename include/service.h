@@ -9,7 +9,7 @@
  */
 class Service{
 private:
-    const Client *client_;
+    Client::IdType clientid_;
     Person contact1_;
     Person contact2_;
     std::string cargo_type_;
@@ -34,10 +34,13 @@ public:
      * @param   a_begin         @ref Address at which the cargo should be loaded
      * @param   a_end           @ref Address at which the cargo should be unloaded
      */
-    Service(const Client *client, const Person &contact1, const Person &contact2,
+    Service(const Person::IdType &clientid, const Person &contact1, const Person &contact2,
             const std::string &cargo_type, double cargo_amount, int cargo_danger,
             Time t_begin, Time t_end,
             Address a_begin, Address a_end);
+
+    friend std::istream& operator>>(std::istream &is,       Service &s);
+    friend std::ostream& operator<<(std::ostream &os, const Service &s);
 };
 
 #endif //SERVICE_H_INCLUDED

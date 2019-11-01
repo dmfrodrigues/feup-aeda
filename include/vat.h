@@ -14,11 +14,24 @@ public:
      */
     static const std::string REGEX_STR;
     /**
+     * @brief   Empty constructor
+     */
+    VAT();
+    /**
      * @brief   Constructor accepting %VAT as string
      * @param   vat String containing %VAT
      * @exception   VAT::VATTooLong When VAT is longer than the maximum size
      */
     VAT(const std::string &vat);
+
+    /**
+     * @brief       Overload of <em> operator>> </em>. Reads an entire line and expects it to be a VAT.
+     */
+    friend std::istream& operator>>(std::istream &is,       VAT &v);
+    /**
+     * @brief       Overload of <em> operator<< </em>.
+     */
+    friend std::ostream& operator<<(std::ostream &os, const VAT &v);
 
     /**
      * @brief   Exception class for when the provided %VAT string is too long.
@@ -41,15 +54,6 @@ public:
          */
         std::string get_vat() const;
     };
-
-    /**
-     * @brief       Overload of <em> operator>> </em>. Reads an entire line and expects it to be a VAT.
-     */
-    friend std::istream& operator>>(std::istream &is,       VAT &v);
-    /**
-     * @brief       Overload of <em> operator<< </em>.
-     */
-    friend std::ostream& operator<<(std::ostream &os, const VAT &v);
 };
 
 const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";

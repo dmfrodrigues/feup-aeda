@@ -10,9 +10,14 @@
  * @brief %Person class.
  */
 class Person {
+public:
+    typedef unsigned int IdType;
 private:
+    IdType      id_ = 0;
     std::string name_;
     PhoneNumber phonenumber_;
+protected:
+    virtual std::istream& input(std::istream &is);
 public:
     /**
      * @brief Constructor accepting a name and a phone number.
@@ -20,6 +25,11 @@ public:
      * @param   phonenumber Phone number
      */
     Person(const std::string &name, const PhoneNumber &phonenumber);
+
+    virtual Person::IdType get_id() const final;
+
+    friend std::istream& operator>>(std::istream &is,       Person &p);
+    friend std::ostream& operator<<(std::ostream &os, const Person &p);
 };
 
 /**
@@ -31,6 +41,8 @@ class User : public Person{
 private:
     std::string user_;
     std::string pswd_;
+protected:
+    virtual std::istream& input(std::istream &is);
 public:
     /**
      * @brief Constructor accepting a name, a phone number and credentials.
@@ -41,6 +53,9 @@ public:
      */
     User(const std::string &name, const PhoneNumber &phonenumber,
          const std::string &user, const std::string &pswd       );
+
+    friend std::istream& operator>>(std::istream &is,       User &p);
+    friend std::ostream& operator<<(std::ostream &os, const User &p);
 };
 
 /**
@@ -53,6 +68,8 @@ class Client: public User {
 private:
     Address address_;
     VAT vat_;
+protected:
+    virtual std::istream& input(std::istream &is);
 public:
     /**
      * @brief Constructor accepting all information to construct a client.
@@ -66,6 +83,9 @@ public:
     Client(const std::string &name   , const PhoneNumber &phonenumber,
            const std::string &user   , const std::string &pswd       ,
            const Address     &address, const VAT         &vat        );
+
+    friend std::istream& operator>>(std::istream &is,       Client &p);
+    friend std::ostream& operator<<(std::ostream &os, const Client &p);
 };
 
 /**
@@ -76,6 +96,8 @@ public:
 class Employee: public User {
 private:
     Currency base_salary_;
+protected:
+    virtual std::istream& input(std::istream &is);
 public:
     /**
      * @brief Constructor accepting all information to construct an employee.
@@ -102,6 +124,9 @@ public:
      * @return  %Employee type
      */
     virtual Employee::Type get_type() const = 0;
+
+    friend std::istream& operator>>(std::istream &is,       Employee &p);
+    friend std::ostream& operator<<(std::ostream &os, const Employee &p);
 };
 
 /**
@@ -110,6 +135,8 @@ public:
  * A manager has permissions to make any modification to data in the program.
  */
 class Manager: public Employee {
+protected:
+    virtual std::istream& input(std::istream &is);
 public:
     /**
      * @brief Constructor accepting all information to construct a manager.
@@ -128,6 +155,9 @@ public:
      * @return  %Employee type
      */
     Employee::Type get_type() const;
+
+    friend std::istream& operator>>(std::istream &is,       Manager &p);
+    friend std::ostream& operator<<(std::ostream &os, const Manager &p);
 };
 
 /**
@@ -136,6 +166,8 @@ public:
  * A driver makes deliveries.
  */
 class Driver: public Employee {
+protected:
+    virtual std::istream& input(std::istream &is);
 public:
     /**
      * @brief Constructor accepting all information to construct a driver.
@@ -154,6 +186,9 @@ public:
     * @return  %Employee type
     */
     Employee::Type get_type() const;
+
+    friend std::istream& operator>>(std::istream &is,       Driver &p);
+    friend std::ostream& operator<<(std::ostream &os, const Driver &p);
 };
 
 #endif //PERSON_H_INCLUDED
