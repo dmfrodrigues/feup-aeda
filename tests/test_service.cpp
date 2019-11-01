@@ -8,7 +8,7 @@ TEST_CASE("Service", "[service]") {
              VAT("0123456789ABCDE")
             );
 
-    Service s(c.get_id(), c, c,
+    Service s(c.get_username(), c, c,
               "wooden tables", 5000, 0,
               Time("20190125_124322"), Time("20190203_120001"),
               Address("Rua das Oliveiras, 25", "4020-318", "BACIAS", "Trás-os-Montes", "Portugal"),

@@ -36,11 +36,24 @@ public:
      */
     friend std::ostream& operator<<(std::ostream &os, const Time &t);
 
+    /**
+     * @brief   Class for denoting an invalid time format
+     */
     class InvalidTimeFormat: public std::invalid_argument{
     private:
         std::string fmt_;
     public:
+        /**
+         * @brief Constructor accepting the time format that caused the exception.
+         *
+         * Also sets the string returned by <em> std::exception::what() </em>.
+         * @param   fmt     Time format
+         */
         InvalidTimeFormat(const std::string &fmt);
+        /**
+         * @brief   Get time format from which the exception was constructed.
+         * @return  Time format
+         */
         const std::string& get_format() const;
     };
 };

@@ -4,10 +4,6 @@
 Person::Person(const std::string &name, const PhoneNumber &phonenumber):
                name_(name), phonenumber_(phonenumber){}
 
-Person::IdType Person::get_id() const {
-    return 0;
-}
-
 std::istream& Person::input(std::istream &is){
     std::getline(is, name_);
     is >> phonenumber_;
@@ -21,21 +17,21 @@ std::ostream& operator<<(std::ostream &os, const Person &p){
 }
 
 ///USER
-User::User(const std::string &name, const PhoneNumber &phonenumber,
-           const std::string &user, const std::string &pswd       ):
+User::User(const std::string &name    , const PhoneNumber &phonenumber,
+           const std::string &username, const std::string &pswd       ):
            Person(name, phonenumber),
-           user_(user), pswd_(pswd){}
+           username_(username), pswd_(pswd){}
 
 std::istream& User::input(std::istream &is){
    Person::input(is);
-   std::getline(is, user_);
+   std::getline(is, username_);
    std::getline(is, pswd_);
    return is;
 }
 std::istream& operator>>(std::istream &is,       User &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const User &p){
     os << static_cast<const Person&>(p) << "\n"
-       << p.user_                       << "\n"
+       << p.username_                   << "\n"
        << p.pswd_;
     return os;
 }

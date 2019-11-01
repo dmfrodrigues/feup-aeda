@@ -10,13 +10,14 @@
  * @brief %Person class.
  */
 class Person {
-public:
-    typedef unsigned int IdType;
 private:
-    IdType      id_ = 0;
     std::string name_;
     PhoneNumber phonenumber_;
 protected:
+    /**
+     * @brief Allows Person fields to be filled from info in input stream.
+     * @param   is  Input stream
+     */
     virtual std::istream& input(std::istream &is);
 public:
     /**
@@ -26,9 +27,9 @@ public:
      */
     Person(const std::string &name, const PhoneNumber &phonenumber);
 
-    virtual Person::IdType get_id() const final;
-
+    /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Person &p);
+    /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Person &p);
 };
 
@@ -38,23 +39,37 @@ public:
  * A user must have his/her own credentials to login to the system.
  */
 class User : public Person{
+public:
+    /**
+     * @brief UserName type. Usually a string.
+     */
+    typedef std::string UserName;
 private:
-    std::string user_;
+    UserName username_;
     std::string pswd_;
 protected:
+    /**
+     * @brief Allows User fields to be filled from info in input stream.
+     * @param   is  Input stream
+     */
     virtual std::istream& input(std::istream &is);
 public:
     /**
      * @brief Constructor accepting a name, a phone number and credentials.
      * @param   name        String containing name of user
      * @param   phonenumber Phone number
-     * @param   user        Unique username in the program
+     * @param   username    Unique username in the program
      * @param   pswd        Password of the user
      */
-    User(const std::string &name, const PhoneNumber &phonenumber,
-         const std::string &user, const std::string &pswd       );
+    User(const std::string &name    , const PhoneNumber &phonenumber,
+         const std::string &username, const std::string &pswd       );
 
+    /** @brief Get username */
+    const UserName& get_username() const{ return username_; }
+
+    /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       User &p);
+    /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const User &p);
 };
 
@@ -69,6 +84,10 @@ private:
     Address address_;
     VAT vat_;
 protected:
+    /**
+     * @brief Allows Client fields to be filled from info in input stream.
+     * @param   is  Input stream
+     */
     virtual std::istream& input(std::istream &is);
 public:
     /**
@@ -84,7 +103,9 @@ public:
            const std::string &user   , const std::string &pswd       ,
            const Address     &address, const VAT         &vat        );
 
+    /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Client &p);
+    /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Client &p);
 };
 
@@ -125,7 +146,9 @@ public:
      */
     virtual Employee::Type get_type() const = 0;
 
+    /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Employee &p);
+    /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Employee &p);
 };
 
@@ -156,7 +179,9 @@ public:
      */
     Employee::Type get_type() const;
 
+    /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Manager &p);
+    /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Manager &p);
 };
 
@@ -187,7 +212,9 @@ public:
     */
     Employee::Type get_type() const;
 
+    /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Driver &p);
+    /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Driver &p);
 };
 

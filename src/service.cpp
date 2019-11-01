@@ -1,16 +1,16 @@
 #include "service.h"
 
-Service::Service(const Person::IdType &clientid, const Person &contact1, const Person &contact2,
+Service::Service(const Client::UserName &client_user, const Person &contact1, const Person &contact2,
                  const std::string &cargo_type, double cargo_amount, int cargo_danger,
                  Time t_begin, Time t_end,
                  Address a_begin, Address a_end):
-                 clientid_(clientid), contact1_(contact1), contact2_(contact2),
+                 client_user_(client_user), contact1_(contact1), contact2_(contact2),
                  cargo_type_(cargo_type), cargo_amount_(cargo_amount), cargo_danger_(cargo_danger),
                  t_begin_(t_begin), t_end_(t_end),
                  a_begin_(a_begin), a_end_(a_end){}
 
 std::istream& operator>>(std::istream &is,       Service &s){
-    is >> s.clientid_
+    is >> s.client_user_
        >> s.contact1_
        >> s.contact2_
        >> s.cargo_type_
@@ -23,7 +23,7 @@ std::istream& operator>>(std::istream &is,       Service &s){
     return is;
 }
 std::ostream& operator<<(std::ostream &os, const Service &s){
-    os << s.clientid_ << "\n"
+    os << s.client_user_ << "\n"
        << s.contact1_ << "\n"
        << s.contact2_ << "\n"
        << s.cargo_type_ << "\n"
