@@ -62,7 +62,4 @@ public:
     };
 };
 
-const std::string Time::DEFAULT_FORMAT = "%Y%m%d_%H%M%S";
-const std::string Time::DEFAULT_TIME   = "00000000_000000";
-
 #endif //TIME_H_INCLUDED

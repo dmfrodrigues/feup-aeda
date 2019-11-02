@@ -39,3 +39,5 @@ VAT::InvalidVAT::InvalidVAT(const std::string &vat):
 std::string VAT::InvalidVAT::get_vat() const{
     return vat_;
 }
+
+const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";

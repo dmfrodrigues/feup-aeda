@@ -60,6 +60,4 @@ public:
     };
 };
 
-const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";
-
 #endif //ADDRESS_H_INCLUDED

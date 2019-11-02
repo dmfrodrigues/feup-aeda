@@ -28,3 +28,5 @@ std::istream& operator>>(std::istream &is, Address &a){
     std::getline(is, a.country_);
     return is;
 }
+
+const std::string Address::DEFAULT_FORMAT = "%street\n%postal\n%city\n%district\n%country";

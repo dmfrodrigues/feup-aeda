@@ -2,6 +2,7 @@
 #define ADDRESS_H_INCLUDED
 
 #include <string>
+#include <iostream>
 
 /**
  * @brief Class for real-world address.
@@ -59,7 +60,5 @@ public:
      */
     friend std::ostream& operator<<(std::ostream &os, const Address &a);
 };
-
-const std::string Address::DEFAULT_FORMAT = "%street\n%postal\n%city\n%district\n%country";
 
 #endif //ADDRESS_H_INCLUDED

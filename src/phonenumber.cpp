@@ -36,3 +36,5 @@ std::istream& operator>>(std::istream &is,       PhoneNumber &p){
     }
     return is;
 }
+
+const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";

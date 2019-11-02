@@ -63,6 +63,4 @@ public:
     friend std::ostream& operator<<(std::ostream &os, const PhoneNumber &p);
 };
 
-const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";
-
 #endif //PHONENUMBER_H_INCLUDED
