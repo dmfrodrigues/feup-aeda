@@ -34,3 +34,5 @@ std::istream& operator>>(std::istream &is,       Currency &c){
     }
     return is;
 }
+
+long long int Currency::getCents(void) const { return cents_; }

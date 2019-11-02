@@ -35,6 +35,12 @@ public:
      */
     friend std::ostream& operator<<(std::ostream &os, const Currency &c);
 
+    /**
+     * @brief Gets the amount of money
+     * @return The amount of cents
+     */
+    long long int getCents(void) const;
+
 };
 
 #endif //CURRENCY_H_INCLUDED

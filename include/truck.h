@@ -72,18 +72,25 @@ public:
      * @brief Get price of the transport.
      * @return  Currency price
      */
-    Currency getPrice() const;
+    Currency getPrice();
+
+    /**
+     * @brief Gets the current total weight in the truck.
+     * @return Total weight of cargo
+     */
+    float getTotalWeight(void) const;
 
     /**
      * @brief Get type of truck.
      * @return  Truck type
      */
-    virtual Truck::Type get_type() const = 0;
+    virtual Truck::Type get_type(void) const = 0;
 
     /**
      * @brief Adds cargo to the truck
      * @param cargo Cargo to be added
-     * @return 0 if operation was sucessful, non-zero otherwise
+     * @throws <em>std::invalid_argument</em> If cargo is invalid for this type of truck
+     * @return 0 if cargo was added, non-zero if not added but cargo is valid
      */
     virtual bool addCargo(const Cargo& cargo) = 0;
 
@@ -117,8 +124,9 @@ public:
  * @brief Truck with freezing camera allowing transport of products that require specific temperature ranges.
  */
 class RefrigeratorTruck : public Truck {
+protected:
     float temperature_;
-
+private:
     /**
      * @brief Updates price values
      */
@@ -148,16 +156,10 @@ public:
     RefrigeratorTruck(unsigned int max_weight, unsigned int max_reach, float taxes, float temperature);
 
     /**
-     * @brief Get price for service involving refrigeration.
-     * @return  %Currency price
-     */
-    Currency getPrice() const;
-
-    /**
      * @brief Get type of truck.
      * @return  Truck::Type::Refrigerator
      */
-    Truck::Type get_type() const;
+    Truck::Type get_type(void) const;
 
     /**
      * @brief Gets the temperature of the refrigerator camera.
@@ -169,13 +171,14 @@ public:
      * @brief Sets the temperature of the refrigerator camera to new value given.
      * @param temperature Temperature to be set to
      */
-    void setTemperature(float temperature) const;
+    void setTemperature(float temperature);
 
     /**
      * @brief Adds cargo to the truck
      * Cargo temperature range must contain the temperature of the camera and danger level below or equal <em>Cargo::DangerLevel::Miscellaneous</em> to be added
      * @param cargo Cargo to be added
-     * @return 0 if operation was sucessful, non-zero otherwise
+     * @throws <em>std::invalid_argument</em> If cargo is invalid for this type of truck
+     * @return 0 if cargo was added, non-zero if not added but cargo is valid
      */
     bool addCargo(const Cargo& cargo);
 
@@ -186,8 +189,9 @@ public:
  * @brief Truck that has capacity of transporting dangerous goods.
  */
 class DangerousCargoTruck : public Truck {
+protected:
     Cargo::DangerLevel max_danger_level_;
-
+private:
     /**
      * @brief Updates price values
      */
@@ -216,12 +220,6 @@ public:
     DangerousCargoTruck(unsigned int max_weight, unsigned int max_reach, float taxes, Cargo::DangerLevel max_danger_level);
 
     /**
-     * @brief Get price for service involving dangerous goods.
-     * @return  Currency price
-     */
-    Currency getPrice(void) const;
-
-    /**
      * @brief Get type of truck.
      * @return  Truck::Type::DangerousCargo
      */
@@ -243,7 +241,8 @@ public:
      * @brief Adds cargo to the truck
      * Cargo danger level range must be lower or equal to the maximum danger level the truck is able to transport to be added.
      * @param cargo Cargo to be added
-     * @return 0 if operation was sucessful, non-zero otherwise
+     * @throws <em>std::invalid_argument</em> If cargo is invalid for this type of truck
+     * @return 0 if cargo was added, non-zero if not added but cargo is valid
      */
     bool addCargo(const Cargo& cargo);
 };
@@ -274,12 +273,6 @@ public:
     AnimalTruck(unsigned int max_weight, unsigned int max_reach, float taxes);
 
     /**
-     * @brief Get price for service involving animal transport.
-     * @return  Currency price
-     */
-    Currency getPrice() const;
-
-    /**
      * @brief Get type of truck.
      * @return  Truck::Type::Animal
      */
@@ -289,7 +282,8 @@ public:
      * @brief Adds cargo to the truck
      * Cargo danger level range must be lower or equal <em>Cargo::DangerLevel::Miscellaneous</em> to be added.
      * @param cargo Cargo to be added
-     * @return 0 if operation was sucessful, non-zero otherwise
+     * @throws <em>std::invalid_argument</em> If cargo is invalid for this type of truck
+     * @return 0 if cargo was added, non-zero if not added but cargo is valid
      */
     bool addCargo(const Cargo& cargo);
 
@@ -318,12 +312,6 @@ public:
     NormalTruck(unsigned int max_weight, unsigned int max_reach, float taxes);
 
     /**
-     * @brief Get price for normal service.
-     * @return  Currency price
-     */
-    Currency getPrice() const;
-
-    /**
      * @brief Get type of truck.
      * @return  Truck::Type::Normal
      */
@@ -333,13 +321,14 @@ public:
      * @brief Adds cargo to the truck
      * Cargo danger level range must be lower or equal <em>Cargo::DangerLevel::None</em> to be added.
      * @param cargo Cargo to be added
-     * @return 0 if operation was sucessful, non-zero otherwise
+     * @throws <em>std::invalid_argument</em> If cargo is invalid for this type of truck
+     * @return 0 if cargo was added, non-zero if not added but cargo is valid
      */
     bool addCargo(const Cargo& cargo);
 
 };
 
-class DangerousRefrigeratorTruck: public RefrigeratorTruck, public DangerousCargoTruck {
+class DangerousRefrigeratorTruck: public DangerousCargoTruck, protected RefrigeratorTruck {
     /**
      * @brief Updates price values
      */
@@ -385,12 +374,6 @@ public:
     DangerousRefrigeratorTruck(unsigned int max_weight, unsigned int max_reach, float taxes, float temperature, Cargo::DangerLevel max_danger_level);
 
     /**
-     * @brief Get price for service involving dangerous goods and refrigeration.
-     * @return  Currency price
-     */
-    Currency getPrice() const;
-
-    /**
      * @brief Get type of truck.
      * @return  Truck::Type::DangerousRefrigerator
      */
@@ -401,7 +384,8 @@ public:
      * Cargo danger level range must be lower or equal to the maximum danger level the truck is able to transport and
      * the temperature range of the cargo must contain the temperature of the camera of the truck to be added.
      * @param cargo Cargo to be added
-     * @return 0 if operation was sucessful, non-zero otherwise
+     * @throws <em>std::invalid_argument</em> If cargo is invalid for this type of truck
+     * @return 0 if cargo was added, non-zero if not added but cargo is valid
      */
     bool addCargo(const Cargo& cargo);
 };

@@ -168,6 +168,7 @@ public:
     /**
      * @brief Sets the type of cargo.
      * @param cargo_type Type of cargo to be set to
+     * @throws <em>std::invalid_argument</em> If type can't be modified
      */
     void setType(Cargo::Type cargo_type);
 
@@ -180,6 +181,7 @@ public:
     /**
      * @brief Sets the danger level of cargo.
      * @param danger_level Danger level of cargo to be set to
+     * @throws <em>std::invalid_argument</em> If danger level can't be modified
      */
     void setDangerLevel(Cargo::DangerLevel danger_level);
 
@@ -193,18 +195,19 @@ public:
      * @brief Gets the minimum temperature that cargo must be kept on.
      * @return Minimum temperature
      */
-    float getMinTemp(void);
+    float getMinTemp(void) const;
 
     /**
      * @brief Gets the maximum temperature that cargo must be kept on.
      * @return Maximum temperature
      */
-    float getMaxTemp(void);
+    float getMaxTemp(void) const;
 
     /**
      * @brief Sets the temperature range to the pair of temperatures given.
      * @param temperature_range Temperature range that cargo must be kept on.
      * @throws InvalidTemperatureRange If the temperature range is invalid.
+     * @throws <em>std::invalid_argument</em> If temperature range can't be modified
      */
     void setTemperatureRange(const std::pair<float, float> &temperature_range);
 
@@ -213,6 +216,7 @@ public:
      * @param min_temp Minimum temperature that cargo must be kept on
      * @param max_temp Maximum temperature that cargo must be kept on
      * @throws InvalidTemperatureRange If the temperature range is invalid.
+     * @throws <em>std::invalid_argument</em> If temperature range can't be modified
      */
     void setTemperatureRange(float min_temp, float max_temp);
 
@@ -220,6 +224,7 @@ public:
      * @brief Sets the minimum temperature of the range to the value given.
      * @param min_temp Minimum temperature that cargo must be kept on
      * @throws InvalidTemperatureRange If the temperature range is invalid.
+     * @throws <em>std::invalid_argument</em> If temperature range can't be modified
      */
     void setMinTemp(float min_temp);
 
@@ -227,6 +232,7 @@ public:
      * @brief Sets the minimum temperature of the range to the value given.
      * @param max_temp Minimum temperature that cargo must be kept on
      * @throws InvalidTemperatureRange If the temperature range is invalid.
+     * @throws <em>std::invalid_argument</em> If temperature range can't be modified
      */
     void setMaxTemp(float max_temp);
 
