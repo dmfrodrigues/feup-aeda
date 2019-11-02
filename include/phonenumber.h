@@ -1,6 +1,9 @@
 #ifndef PHONENUMBER_H_INCLUDED
 #define PHONENUMBER_H_INCLUDED
 
+#include <regex>
+#include <string>
+
 /**
  * @brief Class to store phone number.
  */

@@ -5,12 +5,44 @@
 #ifndef CARGO_H_INCLUDED
 #define CARGO_H_INCLUDED
 
+#include "currency.h"
+
 #include <utility>
+#include <stdexcept>
 
 /**
  * @class Cargo
  */
 class Cargo {
+public:
+    /**
+     * @enum Type
+     * @brief Types of cargo
+     */
+    enum Type {
+        Normal = 0,
+        Animal,
+        Refrigerated,
+        Dangerous,
+    };
+
+    /**
+     * @enum DangerLevel
+     * @brief Dangerous Goods Classification.
+     */
+    enum DangerLevel {
+        None = 0,
+        Miscellaneous,
+        Gases,
+        Flammable_Liq,
+        Flammable_Sol,
+        Oxydizing_Agents,
+        Explosives,
+        Corrosive,
+        Toxic,
+        Radioactive,
+    };
+private:
     unsigned int quantity_;
     Type cargo_type_;
     DangerLevel danger_level_;
@@ -82,9 +114,9 @@ public:
      * @throws InvalidTemperatureRange If the temperature range is invalid.
      * @throws InvalidWeight If the weight value is invalid.
      */
-    Cargo(unsigned int          quantity     = 0,                   Cargo::Type  cargo_type = Type::Normal,
-          Cargo::DangerLevel    danger_level = DangerLevel::Normal, float        weight     = 0.0f,
-          std::pair<float, float> temperature_range = std::pair(0.0f, 0.0f));
+    Cargo(unsigned int          quantity,     Cargo::Type  cargo_type,
+          Cargo::DangerLevel    danger_level, float        weight,
+          std::pair<float, float> temperature_range);
 
     /**
      * @brief Constructs a cargo.
@@ -98,37 +130,9 @@ public:
      * @throws InvalidTemperatureRange If the temperature range is invalid.
      * @throws InvalidWeight If the weight value is invalid.
      */
-    Cargo(unsigned int          quantity     = 0,                   Cargo::Type  cargo_type = Type::Normal,
-          Cargo::DangerLevel    danger_level = DangerLevel::Normal, float        weight     = 0.0f,
-          float                 min_temp     = 0,                   float        max_temp   = 0);
-
-    /**
-     * @enum Type
-     * @brief Types of trucks
-     */
-    static enum Type {
-        Normal,
-        Animal,
-        Refrigerated,
-        Dangerous,
-    };
-
-    /**
-     * @enum DangerLevel
-     * @brief Dangerous Goods Classification.
-     */
-    static enum DangerLevel {
-        Normal = 0,
-        Explosives,
-        Gases,
-        Flammable_Liq,
-        Flammable_Sol,
-        Oxydizing_Agents,
-        Toxic,
-        Radioactive,
-        Corrosive,
-        Miscellaneous
-    };
+    Cargo(unsigned int          quantity,     Cargo::Type  cargo_type,
+          Cargo::DangerLevel    danger_level, float        weight,
+          float                 min_temp,     float        max_temp);
 
     /**
      * @brief Gets the quantity of cargo.
@@ -212,6 +216,25 @@ public:
      */
     void setTemperatureRange(float min_temp, float max_temp);
 
+    /**
+     * @brief Sets the minimum temperature of the range to the value given.
+     * @param min_temp Minimum temperature that cargo must be kept on
+     * @throws InvalidTemperatureRange If the temperature range is invalid.
+     */
+    void setMinTemp(float min_temp);
+
+    /**
+     * @brief Sets the minimum temperature of the range to the value given.
+     * @param max_temp Minimum temperature that cargo must be kept on
+     * @throws InvalidTemperatureRange If the temperature range is invalid.
+     */
+    void setMaxTemp(float max_temp);
+
+    /**
+     * @brief Gets the costs for transportation of cargo
+     * @return Price of cargo
+     */
+    Currency getPrice(void) const;
 };
 
 #endif // CARGO_H_INCLUDED

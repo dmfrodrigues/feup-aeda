@@ -1,4 +1,6 @@
-#include "utils.h"
+#include "../include/utils.h"
+
+#include <sstream>
 
 std::string utils::itos(const long long int &i){
     std::stringstream ss;
@@ -16,3 +18,6 @@ std::string utils::strrep(const std::string &s, const std::string &fr, const std
     }while(i != std::string::npos);
     return ret;
 }
+
+utils::InvalidIterator::InvalidIterator():
+    std::invalid_argument("Invalid iterator (iterator is out of the range)") {}

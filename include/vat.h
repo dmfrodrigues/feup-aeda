@@ -1,6 +1,10 @@
 #ifndef VAT_H_INCLUDED
 #define VAT_H_INCLUDED
 
+#include <string>
+#include <stdexcept>
+#include <regex>
+
 /**
  * @brief %VAT number.
  */

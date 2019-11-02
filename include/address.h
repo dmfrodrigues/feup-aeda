@@ -1,6 +1,8 @@
 #ifndef ADDRESS_H_INCLUDED
 #define ADDRESS_H_INCLUDED
 
+#include <string>
+
 /**
  * @brief Class for real-world address.
  */

@@ -1,6 +1,8 @@
 #ifndef CURRENCY_H_INCLUDED
 #define CURRENCY_H_INCLUDED
 
+#include <iostream>
+
 /**
  * @brief Class for storing amounts of a given currency.
  *

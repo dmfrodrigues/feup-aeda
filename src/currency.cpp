@@ -1,4 +1,6 @@
-#include "currency.h"
+#include "../include/currency.h"
+
+#include <iomanip>
 
 Currency::Currency(double amount):cents_(100.0L*amount+(amount > 0.0L ? 0.5L : -0.5L)){}
 

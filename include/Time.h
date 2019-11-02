@@ -1,6 +1,10 @@
 #ifndef TIME_H_INCLUDED
 #define TIME_H_INCLUDED
 
+#include <string>
+#include <stdexcept>
+#include <ctime>
+
 /**
  * @brief Encapsulate time in a simple class with a few methods
  */
