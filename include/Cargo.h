@@ -11,7 +11,7 @@
 #include <stdexcept>
 
 /**
- * @class Cargo
+ * @brief Cargo
  */
 class Cargo {
 public:
@@ -52,7 +52,6 @@ private:
 public:
 
     /**
-     * @class InvalidTemperatureRange
      * @brief Exception class for invalid temperature ranges
      */
     class InvalidTemperatureRange: public std::invalid_argument {
@@ -80,6 +79,9 @@ public:
         std::pair<float, float> getTemperatureRange(void) const;
     };
 
+    /**
+     * @brief Invalid weight exception
+     */
     class InvalidWeight: public std::invalid_argument {
     private:
         float weight_;
