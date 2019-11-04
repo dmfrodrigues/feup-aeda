@@ -1,5 +1,7 @@
 #include "../include/phonenumber.h"
 
+const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";
+
 const std::regex  PhoneNumber::regex_(PhoneNumber::REGEX_STR);
 
 PhoneNumber::PhoneNumber(){}
@@ -36,5 +38,3 @@ std::istream& operator>>(std::istream &is,       PhoneNumber &p){
     }
     return is;
 }
-
-const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";

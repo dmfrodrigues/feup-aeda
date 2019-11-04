@@ -1,3 +1,5 @@
+#include "phonenumber.h"
+
 TEST_CASE("Phone number", "[phonenumber]") {
     REQUIRE_NOTHROW(PhoneNumber("+"));
     REQUIRE_NOTHROW(PhoneNumber(" "));

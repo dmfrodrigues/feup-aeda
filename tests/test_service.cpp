@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "service.h"
 
 TEST_CASE("Service", "[service]") {
     Client c("Rosvaldo de Albuquerque e Sousa",

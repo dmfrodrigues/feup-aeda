@@ -1,3 +1,5 @@
+#include "time.h"
+
 TEST_CASE("Time", "[Time]") {
     {
         std::stringstream ss;

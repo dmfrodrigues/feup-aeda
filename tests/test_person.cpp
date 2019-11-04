@@ -1,3 +1,5 @@
+#include "person.h"
+
 TEST_CASE("Person", "[person]") {
     REQUIRE_NOTHROW(
         Person("Rosvaldo de Albuquerque e Sousa",

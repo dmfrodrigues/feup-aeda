@@ -2,6 +2,8 @@
 
 #include "../include/utils.h"
 
+const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";
+
 const std::regex  VAT::regex_(VAT::REGEX_STR);
 
 VAT::VAT(){}
@@ -39,5 +41,3 @@ VAT::InvalidVAT::InvalidVAT(const std::string &vat):
 std::string VAT::InvalidVAT::get_vat() const{
     return vat_;
 }
-
-const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";

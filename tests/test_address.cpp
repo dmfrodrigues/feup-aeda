@@ -1,3 +1,5 @@
+#include "address.h"
+
 TEST_CASE("Address", "[address]") {
     {
         Address a("Rua das Oliveiras, 25", "4020-318", "BACIAS", "Trás-os-Montes", "Portugal");
