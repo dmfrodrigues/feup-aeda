@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include "utils.h"
 
 Time::Time(const std::string &s){
     std::stringstream ss(s);
@@ -17,9 +18,8 @@ std::string Time::format(const std::string &fmt) const{
 
 std::istream& operator>>(std::istream &is,       Time &t){
     std::string s;
-    std::getline(is, s);
     try{
-        t = Time(s);
+        is >> s; t = Time(utils::urldecode(s));
     }catch(...){
         is.setstate(std::ios::failbit);
     }
@@ -27,7 +27,7 @@ std::istream& operator>>(std::istream &is,       Time &t){
 }
 
 std::ostream& operator<<(std::ostream &os, const Time &t){
-    return (os << t.format());
+    return (os << utils::urlencode(t.format()));
 }
 
 Time::InvalidTimeFormat::InvalidTimeFormat(const std::string &fmt):

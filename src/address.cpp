@@ -17,15 +17,20 @@ std::string Address::format(const std::string &s) const{
 }
 
 std::ostream& operator<<(std::ostream &os, const Address &a){
-    return os << a.format();
+    return os << utils::urlencode(a.street_     ) << "\n"
+              << utils::urlencode(a.postal_code_) << "\n"
+              << utils::urlencode(a.city_       ) << "\n"
+              << utils::urlencode(a.district_   ) << "\n"
+              << utils::urlencode(a.country_    );
 }
 
 std::istream& operator>>(std::istream &is, Address &a){
-    std::getline(is, a.street_);
-    std::getline(is, a.postal_code_);
-    std::getline(is, a.city_);
-    std::getline(is, a.district_);
-    std::getline(is, a.country_);
+    std::string s;
+    is >> s; a.street_      = utils::urldecode(s);
+    is >> s; a.postal_code_ = utils::urldecode(s);
+    is >> s; a.city_        = utils::urldecode(s);
+    is >> s; a.district_    = utils::urldecode(s);
+    is >> s; a.country_     = utils::urldecode(s);
     return is;
 }
 

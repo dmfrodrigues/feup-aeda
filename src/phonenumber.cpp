@@ -1,5 +1,7 @@
 #include "phonenumber.h"
 
+#include "utils.h"
+
 const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";
 
 const std::regex  PhoneNumber::regex_(PhoneNumber::REGEX_STR);
@@ -25,14 +27,13 @@ bool PhoneNumber::operator==(const PhoneNumber &p) const{
 }
 
 std::ostream& operator<<(std::ostream &os, const PhoneNumber &p){
-    return (os << p.number_);
+    return (os << utils::urlencode(p.number_));
 }
 
 std::istream& operator>>(std::istream &is,       PhoneNumber &p){
     std::string s;
-    std::getline(is, s);
     try{
-        p = PhoneNumber(s);
+        is >> s; p = PhoneNumber(utils::urldecode(s));
     }catch(...){
         is.setstate(std::ios::failbit);
     }

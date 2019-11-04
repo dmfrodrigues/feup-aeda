@@ -17,8 +17,8 @@ VAT::VAT(const std::string &vat){
 std::istream& operator>>(std::istream &is,       VAT &v){
     std::string s;
     try{
-        std::getline(is, s);
-        v = VAT(s);
+        is >> s;
+        v = VAT(utils::urldecode(s));
     }catch(...){
         is.setstate(std::ios::failbit);
     }
@@ -29,7 +29,7 @@ std::ostream& operator<<(std::ostream &os, const VAT &v){
     if(!std::regex_match(v.vat_, VAT::regex_)){
         os.setstate(std::ios::failbit);
     }else{
-        os << v.vat_;
+        os << utils::urlencode(v.vat_);
     }
     return os;
 }

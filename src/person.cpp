@@ -1,18 +1,25 @@
 #include "person.h"
 
+#include "utils.h"
+
 ///PERSON
 Person::Person(const std::string &name, const PhoneNumber &phonenumber):
                name_(name), phonenumber_(phonenumber){}
 
 std::istream& Person::input(std::istream &is){
-    std::getline(is, name_);
+    std::string s; is >> s;
+    try{
+        name_ = utils::urldecode(s);
+    }catch(...){
+        is.setstate(std::ios::failbit);
+    }
     is >> phonenumber_;
     return is;
 }
 std::istream& operator>>(std::istream &is,       Person &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Person &p){
-    os << p.name_        << "\n"
-       << p.phonenumber_ << "\n";
+    os << utils::urlencode(p.name_) << "\n"
+       << p.phonenumber_            << "\n";
     return os;
 }
 
@@ -23,16 +30,21 @@ User::User(const std::string &name    , const PhoneNumber &phonenumber,
            username_(username), pswd_(pswd){}
 
 std::istream& User::input(std::istream &is){
-   Person::input(is);
-   std::getline(is, username_);
-   std::getline(is, pswd_);
-   return is;
+    Person::input(is);
+    std::string s;
+    try{
+        is >> s; username_ = utils::urldecode(s);
+        is >> s; pswd_     = utils::urldecode(s);
+    }catch(...){
+        is.setstate(std::ios::failbit);
+    }
+    return is;
 }
 std::istream& operator>>(std::istream &is,       User &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const User &p){
     os << static_cast<const Person&>(p) << "\n"
-       << p.username_                   << "\n"
-       << p.pswd_;
+       << utils::urlencode(p.username_)   << "\n"
+       << utils::urlencode(p.pswd_    );
     return os;
 }
 
