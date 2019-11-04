@@ -1,8 +1,12 @@
 #ifndef SERVICE_H_INCLUDED
 #define SERVICE_H_INCLUDED
 
+#include <vector>
+
 #include "person.h"
 #include "Time.h"
+#include "Cargo.h"
+#include "truck.h"
 
 /**
  * @brief Class to store all the information concerning a transport service.
@@ -19,7 +23,8 @@ private:
     Time t_end_;
     Address a_begin_;
     Address a_end_;
-    //vector<Truck*> trucks_;
+    Cargo *cargo_;
+    std::vector<Truck*> trucks_;
 public:
     /**
      * @brief Constructor that accepts all the information concerning a transport service.
@@ -37,7 +42,8 @@ public:
     Service(const Client::UserName &client_user, const Person &contact1, const Person &contact2,
             const std::string &cargo_type, double cargo_amount, int cargo_danger,
             Time t_begin, Time t_end,
-            Address a_begin, Address a_end);
+            Address a_begin, Address a_end,
+            Cargo *cargo);
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Service &s);

@@ -12,7 +12,6 @@
 #include <utility>
 
 /**
- * @class Truck
  * @brief Superclass of all transports of the company.
  * @ref   Cargo
  * @ref   Currency
