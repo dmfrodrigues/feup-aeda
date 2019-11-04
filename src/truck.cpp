@@ -1,6 +1,6 @@
-#include "../include/truck.h"
+#include "truck.h"
 
-#include "../include/utils.h"
+#include "utils.h"
 
 /* Truck Superclass */
 Truck::Truck(const Truck &truck):

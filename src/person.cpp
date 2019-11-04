@@ -1,4 +1,4 @@
-#include "../include/person.h"
+#include "person.h"
 
 ///PERSON
 Person::Person(const std::string &name, const PhoneNumber &phonenumber):

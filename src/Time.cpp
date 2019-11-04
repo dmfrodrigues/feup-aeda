@@ -1,4 +1,4 @@
-#include "../include/Time.h"
+#include "Time.h"
 
 #include <sstream>
 #include <iomanip>
