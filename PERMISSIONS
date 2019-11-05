@@ -1,6 +1,6 @@
-#Permissions
+# Permissions
 
-##MANAGER
+## MANAGER
 * Show list of active services;
     *Add a service;
     *Edit a service's info;
@@ -25,14 +25,14 @@
     *For a specific truck;
         //Accountability should include salaries, fines, repairs, gas expenses, etc.
               
-##DRIVER
+## DRIVER
 * See his active services;
 * See his past services;
 * See his month statistics
 * See his truck(s) information and/or location;
 * Request vacations (?);
 
-##CLIENT
+## CLIENT
 * Request a service;
 * See list of his active services;
     *Edit a service's info;
