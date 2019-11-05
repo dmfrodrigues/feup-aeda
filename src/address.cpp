@@ -2,6 +2,8 @@
 
 #include "utils.h"
 
+const std::string Address::DEFAULT_FORMAT = "%street\n%postal\n%city\n%district\n%country";
+
 Address::Address(){}
 Address::Address(const std::string &street, const std::string &postal_code, const std::string &city, const std::string &district, const std::string &country):
                  street_(street), postal_code_(postal_code), city_(city), district_(district), country_(country){}
@@ -33,5 +35,3 @@ std::istream& operator>>(std::istream &is, Address &a){
     is >> s; a.country_     = utils::urldecode(s);
     return is;
 }
-
-const std::string Address::DEFAULT_FORMAT = "%street\n%postal\n%city\n%district\n%country";

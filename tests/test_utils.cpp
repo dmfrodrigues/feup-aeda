@@ -13,3 +13,16 @@ TEST_CASE("Utilities: URL-encoding", "[utils-url]") {
     for(const std::string &s:v)
         REQUIRE(utils::urldecode(utils::urlencode(s)) == s);
 }
+
+int RandomNumber() { return (std::rand()%1000); }
+
+TEST_CASE("Utilities: mergesort", "[utils-mergesort]") {
+    for(size_t i = 1; i < 1000; ++i){
+        std::vector<int> v1(i);
+        std::generate(v1.begin(), v1.end(), RandomNumber);
+        std::vector<int> v2 = v1;
+        std::sort(v1.begin(), v1.end());
+        utils::mergesort(v2);
+        REQUIRE(v1 == v2);
+    }
+}

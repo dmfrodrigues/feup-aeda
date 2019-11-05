@@ -20,12 +20,16 @@ protected:
      */
     virtual std::istream& input(std::istream &is);
 public:
+    /** @brief Empty constructor */
+    Person(){}
     /**
      * @brief Constructor accepting a name and a phone number.
      * @param   name        String containing name of person
      * @param   phonenumber Phone number
      */
     Person(const std::string &name, const PhoneNumber &phonenumber);
+
+    virtual const std::string& get_name() const final{ return name_; }
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Person &p);
@@ -40,13 +44,13 @@ public:
  */
 class User : public Person{
 public:
-    /**
-     * @brief UserName type. Usually a string.
-     */
+    /** @brief UserName type. Usually a string. */
     typedef std::string UserName;
 private:
     UserName username_;
     std::string pswd_;
+    Address address_;
+    VAT vat_;
 protected:
     /**
      * @brief Allows User fields to be filled from info in input stream.
@@ -54,6 +58,8 @@ protected:
      */
     virtual std::istream& input(std::istream &is);
 public:
+    /** @brief Empty constructor */
+    User():Person(){}
     /**
      * @brief Constructor accepting a name, a phone number and credentials.
      * @param   name        String containing name of user
@@ -62,7 +68,8 @@ public:
      * @param   pswd        Password of the user
      */
     User(const std::string &name    , const PhoneNumber &phonenumber,
-         const std::string &username, const std::string &pswd       );
+         const std::string &username, const std::string &pswd       ,
+         const Address     &address , const VAT         &vat        );
 
     /** @brief Get username */
     const UserName& get_username() const{ return username_; }
@@ -80,9 +87,6 @@ public:
  * In order to issue bills, a client must have an Address and a VAT number.
  */
 class Client: public User {
-private:
-    Address address_;
-    VAT vat_;
 protected:
     /**
      * @brief Allows Client fields to be filled from info in input stream.
@@ -90,6 +94,8 @@ protected:
      */
     virtual std::istream& input(std::istream &is);
 public:
+    /** @brief Empty constructor */
+    Client():User(){}
     /**
      * @brief Constructor accepting all information to construct a client.
      * @param   name        String containing name of client
@@ -120,6 +126,8 @@ private:
 protected:
     virtual std::istream& input(std::istream &is);
 public:
+    /** @brief Empty constructor */
+    Employee():User(){}
     /**
      * @brief Constructor accepting all information to construct an employee.
      * @param   name        String containing name of employee
@@ -128,8 +136,9 @@ public:
      * @param   pswd        Password of the client
      * @param   base_salary Base salary of the employee
      */
-    Employee(const std::string &name, const PhoneNumber &phonenumber,
-             const std::string &user, const std::string &pswd,
+    Employee(const std::string &name       , const PhoneNumber &phonenumber,
+             const std::string &user       , const std::string &pswd       ,
+             const Address     &address    , const VAT      &vat           ,
              const Currency    &base_salary);
 
     /**
@@ -161,6 +170,8 @@ class Manager: public Employee {
 protected:
     virtual std::istream& input(std::istream &is);
 public:
+    /** @brief Empty constructor */
+    Manager():Employee(){}
     /**
      * @brief Constructor accepting all information to construct a manager.
      * @param   name        String containing name of manager
@@ -169,8 +180,9 @@ public:
      * @param   pswd        Password of the manager
      * @param   base_salary Base salary of the manager
      */
-    Manager(const std::string &name, const PhoneNumber &phonenumber,
-            const std::string &user, const std::string &pswd,
+    Manager(const std::string &name       , const PhoneNumber &phonenumber,
+            const std::string &user       , const std::string &pswd       ,
+            const Address     &address    , const VAT      &vat           ,
             const Currency    &base_salary);
 
     /**
@@ -194,6 +206,8 @@ class Driver: public Employee {
 protected:
     virtual std::istream& input(std::istream &is);
 public:
+    /** @brief Empty constructor */
+    Driver():Employee(){}
     /**
      * @brief Constructor accepting all information to construct a driver.
      * @param   name        String containing name of driver
@@ -202,8 +216,9 @@ public:
      * @param   pswd        Password of the driver
      * @param   base_salary Base salary of the driver
      */
-    Driver(const std::string &name, const PhoneNumber &phonenumber,
-           const std::string &user, const std::string &pswd,
+    Driver(const std::string &name       , const PhoneNumber &phonenumber,
+           const std::string &user       , const std::string &pswd       ,
+           const Address     &address    , const VAT      &vat           ,
            const Currency    &base_salary);
 
    /**
