@@ -23,6 +23,7 @@
     * For a specific client;
     * For a specific driver;
     * For a specific truck;
+    
         //Accountability should include salaries, fines, repairs, gas expenses, etc.
               
 ## DRIVER
