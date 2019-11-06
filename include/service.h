@@ -13,6 +13,7 @@
  */
 class Service{
 private:
+    std::string id_;
     Client::UserName client_user_;
     Person contact1_;
     Person contact2_;
@@ -26,6 +27,10 @@ private:
     Cargo *cargo_;
     std::vector<Truck*> trucks_;
 public:
+    static int next_id_;
+
+    Service(){}
+
     /**
      * @brief Constructor that accepts all the information concerning a transport service.
      * @param   client_user     Pointer to @ref Client to which the service will be provided
@@ -44,6 +49,8 @@ public:
             Time t_begin, Time t_end,
             Address a_begin, Address a_end,
             Cargo *cargo);
+
+    const std::string& get_id()const{ return id_; }
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Service &s);

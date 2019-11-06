@@ -24,9 +24,11 @@ private:
     std::map<std::string, Truck *> trucks_  ;
     std::map<std::string, Service> services_;
     ///PRIVATE FUNCTIONS
-    template<class T> static std::map<std::string, T > load    (const std::string &path);
-    template<class T> static std::map<std::string, T*> load_ptr(const std::string &path);
-    template<class T> static void save(const std::string &managers_path, const std::map<std::string, T> &m);
+    template<class ID, class T> static void load    (std::ifstream &is, std::map<ID, T > &ret);
+    template<class ID, class T> static void load_ptr(std::ifstream &is, std::map<ID, T*> &ret);
+    template<class T> static void save(const std::string &path, const std::map<std::string, T> &m);
+    ///OPERATIONS
+    void request_service();
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
@@ -41,12 +43,12 @@ public:
 
     bool save_all();
 
-    class RepeatedName: public std::runtime_error {
+    class RepeatedId: public std::runtime_error {
     private:
-        std::string name_;
+        std::string id_;
     public:
-        RepeatedName(const std::string &name);
-        const std::string& get_name() const;
+        RepeatedId(const std::string &id);
+        const std::string& get_id() const;
     };
 };
 

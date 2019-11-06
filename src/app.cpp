@@ -1,30 +1,31 @@
 #include "app.h"
 
-template<class T>
-std::map<std::string, T> App::load(const std::string &path){
-    std::ifstream is(path);
+template<class ID, class T>
+void App::load(std::ifstream &is, std::map<ID, T> &ret){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     size_t N; is >> N;
-    std::map<std::string, T> ret;
+    ret = std::map<ID, T>();
     while(N--){
         T m; is >> m;
         if(ret.find(m.get_id()) != ret.end())
-            throw App::RepeatedName(m.get_name());
+            throw App::RepeatedId(m.get_id());
         ret[m.get_id()] = m;
     }
-    return ret;
 }
-template<class T>
-std::map<std::string, T*> App::load_ptr(const std::string &path){
-    std::ifstream is(path);
+template<class ID, class T>
+void App::load_ptr(std::ifstream &is, std::map<ID, T*> &ret){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     size_t N; is >> N;
-    std::map<std::string, T> ret;
+    ret = std::map<ID, T*>();
     while(N--){
         T *m = new T(); is >> *m;
+        if(ret.find(m->get_id()) != ret.end()){
+            auto id = m->get_id();
+            delete m;
+            throw App::RepeatedId(id);
+        }
         ret[m->get_id()] = m;
     }
-    return ret;
 }
 
 template<class T>
@@ -44,12 +45,20 @@ App::App(const std::string &base      ,
          managers_path_(base+managers), drivers_path_ (base+drivers ),
          clients_path_ (base+clients ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
-    managers_ = load    <Manager>(managers_path_);
-    drivers_  = load    <Driver >(drivers_path_ );
-    clients_  = load    <Client >(clients_path_ );
-    //trucks_   = load_ptr<Truck  >(trucks_path_  );
-    //services_ = load    <Service>(services_path_);
+    { std::ifstream is(managers_path_); load    (is, managers_); }
+    { std::ifstream is(drivers_path_ ); load    (is, drivers_); }
+    { std::ifstream is(clients_path_ ); load    (is, clients_); }
+    { std::ifstream is(trucks_path_  ); load_ptr(is, trucks_); }
+    {
+        std::ifstream is(services_path_);
+        is >> Service::next_id_;
+        load(is, services_);
+    }
     save_all();
+
+}
+
+void App::request_service(){
 
 }
 
@@ -68,7 +77,6 @@ bool App::guestMenu(User *user) {
 }
 
 bool App::userMenu(User *user) {
-
     try {
         User::Type user_type = user->get_user_type();
         if (user_type == User::Type::client) {
@@ -86,7 +94,7 @@ bool App::userMenu(User *user) {
                          "==============================    =============================\n"
                          "Service list              [11]    Change address           [21]\n"
                          "Solicit lay-off           [12]    Change VAT               [22]\n"
-                         "Solicit resignation????   [13]    Change password          [23]\n"
+                         "Resign                    [13]    Change password          [23]\n"
                          "                                                               \n"
                          "Information visualization                                      \n"
                          "==============================    =============================\n"
@@ -133,8 +141,6 @@ bool App::save_all(){
     save(clients_path_ , clients_ );
 }
 
-App::RepeatedName::RepeatedName(const std::string &name):
-    runtime_error("Repeated name "+name),
-    name_(name){}
-
-const std::string& App::RepeatedName::get_name() const{ return name_; }
+App::RepeatedId::RepeatedId(const std::string &id):
+    runtime_error("Repeated id "+std::string(id)), id_(id){}
+const std::string& App::RepeatedId::get_id() const{ return id_; }

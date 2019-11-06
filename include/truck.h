@@ -35,11 +35,14 @@ private:
     std::vector<CargoTrans*> cargo_;
 
 public:
+    Truck(){}
     /**
      * @brief Copy Constructor.
      * @param truck Truck that will be used to form the new truck
      */
     Truck(const Truck& truck);
+
+    const NumberPlate& get_id(){ return number_plate_; }
 
     /**
      * @brief Constructor of all information of a general truck.
@@ -51,6 +54,10 @@ public:
           const Fuel        &fuel        , const Distance &max_reach          ,
           const Category    &category    , std::vector<CargoTrans*> cargo);
 
+    /** @brief   Overload of <em> operator>> </em>. */
+    friend std::istream& operator>>(std::istream &is,       Truck &t);
+    /** @brief   Overload of <em> operator<< </em>. */
+    friend std::ostream& operator<<(std::ostream &os, const Truck &t);
 };
 
 #endif /* end of include guard: TRUCK_H_INCLUDED */

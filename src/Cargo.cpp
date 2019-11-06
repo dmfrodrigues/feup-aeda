@@ -3,7 +3,6 @@
 #include <cmath>
 #include <algorithm>
 
-
 Cargo::Cargo(): weight_(0){}
 Cargo::Cargo(Weight weight, const std::string &description):weight_(weight), description_(description){}
 

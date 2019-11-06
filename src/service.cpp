@@ -1,5 +1,7 @@
 #include "service.h"
 
+#include "utils.h"
+
 Service::Service(const Client::UserName &client_user, const Person &contact1, const Person &contact2,
                  const std::string &cargo_type, double cargo_amount, int cargo_danger,
                  Time t_begin, Time t_end,
@@ -9,10 +11,12 @@ Service::Service(const Client::UserName &client_user, const Person &contact1, co
                  cargo_type_(cargo_type), cargo_amount_(cargo_amount), cargo_danger_(cargo_danger),
                  t_begin_(t_begin), t_end_(t_end),
                  a_begin_(a_begin), a_end_(a_end),
-                 cargo_(cargo){}
+                 cargo_(cargo),
+                 id_(utils::itos(next_id_++)){}
 
 std::istream& operator>>(std::istream &is,       Service &s){
-    is >> s.client_user_
+    is >> s.id_
+       >> s.client_user_
        >> s.contact1_
        >> s.contact2_
        >> s.cargo_type_
@@ -25,10 +29,11 @@ std::istream& operator>>(std::istream &is,       Service &s){
     return is;
 }
 std::ostream& operator<<(std::ostream &os, const Service &s){
-    os << s.client_user_ << "\n"
-       << s.contact1_ << "\n"
-       << s.contact2_ << "\n"
-       << s.cargo_type_ << "\n"
+    os << s.id_           << "\n"
+       << s.client_user_  << "\n"
+       << s.contact1_     << "\n"
+       << s.contact2_     << "\n"
+       << s.cargo_type_   << "\n"
        << s.cargo_amount_ << "\n"
        << s.cargo_danger_ << "\n"
        << s.t_begin_      << "\n"
