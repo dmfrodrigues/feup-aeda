@@ -8,7 +8,21 @@ std::map<std::string, T> App::load(const std::string &path){
     std::map<std::string, T> ret;
     while(N--){
         T m; is >> m;
+        if(ret.find(m.get_name()) != ret.end())
+            throw App::RepeatedName(m.get_name());
         ret[m.get_name()] = m;
+    }
+    return ret;
+}
+template<class T>
+std::map<std::string, T*> App::load_ptr(const std::string &path){
+    std::ifstream is(path);
+    is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
+    size_t N; is >> N;
+    std::map<std::string, T> ret;
+    while(N--){
+        T *m = new T(); is >> *m;
+        ret[m->get_id()] = m;
     }
     return ret;
 }
@@ -30,8 +44,13 @@ App::App(const std::string &base      ,
          managers_path_(base+managers), drivers_path_ (base+drivers ),
          clients_path_ (base+clients ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
-    managers_ = load<Manager>(managers_path_);
-    save(managers_path_, managers_);
+    managers_ = load    <Manager>(managers_path_);
+    drivers_  = load    <Driver >(drivers_path_ );
+    clients_  = load    <Client >(clients_path_ );
+    //trucks_   = load_ptr<Truck  >(trucks_path_  );
+    //services_ = load    <Service>(services_path_);
+    save_all();
+
 }
 
 bool App::guestMenu(User *user) {
@@ -89,3 +108,15 @@ bool App::userMenu(User *user) {
 void App::start(){
 
 }
+
+bool App::save_all(){
+    save(managers_path_, managers_);
+    save(drivers_path_ , drivers_ );
+    save(clients_path_ , clients_ );
+}
+
+App::RepeatedName::RepeatedName(const std::string &name):
+    runtime_error("Repeated name "+name),
+    name_(name){}
+
+const std::string& App::RepeatedName::get_name() const{ return name_; }
