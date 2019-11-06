@@ -3,6 +3,7 @@
 
 #include <string>
 #include <stdexcept>
+#include <vector>
 
 /**
  * @brief Utilities
