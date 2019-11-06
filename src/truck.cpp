@@ -32,13 +32,13 @@ std::istream& operator>>(std::istream &is,       Truck &t){
 
 std::ostream& operator<<(std::ostream &os, const Truck &t){
     os << utils::urlencode(t.number_plate_       ) << "\n"
-       <<           t.plate_register_date_  << "\n"
+       <<                  t.plate_register_date_  << "\n"
        << utils::urlencode(t.fuel_               ) << "\n"
-       <<           t.max_reach_            << "\n"
+       <<                  t.max_reach_            << "\n"
        << utils::urlencode(t.category_           ) << "\n"
-       <<           t.cargo_.size()         << "\n";
+       <<                  t.cargo_.size()         << "\n";
     for(size_t i = 0; i < t.cargo_.size(); ++i){
-        p->output(os); if(i+1 != t.cargo_.size()) os << "\n";
+        output_CargoTrans(os, t.cargo_[i]); if(i+1 != t.cargo_.size()) os << "\n";
     }
     return os;
 }
