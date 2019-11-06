@@ -8,7 +8,7 @@ std::map<std::string, T> App::load(const std::string &path){
     std::map<std::string, T> ret;
     while(N--){
         T m; is >> m;
-        if(ret.find(m.get_name()) != ret.end())
+        if(ret.find(m.get_id()) != ret.end())
             throw App::RepeatedName(m.get_name());
         ret[m.get_id()] = m;
     }
