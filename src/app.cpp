@@ -10,7 +10,7 @@ std::map<std::string, T> App::load(const std::string &path){
         T m; is >> m;
         if(ret.find(m.get_name()) != ret.end())
             throw App::RepeatedName(m.get_name());
-        ret[m.get_name()] = m;
+        ret[m.get_id()] = m;
     }
     return ret;
 }

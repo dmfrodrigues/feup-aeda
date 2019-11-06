@@ -47,14 +47,11 @@ public:
     /** @brief UserName type. Usually a string. */
     typedef std::string UserName;
 
-    /**
-     * @brief Type of users there are.
-     */
+    /** @brief Type of users there are. */
     enum Type {
         client,
         driver,
         manager
-
     };
 private:
     UserName username_;
@@ -83,7 +80,7 @@ public:
 
     /** @brief Get username */
     const UserName& get_username() const{ return username_; }
-
+    const UserName& get_id      () const{ return get_username(); }
     /**
      * @brief Gets the type of user.
      * @return User type
