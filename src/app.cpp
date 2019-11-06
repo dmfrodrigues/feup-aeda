@@ -14,7 +14,7 @@ void App::load(std::ifstream &is, std::map<ID, T> &ret){
 }
 template<class ID, class T>
 void App::load_ptr(std::ifstream &is, std::map<ID, T*> &ret){
-    is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
+    is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);;
     size_t N; is >> N;
     ret = std::map<ID, T*>();
     while(N--){
@@ -38,6 +38,26 @@ void App::save(const std::string &path, const std::map<std::string, T> &m){
     }
 }
 
+void App::load_all(){
+    { std::cout << "Loading managers..."; std::ifstream is(managers_path_); load    (is, managers_); std::cout << " Done\n"; }
+    { std::cout << "Loading drivers ..."; std::ifstream is(drivers_path_ ); load    (is, drivers_ ); std::cout << " Done\n"; }
+    { std::cout << "Loading clients ..."; std::ifstream is(clients_path_ ); load    (is, clients_ ); std::cout << " Done\n"; }
+    { std::cout << "Loading trucks  ..."; std::ifstream is(trucks_path_  ); load_ptr(is, trucks_  ); std::cout << " Done\n"; }
+    {
+        std::cout << "Loading services...";
+        std::ifstream is(services_path_);
+        is >> Service::next_id_;
+        load(is, services_);
+        std::cout << " Done\n";
+    }
+}
+
+bool App::save_all(){
+    save(managers_path_, managers_);
+    save(drivers_path_ , drivers_ );
+    save(clients_path_ , clients_ );
+}
+
 App::App(const std::string &base      ,
          const std::string &managers  , const std::string &drivers ,
          const std::string &clients   ,
@@ -45,17 +65,8 @@ App::App(const std::string &base      ,
          managers_path_(base+managers), drivers_path_ (base+drivers ),
          clients_path_ (base+clients ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
-    { std::ifstream is(managers_path_); load    (is, managers_); }
-    { std::ifstream is(drivers_path_ ); load    (is, drivers_); }
-    { std::ifstream is(clients_path_ ); load    (is, clients_); }
-    { std::ifstream is(trucks_path_  ); load_ptr(is, trucks_); }
-    {
-        std::ifstream is(services_path_);
-        is >> Service::next_id_;
-        load(is, services_);
-    }
+    load_all();
     save_all();
-
 }
 
 void App::request_service(){
@@ -133,12 +144,6 @@ bool App::userMenu(User *user) {
 
 void App::start(){
 
-}
-
-bool App::save_all(){
-    save(managers_path_, managers_);
-    save(drivers_path_ , drivers_ );
-    save(clients_path_ , clients_ );
 }
 
 App::RepeatedId::RepeatedId(const std::string &id):

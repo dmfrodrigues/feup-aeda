@@ -2,6 +2,8 @@
 
 #include "utils.h"
 
+int Service::next_id_ = 0;
+
 Service::Service(const Client::UserName &client_user, const Person &contact1, const Person &contact2,
                  const std::string &cargo_type, double cargo_amount, int cargo_danger,
                  Time t_begin, Time t_end,
