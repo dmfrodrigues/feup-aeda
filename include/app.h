@@ -31,6 +31,11 @@ public:
         const std::string &managers, const std::string &drivers ,
         const std::string &clients ,
         const std::string &trucks  , const std::string &services);
+
+    bool guestMenu(User *user);
+
+    bool userMenu(User *user);
+
     void start();
 };
 

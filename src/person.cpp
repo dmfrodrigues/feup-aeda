@@ -64,6 +64,9 @@ std::istream& Client::input(std::istream &is){
     User::input(is);
     return is;
 }
+
+User::UserType Client::get_user_type() const { return User::UserType::client; }
+
 std::istream& operator>>(std::istream &is,       Client &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Client &p){
     os << static_cast<const User&>(p);
@@ -83,6 +86,7 @@ std::istream& Employee::input(std::istream &is){
     is >> base_salary_;
     return is;
 }
+
 std::istream& operator>>(std::istream &is,       Employee &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Employee &p){
     os << static_cast<const User&>(p) << "\n"
@@ -97,7 +101,7 @@ Manager::Manager(const std::string &name       , const PhoneNumber &phonenumber,
                  const Currency    &base_salary):
                  Employee(name, phonenumber, user, pswd, address, vat, base_salary){}
 
-Employee::Type Manager::get_type() const{ return Employee::Type::Manager; }
+User::UserType Manager::get_user_type() const { return User::UserType::manager; }
 
 std::istream& Manager::input(std::istream &is){
     Employee::input(is);
@@ -121,7 +125,7 @@ std::istream& Driver ::input(std::istream &is){
    return is;
 }
 
-Employee::Type Driver ::get_type() const{ return Employee::Type::Driver; }
+User::UserType Driver::get_user_type() const { return User::UserType::driver; }
 
 std::istream& operator>>(std::istream &is,       Driver &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Driver &p){

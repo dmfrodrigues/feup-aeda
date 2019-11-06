@@ -46,6 +46,16 @@ class User : public Person{
 public:
     /** @brief UserName type. Usually a string. */
     typedef std::string UserName;
+
+    /**
+     * @brief Type of users there are.
+     */
+    enum Type {
+        client,
+        driver,
+        manager
+
+    };
 private:
     UserName username_;
     std::string pswd_;
@@ -73,6 +83,12 @@ public:
 
     /** @brief Get username */
     const UserName& get_username() const{ return username_; }
+
+    /**
+     * @brief Gets the type of user.
+     * @return User type
+     */
+    virtual Type get_user_type(void) const = 0;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       User &p);
@@ -109,6 +125,12 @@ public:
            const std::string &user   , const std::string &pswd       ,
            const Address     &address, const VAT         &vat        );
 
+    /**
+     * @brief Gets the type of user.
+     * @return UserType::client type
+     */
+    virtual Type get_user_type(void) const;
+
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Client &p);
     /** @brief Overload of <em> operator<< </em>. */
@@ -142,18 +164,10 @@ public:
              const Currency    &base_salary);
 
     /**
-     * @brief Types of employees there are; makes it easier to implement @ref Employee::get_type() for inheriting classes.
+     * @brief Gets the type of user.
+     * @return User type
      */
-    enum Type{
-        Manager,
-        Driver
-    };
-
-    /**
-     * @brief Get type of employee.
-     * @return  %Employee type
-     */
-    virtual Employee::Type get_type() const = 0;
+    virtual Type get_user_type(void) const = 0;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Employee &p);
@@ -186,10 +200,10 @@ public:
             const Currency    &base_salary);
 
     /**
-     * @brief Get type of employee. Always returns \a Employee::Type::Manager.
-     * @return  %Employee type
+     * @brief Gets the type of user.
+     * @return UserType::manager type
      */
-    Employee::Type get_type() const;
+    virtual Type get_user_type(void) const;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Manager &p);
@@ -221,11 +235,11 @@ public:
            const Address     &address    , const VAT      &vat           ,
            const Currency    &base_salary);
 
-   /**
-    * @brief Get type of employee. Always returns \a Employee::Type::Driver.
-    * @return  %Employee type
-    */
-    Employee::Type get_type() const;
+    /**
+     * @brief Gets the type of user.
+     * @return UserType::driver type
+     */
+    virtual Type get_user_type(void) const;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Driver &p);

@@ -34,6 +34,58 @@ App::App(const std::string &base      ,
     save(managers_path_, managers_);
 }
 
+bool App::guestMenu(User *user) {
+    try {
+        std::cout << "Agency SML                    \n"
+                     "==============================\n"
+                     "LOGIN                      [1]\n"
+                     "CREATE NEW ACCOUNT         [2]\n";
+        // LOGIN PROCESS
+        // ...
+        // CREATE ACCOUNT PROCESS
+    } catch (...) {
+        return false;
+    }
+}
+
+bool App::userMenu(User *user) {
+
+    try {
+        User::Type user_type = user->get_user_type();
+        if (user_type == User::Type::client) {
+            std::cout << "";
+
+        } else if (user_type == User::Type::driver) {
+                std::cout << "";
+
+        } else if (user_type == User::Type::manager) {
+            std::cout << "Services Management:              Truck Management:            \n"
+                         "==============================    =============================\n"
+                         "Add service               [11]    Add truck                [21]\n"
+                         "Edit service              [12]    Edit truck               [22]\n"
+                         "Delete service            [13]    Delete truck             [23]\n"
+                         "                                                               \n"
+                         "Client Management:                Driver Management            \n"
+                         "==============================    =============================\n"
+                         "Add client                [31]    Add driver               [41]\n"
+                         "Edit client               [32]    Edit driver              [42]\n"
+                         "Delete client             [33]    Delete driver            [43]\n"
+                         "                                                               \n"
+                         "Information visualization         Other operations             \n"
+                         "==============================    =============================\n"
+                         "Service list              [51]    Save                     [61]\n"
+                         "Truck list                [52]    Exit                     [62]\n"
+                         "Client list               [53]                                 \n"
+                         "Driver list               [54]                                 \n"
+                         "$$$$$ things              [55]                                 \n";
+        }
+
+
+    } catch(...) {
+        return false;
+    }
+}
+
 void App::start(){
 
 }
