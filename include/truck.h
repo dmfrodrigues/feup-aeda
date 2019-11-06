@@ -18,29 +18,21 @@
  */
 class Truck {
 public:
-    /**
-     * @brief Types of trucks
-     */
-    enum Type {
-        Normal = 0,
-        Animal,
-        Refrigerator,
-        DangerousCargo,
-        DangerousRefrigerator
-    };
-protected:
+    typedef std::string NumberPlate;
+    typedef std::string Category;
+    typedef std::string Fuel;
+private:
     //std::vector<Event> logs_;
-    unsigned int max_weight_;
-    unsigned int max_reach_;
-    float taxes_;
-    Currency price_;
-    std::vector<Cargo> cargo_;
+    NumberPlate number_plate_;
+    Time plate_register_date_;
+    std::string fuel_;
+    float max_reach_;
+    Category category_ //A,B,C,D
 
-    virtual void updatePrice(void) = 0;
+    //second in pair is cost per kilometer of transporting a given Cargo
+    std::vector< std::pair<Cargo, Currency> > cargo_;
 
 public:
-    //class Event;
-
     /**
      * @brief Copy Constructor.
      * @param truck Truck that will be used to form the new truck
@@ -53,7 +45,8 @@ public:
      * @param max_reach     Maximum distance for the transport
      * @param taxes         Tax that needs to be paid
      */
-    Truck(unsigned int max_weight, unsigned int max_reach, float taxes);
+    Truck(const NumberPlate &number_plate, const Time &plate_register_date,
+          const );
 
     /**
      * @brief Gets the maximum weight the truck can transport
