@@ -14,7 +14,7 @@ void App::load(std::ifstream &is, std::map<ID, T> &ret){
 }
 template<class ID, class T>
 void App::load_ptr(std::ifstream &is, std::map<ID, T*> &ret){
-    is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);;
+    is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     size_t N; is >> N;
     ret = std::map<ID, T*>();
     while(N--){
@@ -36,19 +36,20 @@ void App::save(const std::string &path, const std::map<std::string, T> &m){
     for(const std::pair<std::string, T> &p:m){
         os << p.second << "\n";
     }
+    os << std::flush;
 }
 
 void App::load_all(){
-    { std::cout << "Loading managers..."; std::ifstream is(managers_path_); load    (is, managers_); std::cout << " Done\n"; }
-    { std::cout << "Loading drivers ..."; std::ifstream is(drivers_path_ ); load    (is, drivers_ ); std::cout << " Done\n"; }
-    { std::cout << "Loading clients ..."; std::ifstream is(clients_path_ ); load    (is, clients_ ); std::cout << " Done\n"; }
-    { std::cout << "Loading trucks  ..."; std::ifstream is(trucks_path_  ); load_ptr(is, trucks_  ); std::cout << " Done\n"; }
+    { std::cout << "Loading managers..."; std::ifstream is(managers_path_); load    (is, managers_); std::cout << " loaded " << managers_.size() << std::endl; }
+    { std::cout << "Loading drivers ..."; std::ifstream is(drivers_path_ ); load    (is, drivers_ ); std::cout << " loaded " << drivers_ .size() << std::endl; }
+    { std::cout << "Loading clients ..."; std::ifstream is(clients_path_ ); load    (is, clients_ ); std::cout << " loaded " << clients_ .size() << std::endl; }
+    { std::cout << "Loading trucks  ..."; std::ifstream is(trucks_path_  ); load_ptr(is, trucks_  ); std::cout << " loaded " << trucks_  .size() << std::endl; }
     {
         std::cout << "Loading services...";
         std::ifstream is(services_path_);
         is >> Service::next_id_;
         load(is, services_);
-        std::cout << " Done\n";
+        std::cout << " loaded " << services_.size() << std::endl;
     }
 }
 
@@ -66,7 +67,9 @@ App::App(const std::string &base      ,
          clients_path_ (base+clients ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
     load_all();
-    save_all();
+    #ifdef DEV
+        save_all();
+    #endif
 }
 
 void App::request_service(){

@@ -2,6 +2,19 @@
 
 #include "utils.h"
 
+const std::string Address::PostalCode::REGEX_STR = "^[0-9a-zA-Z -]*$";
+const std::regex  Address::PostalCode::REGEX(REGEX_STR);
+
+Address::PostalCode::PostalCode(const std::string &postal_code){
+    if(!std::regex_match(postal_code, Address::PostalCode::REGEX))
+        throw InvalidPostalCode(postal_code);
+    postal_code_ = postal_code;
+}
+
+Address::PostalCode::InvalidPostalCode::InvalidPostalCode(const std::string &postal_code):
+    std::invalid_argument("Invalid postal code ("+postal_code+") does not match with regex ("+Address::PostalCode::REGEX_STR+")"),
+    postal_code_(postal_code){}
+
 const std::string Address::DEFAULT_FORMAT = "%street\n%postal\n%city\n%district\n%country";
 
 Address::Address(){}
@@ -20,9 +33,9 @@ std::string Address::format(const std::string &s) const{
 
 std::ostream& operator<<(std::ostream &os, const Address &a){
     return os << utils::urlencode(a.street_     ) << "\n"
-              << utils::urlencode(a.postal_code_) << "\n"
+              << utils::urlencode(a.postal_code_) << " "
               << utils::urlencode(a.city_       ) << "\n"
-              << utils::urlencode(a.district_   ) << "\n"
+              << utils::urlencode(a.district_   ) << " "
               << utils::urlencode(a.country_    );
 }
 

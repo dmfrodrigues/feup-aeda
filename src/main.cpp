@@ -1,3 +1,5 @@
+#define DEV
+
 #include "app.h"
 
 int main(){

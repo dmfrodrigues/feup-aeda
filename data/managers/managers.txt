@@ -4,9 +4,7 @@ Rosvaldo%20de%20Albuquerque%20e%20Sousa
 rosvaldoas
 aminhapasswordrosvaldo
 Rua%20das%20Oliveiras%2C%2025
-4020-318
-BACIAS
-Tr%C3%A1s-os-Montes
-Portugal
+4020-318 BACIAS
+Tr%C3%A1s-os-Montes Portugal
 0123456789ABCDE
 1080.67

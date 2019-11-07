@@ -3,14 +3,32 @@
 
 #include <string>
 #include <iostream>
+#include <regex>
 
 /**
  * @brief Class for real-world address.
  */
 class Address{
+public:
+    class PostalCode{
+    private:
+        static const std::regex REGEX;
+        std::string postal_code_;
+    public:
+        static const std::string REGEX_STR;
+        PostalCode(const std::string &postal_code = "");
+        operator std::string() const{ return postal_code_; }
+        class InvalidPostalCode: public std::invalid_argument{
+        private:
+            std::string postal_code_;
+        public:
+            InvalidPostalCode(const std::string &postal_code);
+            const std::string& get_postal_code() const{ return postal_code_; }
+        };
+    };
 private:
     std::string street_;
-    std::string postal_code_;
+    PostalCode postal_code_;
     std::string city_;
     std::string district_;
     std::string country_;
