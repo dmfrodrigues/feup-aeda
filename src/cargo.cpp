@@ -60,12 +60,12 @@ CargoRefrigerated::CargoRefrigerated(Weight weight, const std::string &descripti
     Cargo(weight, description), temperature_range_(temperature_range){}
 std::istream& CargoRefrigerated::input(std::istream &is){
     Cargo::input(is);
-    is >> temperature_range_.first >> temperature_range_.second;
+    is >> temperature_range_;
     return is;
 }
 std::ostream& CargoRefrigerated::output(std::ostream &os) const{
     Cargo::output(os); os << "\n";
-    os << temperature_range_.first << " " << temperature_range_.second;
+    os << temperature_range_;
     return os;
 }
 
@@ -137,7 +137,7 @@ std::ostream& CargoTransRefrigerated::output(std::ostream &os) const{
     return os;
 }
 
-CargoTransDangerous::CargoTransDangerous(float weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level):
+CargoTransDangerous::CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level):
     CargoTrans(weight, description, expenses_per_km), danger_level_(danger_level){}
 std::istream& CargoTransDangerous::input(std::istream &is){
     CargoTrans::input(is);

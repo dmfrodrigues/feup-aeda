@@ -45,7 +45,24 @@ public:
 class User : public Person{
 public:
     /** @brief UserName type. Usually a string. */
-    typedef std::string UserName;
+    class Username{
+    private:
+        std::string username_;
+    public:
+        Username(){}
+        Username(const std::string &username);
+        friend std::istream& operator>>(std::istream &is,       Username &u);
+        friend std::ostream& operator<<(std::ostream &os, const Username &u);
+        explicit operator std::string() const{ return username_; }
+        bool operator<(const Username &u)const{ return (username_ < u.username_); }
+        class InvalidUsername: public std::invalid_argument{
+        private:
+            std::string username_;
+        public:
+            InvalidUsername(const std::string &username);
+            const std::string& get_username()const;
+        };
+    };
 
     /** @brief Type of users there are. */
     enum Type {
@@ -54,7 +71,7 @@ public:
         manager
     };
 private:
-    UserName username_;
+    Username username_;
     std::string pswd_;
     Address address_;
     VAT vat_;
@@ -75,12 +92,12 @@ public:
      * @param   pswd        Password of the user
      */
     User(const std::string &name    , const PhoneNumber &phonenumber,
-         const std::string &username, const std::string &pswd       ,
+         const Username    &username, const std::string &pswd       ,
          const Address     &address , const VAT         &vat        );
 
     /** @brief Get username */
-    const UserName& get_username() const{ return username_; }
-    const UserName& get_id      () const{ return get_username(); }
+    const Username& get_username() const{ return username_; }
+    const Username& get_id      () const{ return get_username(); }
     /**
      * @brief Gets the type of user.
      * @return User type
@@ -119,7 +136,7 @@ public:
      * @param   vat         VAT number of the client for billing purposes
      */
     Client(const std::string &name   , const PhoneNumber &phonenumber,
-           const std::string &user   , const std::string &pswd       ,
+           const Username    &user   , const std::string &pswd       ,
            const Address     &address, const VAT         &vat        );
 
     /**
@@ -156,7 +173,7 @@ public:
      * @param   base_salary Base salary of the employee
      */
     Employee(const std::string &name       , const PhoneNumber &phonenumber,
-             const std::string &user       , const std::string &pswd       ,
+             const Username    &user       , const std::string &pswd       ,
              const Address     &address    , const VAT      &vat           ,
              const Currency    &base_salary);
 
@@ -192,7 +209,7 @@ public:
      * @param   base_salary Base salary of the manager
      */
     Manager(const std::string &name       , const PhoneNumber &phonenumber,
-            const std::string &user       , const std::string &pswd       ,
+            const Username    &user       , const std::string &pswd       ,
             const Address     &address    , const VAT      &vat           ,
             const Currency    &base_salary);
 
@@ -228,7 +245,7 @@ public:
      * @param   base_salary Base salary of the driver
      */
     Driver(const std::string &name       , const PhoneNumber &phonenumber,
-           const std::string &user       , const std::string &pswd       ,
+           const Username    &user       , const std::string &pswd       ,
            const Address     &address    , const VAT      &vat           ,
            const Currency    &base_salary);
 

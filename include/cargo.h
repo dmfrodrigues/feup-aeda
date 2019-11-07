@@ -6,6 +6,8 @@
 #define CARGO_H_INCLUDED
 
 #include "currency.h"
+#include "temperature.h"
+#include "weight.h"
 
 #include <utility>
 #include <stdexcept>
@@ -13,10 +15,6 @@
 /**
  * @brief Cargo
  */
-
-typedef float Temperature;
-typedef std::pair<Temperature,Temperature> TemperatureRange;
-typedef float Weight;
 
 class Cargo {
     friend std::istream& input_Cargo (std::istream &is,       Cargo *c);
@@ -192,7 +190,7 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoTransRefrigerated():CargoTrans(){}
-    CargoTransRefrigerated(float weight, const std::string &description, Currency expenses_per_km, Currency expenses_per_deg);
+    CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, Currency expenses_per_deg);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
 };
 
@@ -207,7 +205,7 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoTransDangerous():CargoTrans(){}
-    CargoTransDangerous(float weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level);
+    CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
 };
 

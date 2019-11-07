@@ -1,39 +1,38 @@
 #include "app.h"
 
 template<class ID, class T>
-void App::load(std::ifstream &is, std::map<ID, T> &ret){
+void App::load(std::ifstream &is, std::map<ID, T> &m_in){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     size_t N; is >> N;
-    ret = std::map<ID, T>();
+    m_in = std::map<ID, T>();
     while(N--){
         T m; is >> m;
-        if(ret.find(m.get_id()) != ret.end())
-            throw App::RepeatedId(m.get_id());
-        ret[m.get_id()] = m;
+        if(m_in.find(m.get_id()) != m_in.end())
+            throw App::RepeatedId((std::string)m.get_id());
+        m_in[m.get_id()] = m;
     }
 }
 template<class ID, class T>
-void App::load_ptr(std::ifstream &is, std::map<ID, T*> &ret){
+void App::load_ptr(std::ifstream &is, std::map<ID, T*> &m_in){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     size_t N; is >> N;
-    ret = std::map<ID, T*>();
+    m_in = std::map<ID, T*>();
     while(N--){
         T *m = new T(); is >> *m;
-        if(ret.find(m->get_id()) != ret.end()){
+        if(m_in.find(m->get_id()) != m_in.end()){
             auto id = m->get_id();
             delete m;
             throw App::RepeatedId(id);
         }
-        ret[m->get_id()] = m;
+        m_in[m->get_id()] = m;
     }
 }
 
-template<class T>
-void App::save(const std::string &path, const std::map<std::string, T> &m){
-    std::ofstream os(path);
+template<class ID, class T>
+void App::save(std::ofstream &os, const std::map<ID, T> &m_out){
     os.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
-    os << m.size() << "\n";
-    for(const std::pair<std::string, T> &p:m){
+    os << m_out.size() << "\n";
+    for(const std::pair<ID, T> &p:m_out){
         os << p.second << "\n";
     }
     os << std::flush;
@@ -54,9 +53,9 @@ void App::load_all(){
 }
 
 void App::save_all(){
-    save(managers_path_, managers_);
-    save(drivers_path_ , drivers_ );
-    save(clients_path_ , clients_ );
+    { std::cout << "Saving managers..."; std::ofstream os(managers_path_); save(os, managers_); std::cout << " saved " << managers_.size() << std::endl; }
+    { std::cout << "Saving drivers ..."; std::ofstream os(drivers_path_ ); save(os, drivers_ ); std::cout << " saved " << drivers_ .size() << std::endl; }
+    { std::cout << "Saving clients ..."; std::ofstream os(clients_path_ ); save(os, managers_); std::cout << " saved " << clients_ .size() << std::endl; }
 }
 
 App::App(const std::string &base      ,

@@ -14,7 +14,7 @@
 class Service{
 private:
     std::string id_;
-    Client::UserName client_user_;
+    Client::Username client_user_;
     Person contact1_;
     Person contact2_;
     std::string cargo_type_;
@@ -44,7 +44,7 @@ public:
      * @param   a_begin         @ref Address at which the cargo should be loaded
      * @param   a_end           @ref Address at which the cargo should be unloaded
      */
-    Service(const Client::UserName &client_user, const Person &contact1, const Person &contact2,
+    Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
             const std::string &cargo_type, double cargo_amount, int cargo_danger,
             Time t_begin, Time t_end,
             Address a_begin, Address a_end,

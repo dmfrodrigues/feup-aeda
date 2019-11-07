@@ -24,8 +24,33 @@ std::ostream& operator<<(std::ostream &os, const Person &p){
 }
 
 ///USER
+User::Username::Username(const std::string &username){
+    if(false)
+        throw User::Username::InvalidUsername(username);
+    username_ = username;
+}
+
+std::istream& operator>>(std::istream &is,       User::Username &u){
+    std::string s;
+    try{
+        is >> s;
+        u = User::Username(utils::urldecode(s));
+    }catch(...){
+        is.setstate(std::ios::failbit);
+    }
+    return is;
+}
+std::ostream& operator<<(std::ostream &os, const User::Username &u){
+    return (os << utils::urlencode(u.username_));
+}
+
+User::Username::InvalidUsername::InvalidUsername(const std::string &username):
+    std::invalid_argument("Invalid username ("+username+")"),
+    username_(username){}
+const std::string& User::Username::InvalidUsername::get_username() const{ return username_; }
+
 User::User(const std::string &name    , const PhoneNumber &phonenumber,
-           const std::string &username, const std::string &pswd       ,
+           const Username    &username, const std::string &pswd       ,
            const Address     &address , const VAT         &vat        ):
            Person(name, phonenumber),
            username_(username), pswd_(pswd),
@@ -46,17 +71,17 @@ std::istream& User::input(std::istream &is){
 }
 std::istream& operator>>(std::istream &is,       User &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const User &p){
-    os << static_cast<const Person&>(p) << "\n"
-       << utils::urlencode(p.username_) << "\n"
-       << utils::urlencode(p.pswd_    ) << "\n"
-       << p.address_                    << "\n"
+    os << static_cast<const Person&>(p)              << "\n"
+       << utils::urlencode((std::string)p.username_) << "\n"
+       << utils::urlencode((std::string)p.pswd_    ) << "\n"
+       << p.address_                                 << "\n"
        << p.vat_;
     return os;
 }
 
 ///CLIENT
 Client::Client(const std::string &name   , const PhoneNumber &phonenumber,
-               const std::string &user   , const std::string &pswd       ,
+               const Username    &user   , const std::string &pswd       ,
                const Address     &address, const VAT         &vat        ):
                User(name, phonenumber, user, pswd, address, vat){}
 
@@ -75,7 +100,7 @@ std::ostream& operator<<(std::ostream &os, const Client &p){
 
 ///EMPLOYEE
 Employee::Employee(const std::string &name       , const PhoneNumber &phonenumber,
-                   const std::string &user       , const std::string &pswd       ,
+                   const Username    &user       , const std::string &pswd       ,
                    const Address     &address    , const VAT      &vat           ,
                    const Currency    &base_salary):
                    User(name, phonenumber, user, pswd, address, vat),
@@ -96,7 +121,7 @@ std::ostream& operator<<(std::ostream &os, const Employee &p){
 
 ///MANAGER
 Manager::Manager(const std::string &name       , const PhoneNumber &phonenumber,
-                 const std::string &user       , const std::string &pswd       ,
+                 const Username    &user       , const std::string &pswd       ,
                  const Address     &address    , const VAT         &vat        ,
                  const Currency    &base_salary):
                  Employee(name, phonenumber, user, pswd, address, vat, base_salary){}
@@ -115,7 +140,7 @@ std::ostream& operator<<(std::ostream &os, const Manager &p){
 
 ///DRIVER
 Driver::Driver(const std::string &name       , const PhoneNumber &phonenumber,
-               const std::string &user       , const std::string &pswd       ,
+               const Username    &user       , const std::string &pswd       ,
                const Address     &address    , const VAT         &vat        ,
                const Currency    &base_salary):
                Employee(name, phonenumber, user, pswd, address, vat, base_salary){}
