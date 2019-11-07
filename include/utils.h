@@ -6,19 +6,16 @@
 #include <vector>
 #include <regex>
 
-/**
- * @brief Utilities
- */
-
 namespace utils{
     template<class T> class ufloat;
-    class string_regex;
 }
 
 template<class T> std::istream& operator>>(std::istream &is,       utils::ufloat<T> &u);
 template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat<T> &u);
 
-
+/**
+ * @brief Utilities
+ */
 namespace utils {
     /**
      * @brief       Convert integer to string.
@@ -77,6 +74,9 @@ namespace utils {
     public:
         string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
         string_regex& operator=(const std::string &s);
+
+        operator std::string() const;
+        bool operator<(const utils::string_regex &s) const;
 
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
         friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);

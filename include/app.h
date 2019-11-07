@@ -28,6 +28,7 @@ private:
     template<class ID, class T> static void load    (std::ifstream &is,       std::map<ID, T > &m_in);
     template<class ID, class T> static void load_ptr(std::ifstream &is,       std::map<ID, T*> &m_in);
     template<class ID, class T> static void save    (std::ofstream &os, const std::map<ID, T > &m_out);
+    template<class ID, class T> static void save_ptr(std::ofstream &os, const std::map<ID, T*> &m_out);
     void load_all();
     void save_all();
     ///Operations

@@ -61,13 +61,21 @@ utils::string_regex& utils::string_regex::operator=(const std::string &s){
     s_ = s;
     return *this;
 }
+utils::string_regex::operator std::string() const{
+    return s_;
+}
+bool utils::string_regex::operator<(const utils::string_regex &s) const{
+    return ((std::string)*this < (std::string)s);
+}
 namespace utils{
     std::istream& operator>>(std::istream &is,       utils::string_regex &s){
         std::string ss; is >> ss;
-        s = ss;
+        s = utils::urldecode(ss);
         return is;
     }
-    std::ostream& operator<<(std::ostream &os, const utils::string_regex &s){ return (os << s.s_); }
+    std::ostream& operator<<(std::ostream &os, const utils::string_regex &s){
+        return (os << utils::urlencode(s.s_));
+    }
 }
 utils::string_regex::FailedRegex::FailedRegex(const std::string &s, const std::string &REGEX_STR):
     std::invalid_argument("Invalid string ("+s+") does not match regex ("+REGEX_STR+")"),

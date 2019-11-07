@@ -22,7 +22,19 @@ typedef utils::ufloat<float> Distance;
 
 class Truck {
 public:
-    typedef std::string NumberPlate;
+    /** @brief Class to store number plates. */
+    class NumberPlate: public utils::string_regex{
+    public:
+        /** @brief   Regular expression string that describes a valid number plate. */
+        static const std::string REGEX_STR;
+        /** @brief   Empty constructor. */
+        NumberPlate();
+        /**
+         * @brief   Constructs from string containing number plate.
+         * @param   number  String with numberplate
+         */
+        NumberPlate(const std::string &plate);
+    };
     typedef std::string Category;
     typedef std::string Fuel;
 private:

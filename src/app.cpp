@@ -22,7 +22,7 @@ void App::load_ptr(std::ifstream &is, std::map<ID, T*> &m_in){
         if(m_in.find(m->get_id()) != m_in.end()){
             auto id = m->get_id();
             delete m;
-            throw App::RepeatedId(id);
+            throw App::RepeatedId((std::string)id);
         }
         m_in[m->get_id()] = m;
     }
@@ -34,6 +34,15 @@ void App::save(std::ofstream &os, const std::map<ID, T> &m_out){
     os << m_out.size() << "\n";
     for(const std::pair<ID, T> &p:m_out){
         os << p.second << "\n";
+    }
+    os << std::flush;
+}
+template<class ID, class T>
+void App::save_ptr(std::ofstream &os, const std::map<ID, T*> &m_out){
+    os.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
+    os << m_out.size() << "\n";
+    for(const std::pair<ID, T*> &p:m_out){
+        os << *p.second << "\n";
     }
     os << std::flush;
 }
@@ -53,9 +62,17 @@ void App::load_all(){
 }
 
 void App::save_all(){
-    { std::cout << "Saving managers..."; std::ofstream os(managers_path_); save(os, managers_); std::cout << " saved " << managers_.size() << std::endl; }
-    { std::cout << "Saving drivers ..."; std::ofstream os(drivers_path_ ); save(os, drivers_ ); std::cout << " saved " << drivers_ .size() << std::endl; }
-    { std::cout << "Saving clients ..."; std::ofstream os(clients_path_ ); save(os, managers_); std::cout << " saved " << clients_ .size() << std::endl; }
+    { std::cout << "Saving managers..."; std::ofstream os(managers_path_); save    (os, managers_); std::cout << " saved " << managers_.size() << std::endl; }
+    { std::cout << "Saving drivers ..."; std::ofstream os(drivers_path_ ); save    (os, drivers_ ); std::cout << " saved " << drivers_ .size() << std::endl; }
+    { std::cout << "Saving clients ..."; std::ofstream os(clients_path_ ); save    (os, managers_); std::cout << " saved " << clients_ .size() << std::endl; }
+    { std::cout << "Saving trucks  ..."; std::ofstream os(trucks_path_  ); save_ptr(os, trucks_  ); std::cout << " saved " << trucks_  .size() << std::endl; }
+    {
+        std::cout << "Saving services...";
+        std::ofstream os(services_path_);
+        os << Service::next_id_ << "\n";
+        save(os, services_);
+        std::cout << " saved " << services_.size() << std::endl;
+    }
 }
 
 App::App(const std::string &base      ,
@@ -66,9 +83,7 @@ App::App(const std::string &base      ,
          clients_path_ (base+clients ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
     load_all();
-    #ifdef DEV
-        save_all();
-    #endif
+    save_all();
 }
 
 void App::request_service(){

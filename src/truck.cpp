@@ -2,6 +2,14 @@
 
 #include "utils.h"
 
+const std::string Truck::NumberPlate::REGEX_STR = "^[A-Z0-9 |.]{4,12}*$";
+
+Truck::NumberPlate::NumberPlate():utils::string_regex(Truck::NumberPlate::REGEX_STR){}
+
+Truck::NumberPlate::NumberPlate(const std::string &plate):NumberPlate(){
+    *this = plate;
+}
+
 Truck::Truck(const Truck &truck):
     number_plate_(truck.number_plate_), plate_register_date_(truck.plate_register_date_),
     fuel_        (truck.fuel_        ), max_reach_          (truck.max_reach_          ),

@@ -1,42 +1,9 @@
 #include "vat.h"
 
-#include "utils.h"
-
 const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";
-const std::regex  VAT::REGEX(VAT::REGEX_STR);
 
-VAT::VAT(){}
+VAT::VAT():utils::string_regex(VAT::REGEX_STR){}
 
-VAT::VAT(const std::string &vat){
-    if(!std::regex_match(vat, VAT::REGEX))
-        throw VAT::InvalidVAT(vat);
-    vat_ = vat;
-}
-
-std::istream& operator>>(std::istream &is,       VAT &v){
-    std::string s;
-    try{
-        is >> s;
-        v = VAT(utils::urldecode(s));
-    }catch(...){
-        is.setstate(std::ios::failbit);
-    }
-    return is;
-}
-
-std::ostream& operator<<(std::ostream &os, const VAT &v){
-    if(!std::regex_match(v.vat_, VAT::REGEX)){
-        os.setstate(std::ios::failbit);
-    }else{
-        os << utils::urlencode(v.vat_);
-    }
-    return os;
-}
-
-VAT::InvalidVAT::InvalidVAT(const std::string &vat):
-    std::invalid_argument("VAT has at least one invalid character (regex format is '"+VAT::REGEX_STR+"')"),
-    vat_(vat){}
-
-std::string VAT::InvalidVAT::get_vat() const{
-    return vat_;
+VAT::VAT(const std::string &vat):VAT(){
+    *this = vat;
 }
