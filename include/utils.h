@@ -12,14 +12,12 @@
 
 namespace utils{
     template<class T> class ufloat;
-    template<char const *str> class string_regex;
+    class string_regex;
 }
 
 template<class T> std::istream& operator>>(std::istream &is,       utils::ufloat<T> &u);
 template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat<T> &u);
 
-template<char const *str> std::istream& operator>>(std::istream &is,       utils::string_regex<str> &s);
-template<char const *str> std::ostream& operator<<(std::ostream &os, const utils::string_regex<str> &s);
 
 namespace utils {
     /**
@@ -72,21 +70,23 @@ namespace utils {
         };
     };
 
-    template<char const *str>
     class string_regex{
     private:
         std::string s_;
-        const std::regex REGEX;
+        std::string REGEX_STR_;
     public:
-        string_regex():REGEX(str){}
-        string_regex(const std::string &s);
-        friend std::istream& operator>> <>(std::istream &is,       utils::string_regex<str> &s);
-        friend std::ostream& operator<< <>(std::ostream &os, const utils::string_regex<str> &s);
+        string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
+        string_regex& operator=(const std::string &s);
+
+        friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
+        friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);
+
         class FailedRegex: public std::invalid_argument{
         private:
-            std::string s_;
+            const std::string s_;
+            const std::string REGEX_STR_;
         public:
-            FailedRegex(const std::string &s);
+            FailedRegex(const std::string &s, const std::string &REGEX_STR);
             const std::string& get_string()const{ return s_; }
         };
     };
@@ -117,21 +117,6 @@ template<class T> utils::ufloat<T>::InvalidUFloat::InvalidUFloat(const T &u):
     u_(u){}
 template<class T> const T& utils::ufloat<T>::InvalidUFloat::get_ufloat()const{ return u_; }
 
-///STRING_REGEX
-template<char const *str> utils::string_regex<str>::string_regex(const std::string &s):REGEX(str){
-    if(!std::regex_match(s, REGEX))
-        throw FailedRegex(s);
-    s_ = s;
-}
-template<char const *str> std::istream& operator>>(std::istream &is,       utils::string_regex<str> &s){
-    std::string ss; is >> ss;
-    s = utils::string_regex<str>(s);
-    return is;
-}
-template<char const *str> std::ostream& operator<<(std::ostream &os, const utils::string_regex<str> &s){ return (os << s.s_); }
-template<char const *str> utils::string_regex<str>::FailedRegex::FailedRegex(const std::string &s):
-    std::invalid_argument("Invalid string ("+s+") does not match regex ("+std::string(str)+")"),
-    s_(s){}
 ///MEGESORT
 template<class T, class Compare> void utils::mergesort(std::vector<T> &v, const size_t &l, const size_t &r, Compare comp){
     if(r-l <= 1) return;

@@ -4,13 +4,12 @@
 #include <regex>
 #include <string>
 
-const char REGEX_STR[] = "^[+-a-zA-Z0-9 *#()/,.;]*$";
-
 /**
  * @brief Class to store phone number.
  */
 class PhoneNumber{
 private:
+    static const std::string REGEX_STR;
     static const std::regex  REGEX;
     std::string number_;
 public:

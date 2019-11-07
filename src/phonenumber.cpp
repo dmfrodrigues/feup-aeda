@@ -2,6 +2,7 @@
 
 #include "utils.h"
 
+const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";
 const std::regex  PhoneNumber::REGEX(REGEX_STR);
 
 PhoneNumber::PhoneNumber(){}

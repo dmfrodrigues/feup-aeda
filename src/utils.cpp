@@ -54,5 +54,24 @@ std::string utils::urldecode(const std::string &s){
     return ret;
 }
 
+///STRING_REGEX
+utils::string_regex& utils::string_regex::operator=(const std::string &s){
+    if(!std::regex_match(s, std::regex(REGEX_STR_)))
+        throw FailedRegex(s, REGEX_STR_);
+    s_ = s;
+    return *this;
+}
+namespace utils{
+    std::istream& operator>>(std::istream &is,       utils::string_regex &s){
+        std::string ss; is >> ss;
+        s = ss;
+        return is;
+    }
+    std::ostream& operator<<(std::ostream &os, const utils::string_regex &s){ return (os << s.s_); }
+}
+utils::string_regex::FailedRegex::FailedRegex(const std::string &s, const std::string &REGEX_STR):
+    std::invalid_argument("Invalid string ("+s+") does not match regex ("+REGEX_STR+")"),
+    s_(s){}
+///INVALID ITERATOR
 utils::InvalidIterator::InvalidIterator():
     std::invalid_argument("Invalid iterator (iterator is out of the range)") {}
