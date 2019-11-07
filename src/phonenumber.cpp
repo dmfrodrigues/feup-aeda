@@ -2,20 +2,18 @@
 
 #include "utils.h"
 
-const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";
-
-const std::regex  PhoneNumber::regex_(PhoneNumber::REGEX_STR);
+const std::regex  PhoneNumber::REGEX(REGEX_STR);
 
 PhoneNumber::PhoneNumber(){}
 
 PhoneNumber::PhoneNumber(const std::string &number){
-    if(!std::regex_match(number, PhoneNumber::regex_))
+    if(!std::regex_match(number, PhoneNumber::REGEX))
         throw PhoneNumber::InvalidPhoneNumber(number);
     number_ = number;
 }
 
 PhoneNumber::InvalidPhoneNumber::InvalidPhoneNumber(const std::string &number):
-    std::invalid_argument("Phone number has at least one invalid character (regex format is '"+PhoneNumber::REGEX_STR+"')"),
+    std::invalid_argument("Phone number has at least one invalid character (regex format is '')"),
     number_(number){}
 
 const std::string& PhoneNumber::InvalidPhoneNumber::get_number()const{

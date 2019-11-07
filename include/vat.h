@@ -10,7 +10,7 @@
  */
 class VAT{
 private:
-    static const std::regex  regex_;
+    static const std::regex REGEX;
     std::string vat_;
 public:
     /**

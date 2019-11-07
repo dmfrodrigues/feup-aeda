@@ -17,12 +17,14 @@
  * @ref   Cargo
  * @ref   Currency
  */
+
+typedef utils::ufloat<float> Distance;
+
 class Truck {
 public:
     typedef std::string NumberPlate;
     typedef std::string Category;
     typedef std::string Fuel;
-    typedef float Distance;
 private:
     //std::vector<Event> logs_;
     NumberPlate number_plate_;

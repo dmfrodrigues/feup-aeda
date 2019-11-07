@@ -3,13 +3,12 @@
 #include "utils.h"
 
 const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";
-
-const std::regex  VAT::regex_(VAT::REGEX_STR);
+const std::regex  VAT::REGEX(VAT::REGEX_STR);
 
 VAT::VAT(){}
 
 VAT::VAT(const std::string &vat){
-    if(!std::regex_match(vat, VAT::regex_))
+    if(!std::regex_match(vat, VAT::REGEX))
         throw VAT::InvalidVAT(vat);
     vat_ = vat;
 }
@@ -26,7 +25,7 @@ std::istream& operator>>(std::istream &is,       VAT &v){
 }
 
 std::ostream& operator<<(std::ostream &os, const VAT &v){
-    if(!std::regex_match(v.vat_, VAT::regex_)){
+    if(!std::regex_match(v.vat_, VAT::REGEX)){
         os.setstate(std::ios::failbit);
     }else{
         os << utils::urlencode(v.vat_);

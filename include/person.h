@@ -48,7 +48,9 @@ public:
     class Username{
     private:
         std::string username_;
+        static const std::regex REGEX;
     public:
+        static const std::string REGEX_STR;
         Username(){}
         Username(const std::string &username);
         friend std::istream& operator>>(std::istream &is,       Username &u);
@@ -63,6 +65,24 @@ public:
             const std::string& get_username()const;
         };
     };
+    class Password{
+    private:
+        std::string password_;
+        static const std::regex REGEX;
+    public:
+        static const std::string REGEX_STR;
+        Password(){}
+        Password(const std::string &password);
+        friend std::istream& operator>>(std::istream &is,       Password &u);
+        friend std::ostream& operator<<(std::ostream &os, const Password &u);
+        class InvalidPassword: public std::invalid_argument{
+        private:
+            std::string password_;
+        public:
+            InvalidPassword(const std::string &password);
+            const std::string& get_password()const;
+        };
+    };
 
     /** @brief Type of users there are. */
     enum Type {
@@ -72,7 +92,7 @@ public:
     };
 private:
     Username username_;
-    std::string pswd_;
+    Password password_;
     Address address_;
     VAT vat_;
 protected:
@@ -92,7 +112,7 @@ public:
      * @param   pswd        Password of the user
      */
     User(const std::string &name    , const PhoneNumber &phonenumber,
-         const Username    &username, const std::string &pswd       ,
+         const Username    &username, const Password    &password   ,
          const Address     &address , const VAT         &vat        );
 
     /** @brief Get username */
@@ -136,7 +156,7 @@ public:
      * @param   vat         VAT number of the client for billing purposes
      */
     Client(const std::string &name   , const PhoneNumber &phonenumber,
-           const Username    &user   , const std::string &pswd       ,
+           const Username    &user   , const Password    &password   ,
            const Address     &address, const VAT         &vat        );
 
     /**
@@ -173,7 +193,7 @@ public:
      * @param   base_salary Base salary of the employee
      */
     Employee(const std::string &name       , const PhoneNumber &phonenumber,
-             const Username    &user       , const std::string &pswd       ,
+             const Username    &user       , const Password    &password   ,
              const Address     &address    , const VAT      &vat           ,
              const Currency    &base_salary);
 
@@ -209,7 +229,7 @@ public:
      * @param   base_salary Base salary of the manager
      */
     Manager(const std::string &name       , const PhoneNumber &phonenumber,
-            const Username    &user       , const std::string &pswd       ,
+            const Username    &user       , const Password    &password   ,
             const Address     &address    , const VAT      &vat           ,
             const Currency    &base_salary);
 
@@ -245,7 +265,7 @@ public:
      * @param   base_salary Base salary of the driver
      */
     Driver(const std::string &name       , const PhoneNumber &phonenumber,
-           const Username    &user       , const std::string &pswd       ,
+           const Username    &user       , const Password    &password   ,
            const Address     &address    , const VAT      &vat           ,
            const Currency    &base_salary);
 

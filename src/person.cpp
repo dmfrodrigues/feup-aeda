@@ -24,36 +24,55 @@ std::ostream& operator<<(std::ostream &os, const Person &p){
 }
 
 ///USER
+//Username
+const std::string User::Username::REGEX_STR = "^[0-9a-zA-Z_]*$";
+const std::regex  User::Username::REGEX(User::Username::REGEX_STR);
 User::Username::Username(const std::string &username){
-    if(false)
+    if(!std::regex_match(username, User::Username::REGEX))
         throw User::Username::InvalidUsername(username);
     username_ = username;
 }
-
 std::istream& operator>>(std::istream &is,       User::Username &u){
     std::string s;
-    try{
-        is >> s;
-        u = User::Username(utils::urldecode(s));
-    }catch(...){
-        is.setstate(std::ios::failbit);
-    }
+    try{ is >> s; u = User::Username(utils::urldecode(s));
+    }catch(...){ is.setstate(std::ios::failbit); }
     return is;
 }
 std::ostream& operator<<(std::ostream &os, const User::Username &u){
     return (os << utils::urlencode(u.username_));
 }
-
 User::Username::InvalidUsername::InvalidUsername(const std::string &username):
-    std::invalid_argument("Invalid username ("+username+")"),
+    std::invalid_argument("Invalid username ("+username+") does not match regex ("+User::Username::REGEX_STR+")"),
     username_(username){}
 const std::string& User::Username::InvalidUsername::get_username() const{ return username_; }
 
+//Password
+const std::string User::Password::REGEX_STR = "^[0-9a-zA-Z_]*$";
+const std::regex  User::Password::REGEX(User::Password::REGEX_STR);
+User::Password::Password(const std::string &password){
+    if(!std::regex_match(password, User::Password::REGEX))
+        throw User::Password::InvalidPassword(password);
+    password_ = password;
+}
+std::istream& operator>>(std::istream &is,       User::Password &u){
+    std::string s;
+    try{ is >> s; u = User::Password(utils::urldecode(s));
+    }catch(...){ is.setstate(std::ios::failbit); }
+    return is;
+}
+std::ostream& operator<<(std::ostream &os, const User::Password &u){
+    return (os << utils::urlencode(u.password_));
+}
+User::Password::InvalidPassword::InvalidPassword(const std::string &password):
+    std::invalid_argument("Invalid password ("+password+") does not match regex ("+User::Password::REGEX_STR+")"),
+    password_(password){}
+const std::string& User::Password::InvalidPassword::get_password() const{ return password_; }
+
 User::User(const std::string &name    , const PhoneNumber &phonenumber,
-           const Username    &username, const std::string &pswd       ,
+           const Username    &username, const Password    &password   ,
            const Address     &address , const VAT         &vat        ):
            Person(name, phonenumber),
-           username_(username), pswd_(pswd),
+           username_(username), password_(password),
            address_ (address ), vat_ (vat ){}
 
 std::istream& User::input(std::istream &is){
@@ -61,7 +80,7 @@ std::istream& User::input(std::istream &is){
     std::string s;
     try{
         is >> s; username_ = utils::urldecode(s);
-        is >> s; pswd_     = utils::urldecode(s);
+        is >> s; password_     = utils::urldecode(s);
         is >> address_;
         is >> vat_;
     }catch(...){
@@ -71,19 +90,19 @@ std::istream& User::input(std::istream &is){
 }
 std::istream& operator>>(std::istream &is,       User &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const User &p){
-    os << static_cast<const Person&>(p)              << "\n"
-       << utils::urlencode((std::string)p.username_) << "\n"
-       << utils::urlencode((std::string)p.pswd_    ) << "\n"
-       << p.address_                                 << "\n"
+    os << static_cast<const Person&>(p) << "\n"
+       << p.username_                   << "\n"
+       << p.password_                   << "\n"
+       << p.address_                    << "\n"
        << p.vat_;
     return os;
 }
 
 ///CLIENT
 Client::Client(const std::string &name   , const PhoneNumber &phonenumber,
-               const Username    &user   , const std::string &pswd       ,
+               const Username    &user   , const Password    &password   ,
                const Address     &address, const VAT         &vat        ):
-               User(name, phonenumber, user, pswd, address, vat){}
+               User(name, phonenumber, user, password, address, vat){}
 
 std::istream& Client::input(std::istream &is){
     User::input(is);
@@ -100,10 +119,10 @@ std::ostream& operator<<(std::ostream &os, const Client &p){
 
 ///EMPLOYEE
 Employee::Employee(const std::string &name       , const PhoneNumber &phonenumber,
-                   const Username    &user       , const std::string &pswd       ,
+                   const Username    &user       , const Password    &password   ,
                    const Address     &address    , const VAT      &vat           ,
                    const Currency    &base_salary):
-                   User(name, phonenumber, user, pswd, address, vat),
+                   User(name, phonenumber, user, password, address, vat),
                    base_salary_(base_salary){}
 
 std::istream& Employee::input(std::istream &is){
@@ -121,10 +140,10 @@ std::ostream& operator<<(std::ostream &os, const Employee &p){
 
 ///MANAGER
 Manager::Manager(const std::string &name       , const PhoneNumber &phonenumber,
-                 const Username    &user       , const std::string &pswd       ,
+                 const Username    &user       , const Password    &password   ,
                  const Address     &address    , const VAT         &vat        ,
                  const Currency    &base_salary):
-                 Employee(name, phonenumber, user, pswd, address, vat, base_salary){}
+                 Employee(name, phonenumber, user, password, address, vat, base_salary){}
 
 User::Type Manager::get_user_type() const { return User::Type::manager; }
 
@@ -140,10 +159,10 @@ std::ostream& operator<<(std::ostream &os, const Manager &p){
 
 ///DRIVER
 Driver::Driver(const std::string &name       , const PhoneNumber &phonenumber,
-               const Username    &user       , const std::string &pswd       ,
+               const Username    &user       , const Password    &password   ,
                const Address     &address    , const VAT         &vat        ,
                const Currency    &base_salary):
-               Employee(name, phonenumber, user, pswd, address, vat, base_salary){}
+               Employee(name, phonenumber, user, password, address, vat, base_salary){}
 
 std::istream& Driver ::input(std::istream &is){
    Employee::input(is);

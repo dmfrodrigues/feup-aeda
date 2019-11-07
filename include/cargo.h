@@ -7,7 +7,7 @@
 
 #include "currency.h"
 #include "temperature.h"
-#include "weight.h"
+#include "utils.h"
 
 #include <utility>
 #include <stdexcept>
@@ -15,6 +15,8 @@
 /**
  * @brief Cargo
  */
+
+typedef utils::ufloat<float> Weight;
 
 class Cargo {
     friend std::istream& input_Cargo (std::istream &is,       Cargo *c);
