@@ -52,7 +52,7 @@ void App::load_all(){
     }
 }
 
-bool App::save_all(){
+void App::save_all(){
     save(managers_path_, managers_);
     save(drivers_path_ , drivers_ );
     save(clients_path_ , clients_ );

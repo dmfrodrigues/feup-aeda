@@ -70,6 +70,7 @@ public:
      * @throws InvalidWeight If the weight value is invalid.
      */
     Cargo(Weight weight, const std::string &description);
+    virtual ~Cargo(){};
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Normal; }
 };

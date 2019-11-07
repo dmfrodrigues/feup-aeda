@@ -29,7 +29,7 @@ private:
     template<class ID, class T> static void load_ptr(std::ifstream &is, std::map<ID, T*> &ret);
     template<class T> static void save(const std::string &path, const std::map<std::string, T> &m);
     void load_all();
-    bool save_all();
+    void save_all();
     ///Operations
     void request_service();
 public:

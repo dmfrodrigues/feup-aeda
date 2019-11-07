@@ -6,7 +6,7 @@
 #define TRUCK_H_INCLUDED
 
 #include "currency.h"
-#include "Cargo.h"
+#include "cargo.h"
 #include "Time.h"
 
 #include <vector>
