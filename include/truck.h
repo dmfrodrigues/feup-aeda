@@ -55,8 +55,22 @@ public:
         friend std::istream& operator>>(std::istream &is,       NumberPlate &n);
         friend std::ostream& operator<<(std::ostream &os, const NumberPlate &n);
     };
-    typedef std::string Category;
-    typedef std::string Fuel;
+    class Category: public utils::string_regex{
+    public:
+        static const std::string REGEX_STR;
+        explicit Category();
+        explicit Category(const std::string &category);
+        Category& operator=(const std::string &category);
+    };
+    enum Fuel : int{
+        Gasoline = 0,
+        Diesel,
+        Biodiesel,
+        Gas,
+        Hydrogen,
+        Electric,
+        Hybrid
+    };
 private:
     //std::vector<Event> logs_;
     NumberPlate number_plate_;

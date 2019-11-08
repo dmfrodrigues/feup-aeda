@@ -2,6 +2,7 @@
 
 #include "utils.h"
 
+///NUMBERPLATE NUMBER
 const std::string Truck::NumberPlate::Number::REGEX_STR = "^[A-Z0-9 |.]{4,12}*$";
 Truck::NumberPlate::Number::Number():utils::string_regex(Truck::NumberPlate::Number::REGEX_STR){}
 Truck::NumberPlate::Number::Number(const std::string &plate):Number(){
@@ -11,7 +12,7 @@ Truck::NumberPlate::Number& Truck::NumberPlate::Number::operator=(const std::str
     string_regex::operator=(s);
     return *this;
 }
-
+///NUMBERPLATE
 Truck::NumberPlate::NumberPlate(){}
 Truck::NumberPlate::NumberPlate(const Number &number):number_(number){}
 Truck::NumberPlate::operator std::string() const{ return (std::string)number_; }
@@ -24,7 +25,17 @@ std::ostream& operator<<(std::ostream &os, const Truck::NumberPlate &n){
     os << n.number_;
     return os;
 }
-
+///CATEGORY
+const std::string Truck::Category::REGEX_STR = "^[+-A-Z]{1,4}$";
+Truck::Category::Category():utils::string_regex(Truck::Category::REGEX_STR){}
+Truck::Category::Category(const std::string &category):Category(){
+    *this = category;
+}
+Truck::Category& Truck::Category::operator=(const std::string &category){
+    string_regex::operator=(category);
+    return *this;
+}
+///TRUCK
 Truck::Truck(const Truck &truck):
     number_plate_(truck.number_plate_), plate_register_date_(truck.plate_register_date_),
     fuel_        (truck.fuel_        ), max_reach_          (truck.max_reach_          ),
@@ -42,9 +53,9 @@ std::istream& operator>>(std::istream &is,       Truck &t){
     std::string s;
     is >> t.number_plate_;
     is >> t.plate_register_date_;
-    is >> s; t.fuel_ = utils::urldecode(s);
+    int i; is >> i; t.fuel_ = static_cast<Truck::Fuel>(i);
     is >> t.max_reach_;
-    is >> s; t.category_ = utils::urldecode(s);
+    is >> t.category_;
     size_t N; is >> N;
     t.cargo_ = std::vector<CargoTrans*>(N, NULL);
     for(CargoTrans* &p:t.cargo_){
@@ -56,10 +67,10 @@ std::istream& operator>>(std::istream &is,       Truck &t){
 std::ostream& operator<<(std::ostream &os, const Truck &t){
     os << t.number_plate_         << "\n"
        << t.plate_register_date_  << "\n"
-       << utils::urlencode(t.fuel_               ) << "\n"
-       <<                  t.max_reach_            << "\n"
-       << utils::urlencode(t.category_           ) << "\n"
-       <<                  t.cargo_.size()         << "\n";
+       << (int)t.fuel_            << "\n"
+       << t.max_reach_            << "\n"
+       << t.category_             << "\n"
+       << t.cargo_.size()         << "\n";
     for(size_t i = 0; i < t.cargo_.size(); ++i){
         output_CargoTrans(os, t.cargo_[i]); if(i+1 != t.cargo_.size()) os << "\n";
     }
