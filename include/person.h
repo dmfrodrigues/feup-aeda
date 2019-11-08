@@ -29,6 +29,8 @@ public:
      */
     Person(const std::string &name, const PhoneNumber &phonenumber);
 
+    virtual ~Person(){}
+
     virtual const std::string& get_name() const final{ return name_; }
     virtual const PhoneNumber& get_phonenumber() const final{ return phonenumber_; }
 
@@ -101,7 +103,7 @@ public:
      * @brief Gets the type of user.
      * @return User type
      */
-    virtual Type get_user_type(void) const = 0;
+    virtual Type get_type(void) const = 0;
 
     /**
      * @brief Tests if credentials given match with user.
@@ -150,7 +152,7 @@ public:
      * @brief Gets the type of user.
      * @return UserType::client type
      */
-    virtual Type get_user_type(void) const;
+    virtual Type get_type(void) const;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Client &p);
@@ -190,7 +192,7 @@ public:
      * @brief Gets the type of user.
      * @return User type
      */
-    virtual Type get_user_type(void) const = 0;
+    virtual Type get_type(void) const = 0;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Employee &p);
@@ -226,7 +228,7 @@ public:
      * @brief Gets the type of user.
      * @return UserType::manager type
      */
-    virtual Type get_user_type(void) const;
+    virtual Type get_type(void) const;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Manager &p);
@@ -262,7 +264,7 @@ public:
      * @brief Gets the type of user.
      * @return UserType::driver type
      */
-    virtual Type get_user_type(void) const;
+    virtual Type get_type(void) const;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Driver &p);

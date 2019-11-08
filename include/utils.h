@@ -155,10 +155,10 @@ template<class T, class Compare> void utils::mergesort(std::vector<T> &v, const 
     std::copy(w.begin(), w.end(), v.begin()+l);
 }
 
-template<class Iterator, class T, class Compare> Iterator linearfind(Iterator l, Iterator r, T obj, Compare comp){
+template<class Iterator, class T, class Compare> Iterator utils::linearfind(Iterator l, Iterator r, T obj, Compare comp){
     Iterator i = l;
     while(i != r){
-        if(*i == obj) break;
+        if(comp(*i,obj)) break;
         ++i;
     }
     return i;

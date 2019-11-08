@@ -16,7 +16,8 @@ Truck::NumberPlate::Number& Truck::NumberPlate::Number::operator=(const std::str
 Truck::NumberPlate::NumberPlate(){}
 Truck::NumberPlate::NumberPlate(const Number &number):number_(number){}
 Truck::NumberPlate::operator std::string() const{ return (std::string)number_; }
-bool Truck::NumberPlate::operator<(const NumberPlate &n) const{ return ((std::string)*this < (std::string)n); }
+bool Truck::NumberPlate::operator< (const NumberPlate &n) const{ return ((std::string)*this <  (std::string)n); }
+bool Truck::NumberPlate::operator==(const NumberPlate &n) const{ return ((std::string)*this == (std::string)n); }
 std::istream& operator>>(std::istream &is,       Truck::NumberPlate &n){
     is >> n.number_;
     return is;

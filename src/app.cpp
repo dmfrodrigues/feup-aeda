@@ -8,78 +8,102 @@ void CLEAR(){
         throw std::system_error(ev, std::system_category());
 }
 
-template<class ID, class T>
-void App::load(std::ifstream &is, std::map<ID, T> &m_in){
+
+template<class Base, class Deriv, class ID>
+size_t App::load_ptr(std::ifstream &is, std::vector<Base*> &m_in){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     size_t N; is >> N;
-    m_in = std::map<ID, T>();
-    while(N--){
-        T m; is >> m;
-        if(m_in.find(m.get_id()) != m_in.end())
-            throw App::RepeatedId((std::string)m.get_id());
-        m_in[m.get_id()] = m;
-    }
-}
-template<class ID, class T>
-void App::load_ptr(std::ifstream &is, std::map<ID, T*> &m_in){
-    is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
-    size_t N; is >> N;
-    m_in = std::map<ID, T*>();
-    while(N--){
-        T *m = new T(); is >> *m;
-        if(m_in.find(m->get_id()) != m_in.end()){
+    for(size_t i = 0; i < N; ++i){
+        Base *m = new Deriv(); is >> *dynamic_cast<Deriv*>(m);
+        if(utils::linearfind(m_in.begin(), m_in.end(), m->get_id(),
+          [](const Base* p, const ID &s){ return (p->get_id() == s); }) != m_in.end()){
             auto id = m->get_id();
             delete m;
             throw App::RepeatedId((std::string)id);
         }
-        m_in[m->get_id()] = m;
+        m_in.push_back(m);
     }
+    return N;
 }
 
-template<class ID, class T>
-void App::save(std::ofstream &os, const std::map<ID, T> &m_out){
+template<class Base, class Deriv>
+size_t App::save_ptr(std::ofstream &os, const std::vector<Base*> &m_out){
     os.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     os << m_out.size() << "\n";
-    for(const std::pair<ID, T> &p:m_out){
-        os << p.second << "\n";
+    for(const Base* p:m_out){
+        os << *dynamic_cast<const Deriv*>(p) << "\n";
     }
     os << std::flush;
-}
-template<class ID, class T>
-void App::save_ptr(std::ofstream &os, const std::map<ID, T*> &m_out){
-    os.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
-    os << m_out.size() << "\n";
-    for(const std::pair<ID, T*> &p:m_out){
-        os << *p.second << "\n";
-    }
-    os << std::flush;
+    return m_out.size();
 }
 
 void App::load_all(){
-    { std::cout << "Loading managers..." << std::flush; std::ifstream is(managers_path_); load    (is, managers_); std::cout << " loaded " << managers_.size() << std::endl; }
-    { std::cout << "Loading drivers ..." << std::flush; std::ifstream is(drivers_path_ ); load    (is, drivers_ ); std::cout << " loaded " << drivers_ .size() << std::endl; }
-    { std::cout << "Loading clients ..." << std::flush; std::ifstream is(clients_path_ ); load    (is, clients_ ); std::cout << " loaded " << clients_ .size() << std::endl; }
-    { std::cout << "Loading trucks  ..." << std::flush; std::ifstream is(trucks_path_  ); load_ptr(is, trucks_  ); std::cout << " loaded " << trucks_  .size() << std::endl; }
+    for(const User *p:users_) delete p;
+    users_ = std::vector<User*>();
+    {
+        std::cout << "Loading managers..." << std::flush;
+        std::ifstream is(managers_path_);
+        size_t sz = load_ptr<User,Manager,User::Username>(is, users_ );
+        std::cout << " loaded " << sz << std::endl;
+    }
+    {
+        std::cout << "Loading drivers ..." << std::flush;
+        std::ifstream is(drivers_path_ );
+        size_t sz = load_ptr<User,Driver ,User::Username>(is, users_ );
+        std::cout << " loaded " << sz << std::endl;
+    }
+    {
+        std::cout << "Loading clients ..." << std::flush;
+        std::ifstream is(clients_path_ );
+        size_t sz = load_ptr<User,Client ,User::Username>(is, users_ );
+        std::cout << " loaded " << sz << std::endl;
+    }
+    {
+        std::cout << "Loading trucks  ..." << std::flush;
+        std::ifstream is(trucks_path_  );
+        size_t sz = load_ptr<Truck,Truck ,Truck::NumberPlate>(is, trucks_);
+        std::cout << " loaded " << sz << std::endl;
+    }
     {
         std::cout << "Loading services..." << std::flush;
         std::ifstream is(services_path_);
         is >> Service::next_id_;
-        load(is, services_);
-        std::cout << " loaded " << services_.size() << std::endl;
+        size_t sz = load_ptr<Service,Service,std::string>(is, services_);
+        std::cout << " loaded " << sz << std::endl;
     }
 }
 
 void App::save_all(){
-    { std::cout << "Saving managers..."; std::ofstream os(managers_path_); save    (os, managers_); std::cout << " saved " << managers_.size() << std::endl; }
-    { std::cout << "Saving drivers ..."; std::ofstream os(drivers_path_ ); save    (os, drivers_ ); std::cout << " saved " << drivers_ .size() << std::endl; }
-    { std::cout << "Saving clients ..."; std::ofstream os(clients_path_ ); save    (os, clients_ ); std::cout << " saved " << clients_ .size() << std::endl; }
-    { std::cout << "Saving trucks  ..."; std::ofstream os(trucks_path_  ); save_ptr(os, trucks_  ); std::cout << " saved " << trucks_  .size() << std::endl; }
+    {
+        std::cout << "Saving managers...";
+        std::ofstream os(managers_path_);
+        size_t sz = save_ptr<User,Manager>(os, filter_user_by_type(users_, User::Type::manager));
+        std::cout << " saved " << sz << std::endl;
+    }
+    {
+        std::cout << "Saving drivers ...";
+        std::ofstream os(drivers_path_ );
+        size_t sz = save_ptr<User,Driver >(os, filter_user_by_type(users_, User::Type::driver ));
+        std::cout << " saved " << sz << std::endl;
+    }
+    {
+        std::cout << "Saving clients ...";
+        std::ofstream os(clients_path_ );
+        size_t sz = save_ptr<User,Client >(os, filter_user_by_type(users_, User::Type::client ));
+        std::cout << " saved " << sz << std::endl;
+    }
+    {
+        std::cout << "Saving trucks  ...";
+        std::ofstream os(trucks_path_  );
+        size_t sz = save_ptr<Truck,Truck >(os, trucks_);
+        std::cout << " saved " << sz << std::endl;
+    }
     {
         std::cout << "Saving services...";
         std::ofstream os(services_path_);
         os << Service::next_id_ << "\n";
-        save(os, services_);
-        std::cout << " saved " << services_.size() << std::endl;
+        size_t sz = save_ptr<Service,Service>(os, services_);
+        std::cout << " saved " << sz << std::endl;
     }
 }
 
@@ -135,41 +159,54 @@ void App::print_list(const std::vector<const Manager*> &v) const{
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧═════════════════╛" << std::endl;
 }
 
+void App::display(const Client *c) const{
+
+}
+
+std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t){
+    std::vector<User*> ret;
+    for(User *p:v){
+        if(p->get_type() == t){
+            ret.push_back(p);
+        }
+    }
+    return ret;
+}
+
 void App::list_clients(){
     //CLEAR();
-    std::vector<const Client*> v(clients_.size());
-    auto it = clients_.begin();
-    for(const Client* &p:v) p = &((it++)->second);
+    std::vector<const Client*> v;
+    auto it = users_.begin();
+    for(const User* p:users_){
+        if(p->get_type() == User::Type::client){
+            v.push_back(dynamic_cast<const Client*>(p));
+        }
+    }
     print_list(v);
 }
 
 void App::list_managers(){
     //CLEAR();
-    std::vector<const Manager*> v(managers_.size());
-    auto it = managers_.begin();
-    for(const Manager* &p:v) p = &((it++)->second);
+    std::vector<const Manager*> v;
+    auto it = users_.begin();
+    for(const User* p:users_){
+        if(p->get_type() == User::Type::manager){
+            v.push_back(dynamic_cast<const Manager*>(p));
+        }
+    }
     print_list(v);
 }
 
+User* App::find_user(const User::Username &u){
+    auto it1 = utils::linearfind(users_.begin(), users_.end(), u, [](const User *m, const User::Username &s){ return (m->get_username() == s); });
+    if(it1 != users_.end()) return *it1;
+    return NULL; //#CHANGE
+}
+
 User* App::verifyUser(const std::string &username, const std::string &password) {
-    try {
-        User *user = &clients_.at(Client::Username(username));
-        if (user->verifyCredentials(password)) return user;
-        throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
-    } catch (std::out_of_range &oor) { }
-    try {
-        User *user = &drivers_.at(Driver::Username(username));
-        if (user->verifyCredentials(password)) return user;
-        throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
-    } catch (std::out_of_range &oor) { }
-    try {
-        User *user = &managers_.at(Manager::Username(username));
-        if (user->verifyCredentials(password)) return user;
-        throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
-    } catch (std::out_of_range &oor) {
-        throw App::InvalidCredentials("Username not found (no matches for username " + username + " ).");
-    }
-    throw App::InvalidCredentials("Invalid credentials.");
+    User *user = find_user(Client::Username(username));
+    if (user->verifyCredentials(password)) return user;
+    throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
 }
 
 bool App::guestMenu(User *user) {
@@ -189,7 +226,7 @@ bool App::guestMenu(User *user) {
 
 bool App::userMenu(User *user) {
     try {
-        User::Type user_type = user->get_user_type();
+        User::Type user_type = user->get_type();
         if (user_type == User::Type::client) {
             std::cout << "Service Management                Account Management           \n"
                          "==============================    =============================\n"

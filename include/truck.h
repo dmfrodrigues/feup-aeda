@@ -50,7 +50,8 @@ public:
         explicit NumberPlate();
         explicit NumberPlate(const Number &number);
         explicit operator std::string() const;
-        bool operator<(const NumberPlate &n) const;
+        bool operator< (const NumberPlate &n) const;
+        bool operator==(const NumberPlate &n) const;
 
         friend std::istream& operator>>(std::istream &is,       NumberPlate &n);
         friend std::ostream& operator<<(std::ostream &os, const NumberPlate &n);
@@ -90,7 +91,7 @@ public:
      */
     Truck(const Truck& truck);
 
-    const NumberPlate& get_id(){ return number_plate_; }
+    const NumberPlate& get_id() const{ return number_plate_; }
 
     /**
      * @brief Constructor of all information of a general truck.
