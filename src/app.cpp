@@ -2,6 +2,12 @@
 
 #include <stdexcept>
 
+void CLEAR(){
+    int ev;
+    if((ev = CLEAR_MACRO()))
+        throw std::system_error(ev, std::system_category());
+}
+
 template<class ID, class T>
 void App::load(std::ifstream &is, std::map<ID, T> &m_in){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
@@ -87,12 +93,12 @@ App::App(const std::string &base      ,
     std::cout << "Starting app..." << std::endl;
     load_all();
     save_all();
+    list_clients(); std::cout << std::endl; list_managers();
 }
 
 void App::request_service(){
 
 }
-
 
 void App::list_clients(){
     CLEAR();
@@ -102,6 +108,22 @@ void App::list_clients(){
     std::cout << "Username [0]     │ Name [1]                              │ Address [2]                   | Phone number [3]      │" << std::endl;
     std::cout << "═════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪" << std::endl;
     for(const Client* p:v){
+        std::cout << utils::ljust((std::string)p->get_username()                 ,15) << "\t │ "
+                  << utils::ljust((std::string)p->get_name()                     ,36) << "\t │ "
+                  << utils::ljust((std::string)p->get_address().format("%street"),28) << "\t │ "
+                  << utils::ljust((std::string)p->get_phonenumber()              ,20) << "\t │ "
+                  << std::endl;
+    }
+}
+
+void App::list_managers(){
+    CLEAR();
+    std::vector<Manager*> v(managers_.size());
+    auto it = managers_.begin();
+    for(Manager* &p:v) p = &((it++)->second);
+    std::cout << "Username [0]     │ Name [1]                              │ Address [2]                   | Phone number [3]      │" << std::endl;
+    std::cout << "═════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪" << std::endl;
+    for(const Manager* p:v){
         std::cout << utils::ljust((std::string)p->get_username()                 ,15) << "\t │ "
                   << utils::ljust((std::string)p->get_name()                     ,36) << "\t │ "
                   << utils::ljust((std::string)p->get_address().format("%street"),28) << "\t │ "

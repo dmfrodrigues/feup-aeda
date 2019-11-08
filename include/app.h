@@ -8,10 +8,12 @@
 #include <fstream>
 
 #if defined(_WIN32)
-    #define CLEAR() system("cls")
+    #define CLEAR_MACRO() system("cls"  )
 #elif defined(unix) || defined(__unix__) || defined(__unix)
-    #define CLEAR() system("clear")
+    #define CLEAR_MACRO() system("clear")
 #endif
+
+void CLEAR();
 
 class App{
 private:
@@ -39,7 +41,8 @@ private:
     void save_all();
     ///Operations
     void request_service();
-    void list_clients();
+    void list_clients ();
+    void list_managers();
 
     User* verifyUser(const std::string &username, const std::string &password);
 public:
