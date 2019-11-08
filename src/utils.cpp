@@ -55,6 +55,7 @@ std::string utils::urldecode(const std::string &s){
 }
 
 ///STRING_REGEX
+#include <iostream>
 utils::string_regex& utils::string_regex::operator=(const std::string &s){
     if(!std::regex_match(s, std::regex(REGEX_STR_)))
         throw FailedRegex(s, REGEX_STR_);

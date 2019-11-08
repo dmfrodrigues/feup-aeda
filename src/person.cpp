@@ -26,48 +26,25 @@ std::ostream& operator<<(std::ostream &os, const Person &p){
 ///USER
 //Username
 const std::string User::Username::REGEX_STR = "^[0-9a-zA-Z_]*$";
-const std::regex  User::Username::REGEX(User::Username::REGEX_STR);
-User::Username::Username(const std::string &username){
-    if(!std::regex_match(username, User::Username::REGEX))
-        throw User::Username::InvalidUsername(username);
-    username_ = username;
+User::Username::Username():string_regex(User::Username::REGEX_STR){}
+User::Username::Username(const std::string &username):Username(){
+    *this = username;
 }
-std::istream& operator>>(std::istream &is,       User::Username &u){
-    std::string s;
-    try{ is >> s; u = User::Username(utils::urldecode(s));
-    }catch(...){ is.setstate(std::ios::failbit); }
-    return is;
+User::Username& User::Username::operator=(const std::string &s){
+    string_regex::operator=(s);
+    return *this;
 }
-std::ostream& operator<<(std::ostream &os, const User::Username &u){
-    return (os << utils::urlencode(u.username_));
-}
-User::Username::InvalidUsername::InvalidUsername(const std::string &username):
-    std::invalid_argument("Invalid username ("+username+") does not match regex ("+User::Username::REGEX_STR+")"),
-    username_(username){}
-const std::string& User::Username::InvalidUsername::get_username() const{ return username_; }
-
 //Password
 const std::string User::Password::REGEX_STR = "^[0-9a-zA-Z_]*$";
-const std::regex  User::Password::REGEX(User::Password::REGEX_STR);
-User::Password::Password(const std::string &password){
-    if(!std::regex_match(password, User::Password::REGEX))
-        throw User::Password::InvalidPassword(password);
-    password_ = password;
+User::Password::Password():string_regex(User::Password::REGEX_STR){}
+User::Password::Password(const std::string &password):Password(){
+    *this = password;
 }
-std::istream& operator>>(std::istream &is,       User::Password &u){
-    std::string s;
-    try{ is >> s; u = User::Password(utils::urldecode(s));
-    }catch(...){ is.setstate(std::ios::failbit); }
-    return is;
+User::Password& User::Password::operator=(const std::string &s){
+    string_regex::operator=(s);
+    return *this;
 }
-std::ostream& operator<<(std::ostream &os, const User::Password &u){
-    return (os << utils::urlencode(u.password_));
-}
-User::Password::InvalidPassword::InvalidPassword(const std::string &password):
-    std::invalid_argument("Invalid password ("+password+") does not match regex ("+User::Password::REGEX_STR+")"),
-    password_(password){}
-const std::string& User::Password::InvalidPassword::get_password() const{ return password_; }
-
+//User
 User::User(const std::string &name    , const PhoneNumber &phonenumber,
            const Username    &username, const Password    &password   ,
            const Address     &address , const VAT         &vat        ):
@@ -79,8 +56,8 @@ std::istream& User::input(std::istream &is){
     Person::input(is);
     std::string s;
     try{
-        is >> s; username_ = utils::urldecode(s);
-        is >> s; password_     = utils::urldecode(s);
+        is >> username_;
+        is >> password_;
         is >> address_;
         is >> vat_;
     }catch(...){

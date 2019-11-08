@@ -15,13 +15,15 @@ public:
     /**
      * @brief   Empty constructor
      */
-    VAT();
+    explicit VAT();
     /**
      * @brief   Constructor accepting %VAT as string
      * @param   vat String containing %VAT
      * @exception   VAT::VATTooLong When VAT is longer than the maximum size
      */
-    VAT(const std::string &vat);
+    explicit VAT(const std::string &vat);
+
+    VAT& operator=(const std::string &s);
 };
 
 #endif //ADDRESS_H_INCLUDED

@@ -3,11 +3,13 @@
 #include "utils.h"
 
 const std::string Truck::NumberPlate::REGEX_STR = "^[A-Z0-9 |.]{4,12}*$";
-
 Truck::NumberPlate::NumberPlate():utils::string_regex(Truck::NumberPlate::REGEX_STR){}
-
 Truck::NumberPlate::NumberPlate(const std::string &plate):NumberPlate(){
     *this = plate;
+}
+Truck::NumberPlate& Truck::NumberPlate::operator=(const std::string &s){
+    string_regex::operator=(s);
+    return *this;
 }
 
 Truck::Truck(const Truck &truck):
@@ -39,8 +41,8 @@ std::istream& operator>>(std::istream &is,       Truck &t){
 }
 
 std::ostream& operator<<(std::ostream &os, const Truck &t){
-    os << utils::urlencode(t.number_plate_       ) << "\n"
-       <<                  t.plate_register_date_  << "\n"
+    os << t.number_plate_         << "\n"
+       << t.plate_register_date_  << "\n"
        << utils::urlencode(t.fuel_               ) << "\n"
        <<                  t.max_reach_            << "\n"
        << utils::urlencode(t.category_           ) << "\n"

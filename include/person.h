@@ -44,44 +44,20 @@ public:
  */
 class User : public Person{
 public:
-    /** @brief UserName type. Usually a string. */
-    class Username{
-    private:
-        std::string username_;
-        static const std::regex REGEX;
+    /** @brief %Username class. */
+    class Username: public utils::string_regex{
     public:
         static const std::string REGEX_STR;
-        Username(){}
-        Username(const std::string &username);
-        friend std::istream& operator>>(std::istream &is,       Username &u);
-        friend std::ostream& operator<<(std::ostream &os, const Username &u);
-        explicit operator std::string() const{ return username_; }
-        bool operator<(const Username &u)const{ return (username_ < u.username_); }
-        class InvalidUsername: public std::invalid_argument{
-        private:
-            std::string username_;
-        public:
-            InvalidUsername(const std::string &username);
-            const std::string& get_username()const;
-        };
+        explicit Username();
+        explicit Username(const std::string &username);
+        Username& operator=(const std::string &s);
     };
-    class Password{
-    private:
-        std::string password_;
-        static const std::regex REGEX;
+    class Password: public utils::string_regex{
     public:
         static const std::string REGEX_STR;
-        Password(){}
-        Password(const std::string &password);
-        friend std::istream& operator>>(std::istream &is,       Password &u);
-        friend std::ostream& operator<<(std::ostream &os, const Password &u);
-        class InvalidPassword: public std::invalid_argument{
-        private:
-            std::string password_;
-        public:
-            InvalidPassword(const std::string &password);
-            const std::string& get_password()const;
-        };
+        explicit Password();
+        explicit Password(const std::string &password);
+        Password& operator=(const std::string &s);
     };
 
     /** @brief Type of users there are. */

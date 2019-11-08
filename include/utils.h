@@ -52,8 +52,8 @@ namespace utils {
     private:
         T u_;
     public:
-        ufloat():u_(0){}
-        ufloat(const T &u);
+        explicit ufloat():u_(0){}
+        explicit ufloat(const T &u);
 
         friend std::istream& operator>> <>(std::istream &is,       utils::ufloat<T> &u);
         friend std::ostream& operator<< <>(std::ostream &os, const utils::ufloat<T> &u);
@@ -62,7 +62,7 @@ namespace utils {
         private:
             T u_;
         public:
-            InvalidUFloat(const T &u);
+            explicit InvalidUFloat(const T &u);
             const T& get_ufloat() const;
         };
     };
@@ -72,10 +72,10 @@ namespace utils {
         std::string s_;
         std::string REGEX_STR_;
     public:
-        string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
+        explicit string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
         string_regex& operator=(const std::string &s);
 
-        operator std::string() const;
+        explicit operator std::string() const;
         bool operator<(const utils::string_regex &s) const;
 
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);

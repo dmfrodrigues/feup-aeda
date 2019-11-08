@@ -48,12 +48,12 @@ void App::save_ptr(std::ofstream &os, const std::map<ID, T*> &m_out){
 }
 
 void App::load_all(){
-    { std::cout << "Loading managers..."; std::ifstream is(managers_path_); load    (is, managers_); std::cout << " loaded " << managers_.size() << std::endl; }
-    { std::cout << "Loading drivers ..."; std::ifstream is(drivers_path_ ); load    (is, drivers_ ); std::cout << " loaded " << drivers_ .size() << std::endl; }
-    { std::cout << "Loading clients ..."; std::ifstream is(clients_path_ ); load    (is, clients_ ); std::cout << " loaded " << clients_ .size() << std::endl; }
-    { std::cout << "Loading trucks  ..."; std::ifstream is(trucks_path_  ); load_ptr(is, trucks_  ); std::cout << " loaded " << trucks_  .size() << std::endl; }
+    { std::cout << "Loading managers..." << std::flush; std::ifstream is(managers_path_); load    (is, managers_); std::cout << " loaded " << managers_.size() << std::endl; }
+    { std::cout << "Loading drivers ..." << std::flush; std::ifstream is(drivers_path_ ); load    (is, drivers_ ); std::cout << " loaded " << drivers_ .size() << std::endl; }
+    { std::cout << "Loading clients ..." << std::flush; std::ifstream is(clients_path_ ); load    (is, clients_ ); std::cout << " loaded " << clients_ .size() << std::endl; }
+    { std::cout << "Loading trucks  ..." << std::flush; std::ifstream is(trucks_path_  ); load_ptr(is, trucks_  ); std::cout << " loaded " << trucks_  .size() << std::endl; }
     {
-        std::cout << "Loading services...";
+        std::cout << "Loading services..." << std::flush;
         std::ifstream is(services_path_);
         is >> Service::next_id_;
         load(is, services_);
@@ -82,6 +82,7 @@ App::App(const std::string &base      ,
          managers_path_(base+managers), drivers_path_ (base+drivers ),
          clients_path_ (base+clients ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
+    std::cout << "Starting app..." << std::endl;
     load_all();
     save_all();
 }

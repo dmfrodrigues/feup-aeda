@@ -28,12 +28,13 @@ public:
         /** @brief   Regular expression string that describes a valid number plate. */
         static const std::string REGEX_STR;
         /** @brief   Empty constructor. */
-        NumberPlate();
+        explicit NumberPlate();
         /**
          * @brief   Constructs from string containing number plate.
          * @param   number  String with numberplate
          */
-        NumberPlate(const std::string &plate);
+        explicit NumberPlate(const std::string &plate);
+        NumberPlate& operator=(const std::string &s);
     };
     typedef std::string Category;
     typedef std::string Fuel;
