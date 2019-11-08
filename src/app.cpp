@@ -1,5 +1,7 @@
 #include "app.h"
 
+#include <stdexcept>
+
 template<class ID, class T>
 void App::load(std::ifstream &is, std::map<ID, T> &m_in){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
@@ -91,6 +93,27 @@ void App::request_service(){
 
 }
 
+User* App::verifyUser(const std::string &username, const std::string &password) {
+    try {
+        User *user = &clients_.at(Client::Username(username));
+        if (user->verifyCredentials(password)) return user;
+        throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
+    } catch (std::out_of_range &oor) { }
+    try {
+        User *user = &drivers_.at(Driver::Username(username));
+        if (user->verifyCredentials(password)) return user;
+        throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
+    } catch (std::out_of_range &oor) { }
+    try {
+        User *user = &managers_.at(Manager::Username(username));
+        if (user->verifyCredentials(password)) return user;
+        throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
+    } catch (std::out_of_range &oor) {
+        throw App::InvalidCredentials("Username not found (no matches for username " + username + " ).");
+    }
+    throw App::InvalidCredentials("Invalid credentials.");
+}
+
 bool App::guestMenu(User *user) {
     try {
         std::cout << "Agency SML                    \n"
@@ -103,6 +126,7 @@ bool App::guestMenu(User *user) {
     } catch (...) {
         return false;
     }
+    return true;
 }
 
 bool App::userMenu(User *user) {
@@ -158,11 +182,17 @@ bool App::userMenu(User *user) {
     } catch(...) {
         return false;
     }
+    return true;
 }
 
 void App::start(){
 
 }
+
+App::InvalidCredentials::InvalidCredentials(const string &msg):
+    std::runtime_error(msg){}
+
+const std::string& App::InvalidCredentials::getMsg() const { return msg_; }
 
 App::RepeatedId::RepeatedId(const std::string &id):
     runtime_error("Repeated id "+std::string(id)), id_(id){}

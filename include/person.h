@@ -51,6 +51,7 @@ public:
         explicit Username();
         explicit Username(const std::string &username);
         Username& operator=(const std::string &s);
+        bool operator==(const std::string &username);
     };
     class Password: public utils::string_regex{
     public:
@@ -58,6 +59,7 @@ public:
         explicit Password();
         explicit Password(const std::string &password);
         Password& operator=(const std::string &s);
+        bool operator==(const std::string &password);
     };
 
     /** @brief Type of users there are. */
@@ -99,6 +101,14 @@ public:
      * @return User type
      */
     virtual Type get_user_type(void) const = 0;
+
+    /**
+     * @brief Tests if credentials given match with user.
+     * @param username Username to verify
+     * @param password Password to verify
+     * @return If the credentials are valid
+     */
+    bool verifyCredentials(const std::string &password);
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       User &p);

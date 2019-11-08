@@ -33,6 +33,8 @@ private:
     void save_all();
     ///Operations
     void request_service();
+
+    User* verifyUser(const std::string &username, const std::string &password);
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
@@ -44,6 +46,14 @@ public:
     bool userMenu(User *user);
 
     void start();
+
+    class InvalidCredentials: public std::runtime_error {
+    private:
+        std::string msg_;
+    public:
+        InvalidCredentials(const string &msg);
+        const string& getMsg() const;
+    };
 
     class RepeatedId: public std::runtime_error {
     private:

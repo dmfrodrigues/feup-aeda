@@ -34,6 +34,9 @@ User::Username& User::Username::operator=(const std::string &s){
     string_regex::operator=(s);
     return *this;
 }
+bool User::Username::operator==(const std::string &username) {
+    return (string)(*this) == username;
+}
 //Password
 const std::string User::Password::REGEX_STR = "^[0-9a-zA-Z_]*$";
 User::Password::Password():string_regex(User::Password::REGEX_STR){}
@@ -43,6 +46,9 @@ User::Password::Password(const std::string &password):Password(){
 User::Password& User::Password::operator=(const std::string &s){
     string_regex::operator=(s);
     return *this;
+}
+bool User::Password::operator==(const std::string &password) {
+    return (string)(*this) == password;
 }
 //User
 User::User(const std::string &name    , const PhoneNumber &phonenumber,
@@ -65,6 +71,11 @@ std::istream& User::input(std::istream &is){
     }
     return is;
 }
+
+bool User::verifyCredentials(const std::string password) {
+    return this->password_ == password;
+}
+
 std::istream& operator>>(std::istream &is,       User &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const User &p){
     os << static_cast<const Person&>(p) << "\n"
