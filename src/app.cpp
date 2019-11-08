@@ -189,7 +189,7 @@ void App::start(){
 
 }
 
-App::InvalidCredentials::InvalidCredentials(const string &msg):
+App::InvalidCredentials::InvalidCredentials(const std::string &msg):
     std::runtime_error(msg){}
 
 const std::string& App::InvalidCredentials::getMsg() const { return msg_; }

@@ -54,6 +54,20 @@ std::string utils::urldecode(const std::string &s){
     return ret;
 }
 
+std::string utils::ljust(std::string s, size_t sz){
+    if(sz < 3) throw std::invalid_argument("size less than 3");
+    if(s.size() < sz) s = s + std::string(sz-s.size(), ' ');
+    if(s.size() > sz) s = s.substr(0,sz-3) + "...";
+    return s;
+}
+
+std::string utils::rjust(std::string s, size_t sz){
+    if(sz < 3) throw std::invalid_argument("size less than 3");
+    if(s.size() < sz) s = std::string(sz-s.size(), ' ') + s;
+    if(s.size() > sz)s = s.substr(0,sz-3) + "...";
+    return s;
+}
+
 ///STRING_REGEX
 #include <iostream>
 utils::string_regex& utils::string_regex::operator=(const std::string &s){
@@ -67,6 +81,9 @@ utils::string_regex::operator std::string() const{
 }
 bool utils::string_regex::operator<(const utils::string_regex &s) const{
     return ((std::string)*this < (std::string)s);
+}
+bool utils::string_regex::operator==(const utils::string_regex &s) const{
+    return ((std::string)*this == (std::string)s);
 }
 namespace utils{
     std::istream& operator>>(std::istream &is,       utils::string_regex &s){

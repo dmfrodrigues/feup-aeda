@@ -51,7 +51,6 @@ public:
         explicit Username();
         explicit Username(const std::string &username);
         Username& operator=(const std::string &s);
-        bool operator==(const std::string &username);
     };
     class Password: public utils::string_regex{
     public:
@@ -59,7 +58,6 @@ public:
         explicit Password();
         explicit Password(const std::string &password);
         Password& operator=(const std::string &s);
-        bool operator==(const std::string &password);
     };
 
     /** @brief Type of users there are. */

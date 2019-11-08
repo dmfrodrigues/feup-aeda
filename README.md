@@ -16,13 +16,10 @@
 - [ ] Show to a driver a list of his services
 
 #### Services
-- [ ] A service includes a list of predicted actions: load, unload and travel (and each of the actions has an expected time range, and real time range)
 - [ ] Allocate services to trucks and drivers in the most efficient way (less expenses):
-- To the driver with the least qualifications
 - To the driver with the least salary (if drivers have different salaries)
 - To the truck that has the lowest expenses
-- To the truck that has traveled the least
-- [ ] When a driver arrives to a place, he needs to have someone's contact for loading/unloading, which might or might not be the client for whom the service is being made
+- [x] When a driver arrives to a place, he needs to have someone's contact for loading/unloading, which might or might not be the client for whom the service is being made
 - [ ] Issue payment bills when a service is introduced
 - [ ] List of completed services and future services
 
@@ -34,6 +31,11 @@
 
 ### Mid priority
 
+- [ ] NumberPlate is identified by Number and Country
+- [ ] Allocate services to trucks and drivers in the most efficient way (less expenses):
+- To the driver with the least qualifications
+- To the truck that has traveled the least
+- [ ] A service includes a list of predicted actions: load, unload and travel (and each of the actions has an expected time range, and real time range)
 - [ ] Get notification when a truck needs periodic inspection
 - [ ] If a service is requested for the same day, the next day, the following week or the following month, different prices should be charged. The same way, drivers' salaries depend on the way services were allocated
 - [ ] Issue credit notes (when bill is incorrect)

@@ -47,6 +47,24 @@ namespace utils {
      */
     std::string urldecode(const std::string &s);
 
+    /**
+    @brief Left-justifies text by adding spaces to the end of the string
+    Truncates string if its size is greater than sz
+    @param  s   string to left-justify
+    @param  sz  size of the returned string
+    @return     string padded with spaces at the end
+    */
+    std::string ljust(std::string s, size_t sz);
+
+    /**
+    @brief Right-justifies text by adding spaces to the end of the string
+    Truncates string if its size is greater than sz
+    @param  s   string to right-justify
+    @param  sz  size of the returned string
+    @return     string padded with spaces at the beginning
+    */
+    std::string rjust(std::string s, size_t sz);
+
     template<class T>
     class ufloat{
     private:
@@ -76,7 +94,8 @@ namespace utils {
         string_regex& operator=(const std::string &s);
 
         explicit operator std::string() const;
-        bool operator<(const utils::string_regex &s) const;
+        bool operator< (const utils::string_regex &s) const;
+        bool operator==(const utils::string_regex &s) const;
 
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
         friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);

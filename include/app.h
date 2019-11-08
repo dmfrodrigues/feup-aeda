@@ -51,8 +51,8 @@ public:
     private:
         std::string msg_;
     public:
-        InvalidCredentials(const string &msg);
-        const string& getMsg() const;
+        InvalidCredentials(const std::string &msg);
+        const std::string& getMsg() const;
     };
 
     class RepeatedId: public std::runtime_error {
