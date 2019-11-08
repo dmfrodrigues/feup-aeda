@@ -2,14 +2,27 @@
 
 #include "utils.h"
 
-const std::string Truck::NumberPlate::REGEX_STR = "^[A-Z0-9 |.]{4,12}*$";
-Truck::NumberPlate::NumberPlate():utils::string_regex(Truck::NumberPlate::REGEX_STR){}
-Truck::NumberPlate::NumberPlate(const std::string &plate):NumberPlate(){
+const std::string Truck::NumberPlate::Number::REGEX_STR = "^[A-Z0-9 |.]{4,12}*$";
+Truck::NumberPlate::Number::Number():utils::string_regex(Truck::NumberPlate::Number::REGEX_STR){}
+Truck::NumberPlate::Number::Number(const std::string &plate):Number(){
     *this = plate;
 }
-Truck::NumberPlate& Truck::NumberPlate::operator=(const std::string &s){
+Truck::NumberPlate::Number& Truck::NumberPlate::Number::operator=(const std::string &s){
     string_regex::operator=(s);
     return *this;
+}
+
+Truck::NumberPlate::NumberPlate(){}
+Truck::NumberPlate::NumberPlate(const Number &number):number_(number){}
+Truck::NumberPlate::operator std::string() const{ return (std::string)number_; }
+bool Truck::NumberPlate::operator<(const NumberPlate &n) const{ return ((std::string)*this < (std::string)n); }
+std::istream& operator>>(std::istream &is,       Truck::NumberPlate &n){
+    is >> n.number_;
+    return is;
+}
+std::ostream& operator<<(std::ostream &os, const Truck::NumberPlate &n){
+    os << n.number_;
+    return os;
 }
 
 Truck::Truck(const Truck &truck):
@@ -27,7 +40,7 @@ Truck::Truck(const NumberPlate &number_plate, const Time     &plate_register_dat
 
 std::istream& operator>>(std::istream &is,       Truck &t){
     std::string s;
-    is >> s; t.number_plate_ = utils::urldecode(s);
+    is >> t.number_plate_;
     is >> t.plate_register_date_;
     is >> s; t.fuel_ = utils::urldecode(s);
     is >> t.max_reach_;

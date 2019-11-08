@@ -23,18 +23,37 @@ typedef utils::ufloat<float> Distance;
 class Truck {
 public:
     /** @brief Class to store number plates. */
-    class NumberPlate: public utils::string_regex{
+    class NumberPlate{
     public:
-        /** @brief   Regular expression string that describes a valid number plate. */
-        static const std::string REGEX_STR;
-        /** @brief   Empty constructor. */
+        class Number: public utils::string_regex{
+        public:
+            /** @brief   Regular expression string that describes a valid number plate. */
+            static const std::string REGEX_STR;
+            /** @brief   Empty constructor. */
+            explicit Number();
+            /**
+             * @brief   Constructs from string containing number plate.
+             * @param   number  String with numberplate
+             */
+            explicit Number(const std::string &plate);
+            Number& operator=(const std::string &s);
+        };
+        /*
+        enum Country : int{
+            Portugal = 0
+        };
+        */
+    private:
+        Number number_;
+        //Country country_;
+    public:
         explicit NumberPlate();
-        /**
-         * @brief   Constructs from string containing number plate.
-         * @param   number  String with numberplate
-         */
-        explicit NumberPlate(const std::string &plate);
-        NumberPlate& operator=(const std::string &s);
+        explicit NumberPlate(const Number &number);
+        explicit operator std::string() const;
+        bool operator<(const NumberPlate &n) const;
+
+        friend std::istream& operator>>(std::istream &is,       NumberPlate &n);
+        friend std::ostream& operator<<(std::ostream &os, const NumberPlate &n);
     };
     typedef std::string Category;
     typedef std::string Fuel;
