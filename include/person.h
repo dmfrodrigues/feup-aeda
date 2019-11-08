@@ -30,6 +30,7 @@ public:
     Person(const std::string &name, const PhoneNumber &phonenumber);
 
     virtual const std::string& get_name() const final{ return name_; }
+    virtual const PhoneNumber& get_phonenumber() const final{ return phonenumber_; }
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Person &p);
@@ -94,6 +95,7 @@ public:
     /** @brief Get username */
     const Username& get_username() const{ return username_; }
     const Username& get_id      () const{ return get_username(); }
+    const Address&  get_address () const{ return address_; }
     /**
      * @brief Gets the type of user.
      * @return User type

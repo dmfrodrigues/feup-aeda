@@ -93,6 +93,23 @@ void App::request_service(){
 
 }
 
+
+void App::list_clients(){
+    CLEAR();
+    std::vector<Client*> v(clients_.size());
+    auto it = clients_.begin();
+    for(Client* &p:v) p = &((it++)->second);
+    std::cout << "Username [0]     │ Name [1]                              │ Address [2]                   | Phone number [3]      │" << std::endl;
+    std::cout << "═════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪" << std::endl;
+    for(const Client* p:v){
+        std::cout << utils::ljust((std::string)p->get_username()                 ,15) << "\t │ "
+                  << utils::ljust((std::string)p->get_name()                     ,36) << "\t │ "
+                  << utils::ljust((std::string)p->get_address().format("%street"),28) << "\t │ "
+                  << utils::ljust((std::string)p->get_phonenumber()              ,20) << "\t │ "
+                  << std::endl;
+    }
+}
+
 User* App::verifyUser(const std::string &username, const std::string &password) {
     try {
         User *user = &clients_.at(Client::Username(username));

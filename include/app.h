@@ -7,6 +7,12 @@
 
 #include <fstream>
 
+#if defined(_WIN32)
+    #define CLEAR() system("cls")
+#elif defined(unix) || defined(__unix__) || defined(__unix)
+    #define CLEAR() system("clear")
+#endif
+
 class App{
 private:
     ///PRIVATE VARIABLES
@@ -33,6 +39,7 @@ private:
     void save_all();
     ///Operations
     void request_service();
+    void list_clients();
 
     User* verifyUser(const std::string &username, const std::string &password);
 public:
