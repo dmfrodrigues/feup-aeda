@@ -72,7 +72,7 @@ void App::load_all(){
 void App::save_all(){
     { std::cout << "Saving managers..."; std::ofstream os(managers_path_); save    (os, managers_); std::cout << " saved " << managers_.size() << std::endl; }
     { std::cout << "Saving drivers ..."; std::ofstream os(drivers_path_ ); save    (os, drivers_ ); std::cout << " saved " << drivers_ .size() << std::endl; }
-    { std::cout << "Saving clients ..."; std::ofstream os(clients_path_ ); save    (os, managers_); std::cout << " saved " << clients_ .size() << std::endl; }
+    { std::cout << "Saving clients ..."; std::ofstream os(clients_path_ ); save    (os, clients_ ); std::cout << " saved " << clients_ .size() << std::endl; }
     { std::cout << "Saving trucks  ..."; std::ofstream os(trucks_path_  ); save_ptr(os, trucks_  ); std::cout << " saved " << trucks_  .size() << std::endl; }
     {
         std::cout << "Saving services...";
@@ -93,7 +93,9 @@ App::App(const std::string &base      ,
     std::cout << "Starting app..." << std::endl;
     load_all();
     save_all();
-    list_clients(); std::cout << std::endl; list_managers();
+    list_clients();
+    std::cout << std::endl;
+    //list_managers();
 }
 
 void App::request_service(){
@@ -101,36 +103,46 @@ void App::request_service(){
 }
 
 void App::list_clients(){
-    CLEAR();
+    //CLEAR();
     std::vector<Client*> v(clients_.size());
     auto it = clients_.begin();
     for(Client* &p:v) p = &((it++)->second);
-    std::cout << "Username [0]     │ Name [1]                              │ Address [2]                   | Phone number [3]      │" << std::endl;
-    std::cout << "═════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪" << std::endl;
+    std::cout << "╒════════════════╤═══════════════════════════════════════╤═══════════════════════════════╤═══════════════════════╤══════════════════╕" << std::endl;
+    std::cout << "│ Username [0]   │ Name [1]                              │ Address [2]                   │ Phone number [3]      │ VAT [4]          │" << std::endl;
+    std::cout << "╞════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪══════════════════╡" << std::endl;
     for(const Client* p:v){
-        std::cout << utils::ljust((std::string)p->get_username()                 ,15) << "\t │ "
+        std::cout << "│ "
+                  << utils::ljust((std::string)p->get_username()                 ,13) << "\t │ "
                   << utils::ljust((std::string)p->get_name()                     ,36) << "\t │ "
                   << utils::ljust((std::string)p->get_address().format("%street"),28) << "\t │ "
                   << utils::ljust((std::string)p->get_phonenumber()              ,20) << "\t │ "
+                  << utils::rjust((std::string)p->get_vat()                      ,16) <<   " │"
                   << std::endl;
     }
+    std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╛" << std::endl;
 }
 
+/*
 void App::list_managers(){
-    CLEAR();
+    //CLEAR();
     std::vector<Manager*> v(managers_.size());
     auto it = managers_.begin();
     for(Manager* &p:v) p = &((it++)->second);
-    std::cout << "Username [0]     │ Name [1]                              │ Address [2]                   | Phone number [3]      │" << std::endl;
-    std::cout << "═════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪" << std::endl;
+    std::cout << "╒════════════════╤═══════════════════════════════════════╤═══════════════════════════════╤═══════════════════════╤═════════════════╕" << std::endl;
+    std::cout << "│ Username [0]   │ Name [1]                              │ Address [2]                   │ Phone number [3]      │ Base salary [4] │" << std::endl;
+    std::cout << "╞════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪═════════════════╡" << std::endl;
     for(const Manager* p:v){
-        std::cout << utils::ljust((std::string)p->get_username()                 ,15) << "\t │ "
+        std::cout << "│ "
+                  << utils::ljust((std::string)p->get_username()                 ,13) << "\t │ "
                   << utils::ljust((std::string)p->get_name()                     ,36) << "\t │ "
                   << utils::ljust((std::string)p->get_address().format("%street"),28) << "\t │ "
                   << utils::ljust((std::string)p->get_phonenumber()              ,20) << "\t │ "
+                  << utils::rjust(utils::ftos("%.2f", p->get_base_salary())      ,15) <<   " │ "
                   << std::endl;
     }
+    std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧═════════════════╛" << std::endl;
 }
+*/
 
 User* App::verifyUser(const std::string &username, const std::string &password) {
     try {

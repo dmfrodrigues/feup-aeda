@@ -24,6 +24,8 @@ namespace utils {
      */
     std::string itos(const long long int &i);
 
+    std::string ftos(const std::string &fmt, const double &n);
+
     /**
      * @brief       Replace all occurences of a string.
      * @param   s   Original string

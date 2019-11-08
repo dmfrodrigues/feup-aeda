@@ -9,6 +9,10 @@ bool Currency::operator==(const Currency &c) const {
     return (cents_ == c.cents_);
 }
 
+Currency::operator double() const{
+    return cents_/100;
+}
+
 std::ostream& operator<<(std::ostream &os, const Currency &c){
     std::stringstream ss;
     if(c.cents_ < 0) ss << "-";

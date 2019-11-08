@@ -9,6 +9,12 @@ std::string utils::itos(const long long int &i){
     return ss.str();
 }
 
+std::string utils::ftos(const std::string &fmt, const double &n){
+    char buf[127];
+    sprintf(buf, fmt.c_str(), n);
+    return std::string(buf);
+}
+
 std::string utils::strrep(const std::string &s, const std::string &fr, const std::string &to){
     std::string ret = s;
     size_t i;
@@ -69,7 +75,6 @@ std::string utils::rjust(std::string s, size_t sz){
 }
 
 ///STRING_REGEX
-#include <iostream>
 utils::string_regex& utils::string_regex::operator=(const std::string &s){
     if(!std::regex_match(s, std::regex(REGEX_STR_)))
         throw FailedRegex(s, REGEX_STR_);

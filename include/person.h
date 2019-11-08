@@ -93,9 +93,10 @@ public:
          const Address     &address , const VAT         &vat        );
 
     /** @brief Get username */
-    const Username& get_username() const{ return username_; }
+    const Username& get_username() const{ return username_     ; }
     const Username& get_id      () const{ return get_username(); }
-    const Address&  get_address () const{ return address_; }
+    const Address&  get_address () const{ return address_      ; }
+    const VAT&      get_vat     () const{ return vat_          ; }
     /**
      * @brief Gets the type of user.
      * @return User type
@@ -182,6 +183,8 @@ public:
              const Username    &user       , const Password    &password   ,
              const Address     &address    , const VAT      &vat           ,
              const Currency    &base_salary);
+
+    Currency get_base_salary() const{ return base_salary_; }
 
     /**
      * @brief Gets the type of user.
