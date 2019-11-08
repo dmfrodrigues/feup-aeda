@@ -41,7 +41,13 @@ private:
     void save_all();
     ///Operations
     void request_service();
+    ///lists
+    void print_list(const std::vector<const Client* > &v) const;
+    void print_list(const std::vector<const Manager*> &v) const;
+    void display(const Client  *p) const;
+    void display(const Manager *p) const;
     void list_clients ();
+
     void list_managers();
 
     User* verifyUser(const std::string &username, const std::string &password);

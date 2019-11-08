@@ -2,6 +2,25 @@
 
 [Guiding lines](https://moodle.up.pt/pluginfile.php/46150/mod_page/content/35/aeda1920_trabalhosParte1.pdf)
 
+## Requirements
+
+- [x] Use adequate classes to represent the entities envolved
+- [x] The classes should have attributes that are adequate to caracterizing the most important concepts of the entities
+- [x] Consider adequate relations between classes
+- [x] Use the concepts of inheritance and polymorphism
+- [x] User data should be saved in files, to use in future executions
+- [ ] Conveniently treat possible exceptions
+- [ ] Use search and sorting algorithms
+- [ ] Implemented classes should be documented
+- [ ] Allow for basic operations CRUD (create, read, update, delete)
+- [ ] Use linear structures to manage entities
+- [ ] Allow for total and partial listings with user-defined criteria
+- [ ] Use different orderning criteria in the listings
+- [ ] Clients can request a service, with origin, destination, travel time,...
+- [ ] List the monthly values the company gets from all its transports, from a given truck, and from all trucks of a given kind.
+- [x] List clients
+- [ ] List services
+
 ## ToDo
 
 ### Most priority
