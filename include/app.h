@@ -42,6 +42,7 @@ private:
     void print_list(const std::vector<const Manager*> &v) const;
     void print_list(const std::vector<const Driver *> &v) const;
     void print_list(const std::vector<const Client *> &v) const;
+    template<class Deriv> static std::vector<const Deriv*> filter_users(const std::vector<User*> &v, const User::Type &t);
     void display(const Manager *p) const;
     void display(const Driver  *p) const;
     void display(const Client  *p) const;
@@ -51,8 +52,10 @@ private:
     void request_service();
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
-    void list_clients ();
+    void list_clients () const;
+    static void list_clients_commands();
     void list_managers();
+    static void list_managers_commands();
 
     const std::vector<User*>::iterator find_user(const User::Username &u);
 

@@ -1,22 +1,43 @@
 #include "app.h"
 
-void App::list_clients(){
-    //CLEAR();
-    std::vector<const Client*> v;{
-        std::vector<User*> v1 = utils::filter(users_, [](const User *p){ return (p->get_type() == User::Type::client); });
-        v = std::vector<const Client*>(v1.size());
-        std::transform(v1.begin(), v1.end(), v.begin(), [](const User *p){ return dynamic_cast<const Client*>(p); });
-    }
+template<class Deriv>
+std::vector<const Deriv*> App::filter_users(const std::vector<User*> &v, const User::Type &t){
+    std::vector<User*> v1 = utils::filter(v, [&t](const User *p){ return (p->get_type() == t); });
+    std::vector<const Deriv*> retv = std::vector<const Deriv*>(v1.size());
+    std::transform(v1.begin(), v1.end(), retv.begin(), [](const User *p){
+        const Deriv *ret = dynamic_cast<const Deriv*>(p);
+        if(ret == nullptr) throw std::bad_cast();
+        return ret;
+    });
+    return retv;
+}
+
+void App::list_clients_commands(){
+    std::cout << "\n"
+              << "Commands:\n"
+              << "sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
+              << "search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,4].\n"
+              << "reset               Reset to initial selection.\n"
+              << "back                Go back.\n";
+    std::cout << std::endl;
+}
+
+void App::list_managers_commands(){
+    std::cout << "\n"
+              << "Commands:\n"
+              << "sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
+              << "search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
+              << "reset               Reset to initial selection.\n"
+              << "back                Go back.\n";
+    std::cout << std::endl;
+}
+
+void App::list_clients() const{
+    std::vector<const Client*> v = filter_users<Client>(users_, User::Type::client);
     while(true){
         CLEAR();
         print_list(v);
-        std::cout << "\n"
-                  << "Commands:\n"
-                  << "sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
-                  << "search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,4].\n"
-                  << "reset               Reset to initial selection.\n"
-                  << "back                Go back.\n";
-        std::cout << std::endl;
+        list_clients_commands();
         std::vector<std::string> s = utils::parse_command(prompt());
         if(s.size() >= 1){
             if(s[0] == "sort"){
@@ -58,11 +79,13 @@ void App::list_clients(){
                 }
             }else if(s[0] == "reset"){
                 if(s.size() != 1){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
-                v = std::vector<const Client*>();
-                auto it = users_.begin();
-                for(const User* p:users_)
-                    if(p->get_type() == User::Type::client)
-                        v.push_back(dynamic_cast<const Client*>(p));
+                std::vector<User*> v1 = utils::filter(users_, [](const User *p){ return (p->get_type() == User::Type::client); });
+                v = std::vector<const Client*>(v1.size());
+                std::transform(v1.begin(), v1.end(), v.begin(), [](const User *p){
+                    const Client *ret = dynamic_cast<const Client*>(p);
+                    if(ret == nullptr) throw std::bad_cast();
+                    return ret;
+                });
             }else if(s[0] == "back"){
                 if(s.size() != 1){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
                 return;
@@ -74,8 +97,66 @@ void App::list_clients(){
 }
 
 void App::list_managers(){
-    //CLEAR();
-    std::vector<User*> v1 = utils::filter(users_, [](const User *p){ return (p->get_type() == User::Type::client); });
-    std::vector<const Manager*> v(v1.size()); std::transform(v1.begin(), v1.end(), v.begin(), [](const User *p){ return dynamic_cast<const Manager*>(p); });
-    print_list(v);
+    std::vector<const Manager*> v = filter_users<Manager>(users_, User::Type::manager);
+    while(true){
+        CLEAR();
+        print_list(v);
+        list_managers_commands();
+        std::vector<std::string> s = utils::parse_command(prompt());
+        if(s.size() >= 1){
+            if(s[0] == "sort"){
+                if(s.size() != 2){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
+                int i;
+                try{
+                    i = std::stoi(s[1]);
+                }catch(const std::invalid_argument &e){
+                    std::cout << "Error: invalid NUM" << std::endl;
+                    wait();
+                    continue;
+                }
+                switch(i){
+                case 0: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_username   () < p2->get_username   ()); }); break;
+                case 1: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_name       () < p2->get_name       ()); }); break;
+                case 2: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_address    () < p2->get_address    ()); }); break;
+                case 3: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }); break;
+                case 4: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_vat        () < p2->get_vat        ()); }); break;
+                case 5: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }); break;
+                default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
+                }
+            }else if(s[0] == "search"){
+                if(s.size() != 3){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
+                int i;
+                try{
+                    i = std::stoi(s[1]);
+                }catch(const std::invalid_argument &e){
+                    std::cout << "Error: invalid NUM" << std::endl;
+                    wait();
+                    continue;
+                }
+                const std::string &str = s[2];
+                switch(i){
+                case 0: v = utils::filter(v, [&str](const Manager *p){ return (std::string(p->get_username()).find(str) != std::string::npos); }); break;
+                case 1: v = utils::filter(v, [&str](const Manager *p){ return (std::string(p->get_name    ()).find(str) != std::string::npos); }); break;
+                case 2: v = utils::filter(v, [&str](const Manager *p){ return (p->get_address().format().find(str) != std::string::npos); }); break;
+                case 3: v = utils::filter(v, [&str](const Manager *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }); break;
+                case 4: v = utils::filter(v, [&str](const Manager *p){ return (std::string(p->get_vat()).find(str) != std::string::npos); }); break;
+                default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
+                }
+            }else if(s[0] == "reset"){
+                if(s.size() != 1){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
+                std::vector<User*> v1 = utils::filter(users_, [](const User *p){ return (p->get_type() == User::Type::manager); });
+                v = std::vector<const Manager*>(v1.size());
+                std::transform(v1.begin(), v1.end(), v.begin(), [](const User *p){
+                    const Manager *ret = dynamic_cast<const Manager*>(p);
+                    if(ret == nullptr) throw std::bad_cast();
+                    return ret;
+                });
+            }else if(s[0] == "back"){
+                if(s.size() != 1){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
+                return;
+            }else{
+                std::cout << "Error: unrecognized command" << std::endl; wait();
+            }
+        }
+    }
 }

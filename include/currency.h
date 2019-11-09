@@ -24,6 +24,7 @@ public:
      * @return      Truth value of the comparison
      */
     bool operator==(const Currency &c) const;
+    bool operator< (const Currency &c) const;
 
     explicit operator double() const;
 

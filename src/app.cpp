@@ -20,7 +20,8 @@ App::App(const std::string &base      ,
     std::cout << "Starting app..." << std::endl;
     load_all();
     save_all();
-    //list_clients();
+    list_clients();
+    list_managers();
 }
 
 std::string App::prompt() const{
