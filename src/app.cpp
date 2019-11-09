@@ -10,6 +10,8 @@ void CLEAR(){
 
 const std::string App::OPSTR = "Operation$ ";
 
+const std::string App::cmdstr = "SML$ ";
+
 App::App(const std::string &base      ,
          const std::string &managers  , const std::string &drivers ,
          const std::string &clients   ,
@@ -53,35 +55,70 @@ std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const U
     return ret;
 }
 
-User* App::find_user(const User::Username &u){
-    auto it1 = utils::linearfind(users_.begin(), users_.end(), u, [](const User *m, const User::Username &s){ return (m->get_username() == s); });
-    if(it1 != users_.end()) return *it1;
-    return NULL; //#CHANGE
+const std::vector<User*>::iterator App::find_user(const User::Username &u){
+    return utils::linearfind(users_.begin(), users_.end(), u, [](const User *m, const User::Username &s){ return (m->get_username() == s); });
 }
 
 User* App::verifyUser(const std::string &username, const std::string &password) {
-    User *user = find_user(Client::Username(username));
-    if (user->verifyCredentials(password)) return user;
+    const std::vector<User*>::iterator it = find_user(Client::Username(username));
+    if (it == users_.end()) throw App::InvalidCredentials("Invalid username (username not found).");
+    if ((*it)->verifyCredentials(password)) return *it;
     throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
 }
 
 bool App::guestMenu(User *user) {
     try {
-        std::cout << "Agency SML                    \n"
-                     "==============================\n"
-                     "LOGIN                      [1]\n"
-                     "CREATE NEW ACCOUNT         [2]\n";
-        // LOGIN PROCESS
-        // ...
-        // CREATE ACCOUNT PROCESS
+        while (true) {
+            //utils::clear();
+            std::cout << "Agency SML                    \n"
+                         "==============================\n"
+                         "Login                      [1]\n"
+                         "Exit                       [2]\n";
+
+            // LOGIN PROCESS
+            std::string cmd;
+            std::cout << "\n" << cmdstr; getline(std::cin, cmd); utils::trim2(cmd);
+
+            int operation;
+            try {
+                operation = std::stoi(cmd);
+            } catch (std::invalid_argument &e) {
+                std::cout << "Invalid operation.\n";
+                operation = -1;
+            } catch (...) {
+                operation = -1;
+            }
+
+            switch (operation) {
+                case 1:
+                {
+                    std::string username, password;
+                    std::cout << "Username: "; std::getline(std::cin, username);
+                    std::cout << "Password: "; std::getline(std::cin, password);
+                    try {
+                        user = verifyUser(username, password);
+                        std::cout << "Login Success\n";
+                        return true;
+                    } catch (App::InvalidCredentials &ic) {
+                        std::cerr << ic.getMsg() << "\n";
+                    }
+                }
+                break;
+                case 2:
+                    return false;
+            }
+            utils::waitInput();
+            // CREATE ACCOUNT PROCESS
+        }
     } catch (...) {
         return false;
     }
     return true;
 }
 
-bool App::userMenu(User *user) {
+bool App::userMenu(const User* const user) {
     try {
+        //utils::clear();
         User::Type user_type = user->get_type();
         if (user_type == User::Type::client) {
             std::cout << "Service Management                Account Management           \n"
@@ -137,11 +174,14 @@ bool App::userMenu(User *user) {
 }
 
 void App::start(){
+    User *user = NULL;
+    if (!guestMenu(user)) return;
 
+    std::cout << "Check 1(login)\n";
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):
-    std::runtime_error(msg){}
+    std::runtime_error(msg), msg_(msg){}
 
 const std::string& App::InvalidCredentials::getMsg() const { return msg_; }
 
