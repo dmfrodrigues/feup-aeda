@@ -202,6 +202,13 @@ void App::start(){
 
     list_clients();
 
+    try {
+        addTruck();
+
+    } catch(App::RepeatedId &e) {
+        std::cerr << "ERROR: " << e.what() << "\n";
+    }
+
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):

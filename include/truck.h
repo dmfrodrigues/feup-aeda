@@ -91,6 +91,8 @@ public:
      */
     Truck(const Truck& truck);
 
+    static Fuel processFuel(const std::string &s);
+
     const NumberPlate& get_id() const{ return number_plate_; }
 
     /**
@@ -107,6 +109,14 @@ public:
     friend std::istream& operator>>(std::istream &is,       Truck &t);
     /** @brief   Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Truck &t);
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    bool in(std::istream &is, std::ostream &os);
 };
 
 #endif /* end of include guard: TRUCK_H_INCLUDED */

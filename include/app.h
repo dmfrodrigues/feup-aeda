@@ -69,6 +69,8 @@ private:
     User* verifyUser(const std::string &username, const std::string &password);
 
     bool addUser();
+
+    bool addTruck();
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,

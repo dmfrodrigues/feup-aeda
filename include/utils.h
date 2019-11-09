@@ -33,7 +33,9 @@ namespace utils {
      * @param s String to be trimmed
      */
     void trim(std::string &s);
-    
+
+    void to_lower(std::string &s);
+
     /**
      * @brief       Convert integer to string.
      * @param   i   Integer to convert

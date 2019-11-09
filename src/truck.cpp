@@ -2,6 +2,18 @@
 
 #include "utils.h"
 
+//Fuel processing
+Truck::Fuel Truck::processFuel(const std::string &s) {
+    if (s == "gasoline") return Truck::Fuel::Gasoline;
+    if (s == "diesel") return Truck::Fuel::Diesel;
+    if (s == "biodiesel") return Truck::Fuel::Diesel;
+    if (s == "gas") return Truck::Fuel::Diesel;
+    if (s == "hydrogen") return Truck::Fuel::Diesel;
+    if (s == "electric") return Truck::Fuel::Diesel;
+    if (s == "hybrid") return Truck::Fuel::Diesel;
+    throw std::invalid_argument("Invalid fuel type.");
+}
+
 ///NUMBERPLATE NUMBER
 const std::string Truck::NumberPlate::Number::REGEX_STR = "^[A-Z0-9 |.]{4,12}*$";
 Truck::NumberPlate::Number::Number():utils::string_regex(Truck::NumberPlate::Number::REGEX_STR){}
@@ -76,4 +88,14 @@ std::ostream& operator<<(std::ostream &os, const Truck &t){
         output_CargoTrans(os, t.cargo_[i]); if(i+1 != t.cargo_.size()) os << "\n";
     }
     return os;
+}
+
+bool Truck::in(std::istream &is, std::ostream &os) {
+    if (!utils::input("Number Plate: ", [](Truck::NumberPlate &np, const std::string &s) { np = Truck::NumberPlate(Truck::NumberPlate::Number(s)); }, number_plate_, is, os)|
+        !utils::input("Plate Register Date: ", [](Time &tm, const std::string &s) { tm = Time(s); },  plate_register_date_, is, os)|
+        !utils::input("Fuel: ", [](Truck::Fuel &fuel, const std::string &s) { fuel = Truck::processFuel(s); }, fuel_, is, os)|
+        !utils::input("Maximum reach: ", max_reach_, is, os)|
+        !utils::input("Category: ",[](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os)) return false;
+
+    return true;
 }

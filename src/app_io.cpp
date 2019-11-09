@@ -103,7 +103,7 @@ bool App::addUser() {
     User *user;
     while (true) {
         //CLEAR();
-        std::string type;
+        std::string type; // TODO: maybe change to argument and then based on choice in menu have call with different argument
         if (!utils::input("Choose type of user (client/driver/manager): ", type, std::cin, std::cout)) return false;
         if (type == "client") {
             user = new Client();
@@ -130,5 +130,19 @@ bool App::addUser() {
     }
     users_.push_back(user);
     std::cout << "User added.\n";
+    return true;
+}
+
+bool App::addTruck() {
+    Truck *truck = new Truck();
+    if (!truck->in(std::cin, std::cout)) { delete truck; return false; }
+    if(utils::linearfind(trucks_.begin(), trucks_.end(), truck->get_id(),
+      [](const Truck* t, const Truck::NumberPlate &id){ return (t->get_id() == id); }) != trucks_.end()){
+        Truck::NumberPlate id = truck->get_id();
+        delete truck;
+        throw App::RepeatedId((std::string)id);
+    }
+    trucks_.push_back(truck);
+    std::cout << "Truck added.\n";
     return true;
 }

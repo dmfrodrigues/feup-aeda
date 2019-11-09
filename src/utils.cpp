@@ -2,7 +2,9 @@
 
 #include <iomanip>
 #include <sstream>
+#include <algorithm>
 #include <iostream>
+#include <cctype>
 
 void utils::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
@@ -14,6 +16,10 @@ void utils::rtrim(std::string &s) {
 
 void utils::trim(std::string &s) {
     utils::ltrim(s); utils::rtrim(s);
+}
+
+void utils::to_lower(std::string &s) {
+    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) -> unsigned char { return std::tolower(c); });
 }
 
 std::string utils::itos(const long long int &i){
