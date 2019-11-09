@@ -16,6 +16,14 @@ std::string utils::ftos(const std::string &fmt, const double &n){
     return std::string(buf);
 }
 
+int utils::stoi(const std::string &str){
+    size_t sz;
+    int ret = std::stoi(str, &sz);
+    if(sz != str.size())
+        throw std::invalid_argument("invalid argument "+str);
+    return ret;
+}
+
 std::string utils::strrep(const std::string &s, const std::string &fr, const std::string &to){
     std::string ret = s;
     size_t i;

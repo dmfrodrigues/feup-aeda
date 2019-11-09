@@ -55,9 +55,11 @@ private:
     void list_clients () const;
     static void list_clients_commands();
     static void list_clients_sort(std::vector<const Client*> &v, const std::vector<std::string> &s);
+    static void list_clients_search(std::vector<const Client*> &v, const std::vector<std::string> &s);
     void list_managers();
     static void list_managers_commands();
     static void list_managers_sort(std::vector<const Manager*> &v, const std::vector<std::string> &s);
+    static void list_managers_search(std::vector<const Manager*> &v, const std::vector<std::string> &s);
 
     const std::vector<User*>::iterator find_user(const User::Username &u);
 
