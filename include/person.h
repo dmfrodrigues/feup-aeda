@@ -33,6 +33,14 @@ public:
 
     virtual const std::string& get_name() const final{ return name_; }
     virtual const PhoneNumber& get_phonenumber() const final{ return phonenumber_; }
+    
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    virtual bool in(std::istream &is, std::ostream &os);
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Person &p);
@@ -104,6 +112,14 @@ public:
      * @return User type
      */
     virtual Type get_type(void) const = 0;
+    
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    virtual bool in(std::istream &is, std::ostream &os);
 
     /**
      * @brief Tests if credentials given match with user.
@@ -153,6 +169,14 @@ public:
      * @return UserType::client type
      */
     virtual Type get_type(void) const;
+    
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    virtual bool in(std::istream &is, std::ostream &os);
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Client &p);
@@ -193,6 +217,15 @@ public:
      * @return User type
      */
     virtual Type get_type(void) const = 0;
+    
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    virtual bool in(std::istream &is, std::ostream &os);
+
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Employee &p);
@@ -229,6 +262,14 @@ public:
      * @return UserType::manager type
      */
     virtual Type get_type(void) const;
+    
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    virtual bool in(std::istream &is, std::ostream &os);
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Manager &p);
@@ -265,6 +306,15 @@ public:
      * @return UserType::driver type
      */
     virtual Type get_type(void) const;
+    
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    virtual bool in(std::istream &is, std::ostream &os);
+
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Driver &p);
