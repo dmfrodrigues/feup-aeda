@@ -4,6 +4,18 @@
 #include <sstream>
 #include <iostream>
 
+void utils::ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
+}
+
+void utils::rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
+}
+
+void utils::trim(std::string &s) {
+    utils::ltrim(s); utils::rtrim(s);
+}
+
 std::string utils::itos(const long long int &i){
     std::stringstream ss;
     ss << i;
@@ -130,6 +142,27 @@ namespace utils{
 utils::string_regex::FailedRegex::FailedRegex(const std::string &s, const std::string &REGEX_STR):
     std::invalid_argument("Invalid string ("+s+") does not match regex ("+REGEX_STR+")"),
     s_(s){}
+
+///OBJECT INPUT
+template<> bool utils::input<std::string>(const std::string &msg, std::string &object, std::istream &is, std::ostream &os) {
+    std::string input;
+
+    while (true) {
+        os << msg; std::getline(is, input); utils::trim(input);
+        if (utils::isCancel(input)) {
+            os << "Operation cancelled.\n"; return false;
+        }
+        try {
+            object = input;
+            return true;
+        } catch (const std::ios_base::failure &ios_fail) {
+            std::cerr << "ERROR: Input failed.\n";
+        } catch (const std::exception &ex) {
+            std::cerr << "ERROR: " << ex.what() << "\n";
+        }
+    }
+}
+
 ///INVALID ITERATOR
 utils::InvalidIterator::InvalidIterator():
     std::invalid_argument("Invalid iterator (iterator is out of the range)") {}
