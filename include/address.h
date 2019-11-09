@@ -70,6 +70,14 @@ public:
     std::string format(const std::string &fmt = DEFAULT_FORMAT) const;
 
     bool operator<(const Address &a)const;
+    
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    bool in(std::istream &is, std::ostream &os);
 
     /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Address::DEFAULT_FORMAT. */
     friend std::istream& operator>>(std::istream &is, Address &a);
