@@ -50,10 +50,10 @@ void App::list_clients(){
                 const std::string &str = s[2];
                 switch(i){
                 case 0: v = utils::filter(v, [&str](const Client *p){ return (std::string(p->get_username()).find(str) != std::string::npos); }); break;
-                case 1:  break;
-                case 2:  break;
-                case 3:  break;
-                case 4:  break;
+                case 1: v = utils::filter(v, [&str](const Client *p){ return (std::string(p->get_name    ()).find(str) != std::string::npos); }); break;
+                case 2: v = utils::filter(v, [&str](const Client *p){ return (p->get_address().format().find(str) != std::string::npos); }); break;
+                case 3: v = utils::filter(v, [&str](const Client *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }); break;
+                case 4: v = utils::filter(v, [&str](const Client *p){ return (std::string(p->get_vat()).find(str) != std::string::npos); }); break;
                 default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
                 }
             }else if(s[0] == "reset"){

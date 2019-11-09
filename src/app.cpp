@@ -10,8 +10,6 @@ void CLEAR(){
 
 const std::string App::OPSTR = "Operation$ ";
 
-const std::string App::cmdstr = "SML$ ";
-
 App::App(const std::string &base      ,
          const std::string &managers  , const std::string &drivers ,
          const std::string &clients   ,
@@ -22,10 +20,6 @@ App::App(const std::string &base      ,
     std::cout << "Starting app..." << std::endl;
     load_all();
     save_all();
-    list_clients();
-    //list_managers();
-    //display(dynamic_cast<const Client *>(filter_user_by_type(users_, User::Type::client )[2]));
-    //display(dynamic_cast<const Manager*>(filter_user_by_type(users_, User::Type::manager)[0]));
 }
 
 std::string App::prompt() const{
@@ -69,7 +63,7 @@ User* App::verifyUser(const std::string &username, const std::string &password) 
 bool App::guestMenu(User *user) {
     try {
         while (true) {
-            //utils::clear();
+            CLEAR();
             std::cout << "Agency SML                    \n"
                          "==============================\n"
                          "Login                      [1]\n"
@@ -77,7 +71,7 @@ bool App::guestMenu(User *user) {
 
             // LOGIN PROCESS
             std::string cmd;
-            std::cout << "\n" << cmdstr; getline(std::cin, cmd); utils::trim2(cmd);
+            std::cout << "\n" << OPSTR; getline(std::cin, cmd); utils::trim2(cmd);
 
             int operation;
             try {
@@ -118,7 +112,7 @@ bool App::guestMenu(User *user) {
 
 bool App::userMenu(const User* const user) {
     try {
-        //utils::clear();
+        CLEAR();
         User::Type user_type = user->get_type();
         if (user_type == User::Type::client) {
             std::cout << "Service Management                Account Management           \n"

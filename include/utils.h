@@ -16,12 +16,6 @@ template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat
 /** @brief Utilities */
 namespace utils {
     /**
-     * @brief Clears console.
-     * @throws std::system_error If error executing the command occurs
-     */
-    void clear();
-
-    /**
      * @brief Waits for user input.
      */
     void waitInput();

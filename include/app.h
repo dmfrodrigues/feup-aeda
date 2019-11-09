@@ -20,7 +20,6 @@ private:
     ///PRIVATE VARIABLES
     //Static const
     // Command string
-    static const std::string cmdstr;
     static const std::string OPSTR;
     //Paths
     const std::string base_path_    ;
