@@ -16,29 +16,6 @@ template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat
 /** @brief Utilities */
 namespace utils {
     /**
-     * @brief Waits for user input.
-     */
-    void waitInput();
-
-    /**
-     * @brief Trims all spaces from the start of the string (in-place).
-     * @param s String to be trimmed
-     */
-    //void ltrim(std::string &s);
-
-    /**
-     * @brief Trims all spaces from the end of the string (in-place).
-     * @param s String to be trimmed
-     */
-    //void rtrim(std::string &s);
-
-    /**
-     * @brief Trims all spaces from both ends of the string (in-place).
-     * @param s String to be trimmed
-     */
-    //void trim2(std::string &s);
-
-    /**
      * @brief       Convert integer to string.
      * @param   i   Integer to convert
      * @return      String that resulted from converting \a i.

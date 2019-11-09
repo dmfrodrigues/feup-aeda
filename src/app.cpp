@@ -107,8 +107,13 @@ bool App::guestMenu(User *user) {
                 break;
                 case 2:
                     return false;
+                    break;
+                default:
+                    std::cout << "Invalid operation.\n";
+                    wait();
+                    continue;
             }
-            utils::waitInput();
+            wait();
             // CREATE ACCOUNT PROCESS
         }
     } catch (...) {
