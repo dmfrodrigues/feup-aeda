@@ -17,6 +17,7 @@ public:
     public:
         static const std::string REGEX_STR;
         PostalCode(const std::string &postal_code = "");
+        static void SetPostalCode(PostalCode &pc, const std::string &s) { pc = PostalCode(s); }
         operator std::string() const{ return postal_code_; }
         class InvalidPostalCode: public std::invalid_argument{
         private:
