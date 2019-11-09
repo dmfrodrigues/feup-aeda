@@ -37,6 +37,11 @@ void App::wait(){
     std::getline(std::cin, b);
 }
 
+void App::error(const std::string &s){
+    std::cout << "Error: " << s << std::endl;
+    wait();
+}
+
 void App::request_service(){
 
 }
