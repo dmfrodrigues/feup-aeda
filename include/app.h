@@ -47,15 +47,17 @@ private:
     void display(const Driver  *p) const;
     void display(const Client  *p) const;
     ///Operations
-    std::string prompt() const;
-    void wait() const;
+    static std::string prompt();
+    static void wait();
     void request_service();
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
     void list_clients () const;
     static void list_clients_commands();
+    static void list_clients_sort(std::vector<const Client*> &v, const std::vector<std::string> &s);
     void list_managers();
     static void list_managers_commands();
+    static void list_managers_sort(std::vector<const Manager*> &v, const std::vector<std::string> &s);
 
     const std::vector<User*>::iterator find_user(const User::Username &u);
 

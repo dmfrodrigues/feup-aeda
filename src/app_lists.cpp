@@ -32,6 +32,47 @@ void App::list_managers_commands(){
     std::cout << std::endl;
 }
 
+void App::list_clients_sort(std::vector<const Client*> &v, const std::vector<std::string> &s){
+    if(s.size() != 2){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); return; }
+    int i;
+    try{
+        i = std::stoi(s[1]);
+    }catch(const std::invalid_argument &e){
+        std::cout << "Error: invalid NUM" << std::endl;
+        wait();
+        return;
+    }
+    switch(i){
+    case 0: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_username   () < p2->get_username   ()); }); break;
+    case 1: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_name       () < p2->get_name       ()); }); break;
+    case 2: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_address    () < p2->get_address    ()); }); break;
+    case 3: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }); break;
+    case 4: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_vat        () < p2->get_vat        ()); }); break;
+    default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
+    }
+}
+
+void App::list_managers_sort(std::vector<const Manager*> &v, const std::vector<std::string> &s){
+    if(s.size() != 2){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); return; }
+    int i;
+    try{
+        i = std::stoi(s[1]);
+    }catch(const std::invalid_argument &e){
+        std::cout << "Error: invalid NUM" << std::endl;
+        wait();
+        return;
+    }
+    switch(i){
+    case 0: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_username   () < p2->get_username   ()); }); break;
+    case 1: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_name       () < p2->get_name       ()); }); break;
+    case 2: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_address    () < p2->get_address    ()); }); break;
+    case 3: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }); break;
+    case 4: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_vat        () < p2->get_vat        ()); }); break;
+    case 5: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }); break;
+    default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
+    }
+}
+
 void App::list_clients() const{
     std::vector<const Client*> v = filter_users<Client>(users_, User::Type::client);
     while(true){
@@ -41,23 +82,7 @@ void App::list_clients() const{
         std::vector<std::string> s = utils::parse_command(prompt());
         if(s.size() >= 1){
             if(s[0] == "sort"){
-                if(s.size() != 2){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
-                int i;
-                try{
-                    i = std::stoi(s[1]);
-                }catch(const std::invalid_argument &e){
-                    std::cout << "Error: invalid NUM" << std::endl;
-                    wait();
-                    continue;
-                }
-                switch(i){
-                case 0: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_username   () < p2->get_username   ()); }); break;
-                case 1: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_name       () < p2->get_name       ()); }); break;
-                case 2: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_address    () < p2->get_address    ()); }); break;
-                case 3: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }); break;
-                case 4: utils::mergesort(v, [](const Client *p1, const Client *p2){ return (p1->get_vat        () < p2->get_vat        ()); }); break;
-                default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
-                }
+                list_clients_sort(v, s);
             }else if(s[0] == "search"){
                 if(s.size() != 3){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
                 int i;
@@ -105,24 +130,7 @@ void App::list_managers(){
         std::vector<std::string> s = utils::parse_command(prompt());
         if(s.size() >= 1){
             if(s[0] == "sort"){
-                if(s.size() != 2){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
-                int i;
-                try{
-                    i = std::stoi(s[1]);
-                }catch(const std::invalid_argument &e){
-                    std::cout << "Error: invalid NUM" << std::endl;
-                    wait();
-                    continue;
-                }
-                switch(i){
-                case 0: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_username   () < p2->get_username   ()); }); break;
-                case 1: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_name       () < p2->get_name       ()); }); break;
-                case 2: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_address    () < p2->get_address    ()); }); break;
-                case 3: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }); break;
-                case 4: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_vat        () < p2->get_vat        ()); }); break;
-                case 5: utils::mergesort(v, [](const Manager *p1, const Manager *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }); break;
-                default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
-                }
+                list_managers_sort(v, s);
             }else if(s[0] == "search"){
                 if(s.size() != 3){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
                 int i;

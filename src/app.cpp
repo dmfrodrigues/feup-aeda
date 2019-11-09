@@ -24,14 +24,14 @@ App::App(const std::string &base      ,
     list_managers();
 }
 
-std::string App::prompt() const{
+std::string App::prompt(){
     std::cout << OPSTR;
     std::string ret;
     std::getline(std::cin, ret);
     return ret;
 }
 
-void App::wait() const{
+void App::wait(){
     std::string b;
     std::cout << "(Press 'Enter' to continue)";
     std::getline(std::cin, b);
