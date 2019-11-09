@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 #include <regex>
+#include <iostream>
 
 namespace utils{
     template<class T> class ufloat;
@@ -15,6 +16,24 @@ template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat
 
 /** @brief Utilities */
 namespace utils {
+    /**
+     * @brief Trims all spaces from the start of the string (in-place).
+     * @param s String to be trimmed
+     */
+    void ltrim(std::string &s);
+
+    /**
+     * @brief Trims all spaces from the end of the string (in-place).
+     * @param s String to be trimmed
+     */
+    void rtrim(std::string &s);
+
+    /**
+     * @brief Trims all spaces from both ends of the string (in-place).
+     * @param s String to be trimmed
+     */
+    void trim(std::string &s);
+    
     /**
      * @brief       Convert integer to string.
      * @param   i   Integer to convert
@@ -121,6 +140,16 @@ namespace utils {
     ///LINEARFIND
     template<class Iterator, class T, class Compare> Iterator linearfind(Iterator l, Iterator r, T obj, Compare comp);
     template<class Iterator, class T               > Iterator linearfind(Iterator l, Iterator r, T obj){ utils::linearfind(l, r, obj, std::equal<T>()); }
+    ///OBJECT INPUT
+    /**
+     * @brief Verify is string given is cancel command ("cancel").
+     * @param s String to be verified
+     * @return If the string equals the string "cancel"
+     */
+    inline bool isCancel(const std::string &s) { return s == "cancel"; }
+    template<class T> bool input(const std::string &msg, T &object, std::istream &is, std::ostream &os);
+    template<> bool input<std::string>(const std::string &msg, std::string &object, std::istream &is, std::ostream &os);
+    template<class T, class Func> bool input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os);
     ///INVALID ITERATOR
     class InvalidIterator : public std::invalid_argument {
     public:
@@ -169,6 +198,7 @@ template<class T, class Compare> void utils::mergesort(std::vector<T> &v, const 
     std::copy(w.begin(), w.end(), v.begin()+(long)l);
 }
 
+///LINEAR FIND
 template<class Iterator, class T, class Compare> Iterator utils::linearfind(Iterator l, Iterator r, T obj, Compare comp){
     Iterator i = l;
     while(i != r){
@@ -176,6 +206,47 @@ template<class Iterator, class T, class Compare> Iterator utils::linearfind(Iter
         ++i;
     }
     return i;
+}
+
+///OBJECT INPUT
+template<class T> bool utils::input(const std::string &msg, T &object, std::istream &is, std::ostream &os) {
+    std::string input;
+    std::stringstream ss; ss.exceptions(std::stringstream::failbit | std::stringstream::badbit);
+
+    while (true) {
+        os << msg; std::getline(is, input); utils::trim(input);
+        if (utils::isCancel(input)) {
+            os << "Operation cancelled.\n"; return false;
+        }
+        ss.clear(); ss.str(input);
+        try {
+            ss >> object;
+            return true;
+        } catch (const std::ios_base::failure &ios_fail) {
+            std::cerr << "ERROR: Input failed.\n";
+        } catch (const std::exception &ex) {
+            std::cerr << "ERROR: " << ex.what() << "\n";
+        }
+    }
+}
+
+template<class T, class Func> bool utils::input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os) {
+    std::string input;
+
+    while (true) {
+        os << msg; std::getline(is, input); utils::trim(input);
+        if (utils::isCancel(input)) {
+            os << "Operation cancelled.\n"; return false;
+        }
+        try {
+            f(object, input);
+            return true;
+        } catch (const std::ios_base::failure &ios_fail) {
+            std::cerr << "ERROR: Input failed.\n";
+        } catch (const std::exception &ex) {
+            std::cerr << "ERROR: " << ex.what() << "\n";
+        }
+    }
 }
 
 #endif //UTILS_H_INCLUDED
