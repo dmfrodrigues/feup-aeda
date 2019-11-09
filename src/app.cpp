@@ -38,7 +38,7 @@ void App::wait(){
 }
 
 void App::error(const std::string &s){
-    std::cout << "Error: " << s << std::endl;
+    std::cerr << "Error: " << s << std::endl;
     wait();
 }
 
@@ -80,7 +80,7 @@ bool App::guestMenu(User *user) {
             std::string cmd; std::cout << "\n" << OPSTR; getline(std::cin, cmd);
             std::vector<std::string> v = utils::parse_command(cmd);
             if(v.size() != 1){
-                std::cout << "Invalid operation\n"; wait();
+                error("Invalid operation.");
                 continue;
             }
 
@@ -88,8 +88,7 @@ bool App::guestMenu(User *user) {
             try {
                 operation = std::stoi(v[0]);
             } catch (std::invalid_argument &e) {
-                std::cout << "Invalid operation.\n";
-                wait();
+                error("Invalid operation.");
                 continue;
             } catch (...) {
                 wait();
@@ -107,7 +106,7 @@ bool App::guestMenu(User *user) {
                         std::cout << "Login Success\n";
                         return true;
                     } catch (App::InvalidCredentials &ic) {
-                        std::cerr << "ERROR: " << ic.getMsg() << "\n";
+                        error(ic.getMsg());
                     }
                 }
                 break;
@@ -115,7 +114,7 @@ bool App::guestMenu(User *user) {
                     return false;
                     break;
                 default:
-                    std::cout << "Invalid operation.\n";
+                    error("Invalid operation.");
                     wait();
                     continue;
             }
