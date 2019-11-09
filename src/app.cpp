@@ -19,9 +19,6 @@ App::App(const std::string &base      ,
          trucks_path_  (base+trucks  ), services_path_(base+services){
     std::cout << "Starting app..." << std::endl;
     load_all();
-    save_all();
-    list_clients();
-    list_managers();
 }
 
 std::string App::prompt(){
@@ -191,23 +188,29 @@ void App::start(){
 
     std::cout << "Check 1(login)\n";
     std::cout << "Check 1(login)\n";*/
-    try {
-        addUser();
+    #ifdef TELMO
+        try {
+            addUser();
 
-    } catch(App::RepeatedId &e) {
-        std::cerr << "ERROR: " << e.what() << "\n";
-    }
-    wait();
+        } catch(App::RepeatedId &e) {
+            std::cerr << "ERROR: " << e.what() << "\n";
+        }
+        wait();
 
-    list_clients();
+        list_clients();
 
-    try {
-        addTruck();
+        try {
+            addTruck();
 
-    } catch(App::RepeatedId &e) {
-        std::cerr << "ERROR: " << e.what() << "\n";
-    }
-
+        } catch(App::RepeatedId &e) {
+            std::cerr << "ERROR: " << e.what() << "\n";
+        }
+    #endif
+    #ifdef DIOGO
+        save_all();
+        list_clients();
+        list_managers();
+    #endif
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):
