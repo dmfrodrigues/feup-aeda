@@ -30,20 +30,21 @@ private:
     std::vector<Truck*> trucks_  ;
     std::vector<Service*> services_;
     ///PRIVATE FUNCTIONS
-    ///Load & save functions
+    ///IO
     template<class Base, class Deriv, class ID> static size_t load_ptr(std::ifstream &is,       std::vector<Base*> &m_in );
     template<class Base, class Deriv          > static size_t save_ptr(std::ofstream &os, const std::vector<Base*> &m_out);
     void load_all();
     void save_all();
-    ///Operations
-    void request_service();
-    ///lists
+    ///Display
     void print_list(const std::vector<const Manager*> &v) const;
     void print_list(const std::vector<const Driver *> &v) const;
     void print_list(const std::vector<const Client *> &v) const;
     void display(const Manager *p) const;
     void display(const Driver  *p) const;
     void display(const Client  *p) const;
+    ///Operations
+    void request_service();
+
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
     void list_clients ();
     void list_managers();
