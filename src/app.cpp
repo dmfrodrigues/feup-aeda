@@ -102,7 +102,7 @@ bool App::guestMenu(User *user) {
                         std::cout << "Login Success\n";
                         return true;
                     } catch (App::InvalidCredentials &ic) {
-                        std::cerr << ic.getMsg() << "\n";
+                        std::cerr << "ERROR: " << ic.getMsg() << "\n";
                     }
                 }
                 break;
@@ -181,10 +181,19 @@ bool App::userMenu(const User* const user) {
 }
 
 void App::start(){
+    /*
     User *user = NULL;
     if (!guestMenu(user)) return;
 
     std::cout << "Check 1(login)\n";
+    std::cout << "Check 1(login)\n";*/
+
+    addUser();
+
+    wait();
+
+    list_clients();
+
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):
