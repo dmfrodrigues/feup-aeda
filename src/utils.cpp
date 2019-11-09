@@ -2,6 +2,38 @@
 
 #include <iomanip>
 #include <sstream>
+#include <iostream>
+
+void utils::clear() {
+    // WINDOWS
+    #ifdef _WIN32
+        system("clear");
+        return;
+    #endif
+
+    // LINUX
+    #ifdef __linux__
+        system("cls");
+        return;
+    #endif
+}
+
+void utils::waitInput() {
+    std::string input;
+    std::cout << "Press ENTER to continue."; std::getline(std::cin, input);
+}
+
+void utils::ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
+}
+
+void utils::rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
+}
+
+void utils::trim2(std::string &s) {
+    utils::ltrim(s); utils::rtrim(s);
+}
 
 std::string utils::itos(const long long int &i){
     std::stringstream ss;
