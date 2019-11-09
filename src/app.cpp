@@ -20,6 +20,7 @@ App::App(const std::string &base      ,
     std::cout << "Starting app..." << std::endl;
     load_all();
     save_all();
+    //list_clients();
 }
 
 std::string App::prompt() const{
@@ -70,17 +71,23 @@ bool App::guestMenu(User *user) {
                          "Exit                       [2]\n";
 
             // LOGIN PROCESS
-            std::string cmd;
-            std::cout << "\n" << OPSTR; getline(std::cin, cmd); utils::trim2(cmd);
+            std::string cmd; std::cout << "\n" << OPSTR; getline(std::cin, cmd);
+            std::vector<std::string> v = utils::parse_command(cmd);
+            if(v.size() != 1){
+                std::cout << "Invalid operation\n"; wait();
+                continue;
+            }
 
             int operation;
             try {
-                operation = std::stoi(cmd);
+                operation = std::stoi(v[0]);
             } catch (std::invalid_argument &e) {
                 std::cout << "Invalid operation.\n";
-                operation = -1;
+                wait();
+                continue;
             } catch (...) {
-                operation = -1;
+                wait();
+                continue;
             }
 
             switch (operation) {

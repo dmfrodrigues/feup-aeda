@@ -24,19 +24,19 @@ namespace utils {
      * @brief Trims all spaces from the start of the string (in-place).
      * @param s String to be trimmed
      */
-    void ltrim(std::string &s);
+    //void ltrim(std::string &s);
 
     /**
      * @brief Trims all spaces from the end of the string (in-place).
      * @param s String to be trimmed
      */
-    void rtrim(std::string &s);
+    //void rtrim(std::string &s);
 
     /**
      * @brief Trims all spaces from both ends of the string (in-place).
      * @param s String to be trimmed
      */
-    void trim2(std::string &s);
+    //void trim2(std::string &s);
 
     /**
      * @brief       Convert integer to string.

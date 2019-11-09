@@ -8,7 +8,7 @@ void utils::waitInput() {
     std::string input;
     std::cout << "Press ENTER to continue."; std::getline(std::cin, input);
 }
-
+/*
 void utils::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
 }
@@ -20,7 +20,7 @@ void utils::rtrim(std::string &s) {
 void utils::trim2(std::string &s) {
     utils::ltrim(s); utils::rtrim(s);
 }
-
+*/
 std::string utils::itos(const long long int &i){
     std::stringstream ss;
     ss << i;
@@ -102,7 +102,7 @@ std::vector<std::string> utils::parse_command(const std::string &s){
             else if(quote ==  c ) quote = ' ';
             else                  t    += c;
         }else if(c == ' '){
-            ret.push_back(t);
+            if(t != "") ret.push_back(t);
             t = "";
         }else t += c;
     }
