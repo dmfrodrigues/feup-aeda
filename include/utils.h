@@ -67,6 +67,25 @@ namespace utils {
     */
     std::string rjust(std::string s, size_t sz);
 
+    /**
+    @brief Trims a string, removing leading and trailing spaces
+    @param  s   string to be trimmed
+    @return     trimmed version of s
+    */
+    std::string trim(std::string s) noexcept;
+
+    /**
+    @brief Splits a string into a vector of words delimited by character delim.
+
+    All elements of the returned vector are trimmed
+    @param  s       string to be split
+    @param  delim   delimiter
+    @return         vector of strings of s delimited by delim
+    */
+    std::vector<std::string> split(std::string s, char delim) noexcept;
+
+    std::vector<std::string> parse_command(const std::string &s);
+
     template<class T>
     class ufloat{
     private:
@@ -147,12 +166,12 @@ template<class T, class Compare> void utils::mergesort(std::vector<T> &v, const 
     std::vector<T> w(r-l);
     size_t k = 0;
     while(i != m && j != r){
-        if(comp(v[i],v[j])) w[k++] = v[i++];
-        else                w[k++] = v[j++];
+        if(!comp(v[j],v[i])) w[k++] = v[i++];
+        else                 w[k++] = v[j++];
     }
     while(i != m) w[k++] = v[i++];
     while(j != r) w[k++] = v[j++];
-    std::copy(w.begin(), w.end(), v.begin()+l);
+    std::copy(w.begin(), w.end(), v.begin()+(long)l);
 }
 
 template<class Iterator, class T, class Compare> Iterator utils::linearfind(Iterator l, Iterator r, T obj, Compare comp){

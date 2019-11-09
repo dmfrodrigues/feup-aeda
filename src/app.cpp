@@ -8,6 +8,8 @@ void CLEAR(){
         throw std::system_error(ev, std::system_category());
 }
 
+const std::string App::OPSTR = "Operation$ ";
+
 App::App(const std::string &base      ,
          const std::string &managers  , const std::string &drivers ,
          const std::string &clients   ,
@@ -19,9 +21,22 @@ App::App(const std::string &base      ,
     load_all();
     save_all();
     list_clients();
-    list_managers();
-    display(dynamic_cast<const Client *>(filter_user_by_type(users_, User::Type::client )[2]));
-    display(dynamic_cast<const Manager*>(filter_user_by_type(users_, User::Type::manager)[0]));
+    //list_managers();
+    //display(dynamic_cast<const Client *>(filter_user_by_type(users_, User::Type::client )[2]));
+    //display(dynamic_cast<const Manager*>(filter_user_by_type(users_, User::Type::manager)[0]));
+}
+
+std::string App::prompt() const{
+    std::cout << OPSTR;
+    std::string ret;
+    std::getline(std::cin, ret);
+    return ret;
+}
+
+void App::wait() const{
+    std::string b;
+    std::cout << "(Press 'Enter' to continue)";
+    std::getline(std::cin, b);
 }
 
 void App::request_service(){
@@ -36,30 +51,6 @@ std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const U
         }
     }
     return ret;
-}
-
-void App::list_clients(){
-    //CLEAR();
-    std::vector<const Client*> v;
-    auto it = users_.begin();
-    for(const User* p:users_){
-        if(p->get_type() == User::Type::client){
-            v.push_back(dynamic_cast<const Client*>(p));
-        }
-    }
-    print_list(v);
-}
-
-void App::list_managers(){
-    //CLEAR();
-    std::vector<const Manager*> v;
-    auto it = users_.begin();
-    for(const User* p:users_){
-        if(p->get_type() == User::Type::manager){
-            v.push_back(dynamic_cast<const Manager*>(p));
-        }
-    }
-    print_list(v);
 }
 
 User* App::find_user(const User::Username &u){

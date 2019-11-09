@@ -31,6 +31,10 @@ std::string Address::format(const std::string &s) const{
     return ret;
 }
 
+bool Address::operator<(const Address &a)const{
+    return (format() < a.format());
+}
+
 std::ostream& operator<<(std::ostream &os, const Address &a){
     return os << utils::urlencode(a.street_     ) << "\n"
               << utils::urlencode(a.postal_code_) << " "

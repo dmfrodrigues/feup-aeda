@@ -18,6 +18,8 @@ void CLEAR();
 class App{
 private:
     ///PRIVATE VARIABLES
+    //Static const
+    static const std::string OPSTR;
     //Paths
     const std::string base_path_    ;
     const std::string managers_path_;
@@ -43,6 +45,8 @@ private:
     void display(const Driver  *p) const;
     void display(const Client  *p) const;
     ///Operations
+    std::string prompt() const;
+    void wait() const;
     void request_service();
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);

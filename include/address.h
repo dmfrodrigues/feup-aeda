@@ -68,14 +68,11 @@ public:
      */
     std::string format(const std::string &fmt = DEFAULT_FORMAT) const;
 
-    /**
-     * @brief   Overload of <em> operator>> </em>. Expects input in @ref Address::DEFAULT_FORMAT.
-     */
-    friend std::istream& operator>>(std::istream &is, Address &a);
+    bool operator<(const Address &a)const;
 
-    /**
-     * @brief   Overload of <em> operator<< </em>. Prints in @ref Address::DEFAULT_FORMAT.
-     */
+    /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Address::DEFAULT_FORMAT. */
+    friend std::istream& operator>>(std::istream &is, Address &a);
+    /** @brief   Overload of <em> operator<< </em>. Prints in @ref Address::DEFAULT_FORMAT.*/
     friend std::ostream& operator<<(std::ostream &os, const Address &a);
 };
 
