@@ -16,6 +16,15 @@ std::istream& Person::input(std::istream &is){
     is >> phonenumber_;
     return is;
 }
+
+bool Person::in(std::istream &is, std::ostream &os) {
+    if (!utils::input("Name: ",         name_,        is, os)|
+        !utils::input("Phone Number: ", phonenumber_, is, os)) return false;
+
+    return true;
+}
+
+
 std::istream& operator>>(std::istream &is,       Person &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Person &p){
     os << utils::urlencode(p.name_) << "\n"
@@ -66,6 +75,18 @@ std::istream& User::input(std::istream &is){
     return is;
 }
 
+bool User::in(std::istream &is, std::ostream &os) {
+    if (!Person::in(is, os)) return false;
+    if (!utils::input("Username: ", username_, is, os)|
+        !utils::input("Password: ", password_, is, os)) return false;
+
+    if (!address_.in(is, os)) return false;
+
+    if (!utils::input("VAT: ", vat_, is, os)) return false;
+
+    return true;
+}
+
 bool User::verifyCredentials(const std::string &password) {
     return this->password_ == Password(password);
 }
@@ -93,6 +114,10 @@ std::istream& Client::input(std::istream &is){
 
 User::Type Client::get_type() const { return User::Type::client; }
 
+bool Client::in(std::istream &is, std::ostream &os) {
+    return User::in(is, os);
+}
+
 std::istream& operator>>(std::istream &is,       Client &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Client &p){
     os << static_cast<const User&>(p);
@@ -111,6 +136,14 @@ std::istream& Employee::input(std::istream &is){
     User::input(is);
     is >> base_salary_;
     return is;
+}
+
+bool Employee::in(std::istream &is, std::ostream &os) {
+    if (!User::in(is, os)) return false;
+
+    if (!utils::input("Salary: ", base_salary_, is, os)) return false;
+
+    return true;
 }
 
 std::istream& operator>>(std::istream &is,       Employee &p){ return p.input(is); }
@@ -133,6 +166,11 @@ std::istream& Manager::input(std::istream &is){
     Employee::input(is);
     return is;
 }
+
+bool Manager::in(std::istream &is, std::ostream &os) {
+    return Employee::in(is, os);
+}
+
 std::istream& operator>>(std::istream &is,       Manager &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Manager &p){
     os << static_cast<const Employee&>(p);
@@ -152,6 +190,10 @@ std::istream& Driver ::input(std::istream &is){
 }
 
 User::Type Driver::get_type() const { return User::Type::driver; }
+
+bool Driver::in(std::istream &is, std::ostream &os) {
+    return Employee::in(is, os);
+}
 
 std::istream& operator>>(std::istream &is,       Driver &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Driver &p){
