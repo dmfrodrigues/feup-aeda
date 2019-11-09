@@ -122,6 +122,12 @@ bool App::addUser() {
         }
         wait();
     }
+    if(utils::linearfind(users_.begin(), users_.end(), user->get_username(),
+      [](const User* u, const User::Username &id){ return (u->get_username() == id); }) != users_.end()){
+        User::Username id = user->get_username();
+        delete user;
+        throw App::RepeatedId((std::string)id);
+    }
     users_.push_back(user);
     std::cout << "User added.\n";
     return true;

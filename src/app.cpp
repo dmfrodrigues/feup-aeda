@@ -187,9 +187,12 @@ void App::start(){
 
     std::cout << "Check 1(login)\n";
     std::cout << "Check 1(login)\n";*/
+    try {
+        addUser();
 
-    addUser();
-
+    } catch(App::RepeatedId &e) {
+        std::cerr << "ERROR: " << e.what() << "\n";
+    }
     wait();
 
     list_clients();
