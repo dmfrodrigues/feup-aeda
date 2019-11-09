@@ -42,9 +42,9 @@ private:
     void print_list(const std::vector<const Manager*> &v) const;
     void print_list(const std::vector<const Driver *> &v) const;
     void print_list(const std::vector<const Client *> &v) const;
-    void display(const Manager *p) const;
-    void display(const Driver  *p) const;
     void display(const Client  *p) const;
+    void display(const Driver  *p) const;
+    void display(const Manager *p) const;
     ///Lists
     template<class Deriv> static std::vector<const Deriv*> filter_users(const std::vector<User*> &v, const User::Type &t);
     static void list_clients_commands();
@@ -54,23 +54,21 @@ private:
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
     template<class T> void list_users(const User::Type &t) const;
-    ///Operations
+    ///Commands
     static std::string prompt();
     static void wait();
     static void error(const std::string &s);
+    ///Operations
     void request_service();
+    void list_clients () const;
+    void list_drivers () const;
+    void list_managers() const;
+    bool addUser();
+    bool addTruck();
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
-    void list_clients () const;
-    void list_managers() const;
-
     const std::vector<User*>::iterator find_user(const User::Username &u);
-
     User* verifyUser(const std::string &username, const std::string &password);
-
-    bool addUser();
-
-    bool addTruck();
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,

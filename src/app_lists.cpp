@@ -126,6 +126,10 @@ void App::list_clients() const{
     list_users<Client>(User::Type::client);
 }
 
+void App::list_drivers() const{
+    //list_users<Driver>(User::Type::driver);
+}
+
 void App::list_managers() const{
     list_users<Manager>(User::Type::manager);
 }
