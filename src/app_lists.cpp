@@ -39,7 +39,23 @@ void App::list_clients(){
                 default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
                 }
             }else if(s[0] == "search"){
-
+                if(s.size() != 3){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
+                int i;
+                try{
+                    i = std::stoi(s[1]);
+                }catch(const std::invalid_argument &e){
+                    std::cout << "Error: invalid NUM" << std::endl;
+                    wait();
+                    continue;
+                }
+                switch(i){
+                case 0:  break;
+                case 1:  break;
+                case 2:  break;
+                case 3:  break;
+                case 4:  break;
+                default: std::cout << "Error: NUM outside range" << std::endl; wait(); break;
+                }
             }else if(s[0] == "reset"){
                 if(s.size() != 1){ std::cout << "Error: wrong number of arguments" << std::endl; wait(); continue; }
                 v = std::vector<const Client*>();

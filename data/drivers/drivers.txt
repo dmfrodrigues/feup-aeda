@@ -1,11 +1,11 @@
-0
+8
 Bruno%20Sousa%20Santos
 %28%2B351%29%2091%20399%2098%2073
 brunoss
 brunopt
 Rua%20Doutor%20Alfredo%20Freitas%2055
-3050-333%20MEALHADA
-Aveiro%20Portugal
+3050-333 MEALHADA
+Aveiro Portugal
 288383828
 875.21
 Alberta%20Andreia%20Alves%20Fernandes
@@ -13,8 +13,8 @@ Alberta%20Andreia%20Alves%20Fernandes
 aaaf23
 27031965
 Avenida%20Afonso%20Henriques%20192
-3510-768%20VISEU
-Viseu%20Portugal
+3510-768 VISEU
+Viseu Portugal
 399498743
 754.75
 Marina%20Dias%20Martins
@@ -22,8 +22,8 @@ Marina%20Dias%20Martins
 marinamartins
 passmarina
 Avenida%20Paris%2033
-4740-225%20ESPOSENDE
-Braga%20Portugal
+4740-225 ESPOSENDE
+Braga Portugal
 388340492
 665.02
 Marcos%20Rodrigo%20Albuquerque%20Martins
@@ -31,8 +31,8 @@ Marcos%20Rodrigo%20Albuquerque%20Martins
 marmartins21
 marcos21
 Travessa%20da%20Aldeia%20Velha%2021
-4500-212%20GONDOMAR
-Porto%20Portugal
+4500-212 GONDOMAR
+Porto Portugal
 110293392
 754.75
 Afonso%20Miguel%20Paiva%20Rodrigues
@@ -40,8 +40,8 @@ Afonso%20Miguel%20Paiva%20Rodrigues
 afonso1975
 scp1906
 Rua%20Municipal%20da%20Venda%20Nova
-7670-367%20OURIQUE
-Beja%20Portugal
+7670-367 OURIQUE
+Beja Portugal
 993818283
 665.02
 Camila%20Barbosa%20Ferreira
@@ -49,8 +49,8 @@ Camila%20Barbosa%20Ferreira
 camilaferr
 arvorejardim
 Rua%20Principal%20293
-4420-517%20VALBOM
-Porto%20Portugal
+4420-517 VALBOM
+Porto Portugal
 991882102
 754.75
 Diogo%20Afonso%20Correia%20Carvalho
@@ -58,8 +58,8 @@ Diogo%20Afonso%20Correia%20Carvalho
 diogocc
 passdiogo
 Rua%20Doutor%20Afonso%20Carvalho%20112
-4550-037%20CASTELO%20DE%20PAIVA
-Aveiro%20Portugal
+4550-037 CASTELO%20DE%20PAIVA
+Aveiro Portugal
 388839202
 665.02
 Manuel%20Henrique%20Castro%20Cardoso
@@ -67,9 +67,7 @@ Manuel%20Henrique%20Castro%20Cardoso
 manel0101
 password123
 Rua%20Gago%20Coutinho%2029
-4500-038%20ESPINHO
-Aveiro%20Portugal
+4500-038 ESPINHO
+Aveiro Portugal
 993821920
 754.75
-
-

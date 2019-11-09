@@ -1,11 +1,11 @@
-1
+8
 Alfredo%20de%20Albuquerque%20e%20Sousa
 %28%2B351%29%2091%20234%2056%2078
 alfredodoas
 aminhapasswordalfredo
 Rua%20das%20Oliveiras%2C%2025
 4020-318 BACIAS
-Tr%C3%A1s-os-Montes%20Portugal
+Tr%C3%A1s-os-Montes Portugal
 012345678
 1080.67
 Carla%20Joana%20Pinto%20Lima
@@ -13,8 +13,8 @@ Carla%20Joana%20Pinto%20Lima
 carlita
 computador10
 Rua%20da%20Senhora%20Manuela%20101
-4450-755%20MATOSINHOS
-Porto%20Portugal
+4450-755 MATOSINHOS
+Porto Portugal
 192921010
 1320.80
 Sofia%20Almeida%20Gomes
@@ -22,8 +22,8 @@ Sofia%20Almeida%20Gomes
 sofgomes
 qwertyui
 Rua%20Padre%20Miguel%20Rodrigues%20111
-4425-439%20MAIA
-Porto%20Portugal
+4425-439 MAIA
+Porto Portugal
 288821720
 998.25
 Pedro%20Paulo%20Guedes%20de%20Sousa
@@ -31,8 +31,8 @@ Pedro%20Paulo%20Guedes%20de%20Sousa
 pedroxx12
 fcp1893
 Travessa%2025%20de%20Abril%2026
-1495-056%20OEIRAS
-Lisboa%20Portugal
+1495-056 OEIRAS
+Lisboa Portugal
 192939192
 1320.80
 Rodrigo%20Francisco%20Almada%20Andrade
@@ -40,8 +40,8 @@ Rodrigo%20Francisco%20Almada%20Andrade
 rodriguex
 slb1908
 Travessa%20do%20Choupelo%2080
-7801-123%20SALVADOR
-Beja%20Portugal
+7801-123 SALVADOR
+Beja Portugal
 166636262
 998.25
 Guilherme%20Antunes%20Fonseca
@@ -49,8 +49,8 @@ Guilherme%20Antunes%20Fonseca
 gui300
 starwars12
 Rua%20do%20Telheiro%2068
-2955-359%20PINHAL%20NOVO
-Lisboa%20Portugal
+2955-359 PINHAL%20NOVO
+Lisboa Portugal
 291929494
 1080.67
 Danilo%20Alberto%20Rocha%20Pereira
@@ -58,8 +58,8 @@ Danilo%20Alberto%20Rocha%20Pereira
 danilorp
 danilopass
 Avenida%20Manuel%20Figueiredo%2097
-2330-302%20ENTRONCAMENTO
-Lisboa%20Portugal
+2330-302 ENTRONCAMENTO
+Lisboa Portugal
 388829192
 998.25
 Manuel%20Carvalho%20Almeida
@@ -67,8 +67,7 @@ Manuel%20Carvalho%20Almeida
 manuel99
 manuel00
 Rua%20Jorge%20Sena%2060
-6080-140%20AMADORA
-Lisboa%20Portugal
-
-
-
+6080-140 AMADORA
+Lisboa Portugal
+307684567
+841.38

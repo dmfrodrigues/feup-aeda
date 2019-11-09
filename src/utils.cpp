@@ -94,9 +94,23 @@ std::vector<std::string> utils::split(std::string s, char delim) noexcept{
     if(s != "") ret.push_back(s);
     return ret;
 }
-
+#include <iostream>
 std::vector<std::string> utils::parse_command(const std::string &s){
-    return split(s, ' ');
+    std::vector<std::string> ret;
+    std::string t = "";
+    char quote = ' ';
+    for(const char &c:s){
+        if(c == '\"' || c == '\''){
+            if     (quote == ' ') quote =  c;
+            else if(quote ==  c ) quote = ' ';
+            else                  t    += c;
+        }else if(c == ' '){
+            ret.push_back(t);
+            t = "";
+        }else t += c;
+    }
+    if(t != "") ret.push_back(t);
+    return ret;
 }
 
 ///STRING_REGEX
