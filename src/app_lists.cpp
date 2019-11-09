@@ -3,10 +3,9 @@
 void App::list_clients(){
     //CLEAR();
     std::vector<const Client*> v;{
-        auto it = users_.begin();
-        for(const User* p:users_)
-            if(p->get_type() == User::Type::client)
-                v.push_back(dynamic_cast<const Client*>(p));
+        std::vector<User*> v1 = utils::filter(users_, [](const User *p){ return (p->get_type() == User::Type::client); });
+        v = std::vector<const Client*>(v1.size());
+        std::transform(v1.begin(), v1.end(), v.begin(), [](const User *p){ return dynamic_cast<const Client*>(p); });
     }
     while(true){
         CLEAR();
@@ -14,7 +13,7 @@ void App::list_clients(){
         std::cout << "\n"
                   << "Commands:\n"
                   << "sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
-                  << "search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m\ in property \033[4mNUM\033[0m [0,4].\n"
+                  << "search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,4].\n"
                   << "reset               Reset to initial selection.\n"
                   << "back                Go back.\n";
         std::cout << std::endl;
@@ -48,8 +47,9 @@ void App::list_clients(){
                     wait();
                     continue;
                 }
+                const std::string &str = s[2];
                 switch(i){
-                case 0:  break;
+                case 0: v = utils::filter(v, [&str](const Client *p){ return (std::string(p->get_username()).find(str) != std::string::npos); }); break;
                 case 1:  break;
                 case 2:  break;
                 case 3:  break;
@@ -75,12 +75,7 @@ void App::list_clients(){
 
 void App::list_managers(){
     //CLEAR();
-    std::vector<const Manager*> v;
-    auto it = users_.begin();
-    for(const User* p:users_){
-        if(p->get_type() == User::Type::manager){
-            v.push_back(dynamic_cast<const Manager*>(p));
-        }
-    }
+    std::vector<User*> v1 = utils::filter(users_, [](const User *p){ return (p->get_type() == User::Type::client); });
+    std::vector<const Manager*> v(v1.size()); std::transform(v1.begin(), v1.end(), v.begin(), [](const User *p){ return dynamic_cast<const Manager*>(p); });
     print_list(v);
 }

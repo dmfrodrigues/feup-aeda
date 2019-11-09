@@ -74,27 +74,6 @@ std::string utils::rjust(std::string s, size_t sz){
     return s;
 }
 
-std::string utils::trim(std::string s) noexcept{
-    auto ret = s;
-    size_t i;
-    i = ret.find_first_not_of(" \f\n\r\t\v"); ret = (i != s.npos ? ret.substr(i) : "");
-    i = ret.find_last_not_of (" \f\n\r\t\v"); if(i != s.npos) ret = ret.substr(0, i+1);
-    return ret;
-}
-
-std::vector<std::string> utils::split(std::string s, char delim) noexcept{
-    std::vector<std::string> ret;
-    while(true){
-        auto i = s.find(delim); if(i == s.npos) break;
-        auto t = trim(s.substr(0,i));
-        if(t != "") ret.push_back(t);
-        s = s.substr(i+1);
-    }
-    s = trim(s);
-    if(s != "") ret.push_back(s);
-    return ret;
-}
-#include <iostream>
 std::vector<std::string> utils::parse_command(const std::string &s){
     std::vector<std::string> ret;
     std::string t = "";

@@ -13,9 +13,7 @@ namespace utils{
 template<class T> std::istream& operator>>(std::istream &is,       utils::ufloat<T> &u);
 template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat<T> &u);
 
-/**
- * @brief Utilities
- */
+/** @brief Utilities */
 namespace utils {
     /**
      * @brief       Convert integer to string.
@@ -67,25 +65,10 @@ namespace utils {
     */
     std::string rjust(std::string s, size_t sz);
 
-    /**
-    @brief Trims a string, removing leading and trailing spaces
-    @param  s   string to be trimmed
-    @return     trimmed version of s
-    */
-    std::string trim(std::string s) noexcept;
-
-    /**
-    @brief Splits a string into a vector of words delimited by character delim.
-
-    All elements of the returned vector are trimmed
-    @param  s       string to be split
-    @param  delim   delimiter
-    @return         vector of strings of s delimited by delim
-    */
-    std::vector<std::string> split(std::string s, char delim) noexcept;
-
     std::vector<std::string> parse_command(const std::string &s);
 
+    template<class T, class Valid> std::vector<T*> filter(const std::vector<T*> &v, Valid valid);
+    ///UFLOAT
     template<class T>
     class ufloat{
     private:
@@ -105,7 +88,7 @@ namespace utils {
             const T& get_ufloat() const;
         };
     };
-
+    ///STRING_REGEX
     class string_regex{
     private:
         std::string s_;
@@ -130,18 +113,29 @@ namespace utils {
             const std::string& get_string()const{ return s_; }
         };
     };
-
+    ///MERGESORT
     template<class T, class Compare> void mergesort(std::vector<T> &v, const size_t &l, const size_t &r, Compare comp);
     template<class T, class Compare> void mergesort(std::vector<T> &v, Compare comp){ utils::mergesort(v, 0, v.size(), comp); }
     template<class T               > void mergesort(std::vector<T> &v){ utils::mergesort(v, std::less<T>()); }
-
+    ///LINEARFIND
     template<class Iterator, class T, class Compare> Iterator linearfind(Iterator l, Iterator r, T obj, Compare comp);
     template<class Iterator, class T               > Iterator linearfind(Iterator l, Iterator r, T obj){ utils::linearfind(l, r, obj, std::equal<T>()); }
-
+    ///INVALID ITERATOR
     class InvalidIterator : public std::invalid_argument {
     public:
         InvalidIterator();
     };
+}
+
+///FILTER
+template<class T, class Valid> std::vector<T*> utils::filter(const std::vector<T*> &v, Valid valid){
+    std::vector<T*> ret;
+    for(T* p:v){
+        if(valid(p)){
+            ret.push_back(p);
+        }
+    }
+    return ret;
 }
 
 ///UFLOAT
