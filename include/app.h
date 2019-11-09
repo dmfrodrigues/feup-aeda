@@ -19,6 +19,8 @@ class App{
 private:
     ///PRIVATE VARIABLES
     //Static const
+    // Command string
+    static const std::string cmdstr;
     static const std::string OPSTR;
     //Paths
     const std::string base_path_    ;
@@ -53,7 +55,7 @@ private:
     void list_clients ();
     void list_managers();
 
-    User* find_user(const User::Username &u);
+    const std::vector<User*>::iterator find_user(const User::Username &u);
 
     User* verifyUser(const std::string &username, const std::string &password);
 public:
@@ -64,7 +66,7 @@ public:
 
     bool guestMenu(User *user);
 
-    bool userMenu(User *user);
+    bool userMenu(const User* const user);
 
     void start();
 
