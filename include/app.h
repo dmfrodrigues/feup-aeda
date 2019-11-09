@@ -38,10 +38,12 @@ private:
     ///Operations
     void request_service();
     ///lists
-    void print_list(const std::vector<const Client* > &v) const;
     void print_list(const std::vector<const Manager*> &v) const;
-    void display(const Client  *p) const;
+    void print_list(const std::vector<const Driver *> &v) const;
+    void print_list(const std::vector<const Client *> &v) const;
     void display(const Manager *p) const;
+    void display(const Driver  *p) const;
+    void display(const Client  *p) const;
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
     void list_clients ();
     void list_managers();

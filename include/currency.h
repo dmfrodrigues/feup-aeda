@@ -25,7 +25,7 @@ public:
      */
     bool operator==(const Currency &c) const;
 
-    operator double() const;
+    explicit operator double() const;
 
     /**
      * @brief   Overload of <em> operator>> </em>.
