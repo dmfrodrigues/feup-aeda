@@ -31,6 +31,16 @@ std::string Address::format(const std::string &s) const{
     return ret;
 }
 
+bool Address::in(std::istream &is, std::ostream &os) {
+    if (!utils::input("Street: ",       street_,        is, os)|
+        !utils::input("Postal Code: ", Address::PostalCode::SetPostalCode,  postal_code_,   is, os)|
+        !utils::input("City: ",         city_,          is, os)|
+        !utils::input("District: ",     district_,      is, os)|
+        !utils::input("Country: ",      country_,       is, os)) return false;
+
+    return true;
+}
+
 bool Address::operator<(const Address &a)const{
     return (format() < a.format());
 }
