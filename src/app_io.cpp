@@ -97,3 +97,32 @@ void App::save_all(){
         std::cout << " saved " << sz << std::endl;
     }
 }
+
+
+bool App::addUser() {
+    User *user;
+    while (true) {
+        //CLEAR();
+        std::string type;
+        if (!utils::input("Choose type of user (client/driver/manager): ", type, std::cin, std::cout)) return false;
+        if (type == "client") {
+            user = new Client();
+            if (!user->in(std::cin, std::cout)) { delete user; return false;}
+            break;
+        } else if (type == "driver") {
+            user = new Driver();
+            if (!user->in(std::cin, std::cout)) { delete user; return false;}
+            break;
+        } else if (type == "manager") {
+            user = new Manager();
+            if (!user->in(std::cin, std::cout)) { delete user; return false;}
+            break;
+        } else {
+            std::cout << "ERROR: Invalid type of user (type \'" << type << "\' doesn't exist).\n";
+        }
+        wait();
+    }
+    users_.push_back(user);
+    std::cout << "User added.\n";
+    return true;
+}
