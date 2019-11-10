@@ -1,8 +1,8 @@
 #include "app.h"
 
 template<class Base, class Deriv, class Type>
-std::vector<const Deriv*> App::filter_users(const std::vector<Base*> &v, const Type &t){
-    std::vector<Base*> v1 = utils::filter(v, [&t](const Base *p){ return (p->get_type() == t); });
+std::vector<const Deriv*> App::filter_users(const std::vector<const Base*> &v, const Type &t){
+    std::vector<const Base*> v1 = utils::filter(v, [&t](const Base *p){ return (p->get_type() == t); });
     std::vector<const Deriv*> retv = std::vector<const Deriv*>(v1.size());
     std::transform(v1.begin(), v1.end(), retv.begin(), [](const Base *p){
         const Deriv *ret = dynamic_cast<const Deriv*>(p);
@@ -100,6 +100,21 @@ void App::list_sort_getcomp(int i, std::function<bool(const Manager*, const Mana
     }
 }
 
+void App::list_sort_getcomp(int i, std::function<bool(const Truck*, const Truck*)> &cmp){
+    cmp = [](const Truck *p1, const Truck *p2){ return true; };
+    /*
+    switch(i){
+        case 0: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_username   () < p2->get_username   ()); }; break;
+        case 1: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_name       () < p2->get_name       ()); }; break;
+        case 2: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_address    () < p2->get_address    ()); }; break;
+        case 3: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }; break;
+        case 4: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_vat        () < p2->get_vat        ()); }; break;
+        case 5: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }; break;
+        default: throw std::invalid_argument("NUM outside range");
+    }
+    */
+}
+
 void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client*)> &cmp){
     switch(i){
         case 0: cmp = [str](const Client *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
@@ -135,8 +150,23 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
     }
 }
 
-template<class Base, class Deriv, class Type> void App::list(const Type &t) const{
-    std::vector<const Deriv*> v = filter_users<Base,Deriv,Type>(users_, t);
+void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Truck*)> &cmp){
+    cmp = [](const Truck *p){ return true; };
+    /*
+    switch(i){
+        case 0: cmp = [str](const Manager *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
+        case 1: cmp = [str](const Manager *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
+        case 2: cmp = [str](const Manager *p){ return (p->get_address().format()        .find(str) != std::string::npos); }; break;
+        case 3: cmp = [str](const Manager *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }; break;
+        case 4: cmp = [str](const Manager *p){ return (std::string(p->get_vat        ()).find(str) != std::string::npos); }; break;
+        case 5: cmp = [str](const Manager *p){ return (Currency(std::stod(str))                    ==p->get_base_salary());};break;
+        default: throw std::invalid_argument("NUM outside range");
+    }
+    */
+}
+
+template<class Base, class Deriv, class Type> void App::list(const std::vector<const Base*> &w, const Type &t) const{
+    std::vector<const Deriv*> v = filter_users<Base,Deriv,Type>(w, t);
     while(true){
         CLEAR();
         print_list(v);
@@ -178,7 +208,7 @@ template<class Base, class Deriv, class Type> void App::list(const Type &t) cons
             //====RESET=========================================================
             if(s[0] == "reset"){
                 if(s.size() != 1) error("wrong number of arguments");
-                else              v = filter_users<Base,Deriv,Type>(users_, t);
+                else              v = filter_users<Base,Deriv,Type>(w, t);
             }else
             //====BACK==========================================================
             if(s[0] == "back"){
@@ -192,18 +222,21 @@ template<class Base, class Deriv, class Type> void App::list(const Type &t) cons
 }
 
 void App::list_clients() const{
-    list<User,Client, User::Type>(User::Type::client);
+    std::vector<const User*> v(users_.begin(), users_.end());
+    list<User,Client ,User::Type>(v, User::Type::client);
 }
 
 void App::list_drivers() const{
-    list<User,Driver ,User::Type>(User::Type::driver);
+    std::vector<const User*> v(users_.begin(), users_.end());
+    list<User,Driver ,User::Type>(v, User::Type::driver);
 }
 
 void App::list_managers() const{
-    list<User,Manager,User::Type>(User::Type::manager);
+    std::vector<const User*> v(users_.begin(), users_.end());
+    list<User,Manager,User::Type>(v, User::Type::manager);
 }
-/*
-void App::list_trucks() const{
 
+void App::list_trucks() const{
+    std::vector<const Truck*> v(trucks_.begin(), trucks_.end());
+    list<Truck,Truck,Truck::Type>(v, Truck::Type::truck);
 }
-*/

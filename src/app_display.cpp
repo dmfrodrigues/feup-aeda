@@ -65,6 +65,28 @@ void App::print_list(const std::vector<const Manager*> &v){
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧═════════════════╛" << std::endl;
 }
 
+void App::print_list(const std::vector<const Truck*> &v){
+    std::cout << std::endl;
+    std::cout << " ╶┬╴┌─╮╷ ╷╭─╴╷ ╱╭─╴ \n"
+              << "  │ ├┬╯│ ││  │╱ ╰─╮ \n"
+              << "  ╵ ╵╰╴╰─╯╰─╴│ ╲╶─╯ \n";
+    std::cout << std::endl;
+    std::cout << "╒════════════════════════╤═══════════════╤═══════════════╤════════════════╤══════════════╤═════════════════╕" << std::endl;
+    std::cout << "│ Number plate [0]       │ Date [1]      │ Fuel [2]      │ Range (km) [3] │ Category [4] │ Cargo [5]       │" << std::endl;
+    std::cout << "╞════════════════════════╪═══════════════╪═══════════════╪════════════════╪══════════════╪═════════════════╡" << std::endl;
+    for(const Truck* p:v){
+        std::cout << "│ "
+                  << utils::ljust((std::string)p->get_numberplate()                 ,21) << "\t │ "
+                  << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")     ,10) << "\t │ "
+                  << utils::ljust(Truck::fuel_string(p->get_fuel())                 ,12) << "\t │ "
+                  << utils::rjust(utils::ftos("%.1f", (float)p->get_range())        ,14) <<   " │ "
+                  << utils::ljust((std::string)p->get_category()                    ,11) << "\t │ "
+                  << std::endl;
+    }
+    std::cout << "╘════════════════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═════════════════╛" << std::endl;
+
+}
+
 void App::display(const Client *p){
     std::cout << "╒══════════════════╤═════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] Username     │ " << utils::ljust((std::string)p->get_username()                        ,82) << "\t │\n"
@@ -100,7 +122,7 @@ void App::display(const Manager *p){
 void App::display(const Truck *p){
     std::cout << "╒══════════════════╤═════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] Number plate │ " << utils::ljust((std::string)p->get_numberplate()                     ,82) << "\t │\n"
-              << "│ [2] Date         │ " << utils::ljust(p->get_plateregisterdate().format("%m/%Y")            ,82) << "\t │\n"
+              << "│ [1] Date         │ " << utils::ljust(p->get_plateregisterdate().format("%m/%Y")            ,82) << "\t │\n"
               << "│ [2] Fuel         │ " << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,82) << "\t │\n"
               << "│ [3] Range (km)   │ " << utils::ljust(utils::ftos("%.1f", (float)p->get_range())            ,82) << "\t │\n"
               << "│ [4] Category     │ " << utils::ljust((std::string)p->get_category()                        ,82) << "\t │\n";
@@ -108,7 +130,7 @@ void App::display(const Truck *p){
     for(size_t i = 0; i < cargo.size(); ++i){
         const CargoTrans *q = cargo[i];
         std::cout << "├──────────────────┴─────────────────────────────────────────────────────────────────────────────────────┤\n"
-                  << "│ [5] Cargo " << utils::rjust("#"+utils::itos(i), 6)
+                  << "│ [5] Cargo " << utils::rjust("#"+utils::itos((long long)i), 6)
                                     << " : " + utils::ljust(Cargo::type_string(q->get_type()), 82) << "\t │\n"
                   << "├──────────────────┬─────────────────────────────────────────────────────────────────────────────────────┤\n";
         App::display(q);
@@ -131,7 +153,10 @@ void App::display(const CargoTrans             *p){
     }
 }
 void App::display(const CargoTransAnimal       *p){
-
+    std::cout << "│ [0] Weight (kg)  │ " << utils::ljust(utils::ftos("%.0f", p->get_weight()), 82) << "\t │\n"
+              << "│ [1] Description  │ " << utils::ljust(p->get_description()                , 82) << "\t │\n"
+              << "| [2] Price base € │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_pricebase()),82)<< "\t │\n"
+              << "│ [3] Expense €/km │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_expensesperkm()),82)<<"\t │\n";
 }
 void App::display(const CargoTransRefrigerated *p){
 
