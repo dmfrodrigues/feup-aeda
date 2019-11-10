@@ -43,12 +43,13 @@ private:
     void load_all();
     void save_all();
     ///Display
-    void print_list(const std::vector<const Manager*> &v) const;
-    void print_list(const std::vector<const Driver *> &v) const;
-    void print_list(const std::vector<const Client *> &v) const;
-    void display(const Client  *p) const;
-    void display(const Driver  *p) const;
-    void display(const Manager *p) const;
+    static void print_list(const std::vector<const Manager*> &v);
+    static void print_list(const std::vector<const Driver *> &v);
+    static void print_list(const std::vector<const Client *> &v);
+    static void display(const Client  *p);
+    static void display(const Driver  *p);
+    static void display(const Manager *p);
+    static void display(const Truck   *p);
     ///Lists
     template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter_users(const std::vector<Base*> &v, const Type &t);
     static void list_clients_commands();

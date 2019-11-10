@@ -15,7 +15,7 @@ Truck::Fuel Truck::processFuel(const std::string &s) {
 }
 
 ///NUMBERPLATE NUMBER
-const std::string Truck::NumberPlate::Number::REGEX_STR = "^[A-Z0-9 |.]{4,12}*$";
+const std::string Truck::NumberPlate::Number::REGEX_STR = "^[A-Z0-9 -|.]{4,12}*$";
 Truck::NumberPlate::Number::Number():utils::string_regex(Truck::NumberPlate::Number::REGEX_STR){}
 Truck::NumberPlate::Number::Number(const std::string &plate):Number(){
     *this = plate;
@@ -39,7 +39,7 @@ std::ostream& operator<<(std::ostream &os, const Truck::NumberPlate &n){
     return os;
 }
 ///CATEGORY
-const std::string Truck::Category::REGEX_STR = "^[+-A-Z]{1,4}$";
+const std::string Truck::Category::REGEX_STR = "^[A-Z+-]{1,4}$";
 Truck::Category::Category():utils::string_regex(Truck::Category::REGEX_STR){}
 Truck::Category::Category(const std::string &category):Category(){
     *this = category;
@@ -47,6 +47,19 @@ Truck::Category::Category(const std::string &category):Category(){
 Truck::Category& Truck::Category::operator=(const std::string &category){
     string_regex::operator=(category);
     return *this;
+}
+///FUEL
+std::string Truck::fuel_string(const Truck::Fuel &f){
+    switch(f){
+        case Fuel::Gasoline : return "Gasoline" ;
+        case Fuel::Diesel   : return "Diesel"   ;
+        case Fuel::Biodiesel: return "Biodiesel";
+        case Fuel::Gas      : return "Gas"      ;
+        case Fuel::Hydrogen : return "Hydrogen" ;
+        case Fuel::Electric : return "Electric" ;
+        case Fuel::Hybrid   : return "Hybrid"   ;
+        default: throw std::invalid_argument("invalid argument");
+    }
 }
 ///TRUCK
 Truck::Truck(const Truck &t):
@@ -64,7 +77,6 @@ Truck::Truck(const NumberPlate &number_plate, const Time     &plate_register_dat
 Truck::Type Truck::get_type(void) const{ return Truck::Type::truck; }
 
 std::istream& operator>>(std::istream &is,       Truck &t){
-    std::string s;
     is >> t.number_plate_;
     is >> t.plate_register_date_;
     int i; is >> i; t.fuel_ = static_cast<Truck::Fuel>(i);
@@ -73,6 +85,7 @@ std::istream& operator>>(std::istream &is,       Truck &t){
     size_t N; is >> N;
     t.cargo_ = std::vector<CargoTrans*>(N, NULL);
     for(CargoTrans* &p:t.cargo_){
+        p = new CargoTrans();
         input_CargoTrans(is, p);
     }
     return is;
