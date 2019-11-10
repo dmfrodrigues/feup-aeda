@@ -38,7 +38,20 @@ namespace utils {
      */
     void trim(std::string &s);
 
+    /**
+     * @brief Converts all characters in string to lowercase.
+     * @param s String to be transformed
+     */
     void to_lower(std::string &s);
+
+    /**
+     * @brief Confirms user input via a yes/no validation.
+     * @param msg Message to display before asking for input
+     * @param is Input stream
+     * @param os Output stream
+     * @return True if input is 'yes', false if inputs a 'no'
+     */
+    bool confirm(std::string msg, std::istream &is, std::ostream &os);
 
     /**
      * @brief       Convert integer to string.

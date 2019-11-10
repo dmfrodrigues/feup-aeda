@@ -74,6 +74,8 @@ private:
     void list_drivers () const;
     void list_managers() const;
     bool addUser();
+    template<class Deriv> bool deleteUser(User::Type type);
+    bool deleteUser(User::Type type);
     bool addTruck();
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
@@ -107,5 +109,30 @@ public:
         const std::string& get_id() const;
     };
 };
+
+template<class Deriv> bool App::deleteUser(User::Type type) {
+    while (true) {
+        std::vector<const Deriv*> users_filter = filter_users<User,Deriv,User::Type>(users_, type);
+        print_list(users_filter);
+        std::string id;
+        std::cout << "Choose user to delete (username): "; std::getline(std::cin, id); utils::trim(id);
+        User::Username username = User::Username(id);
+        typename std::vector<const Deriv*>::iterator it = utils::find_if(users_filter.begin(), users_filter.end(), [username](const User *u) { return u->get_username() == username; });
+        if (it == users_filter.end()) {
+            error("User doesn't exist (username doesn't have matches).");
+            continue;
+        }
+        std::vector<User*>::iterator user_it = std::find(users_.begin(), users_.end(), (User*)*it);
+        if (user_it == users_.end()) {
+            error("User doesn't exist (username doesn't have matches).");
+            continue;
+        }
+        if (!utils::confirm("Confirm the deletion of user \'" + (std::string)((*user_it)->get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        users_.erase(user_it);
+        std::cout << "User deleted.\n";
+        return true;
+    }
+    return false;
+}
 
 #endif //APP_H_INCLUDED

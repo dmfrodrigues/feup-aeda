@@ -22,6 +22,18 @@ void utils::to_lower(std::string &s) {
     std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) -> unsigned char { return std::tolower(c); });
 }
 
+bool utils::confirm(std::string msg, std::istream &is, std::ostream &os) {
+    std::string input;
+    while (true) {
+        if (!utils::input(msg, input, is, os)) return false;
+        to_lower(input);
+        if (input == "yes" || input == "y" || input == "no" || input == "n") break;
+        std::cout << "Error: Only \'yes\'/\'y\' or \'no\'/\'n\' are valid options.\n";
+    }
+    if (input == "yes" || input == "y") return true;
+    os << "Operation cancelled.\n"; return false;
+}
+
 std::string utils::itos(const long long int &i){
     std::stringstream ss;
     ss << i;

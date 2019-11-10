@@ -189,22 +189,13 @@ void App::start(){
     std::cout << "Check 1(login)\n";
     std::cout << "Check 1(login)\n";*/
     #ifdef TELMO
-        try {
-            addUser();
 
-        } catch(App::RepeatedId &e) {
-            std::cerr << "ERROR: " << e.what() << "\n";
-        }
+        deleteUser<Client>(User::Type::client);
+
         wait();
 
         list_clients();
 
-        try {
-            addTruck();
-
-        } catch(App::RepeatedId &e) {
-            std::cerr << "ERROR: " << e.what() << "\n";
-        }
     #endif
     #ifdef DIOGO
         save_all();
