@@ -86,7 +86,7 @@ private:
     template<class Deriv> bool deleteUser(const User::Type &type);
     template<class Deriv> User* chooseUser(const User::Type &type);
     template<class Deriv> bool editUser(const User::Type &type); // manager function
-    bool editUser(User *user); // edit own account
+    template<class Deriv> bool editUser(User *user); // edit own account
 
     bool addTruck();
     bool deleteTruck(); // not implemented, waiting for list_trucks
@@ -125,7 +125,8 @@ public:
 
 template<class Deriv> User* App::chooseUser(const User::Type &type) {
     while (true) {
-        std::vector<const Deriv*> users_filter = App::filter_users<User,Deriv,User::Type>(users_, type);
+        std::vector<const User*> v(users_.begin(), users_.end());
+        std::vector<const Deriv*> users_filter = App::filter_users<User,Deriv,User::Type>(v, type);
         print_list(users_filter);
         std::string id;
         if (!utils::input("Choose user (username): ", id, std::cin, std::cout)) return NULL;
@@ -171,6 +172,25 @@ template<class Deriv> bool App::editUser(const User::Type &type) {
     if (!utils::confirm("Confirm the edition of user \'" + (std::string)(user_copy.get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
     *user = user_copy;
     std::cout << "User edited.\n";
+    return true;
+}
+
+template<class Deriv> bool App::editUser(User *user) {
+    User::Type user_type = user->get_type();
+    int no_properties = 4 + (user_type == User::Type::manager || user_type == User::Type::driver);
+    int option;
+
+    Deriv user_copy = *dynamic_cast<Deriv*>(user);
+    while (true) {
+        option = 0;
+        App::display(&user_copy);
+        if (!utils::input("Choose property to change (type cancel to finish): ", option, std::cin, std::cout)) break;
+        if (option <= 0 || option > no_properties) { App::error("Option outside of range."); continue; }
+        user_copy.edit(option, std::cin, std::cout);
+    }
+    if (!utils::confirm("Confirm the changes (yes/no): ", std::cin, std::cout)) return false;
+    *user = user_copy;
+    std::cout << "Saved changes.\n";
     return true;
 }
 

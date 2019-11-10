@@ -190,7 +190,7 @@ void App::start(){
     std::cout << "Check 1(login)\n";*/
     #ifdef TELMO
 
-        editUser<Client>(User::Type::client);
+        editUser<Manager>(users_.at(0));
 
         wait();
 
