@@ -75,9 +75,13 @@ private:
     void list_drivers () const;
     void list_managers() const;
     bool addUser();
-    template<class Deriv> bool deleteUser(User::Type type);
-    bool deleteUser(User::Type type);
+    template<class Deriv> bool deleteUser(const User::Type &type);
+    template<class Deriv> User* chooseUser(const User::Type &type);
+    template<class Deriv> bool editUser(const User::Type &type); // manager function
+    bool editUser(User *user); // edit own account
+
     bool addTruck();
+    bool deleteTruck(); // not implemented, waiting for list_trucks
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
     const std::vector<User*>::iterator find_user(const User::Username &u);
@@ -111,29 +115,55 @@ public:
     };
 };
 
-template<class Deriv> bool App::deleteUser(User::Type type) {
+template<class Deriv> User* App::chooseUser(const User::Type &type) {
     while (true) {
-        std::vector<const Deriv*> users_filter = filter_users<User,Deriv,User::Type>(users_, type);
+        std::vector<const Deriv*> users_filter = App::filter_users<User,Deriv,User::Type>(users_, type);
         print_list(users_filter);
         std::string id;
-        std::cout << "Choose user to delete (username): "; std::getline(std::cin, id); utils::trim(id);
+        if (!utils::input("Choose user (username): ", id, std::cin, std::cout)) return NULL;
         User::Username username = User::Username(id);
-        typename std::vector<const Deriv*>::iterator it = utils::find_if(users_filter.begin(), users_filter.end(), [username](const User *u) { return u->get_username() == username; });
-        if (it == users_filter.end()) {
+        std::vector<User*>::iterator it = find_user(username);
+        if (it == users_.end()) {
             error("User doesn't exist (username doesn't have matches).");
             continue;
+        } else {
+            return *it;
         }
-        std::vector<User*>::iterator user_it = std::find(users_.begin(), users_.end(), (User*)*it);
-        if (user_it == users_.end()) {
-            error("User doesn't exist (username doesn't have matches).");
-            continue;
-        }
+    }
+}
+
+template<class Deriv> bool App::deleteUser(const User::Type &type) {
+    while (true) {
+        User *user = App::chooseUser<Deriv>(type);
+        if (user == NULL) return false;
+        std::vector<User*>::iterator user_it = std::find(users_.begin(), users_.end(), user);
         if (!utils::confirm("Confirm the deletion of user \'" + (std::string)((*user_it)->get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        delete *user_it;
         users_.erase(user_it);
         std::cout << "User deleted.\n";
         return true;
     }
     return false;
+}
+
+template<class Deriv> bool App::editUser(const User::Type &type) {
+    User *user = App::chooseUser<Deriv>(type);
+    if (user == NULL) return false;
+    User::Type user_type = user->get_type();
+    int no_properties = 4 + (user_type == User::Type::manager || user_type == User::Type::driver);
+    int option;
+    Deriv user_copy = *dynamic_cast<Deriv*>(user);
+    while (true) {
+        option = 0;
+        App::display(&user_copy);
+        if (!utils::input("Choose property to change (type cancel to finish): ", option, std::cin, std::cout)) break;
+        if (option <= 0 || option > no_properties) { App::error("Option outside of range."); continue; }
+        user_copy.edit(option, std::cin, std::cout);
+    }
+    if (!utils::confirm("Confirm the edition of user \'" + (std::string)(user_copy.get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+    *user = user_copy;
+    std::cout << "User edited.\n";
+    return true;
 }
 
 #endif //APP_H_INCLUDED

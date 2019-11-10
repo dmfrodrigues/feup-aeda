@@ -23,6 +23,20 @@ bool Person::in(std::istream &is, std::ostream &os) {
     return true;
 }
 
+bool Person::edit(int property, std::istream&is, std::ostream &os) {
+    switch(property) {
+    case 0:
+        if (!utils::input("Name: ", name_, is, os))                 return false;
+        else                                                        return true;
+        break;
+    case 1:
+        if (!utils::input("Phone Number: ", phonenumber_, is, os))  return false;
+        else                                                        return true;
+        break;
+    default:
+        return false;
+    }
+}
 
 std::istream& operator>>(std::istream &is,       Person &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Person &p){
@@ -86,6 +100,35 @@ bool User::in(std::istream &is, std::ostream &os) {
     return true;
 }
 
+bool User::edit(int property, std::istream&is, std::ostream &os) {
+    switch(property) {
+    case 0:
+        if (!utils::input("Username: ", username_, is, os))         return false;
+        else                                                        return true;
+        break;
+    case 1:
+        return Person::edit(0, is, os);
+        break;
+    case 2:
+        if (!address_.in(is, os))                                   return false;
+        else                                                        return true;
+        break;
+    case 3:
+        return Person::edit(1, is, os);
+        break;
+    case 4:
+        if (!utils::input("VAT: ", vat_, is, os))                   return false;
+        else                                                        return true;
+        break;
+    case 5:
+        if (!utils::input("Password: ", password_, is, os))         return false;
+        else                                                        return true;
+        break;
+    default:
+        return false;
+    }
+}
+
 bool User::verifyCredentials(const std::string &password) {
     return this->password_ == Password(password);
 }
@@ -117,6 +160,10 @@ bool Client::in(std::istream &is, std::ostream &os) {
     return User::in(is, os);
 }
 
+bool Client::edit(int property, std::istream&is, std::ostream &os) {
+    return User::edit(property, is, os);
+}
+
 std::istream& operator>>(std::istream &is,       Client &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Client &p){
     os << static_cast<const User&>(p);
@@ -145,6 +192,22 @@ bool Employee::in(std::istream &is, std::ostream &os) {
     return true;
 }
 
+bool Employee::edit(int property, std::istream&is, std::ostream &os) {
+    if (property < 5)
+        return User::edit(property, is, os);
+    switch(property) {
+    case 5:
+        if (!utils::input("Salary: ", base_salary_, is, os))        return false;
+        else                                                        return true;
+        break;
+    case 6:
+        return User::edit(5, is, os);
+        break;
+    default:
+        return false;
+    }
+}
+
 std::istream& operator>>(std::istream &is,       Employee &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Employee &p){
     os << static_cast<const User&>(p) << "\n"
@@ -170,6 +233,10 @@ bool Manager::in(std::istream &is, std::ostream &os) {
     return Employee::in(is, os);
 }
 
+bool Manager::edit(int property, std::istream&is, std::ostream &os) {
+    return Employee::edit(property, is, os);
+}
+
 std::istream& operator>>(std::istream &is,       Manager &p){ return p.input(is); }
 std::ostream& operator<<(std::ostream &os, const Manager &p){
     os << static_cast<const Employee&>(p);
@@ -192,6 +259,10 @@ User::Type Driver::get_type() const { return User::Type::driver; }
 
 bool Driver::in(std::istream &is, std::ostream &os) {
     return Employee::in(is, os);
+}
+
+bool Driver::edit(int property, std::istream&is, std::ostream &os) {
+    return Employee::edit(property, is, os);
 }
 
 std::istream& operator>>(std::istream &is,       Driver &p){ return p.input(is); }

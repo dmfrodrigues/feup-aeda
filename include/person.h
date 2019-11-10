@@ -46,6 +46,14 @@ public:
      */
     virtual bool in(std::istream &is, std::ostream &os);
 
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
+
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Person &p);
     /** @brief Overload of <em> operator<< </em>. */
@@ -126,6 +134,14 @@ public:
     virtual bool in(std::istream &is, std::ostream &os);
 
     /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
+
+    /**
      * @brief Tests if credentials given match with user.
      * @param username Username to verify
      * @param password Password to verify
@@ -182,6 +198,14 @@ public:
      */
     virtual bool in(std::istream &is, std::ostream &os);
 
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
+
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Client &p);
     /** @brief Overload of <em> operator<< </em>. */
@@ -230,6 +254,14 @@ public:
      */
     virtual bool in(std::istream &is, std::ostream &os);
 
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
+
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Employee &p);
@@ -275,6 +307,14 @@ public:
      */
     virtual bool in(std::istream &is, std::ostream &os);
 
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
+
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Manager &p);
     /** @brief Overload of <em> operator<< </em>. */
@@ -318,6 +358,14 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 
 
     /** @brief Overload of <em> operator>> </em>. */
