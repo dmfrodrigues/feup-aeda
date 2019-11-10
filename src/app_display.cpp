@@ -66,33 +66,33 @@ void App::print_list(const std::vector<const Manager*> &v) const{
 }
 
 void App::display(const Client *p) const{
-    std::cout << "╒══════════════╤═════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ Username     │ " << utils::ljust((std::string)p->get_username()                    ,78) << "\t │\n"
-              << "│ Name         │ " << utils::ljust((std::string)p->get_name()                        ,78) << "\t │\n"
-              << "│ Address      │ " << utils::ljust(p->get_address().format("%street (%postal %city)"),78) << "\t │\n"
-              << "│ Phone number │ " << utils::ljust((std::string)p->get_phonenumber()                 ,78) << "\t │\n"
-              << "│ VAT          │ " << utils::ljust((std::string)p->get_vat()                         ,78) << "\t │\n"
-              << "╘══════════════╧═════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
+    std::cout << "╒══════════════════╤═════════════════════════════════════════════════════════════════════════════════════╕\n"
+              << "│ [0] Username     │ " << utils::ljust((std::string)p->get_username()                        ,82) << "\t │\n"
+              << "│ [1] Name         │ " << utils::ljust((std::string)p->get_name()                            ,82) << "\t │\n"
+              << "│ [2] Address      │ " << utils::ljust(p->get_address().format("%street (%postal %city)")    ,82) << "\t │\n"
+              << "│ [3] Phone number │ " << utils::ljust((std::string)p->get_phonenumber()                     ,82) << "\t │\n"
+              << "│ [4] VAT          │ " << utils::ljust((std::string)p->get_vat()                             ,82) << "\t │\n"
+              << "╘══════════════════╧═════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
 
 void App::display(const Driver *p) const{
-    std::cout << "╒══════════════╤═════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ Username     │ " << utils::ljust((std::string)p->get_username()                    ,78) << "\t │\n"
-              << "│ Name         │ " << utils::ljust((std::string)p->get_name()                        ,78) << "\t │\n"
-              << "│ Address      │ " << utils::ljust(p->get_address().format("%street (%postal %city)"),78) << "\t │\n"
-              << "│ Phone number │ " << utils::ljust((std::string)p->get_phonenumber()                 ,78) << "\t │\n"
-              << "│ VAT          │ " << utils::ljust((std::string)p->get_vat()                         ,78) << "\t │\n"
-              << "│ Base salary  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())  ,78) << "\t │\n"
-              << "╘══════════════╧═════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
+    std::cout << "╒══════════════════╤═════════════════════════════════════════════════════════════════════════════════════╕\n"
+              << "│ [0] Username     │ " << utils::ljust((std::string)p->get_username()                        ,82) << "\t │\n"
+              << "│ [1] Name         │ " << utils::ljust((std::string)p->get_name()                            ,82) << "\t │\n"
+              << "│ [2] Address      │ " << utils::ljust(p->get_address().format("%street (%postal %city)")    ,82) << "\t │\n"
+              << "│ [3] Phone number │ " << utils::ljust((std::string)p->get_phonenumber()                     ,82) << "\t │\n"
+              << "│ [4] VAT          │ " << utils::ljust((std::string)p->get_vat()                             ,82) << "\t │\n"
+              << "│ [5] Base salary  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())      ,82) << "\t │\n"
+              << "╘══════════════════╧═════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
 
 void App::display(const Manager *p) const{
-    std::cout << "╒══════════════╤═════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ Username     │ " << utils::ljust((std::string)p->get_username()                    ,78) << "\t │\n"
-              << "│ Name         │ " << utils::ljust((std::string)p->get_name()                        ,78) << "\t │\n"
-              << "│ Address      │ " << utils::ljust(p->get_address().format("%street (%postal %city)"),78) << "\t │\n"
-              << "│ Phone number │ " << utils::ljust((std::string)p->get_phonenumber()                 ,78) << "\t │\n"
-              << "│ VAT          │ " << utils::ljust((std::string)p->get_vat()                         ,78) << "\t │\n"
-              << "│ Base salary  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())  ,78) << "\t │\n"
-              << "╘══════════════╧═════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
+    std::cout << "╒══════════════════╤═════════════════════════════════════════════════════════════════════════════════════╕\n"
+              << "│ [0] Username     │ " << utils::ljust((std::string)p->get_username()                        ,82) << "\t │\n"
+              << "│ [1] Name         │ " << utils::ljust((std::string)p->get_name()                            ,82) << "\t │\n"
+              << "│ [2] Address      │ " << utils::ljust(p->get_address().format("%street (%postal %city)")    ,82) << "\t │\n"
+              << "│ [3] Phone number │ " << utils::ljust((std::string)p->get_phonenumber()                     ,82) << "\t │\n"
+              << "│ [4] VAT          │ " << utils::ljust((std::string)p->get_vat()                             ,82) << "\t │\n"
+              << "│ [5] Base salary  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())      ,82) << "\t │\n"
+              << "╘══════════════════╧═════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
