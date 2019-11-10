@@ -10,12 +10,12 @@
 - [x] Use the concepts of inheritance and polymorphism
 - [x] User data should be saved in files, to use in future executions
 - [ ] Conveniently treat possible exceptions
-- [ ] Use search and sorting algorithms
+- [x] Use search and sorting algorithms
 - [ ] Implemented classes should be documented
 - [ ] Allow for basic operations CRUD (create, read, update, delete)
-- [ ] Use linear structures to manage entities
-- [ ] Allow for total and partial listings with user-defined criteria
-- [ ] Use different orderning criteria in the listings
+- [x] Use linear structures to manage entities
+- [x] Allow for total and partial listings with user-defined criteria
+- [x] Use different ordering criteria in the listings
 - [ ] Clients can request a service, with origin, destination, travel time,...
 - [ ] List the monthly values the company gets from all its transports, from a given truck, and from all trucks of a given kind.
 - [x] List clients
