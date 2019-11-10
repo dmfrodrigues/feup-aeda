@@ -1,6 +1,13 @@
 #include "temperature.h"
 
-Temperature::Temperature(float temp):temp_(temp){}
+#include "utils.h"
+
+Temperature::Temperature():Temperature(20.0){}
+Temperature::Temperature(float temp){
+    if(temp < -273.15 || 100 < temp)
+        throw InvalidTemperature(temp);
+    temp_ = temp;
+}
 Temperature Temperature::operator+(const Temperature &t) const{ return Temperature(temp_+t.temp_); }
 Temperature Temperature::operator-(const Temperature &t) const{ return Temperature(temp_-t.temp_); }
 bool Temperature::operator< (const Temperature &t)const{ return (temp_ < t.temp_); }
@@ -11,6 +18,11 @@ bool Temperature::operator<=(const Temperature &t)const{ return !(*this > t); }
 
 std::istream& operator>>(std::istream &is,       Temperature &t){ return (is >> t.temp_); }
 std::ostream& operator<<(std::ostream &os, const Temperature &t){ return (os << t.temp_); }
+
+Temperature::InvalidTemperature::InvalidTemperature(const float &temp):
+    std::invalid_argument("invalid temperature "+utils::ftos("+%.2f", temp)),
+    temp_(temp){}
+const float& Temperature::InvalidTemperature::get_temperature() const{ return temp_; }
 
 TemperatureRange::TemperatureRange(const Temperature &tmin, const Temperature &tmax){
     if(tmin > tmax)

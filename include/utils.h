@@ -114,7 +114,9 @@ namespace utils {
             const T& get_ufloat() const;
         };
     };
-    ///STRING_REGEX
+    /**
+     * @brief String restricted by regex. Throws @ref FailedRegex when assigned with non-conformant string
+     */
     class string_regex{
     private:
         std::string s_;
@@ -129,7 +131,7 @@ namespace utils {
 
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
         friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);
-
+        /** @brief Exception thrown when string does not match regex */
         class FailedRegex: public std::invalid_argument{
         private:
             const std::string s_;

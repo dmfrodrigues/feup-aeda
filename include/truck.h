@@ -12,19 +12,18 @@
 #include <vector>
 #include <utility>
 
+typedef utils::ufloat<float> Distance;
+
 /**
  * @brief Superclass of all transports of the company.
  * @ref   Cargo
- * @ref   Currency
  */
-
-typedef utils::ufloat<float> Distance;
-
 class Truck {
 public:
     /** @brief Class to store number plates. */
     class NumberPlate{
     public:
+        /** @brief Class to store number plate number (i.e., excluding country and other info) */
         class Number: public utils::string_regex{
         public:
             /** @brief   Regular expression string that describes a valid number plate. */
