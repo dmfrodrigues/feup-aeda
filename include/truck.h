@@ -72,6 +72,9 @@ public:
         Electric,
         Hybrid
     };
+    enum Type{
+        truck
+    };
 private:
     //std::vector<Event> logs_;
     NumberPlate number_plate_;
@@ -89,12 +92,7 @@ public:
      * @brief Copy Constructor.
      * @param truck Truck that will be used to form the new truck
      */
-    Truck(const Truck& truck);
-
-    static Fuel processFuel(const std::string &s);
-
-    const NumberPlate& get_id() const{ return number_plate_; }
-
+    Truck(const Truck& t);
     /**
      * @brief Constructor of all information of a general truck.
      * @param max_weight    Maximum weight the truck can transport
@@ -104,6 +102,13 @@ public:
     Truck(const NumberPlate &number_plate, const Time     &plate_register_date,
           const Fuel        &fuel        , const Distance &max_reach          ,
           const Category    &category    , std::vector<CargoTrans*> cargo);
+    virtual ~Truck(){}
+
+    const NumberPlate& get_id() const{ return number_plate_; }
+
+    virtual Type get_type(void) const;
+
+    static Fuel processFuel(const std::string &s);
 
     /** @brief   Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Truck &t);

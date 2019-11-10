@@ -6,8 +6,8 @@ size_t App::load_ptr(std::ifstream &is, std::vector<Base*> &m_in){
     size_t N; is >> N;
     for(size_t i = 0; i < N; ++i){
         Base *m = new Deriv(); is >> *dynamic_cast<Deriv*>(m);
-        if(utils::linearfind(m_in.begin(), m_in.end(), m->get_id(),
-          [](const Base* p, const ID &s){ return (p->get_id() == s); }) != m_in.end()){
+        if(utils::find_if(m_in.begin(), m_in.end(),
+          [&m](const Base* p){ return (p->get_id() == m->get_id()); }) != m_in.end()){
             auto id = m->get_id();
             delete m;
             throw App::RepeatedId((std::string)id);
@@ -122,8 +122,8 @@ bool App::addUser() {
         }
         wait();
     }
-    if(utils::linearfind(users_.begin(), users_.end(), user->get_username(),
-      [](const User* u, const User::Username &id){ return (u->get_username() == id); }) != users_.end()){
+    if(utils::find_if(users_.begin(), users_.end(),
+      [user](const User* u){ return (u->get_username() == user->get_username()); }) != users_.end()){
         User::Username id = user->get_username();
         delete user;
         throw App::RepeatedId((std::string)id);
@@ -136,8 +136,8 @@ bool App::addUser() {
 bool App::addTruck() {
     Truck *truck = new Truck();
     if (!truck->in(std::cin, std::cout)) { delete truck; return false; }
-    if(utils::linearfind(trucks_.begin(), trucks_.end(), truck->get_id(),
-      [](const Truck* t, const Truck::NumberPlate &id){ return (t->get_id() == id); }) != trucks_.end()){
+    if(utils::find_if(trucks_.begin(), trucks_.end(),
+      [&truck](const Truck* t){ return (t->get_id() == truck->get_id()); }) != trucks_.end()){
         Truck::NumberPlate id = truck->get_id();
         delete truck;
         throw App::RepeatedId((std::string)id);

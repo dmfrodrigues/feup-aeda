@@ -1,31 +1,25 @@
+/**
+ * @file address.h
+ */
+
 #ifndef ADDRESS_H_INCLUDED
 #define ADDRESS_H_INCLUDED
 
+#include "utils.h"
 #include <string>
 #include <iostream>
-#include <regex>
 
 /**
  * @brief Class for real-world address.
  */
 class Address{
 public:
-    class PostalCode{
-    private:
-        static const std::regex REGEX;
-        std::string postal_code_;
+    class PostalCode: public utils::string_regex{
     public:
         static const std::string REGEX_STR;
-        PostalCode(const std::string &postal_code = "");
-        static void SetPostalCode(PostalCode &pc, const std::string &s) { pc = PostalCode(s); }
-        operator std::string() const{ return postal_code_; }
-        class InvalidPostalCode: public std::invalid_argument{
-        private:
-            std::string postal_code_;
-        public:
-            InvalidPostalCode(const std::string &postal_code);
-            const std::string& get_postal_code() const{ return postal_code_; }
-        };
+        explicit PostalCode();
+        explicit PostalCode(const std::string &postal_code);
+        PostalCode& operator=(const std::string &postal_code);
     };
 private:
     std::string street_;
@@ -70,7 +64,7 @@ public:
     std::string format(const std::string &fmt = DEFAULT_FORMAT) const;
 
     bool operator<(const Address &a)const;
-    
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream

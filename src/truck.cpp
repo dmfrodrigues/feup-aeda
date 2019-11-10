@@ -49,10 +49,10 @@ Truck::Category& Truck::Category::operator=(const std::string &category){
     return *this;
 }
 ///TRUCK
-Truck::Truck(const Truck &truck):
-    number_plate_(truck.number_plate_), plate_register_date_(truck.plate_register_date_),
-    fuel_        (truck.fuel_        ), max_reach_          (truck.max_reach_          ),
-    category_    (truck.category_    ), cargo_              (truck.cargo_              ){}
+Truck::Truck(const Truck &t):
+    number_plate_(t.number_plate_), plate_register_date_(t.plate_register_date_),
+    fuel_        (t.fuel_        ), max_reach_          (t.max_reach_          ),
+    category_    (t.category_    ), cargo_              (t.cargo_              ){}
 
 Truck::Truck(const NumberPlate &number_plate, const Time     &plate_register_date,
              const Fuel        &fuel        , const Distance &max_reach          ,
@@ -61,6 +61,7 @@ Truck::Truck(const NumberPlate &number_plate, const Time     &plate_register_dat
     fuel_        (fuel        ), max_reach_          (max_reach          ),
     category_    (category    ), cargo_              (cargo){}
 
+Truck::Type Truck::get_type(void) const{ return Truck::Type::truck; }
 
 std::istream& operator>>(std::istream &is,       Truck &t){
     std::string s;

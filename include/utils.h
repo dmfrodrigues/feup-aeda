@@ -1,3 +1,7 @@
+/**
+ * @file utils.h
+ */
+
 #ifndef UTILS_H_INCLUDED
 #define UTILS_H_INCLUDED
 
@@ -140,8 +144,8 @@ namespace utils {
     template<class T, class Compare> void mergesort(std::vector<T> &v, Compare comp){ utils::mergesort(v, 0, v.size(), comp); }
     template<class T               > void mergesort(std::vector<T> &v){ utils::mergesort(v, std::less<T>()); }
     ///LINEARFIND
-    template<class Iterator, class T, class Compare> Iterator linearfind(Iterator l, Iterator r, T obj, Compare comp);
-    template<class Iterator, class T               > Iterator linearfind(Iterator l, Iterator r, T obj){ utils::linearfind(l, r, obj, std::equal<T>()); }
+    template<class Iterator, class Pred> Iterator find_if(Iterator l, Iterator r, Pred pred);
+    template<class Iterator, class T            > Iterator find   (Iterator l, Iterator r, T obj);
     ///OBJECT INPUT
     /**
      * @brief Verify is string given is cancel command ("cancel").
@@ -201,15 +205,17 @@ template<class T, class Compare> void utils::mergesort(std::vector<T> &v, const 
 }
 
 ///LINEAR FIND
-template<class Iterator, class T, class Compare> Iterator utils::linearfind(Iterator l, Iterator r, T obj, Compare comp){
+template<class Iterator, class Pred> Iterator utils::find_if(Iterator l, Iterator r, Pred pred){
     Iterator i = l;
     while(i != r){
-        if(comp(*i,obj)) break;
+        if(pred(*i)) break;
         ++i;
     }
     return i;
 }
-
+template<class Iterator, class T   > Iterator utils::find   (Iterator l, Iterator r, T obj){
+    return utils::find_if(l, r, [obj](const T &t){ return (t == obj); });
+}
 ///OBJECT INPUT
 template<class T> bool utils::input(const std::string &msg, T &object, std::istream &is, std::ostream &os) {
     std::string input;

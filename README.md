@@ -30,7 +30,7 @@
 - [ ] Add, remove and edit truck
 - [ ] Add, remove and edit client, manager and driver
 - [ ] Allow clients and managers to add services
-- [ ] Show list of clients
+- [x] Show list of clients
 - [ ] Show list of trucks
 - [ ] Show to a driver a list of his services
 

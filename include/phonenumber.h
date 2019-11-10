@@ -1,3 +1,7 @@
+/**
+ * @file phonenumber.h
+ */
+
 #ifndef PHONENUMBER_H_INCLUDED
 #define PHONENUMBER_H_INCLUDED
 
@@ -15,14 +19,16 @@ public:
     /**
      * @brief   Empty constructor.
      */
-    PhoneNumber();
+    explicit PhoneNumber();
     /**
      * @brief   Constructs from string containing phone number.
      *
      * @param   number  String with phone number
      * @exception InvalidPhoneNumber    When phone number does not match regular expression
      */
-    PhoneNumber(const std::string &number);
+    explicit PhoneNumber(const std::string &number);
+
+    PhoneNumber& operator=(const std::string &number);
 };
 
 #endif //PHONENUMBER_H_INCLUDED

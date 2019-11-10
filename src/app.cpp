@@ -54,7 +54,7 @@ std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const U
 }
 
 const std::vector<User*>::iterator App::find_user(const User::Username &u){
-    return utils::linearfind(users_.begin(), users_.end(), u, [](const User *m, const User::Username &s){ return (m->get_username() == s); });
+    return utils::find_if(users_.begin(), users_.end(), [u](const User *m){ return (m->get_username() == u); });
 }
 
 User* App::verifyUser(const std::string &username, const std::string &password) {
@@ -208,9 +208,9 @@ void App::start(){
     #endif
     #ifdef DIOGO
         save_all();
-        //list_clients();
+        list_clients();
         //list_managers();
-        list_drivers();
+        //list_drivers();
     #endif
 }
 

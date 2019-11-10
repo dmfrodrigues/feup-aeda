@@ -1,3 +1,7 @@
+/**
+ * @file temperature.h
+ */
+
 #ifndef TEMPERATURE_H_INCLUDED
 #define TEMPERATURE_H_INCLUDED
 

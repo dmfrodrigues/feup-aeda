@@ -74,7 +74,7 @@ std::string utils::urldecode(const std::string &s){
     size_t i = 0;
     while(i < s.size()){
         if(s[i] == '%'){
-            if(i+2 >= s.size()) return ret;
+            if(i+2 >= s.size()) throw std::invalid_argument("invalid argument "+s);
             std::stringstream ss;
             ss << std::hex << s.substr(i+1,2);
             int a; ss >> a;

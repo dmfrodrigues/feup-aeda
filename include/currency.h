@@ -1,3 +1,7 @@
+/**
+ * @file currency.h
+ */
+
 #ifndef CURRENCY_H_INCLUDED
 #define CURRENCY_H_INCLUDED
 

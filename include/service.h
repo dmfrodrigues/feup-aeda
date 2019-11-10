@@ -1,3 +1,7 @@
+/**
+ * @file service.h
+ */
+
 #ifndef SERVICE_H_INCLUDED
 #define SERVICE_H_INCLUDED
 

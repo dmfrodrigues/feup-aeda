@@ -1,3 +1,7 @@
+/**
+ * @file app.h
+ */
+
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
 
@@ -46,16 +50,20 @@ private:
     void display(const Driver  *p) const;
     void display(const Manager *p) const;
     ///Lists
-    template<class Deriv> static std::vector<const Deriv*> filter_users(const std::vector<User*> &v, const User::Type &t);
+    template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter_users(const std::vector<Base*> &v, const Type &t);
     static void list_clients_commands();
+    static void list_drivers_commands();
     static void list_managers_commands();
+    static void list_commands(const User::Type &t);
+    static void list_commands(const Truck::Type &t);
+    static void list_users_commands(const User::Type &t);
     static void list_sort_getcomp(int i, std::function<bool(const Client *, const Client *)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Driver *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
-    template<class T> void list_users(const User::Type &t) const;
+    template<class Base, class Deriv, class Type> void list(const Type &t) const;
     ///Commands
     static std::string prompt();
     static void wait();

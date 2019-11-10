@@ -1,10 +1,10 @@
 #include "app.h"
 
-template<class Deriv>
-std::vector<const Deriv*> App::filter_users(const std::vector<User*> &v, const User::Type &t){
-    std::vector<User*> v1 = utils::filter(v, [&t](const User *p){ return (p->get_type() == t); });
+template<class Base, class Deriv, class Type>
+std::vector<const Deriv*> App::filter_users(const std::vector<Base*> &v, const Type &t){
+    std::vector<Base*> v1 = utils::filter(v, [&t](const Base *p){ return (p->get_type() == t); });
     std::vector<const Deriv*> retv = std::vector<const Deriv*>(v1.size());
-    std::transform(v1.begin(), v1.end(), retv.begin(), [](const User *p){
+    std::transform(v1.begin(), v1.end(), retv.begin(), [](const Base *p){
         const Deriv *ret = dynamic_cast<const Deriv*>(p);
         if(ret == nullptr) throw std::bad_cast();
         return ret;
@@ -14,21 +14,54 @@ std::vector<const Deriv*> App::filter_users(const std::vector<User*> &v, const U
 
 void App::list_clients_commands(){
     std::cout << "\n"
-              << "Commands:\n"
-              << "sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
-              << "search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,4].\n"
-              << "reset               Reset to initial selection.\n"
-              << "back                Go back.\n";
+              << "COMMANDS:\n\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,4].\n"
+              << "    details \"\033[4mSTR\033[0m\"       Print details of client with username \033[4mSTR\033[0m\n"
+              << "    reset               Reset to initial selection.\n"
+              << "    back                Go back.\n";
+    std::cout << std::endl;
+}
+
+void App::list_drivers_commands(){
+    std::cout << "\n"
+              << "COMMANDS:\n\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
+              << "    details \"\033[4mSTR\033[0m\"       Print details of driver with username \033[4mSTR\033[0m\n"
+              << "    reset               Reset to initial selection.\n"
+              << "    back                Go back.\n";
     std::cout << std::endl;
 }
 
 void App::list_managers_commands(){
     std::cout << "\n"
-              << "Commands:\n"
-              << "sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
-              << "search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
-              << "reset               Reset to initial selection.\n"
-              << "back                Go back.\n";
+              << "COMMANDS:\n\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
+              << "    details \"\033[4mSTR\033[0m\"       Print details of manager with username \033[4mSTR\033[0m\n"
+              << "    reset               Reset to initial selection.\n"
+              << "    back                Go back.\n";
+    std::cout << std::endl;
+}
+
+void App::list_commands(const User::Type &t){
+    switch(t){
+        case User::Type::client : list_clients_commands (); break;
+        case User::Type::driver : list_drivers_commands (); break;
+        case User::Type::manager: list_managers_commands(); break;
+        default: break;
+    }
+}
+
+void App::list_commands(const Truck::Type &t){
+    std::cout << "\n"
+              << "COMMANDS:\n\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
+              << "    details \"\033[4mSTR\033[0m\"       Print details of truck with number plate \033[4mSTR\033[0m\n"
+              << "    reset               Reset to initial selection.\n"
+              << "    back                Go back.\n";
     std::cout << std::endl;
 }
 
@@ -102,19 +135,19 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
     }
 }
 
-template<class T> void App::list_users(const User::Type &t) const{
-    std::vector<const T*> v = filter_users<T>(users_, t);
+template<class Base, class Deriv, class Type> void App::list(const Type &t) const{
+    std::vector<const Deriv*> v = filter_users<Base,Deriv,Type>(users_, t);
     while(true){
         CLEAR();
         print_list(v);
-        list_clients_commands();
+        list_commands(t);
         std::vector<std::string> s = utils::parse_command(prompt());
         if(s.size() >= 1){
             //====SORT==========================================================
             if(s[0] == "sort"){
                 if(s.size() != 2){ error("wrong number of arguments"); continue; }
                 int i; try{ i = utils::stoi(s[1]); } catch(const std::invalid_argument &e){ error("invalid NUM"); continue; }
-                std::function<bool(const T*, const T*)> cmp;
+                std::function<bool(const Deriv*, const Deriv*)> cmp;
                 try{
                     list_sort_getcomp(i, cmp);
                     utils::mergesort(v,cmp);
@@ -124,16 +157,28 @@ template<class T> void App::list_users(const User::Type &t) const{
             if(s[0] == "search"){
                 if(s.size() != 3){ error("wrong number of arguments"); continue; }
                 int i; try{ i = utils::stoi(s[1]); } catch(const std::invalid_argument &e){ error("invalid NUM"); continue; }
-                std::function<bool(const T*)> cmp;
+                std::function<bool(const Deriv*)> cmp;
                 try{
                     list_filter_getvalid(i, s[2], cmp);
                     v = utils::filter(v,cmp);
                 }catch(const std::invalid_argument &e){ error(e.what()); }
             }else
+            //====DETAILS=======================================================
+            if(s[0] == "details"){
+                if(s.size() != 2){ error("wrong number of arguments"); continue; }
+                const std::string &u = s[1];
+                auto it = utils::find_if(v.begin(), v.end(),
+                  [&u](const Deriv *p){ return (std::string(p->get_id()) == u); });
+                if(it == v.end()){ error("no such username in table"); continue; }
+                std::cout << std::endl;
+                display(dynamic_cast<const Deriv*>(*it));
+                std::cout << std::endl;
+                wait();
+            }else
             //====RESET=========================================================
             if(s[0] == "reset"){
                 if(s.size() != 1) error("wrong number of arguments");
-                else              v = filter_users<T>(users_, User::Type::client);
+                else              v = filter_users<Base,Deriv,Type>(users_, t);
             }else
             //====BACK==========================================================
             if(s[0] == "back"){
@@ -147,13 +192,18 @@ template<class T> void App::list_users(const User::Type &t) const{
 }
 
 void App::list_clients() const{
-    list_users<Client>(User::Type::client);
+    list<User,Client, User::Type>(User::Type::client);
 }
 
 void App::list_drivers() const{
-    list_users<Driver>(User::Type::driver);
+    list<User,Driver ,User::Type>(User::Type::driver);
 }
 
 void App::list_managers() const{
-    list_users<Manager>(User::Type::manager);
+    list<User,Manager,User::Type>(User::Type::manager);
 }
+/*
+void App::list_trucks() const{
+
+}
+*/

@@ -20,7 +20,6 @@ std::istream& Person::input(std::istream &is){
 bool Person::in(std::istream &is, std::ostream &os) {
     if (!utils::input("Name: ",         name_,        is, os)|
         !utils::input("Phone Number: ", phonenumber_, is, os)) return false;
-
     return true;
 }
 

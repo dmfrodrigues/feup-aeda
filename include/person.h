@@ -1,3 +1,7 @@
+/**
+ * @file person.h
+ */
+
 #ifndef PERSON_H_INCLUDED
 #define PERSON_H_INCLUDED
 
@@ -33,7 +37,7 @@ public:
 
     virtual const std::string& get_name() const final{ return name_; }
     virtual const PhoneNumber& get_phonenumber() const final{ return phonenumber_; }
-    
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream
@@ -112,7 +116,7 @@ public:
      * @return User type
      */
     virtual Type get_type(void) const = 0;
-    
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream
@@ -169,7 +173,7 @@ public:
      * @return UserType::client type
      */
     virtual Type get_type(void) const;
-    
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream
@@ -217,7 +221,7 @@ public:
      * @return User type
      */
     virtual Type get_type(void) const = 0;
-    
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream
@@ -262,7 +266,7 @@ public:
      * @return UserType::manager type
      */
     virtual Type get_type(void) const;
-    
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream
@@ -306,7 +310,7 @@ public:
      * @return UserType::driver type
      */
     virtual Type get_type(void) const;
-    
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream
