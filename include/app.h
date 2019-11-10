@@ -46,12 +46,17 @@ private:
     static void print_list(const std::vector<const Manager*> &v);
     static void print_list(const std::vector<const Driver *> &v);
     static void print_list(const std::vector<const Client *> &v);
+    static void print_list(const std::vector<const Truck  *> &v);
     static void display(const Client  *p);
     static void display(const Driver  *p);
     static void display(const Manager *p);
     static void display(const Truck   *p);
+    static void display(const CargoTrans             *p);
+    static void display(const CargoTransAnimal       *p);
+    static void display(const CargoTransRefrigerated *p);
+    static void display(const CargoTransDangerous    *p);
     ///Lists
-    template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter_users(const std::vector<Base*> &v, const Type &t);
+    template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter_users(const std::vector<const Base*> &v, const Type &t);
     static void list_clients_commands();
     static void list_drivers_commands();
     static void list_managers_commands();
@@ -61,10 +66,12 @@ private:
     static void list_sort_getcomp(int i, std::function<bool(const Client *, const Client *)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp);
+    static void list_sort_getcomp(int i, std::function<bool(const Truck  *, const Truck  *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Driver *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
-    template<class Base, class Deriv, class Type> void list(const Type &t) const;
+    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Truck  *)> &cmp);
+    template<class Base, class Deriv, class Type> void list(const std::vector<const Base*> &w, const Type &t) const;
     ///Commands
     static std::string prompt();
     static void wait();
@@ -74,6 +81,7 @@ private:
     void list_clients () const;
     void list_drivers () const;
     void list_managers() const;
+    void list_trucks  () const;
     bool addUser();
     template<class Deriv> bool deleteUser(const User::Type &type);
     template<class Deriv> User* chooseUser(const User::Type &type);

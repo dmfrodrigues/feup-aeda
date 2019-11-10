@@ -110,6 +110,7 @@ public:
     const Fuel&        get_fuel             () const{ return fuel_               ; }
     const Distance&    get_range            () const{ return max_reach_          ; }
     const Category&    get_category         () const{ return category_           ; }
+    std::vector<const CargoTrans*> get_cargo() const;
 
     virtual Type get_type(void) const;
 

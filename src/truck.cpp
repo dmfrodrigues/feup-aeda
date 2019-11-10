@@ -74,6 +74,11 @@ Truck::Truck(const NumberPlate &number_plate, const Time     &plate_register_dat
     fuel_        (fuel        ), max_reach_          (max_reach          ),
     category_    (category    ), cargo_              (cargo){}
 
+std::vector<const CargoTrans*> Truck::get_cargo() const{
+    std::vector<const CargoTrans*> ret(cargo_.begin(), cargo_.end());
+    return ret;
+}
+
 Truck::Type Truck::get_type(void) const{ return Truck::Type::truck; }
 
 std::istream& operator>>(std::istream &is,       Truck &t){
