@@ -50,6 +50,10 @@ private:
     static void display(const Driver  *p);
     static void display(const Manager *p);
     static void display(const Truck   *p);
+    static void display(const CargoTrans             *p);
+    static void display(const CargoTransAnimal       *p);
+    static void display(const CargoTransRefrigerated *p);
+    static void display(const CargoTransDangerous    *p);
     ///Lists
     template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter_users(const std::vector<Base*> &v, const Type &t);
     static void list_clients_commands();

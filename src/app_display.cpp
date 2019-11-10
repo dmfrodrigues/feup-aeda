@@ -102,8 +102,40 @@ void App::display(const Truck *p){
               << "│ [0] Number plate │ " << utils::ljust((std::string)p->get_numberplate()                     ,82) << "\t │\n"
               << "│ [2] Date         │ " << utils::ljust(p->get_plateregisterdate().format("%m/%Y")            ,82) << "\t │\n"
               << "│ [2] Fuel         │ " << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,82) << "\t │\n"
-              << "│ [3] Range        │ " << utils::ljust(utils::ftos("%.1f", (float)p->get_range())            ,82) << "\t │\n"
-              << "│ [4] Category     │ " << utils::ljust((std::string)p->get_category()                        ,82) << "\t │\n"
-              //<< "│ [5] Base salary  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())      ,82) << "\t │\n"
-              << "╘══════════════════╧═════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
+              << "│ [3] Range (km)   │ " << utils::ljust(utils::ftos("%.1f", (float)p->get_range())            ,82) << "\t │\n"
+              << "│ [4] Category     │ " << utils::ljust((std::string)p->get_category()                        ,82) << "\t │\n";
+    auto cargo = p->get_cargo();
+    for(size_t i = 0; i < cargo.size(); ++i){
+        const CargoTrans *q = cargo[i];
+        std::cout << "├──────────────────┴─────────────────────────────────────────────────────────────────────────────────────┤\n"
+                  << "│ [5] Cargo " << utils::rjust("#"+utils::itos(i), 6)
+                                    << " : " + utils::ljust(Cargo::type_string(q->get_type()), 82) << "\t │\n"
+                  << "├──────────────────┬─────────────────────────────────────────────────────────────────────────────────────┤\n";
+        App::display(q);
+    }
+    std::cout << "╘══════════════════╧═════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
+}
+
+void App::display(const CargoTrans             *p){
+    switch(p->get_type()){
+        case Cargo::Animal      : display(dynamic_cast<const CargoTransAnimal      *>(p)); break;
+        case Cargo::Refrigerated: display(dynamic_cast<const CargoTransRefrigerated*>(p)); break;
+        case Cargo::Dangerous   : display(dynamic_cast<const CargoTransDangerous   *>(p)); break;
+        case Cargo::Normal      :
+            std::cout << "│ [0] Weight (kg)  │ " << utils::ljust(utils::ftos("%.0f", p->get_weight()), 82) << "\t │\n"
+                      << "│ [1] Description  │ " << utils::ljust(p->get_description()                , 82) << "\t │\n"
+                      << "| [2] Price base € │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_pricebase()),82)<< "\t │\n"
+                      << "│ [3] Expense €/km │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_expensesperkm()),82)<<"\t │\n";
+        break;
+        default: break;
+    }
+}
+void App::display(const CargoTransAnimal       *p){
+
+}
+void App::display(const CargoTransRefrigerated *p){
+
+}
+void App::display(const CargoTransDangerous    *p){
+
 }

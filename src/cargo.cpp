@@ -29,6 +29,16 @@ std::ostream& output_Cargo(std::ostream &os, const Cargo *c){
     return c->output(os);
 }
 
+std::string Cargo::type_string(const Type &t){
+    switch(t){
+        case Cargo::Type::Normal      : return "Normal"      ;
+        case Cargo::Type::Animal      : return "Animal"      ;
+        case Cargo::Type::Refrigerated: return "Refrigerated";
+        case Cargo::Type::Dangerous   : return "Dangerous"   ;
+        default: throw std::invalid_argument("invalid Cargo::Type");
+    }
+}
+
 Cargo::Cargo(): weight_(0){}
 Cargo::Cargo(Weight weight, const std::string &description):weight_(weight), description_(description){}
 std::istream& Cargo::input(std::istream &is){
