@@ -48,6 +48,7 @@ public:
         Toxic,
         Radioactive,
     };
+    static std::string type_string(const Type &t);
 private:
     Weight weight_; /// @brief Weight of an unit, total weight will be determined by the quantity and weight of an unit.
     std::string description_;
@@ -70,6 +71,9 @@ public:
      */
     Cargo(Weight weight, const std::string &description);
     virtual ~Cargo(){};
+
+    const Weight&      get_weight     () const{ return weight_     ; }
+    const std::string& get_description() const{ return description_; }
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Normal; }
 };
@@ -174,6 +178,8 @@ protected:
 public:
     CargoTrans(){}
     CargoTrans(Weight weight, const std::string &description, Currency expenses_per_km);
+    const Currency& get_pricebase    () const{ return price_base_     ; }
+    const Currency& get_expensesperkm() const{ return expenses_per_km_; }
 };
 
 /**
