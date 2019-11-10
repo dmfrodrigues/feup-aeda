@@ -208,8 +208,9 @@ void App::start(){
     #endif
     #ifdef DIOGO
         save_all();
-        list_clients();
-        list_managers();
+        //list_clients();
+        //list_managers();
+        list_drivers();
     #endif
 }
 

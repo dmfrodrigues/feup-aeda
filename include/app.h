@@ -50,8 +50,10 @@ private:
     static void list_clients_commands();
     static void list_managers_commands();
     static void list_sort_getcomp(int i, std::function<bool(const Client *, const Client *)> &cmp);
+    static void list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client *)> &cmp);
+    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Driver *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
     template<class T> void list_users(const User::Type &t) const;
     ///Commands

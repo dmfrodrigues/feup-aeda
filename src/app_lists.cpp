@@ -43,6 +43,18 @@ void App::list_sort_getcomp(int i, std::function<bool(const Client*, const Clien
     }
 }
 
+void App::list_sort_getcomp(int i, std::function<bool(const Driver*, const Driver*)> &cmp){
+    switch(i){
+        case 0: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_username   () < p2->get_username   ()); }; break;
+        case 1: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_name       () < p2->get_name       ()); }; break;
+        case 2: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_address    () < p2->get_address    ()); }; break;
+        case 3: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }; break;
+        case 4: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_vat        () < p2->get_vat        ()); }; break;
+        case 5: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }; break;
+        default: throw std::invalid_argument("NUM outside range");
+    }
+}
+
 void App::list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp){
     switch(i){
         case 0: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_username   () < p2->get_username   ()); }; break;
@@ -62,6 +74,18 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         case 2: cmp = [str](const Client *p){ return (p->get_address().format()        .find(str) != std::string::npos); }; break;
         case 3: cmp = [str](const Client *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }; break;
         case 4: cmp = [str](const Client *p){ return (std::string(p->get_vat        ()).find(str) != std::string::npos); }; break;
+        default: throw std::invalid_argument("NUM outside range");
+    }
+}
+
+void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Driver*)> &cmp){
+    switch(i){
+        case 0: cmp = [str](const Driver *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
+        case 1: cmp = [str](const Driver *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
+        case 2: cmp = [str](const Driver *p){ return (p->get_address().format()        .find(str) != std::string::npos); }; break;
+        case 3: cmp = [str](const Driver *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }; break;
+        case 4: cmp = [str](const Driver *p){ return (std::string(p->get_vat        ()).find(str) != std::string::npos); }; break;
+        case 5: cmp = [str](const Driver *p){ return (Currency(std::stod(str))                    ==p->get_base_salary());};break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
@@ -127,7 +151,7 @@ void App::list_clients() const{
 }
 
 void App::list_drivers() const{
-    //list_users<Driver>(User::Type::driver);
+    list_users<Driver>(User::Type::driver);
 }
 
 void App::list_managers() const{
