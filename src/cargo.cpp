@@ -18,13 +18,13 @@ std::istream& input_Cargo(std::istream &is,       Cargo *c){
         case Cargo::Type::Animal      : c = new CargoAnimal      (); break;
         case Cargo::Type::Refrigerated: c = new CargoRefrigerated(); break;
         case Cargo::Type::Dangerous   : c = new CargoDangerous   (); break;
-        default: throw 1;
+        default: is.setstate(std::ios::failbit);
     }
     return c->input(is);
 }
 
 std::ostream& output_Cargo(std::ostream &os, const Cargo *c){
-    if(c == NULL) throw 1;
+    if(c == NULL) throw std::invalid_argument("*c is a null pointer");
     os << (int)c->get_type() << "\n";
     return c->output(os);
 }
@@ -91,13 +91,13 @@ std::istream& input_CargoTrans(std::istream &is,       CargoTrans *c){
         case Cargo::Type::Animal      : c = new CargoTransAnimal      (); break;
         case Cargo::Type::Refrigerated: c = new CargoTransRefrigerated(); break;
         case Cargo::Type::Dangerous   : c = new CargoTransDangerous   (); break;
-        default: throw 1;
+        default: is.setstate(std::ios::failbit); break;
     }
     return c->input(is);
 }
 
 std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c){
-    if(c == NULL) throw 1;
+    if(c == NULL) throw std::invalid_argument("*c is a null pointer");
     os << (int)c->get_type() << "\n";
     return c->output(os);
 }

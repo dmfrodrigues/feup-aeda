@@ -71,6 +71,7 @@ public:
         Electric,
         Hybrid
     };
+    static std::string fuel_string(const Fuel &f);
     enum Type{
         truck
     };
@@ -103,7 +104,12 @@ public:
           const Category    &category    , std::vector<CargoTrans*> cargo);
     virtual ~Truck(){}
 
-    const NumberPlate& get_id() const{ return number_plate_; }
+    const NumberPlate& get_numberplate      () const{ return number_plate_       ; }
+    const NumberPlate& get_id               () const{ return get_numberplate()   ; }
+    const Time&        get_plateregisterdate() const{ return plate_register_date_; }
+    const Fuel&        get_fuel             () const{ return fuel_               ; }
+    const Distance&    get_range            () const{ return max_reach_          ; }
+    const Category&    get_category         () const{ return category_           ; }
 
     virtual Type get_type(void) const;
 

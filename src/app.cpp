@@ -207,8 +207,9 @@ void App::start(){
         }
     #endif
     #ifdef DIOGO
+        display(trucks_[0]);
         save_all();
-        list_clients();
+        //list_clients();
         //list_managers();
         //list_drivers();
     #endif

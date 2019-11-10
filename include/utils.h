@@ -103,6 +103,8 @@ namespace utils {
         explicit ufloat():u_(0){}
         explicit ufloat(const T &u);
 
+        operator T() const;
+
         friend std::istream& operator>> <>(std::istream &is,       utils::ufloat<T> &u);
         friend std::ostream& operator<< <>(std::ostream &os, const utils::ufloat<T> &u);
 
@@ -181,6 +183,9 @@ template<class T> utils::ufloat<T>::ufloat(const T &u){
     if(u < 0.0)
         throw utils::ufloat<T>::InvalidUFloat(u);
     u_ = u;
+}
+template<class T> utils::ufloat<T>::operator T() const{
+    return u_;
 }
 template<class T> std::istream& operator>>(std::istream &is,       utils::ufloat<T> &u){ return (is >> u.u_); }
 template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat<T> &u){ return (os << u.u_); }
