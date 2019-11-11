@@ -133,9 +133,9 @@ bool App::printUserMenu(User::Type user_type) {
         if (user_type == User::Type::client) {
             std::cout << "Service Management                Account Management           \n"
                          "==============================    =============================\n"
-                         "Request service           [11]    Change address           [21]\n"
-                         "Edit service              [12]    Change VAT               [22]\n"
-                         "Cancel service            [13]    Change password          [23]\n"
+                         "Request service           [11]    Edit account             [21]\n"
+                         "Edit service              [12]                                 \n"
+                         "Cancel service            [13]                                 \n"
                          "Service list              [14]                                 \n"
                          "                                                               \n";
 
@@ -143,9 +143,9 @@ bool App::printUserMenu(User::Type user_type) {
         } else if (user_type == User::Type::driver) {
             std::cout << "Service Management                Account Management           \n"
                          "==============================    =============================\n"
-                         "Service list              [11]    Change address           [21]\n"
-                         "Solicit lay-off           [12]    Change VAT               [22]\n"
-                         "Resign                    [13]    Change password          [23]\n"
+                         "Service list              [11]    Edit account             [21]\n"
+                         "Solicit lay-off           [12]                                 \n"
+                         "Resign                    [13]                                 \n"
                          "                                                               \n"
                          "Information visualization                                      \n"
                          "==============================    =============================\n"
@@ -168,9 +168,9 @@ bool App::printUserMenu(User::Type user_type) {
                          "                                                               \n"
                          "Information visualization         Other operations             \n"
                          "==============================    =============================\n"
-                         "Service list              [51]    Save                     [61]\n"
-                         "Truck list                [52]    Exit                     [62]\n"
-                         "Client list               [53]                                 \n"
+                         "Service list              [51]    Edit account             [61]\n"
+                         "Truck list                [52]    Save                     [62]\n"
+                         "Client list               [53]    Exit                     [63]\n"
                          "Driver list               [54]                                 \n"
                          "$$$$$ things              [55]                                 \n"
                          "                                                               \n";
@@ -192,11 +192,42 @@ bool App::userMenu(User *user, User::Type user_type) {
             if (!utils::input(App::OPSTR, option, std::cin, std::cout)) return true;
 
             if (user_type == User::Type::client) {
+                switch (option) {
+                case 11: break;     case 21: editUser<Client>(user); break;
+                case 12: break;
+                case 13: break;
+                case 14: break;
+
+                default:
+                    error("Invalid operation.");
+                    break;
+                }
 
             } else if (user_type == User::Type::driver) {
+                switch (option) {
+                case 11:                break;      case 21: editUser<Driver>(user);     break;
+                case 12:                break;
+                case 13:                break;
+                case 14: list_trucks();  break;
 
+                default:
+                    error("Invalid operation.");
+                    break;
+                }
             } else if (user_type == User::Type::manager) {
+                switch (option) {
+                case 11: break;                                 case 21: addTruck();     break;
+                case 12: break;                                 case 22: editTruck();    break;
+                case 13: break;                                 case 23: deleteTruck();  break;
 
+                case 31: addUser(User::Type::client)  ;                  break;  case 41: break;
+                case 32: editUser<Client>(User::Type::client)  ; break;  case 42: break;
+                case 33: deleteUser<Client>(User::Type::client); break;  case 43: break;
+
+                default:
+                    error("Invalid operation.");
+                    break;
+                }
             }
         }
     } catch (...) {
@@ -239,7 +270,7 @@ void App::start(){
 
             User::Type user_type = user->get_type();
 
-            if (!userMenu(user_type)) {
+            if (!userMenu(user, user_type)) {
                 error("Unexpected error.");
                 break;
             }

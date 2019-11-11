@@ -99,29 +99,22 @@ void App::save_all(){
 }
 
 
-bool App::addUser() {
+bool App::addUser(const User::Type &user_type) {
     User *user;
-    while (true) {
-        //CLEAR();
-        std::string type; // TODO: maybe change to argument and then based on choice in menu have call with different argument
-        if (!utils::input("Choose type of user (client/driver/manager): ", type, std::cin, std::cout)) return false;
-        if (type == "client") {
-            user = new Client();
-            if (!user->in(std::cin, std::cout)) { delete user; return false;}
-            break;
-        } else if (type == "driver") {
-            user = new Driver();
-            if (!user->in(std::cin, std::cout)) { delete user; return false;}
-            break;
-        } else if (type == "manager") {
-            user = new Manager();
-            if (!user->in(std::cin, std::cout)) { delete user; return false;}
-            break;
-        } else {
-            std::cout << "ERROR: Invalid type of user (type \'" << type << "\' doesn't exist).\n";
-        }
-        wait();
+    if (user_type == User::Type::client) {
+        user = new Client();
+        if (!user->in(std::cin, std::cout)) { delete user; return false;}
+    } else if (user_type == User::Type::driver) {
+        user = new Driver();
+        if (!user->in(std::cin, std::cout)) { delete user; return false;}
+    } else if (user_type == User::Type::manager) {
+        user = new Manager();
+        if (!user->in(std::cin, std::cout)) { delete user; return false;}
+    } else {
+        error("Invalid user type.");
+        return false;
     }
+
     if(utils::find_if(users_.begin(), users_.end(),
       [user](const User* u){ return (u->get_username() == user->get_username()); }) != users_.end()){
         User::Username id = user->get_username();
@@ -180,5 +173,5 @@ bool App::deleteTruck() {
 }
 
 bool App::editTruck() {
-
+    return true;
 }
