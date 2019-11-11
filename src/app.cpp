@@ -235,11 +235,11 @@ bool App::userMenu(User *user, User::Type user_type) {
                 case 32: editUser<Client>(User::Type::client);      break;  case 42: editUser<Driver>(User::Type::driver);              break;
                 case 33: deleteUser<Client>(User::Type::client);    break;  case 43: deleteUser<Driver>(User::Type::driver);            break;
 
-                case 51: addUser(User::Type::manager);              break;  case 61: print_list(std::vector<const Service*>(services_.begin(), services_.end()));                                                   break;
-                case 52: editUser<Manager>(User::Type::manager);    break;  case 62: print_list(std::vector<const Truck*>(trucks_.begin(), trucks_.end()));                                                         break;
-                case 53: deleteUser<Manager>(User::Type::manager);  break;  case 63: print_list(filter<User, Client, User::Type>(std::vector<const User*>(users_.begin(), users_.end()), User::Type::client));      break;
-                                                                            case 64: print_list(filter<User, Driver, User::Type>(std::vector<const User*>(users_.begin(), users_.end()), User::Type::driver));      break;
-                                                                            case 65: print_list(filter<User, Manager, User::Type>(std::vector<const User*>(users_.begin(), users_.end()), User::Type::manager));    break;
+                case 51: addUser(User::Type::manager);              break;  case 61: list_services();                                   break;
+                case 52: editUser<Manager>(User::Type::manager);    break;  case 62: list_trucks();                                     break;
+                case 53: deleteUser<Manager>(User::Type::manager);  break;  case 63: list_clients();                                    break;
+                                                                            case 64: list_drivers();                                    break;
+                                                                            case 65: list_managers();                                   break;
                                                                             case 66: break;
 
 
@@ -252,6 +252,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                     break;
                 }
             }
+            wait();
         }
     } catch (...) {
         return false;
