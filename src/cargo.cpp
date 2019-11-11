@@ -73,6 +73,12 @@ std::ostream& Cargo::output(std::ostream &os) const{
     return os;
 }
 
+bool Cargo::in(std::istream &is, std::ostream &os) {
+    if (!utils::input("Weight: ", weight_, is, os)|
+        !utils::input("Description: ", description_, is, os)) return false;
+    return true;
+}
+
 CargoAnimal::CargoAnimal(Weight weight, const std::string &description):Cargo(weight, description){}
 std::istream& CargoAnimal::input(std::istream &is){
     return Cargo::input(is);
@@ -81,6 +87,9 @@ std::ostream& CargoAnimal::output(std::ostream &os) const{
     return Cargo::output(os);
 }
 
+bool CargoAnimal::in(std::istream &is, std::ostream &os) {
+    return Cargo::in(is, os);
+}
 
 CargoRefrigerated::CargoRefrigerated(Weight weight, const std::string &description, TemperatureRange temperature_range):
     Cargo(weight, description), temperature_range_(temperature_range){}
@@ -95,6 +104,29 @@ std::ostream& CargoRefrigerated::output(std::ostream &os) const{
     return os;
 }
 
+bool CargoRefrigerated::in(std::istream &is, std::ostream &os) {
+    if(!Cargo::in(is, os)) return false;
+
+    while (true) {
+        try {
+            float tmin, tmax;
+            if (!utils::input("Minimum temperature: ", tmin, is, os)|
+                !utils::input("Maximum temperature: ", tmax, is, os)) return false;
+
+            TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
+
+            temperature_range_ = temp_range;
+            return true;
+        } catch (TemperatureRange::InvalidTemperatureRange &itr) {
+            std::cout << "Error: " << itr.what() << "\n";
+        } catch (Temperature::InvalidTemperature &it) {
+            std::cout << it.what() << "\n";
+        } catch (...) {
+            std::cout << "Error: Invalid input\n";
+        }
+    }
+}
+
 CargoDangerous::CargoDangerous(Weight weight, const std::string &description, DangerLevel danger_level):
     Cargo(weight, description), danger_level_(danger_level){}
 std::istream& CargoDangerous::input(std::istream &is){
@@ -106,6 +138,30 @@ std::ostream& CargoDangerous::output(std::ostream &os) const{
     Cargo::output(os); os << "\n";
     os << (int)danger_level_;
     return os;
+}
+
+bool CargoDangerous::in(std::istream &is, std::ostream &os) {
+    if(!Cargo::in(is, os)) return false;
+    std::string input;
+    std::string msg = "Danger Levels -> None(0) | Miscellaneous(1) | Gases(2)\n"
+                      "                 Flammable Liquids(3) | Flammable Solids(4) | Oxydizing Agents(5)\n"
+                      "                 Explosives(6) | Corrosive(7) | Toxic (8) | Radioactive(9)\nDanger Level: ";
+    while (true) {
+        if (!utils::input(msg, input, is, os)) return false;
+        utils::to_lower(input);
+        if (input == "none"                 ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;             break; }
+        if (input == "miscellaneous"        ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;    break; }
+        if (input == "gases"                ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "flammable solids"     ||  input == "4")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "oxydizing agents"     ||  input == "5")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "explosives"           ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "corrosive"            ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "toxic"                ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "radioactive"          ||  input == "9")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        else { std::cout << "Error: Invalid danger level.\n"; }
+    }
+    return true;
 }
 
 
@@ -141,6 +197,12 @@ std::ostream& CargoTrans::output(std::ostream &os) const{
     return os;
 }
 
+bool CargoTrans::in(std::istream &is, std::ostream &os) {
+    if(!Cargo::in(is, os)) return false;
+    if(!utils::input("Expenses per kilometer: ", expenses_per_km_, is, os)) return false;
+    else                                                                    return true;
+}
+
 CargoTransAnimal::CargoTransAnimal(Weight weight, const std::string &description, Currency expenses_per_km):
     CargoTrans(weight, description, expenses_per_km){}
 std::istream& CargoTransAnimal::input(std::istream &is){
@@ -148,6 +210,10 @@ std::istream& CargoTransAnimal::input(std::istream &is){
 }
 std::ostream& CargoTransAnimal::output(std::ostream &os) const{
     return CargoTrans::output(os);
+}
+
+bool CargoTransAnimal::in(std::istream &is, std::ostream &os) {
+    return CargoTrans::in(is, os);
 }
 
 CargoTransRefrigerated::CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, float temperature_factor):
@@ -163,6 +229,32 @@ std::ostream& CargoTransRefrigerated::output(std::ostream &os) const{
     return os;
 }
 
+bool CargoTransRefrigerated::in(std::istream &is, std::ostream &os) {
+    if(!CargoTrans::in(is, os)) return false;
+
+    while (true) {
+        try {
+            float tmin, tmax;
+            if (!utils::input("Minimum temperature: ", tmin, is, os)|
+                !utils::input("Maximum temperature: ", tmax, is, os)) return false;
+
+            TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
+
+            temperature_range_ = temp_range;
+            break;
+        } catch (TemperatureRange::InvalidTemperatureRange &itr) {
+            std::cout << "Error: " << itr.what() << "\n";
+        } catch (Temperature::InvalidTemperature &it) {
+            std::cout << it.what() << "\n";
+        } catch (...) {
+            std::cout << "Error: Invalid input\n";
+        }
+    }
+
+    if (!utils::input("Temperature factor: ", temperature_factor_, is, os)) return false;
+    else                                                                    return true;
+}
+
 CargoTransDangerous::CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level):
     CargoTrans(weight, description, expenses_per_km), danger_level_(danger_level){}
 std::istream& CargoTransDangerous::input(std::istream &is){
@@ -174,4 +266,28 @@ std::ostream& CargoTransDangerous::output(std::ostream &os) const{
     CargoTrans::output(os); os << "\n";
     os << (int)danger_level_;
     return os;
+}
+
+bool CargoTransDangerous::in(std::istream &is, std::ostream &os) {
+    if(!CargoTrans::in(is, os)) return false;
+    std::string input;
+    std::string msg = "Danger Levels -> None(0) | Miscellaneous(1) | Gases(2)\n"
+                      "                 Flammable Liquids(3) | Flammable Solids(4) | Oxydizing Agents(5)\n"
+                      "                 Explosives(6) | Corrosive(7) | Toxic (8) | Radioactive(9)\nDanger Level: ";
+    while (true) {
+        if (!utils::input(msg, input, is, os)) return false;
+        utils::to_lower(input);
+        if (input == "none"                 ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;             break; }
+        if (input == "miscellaneous"        ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;    break; }
+        if (input == "gases"                ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "flammable solids"     ||  input == "4")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "oxydizing agents"     ||  input == "5")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "explosives"           ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "corrosive"            ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "toxic"                ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "radioactive"          ||  input == "9")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        else { std::cout << "Error: Invalid danger level.\n"; }
+    }
+    return true;
 }

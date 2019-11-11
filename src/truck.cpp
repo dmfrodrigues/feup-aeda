@@ -144,7 +144,7 @@ bool Truck::edit(int property, std::istream &is, std::ostream &os) {
     break;
     case 5:
         // CARGO INPUT
-        
+
     break;
     default:
         return false;

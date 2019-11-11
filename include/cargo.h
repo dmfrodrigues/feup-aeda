@@ -84,7 +84,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //virtual bool in(std::istream &is, std::ostream &os);
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -112,6 +112,14 @@ public:
     CargoAnimal(Weight weight, const std::string &description);
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -149,7 +157,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //virtual bool in(std::istream &is, std::ostream &os);
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -187,7 +195,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //virtual bool in(std::istream &is, std::ostream &os);
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -214,7 +222,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //virtual bool in(std::istream &is, std::ostream &os);
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -240,7 +248,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //virtual bool in(std::istream &is, std::ostream &os);
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -272,7 +280,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //virtual bool in(std::istream &is, std::ostream &os);
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -300,7 +308,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //virtual bool in(std::istream &is, std::ostream &os);
+    virtual bool in(std::istream &is, std::ostream &os);
 };
 
 #endif // CARGO_H_INCLUDED
