@@ -172,3 +172,12 @@ void App::display(const CargoTransRefrigerated *p){
 void App::display(const CargoTransDangerous    *p){
     std::cout << "│ [4] Danger level │ " << utils::ljust(Cargo::dangerlevel_string(p->get_dangerlevel())          , 82) << "\t │\n";
 }
+
+void App::display(const Service *p) const{
+    const Client *c = dynamic_cast<const Client*>(*utils::find_if(users_.begin(), users_.end(),
+      [p](const User *q){ return (q->get_username() == p->get_client()); }));
+    std::cout << "╒══════════════════╤═════════════════════════════════════════════════════════════════════════════════════╕\n"
+              << "│ [0] ID           │ " << utils::ljust(p->get_id()                                           ,82) << "\t │\n"
+              << "│ [1] Client       │ " << utils::ljust("["+std::string(c->get_username())+"] "+c->get_name()+c->get_address().format(" (%street, %district)"),82) << "\t │\n"
+              << "╘══════════════════╧═════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
+}

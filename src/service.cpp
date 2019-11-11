@@ -23,6 +23,10 @@ std::istream& operator>>(std::istream &is,       Service &s){
        >> s.t_end_
        >> s.a_begin_
        >> s.a_end_;
+    input_Cargo(is, s.cargo_);
+    size_t sz; is >> sz;
+    s.trucks_ .resize(sz); for(Truck::NumberPlate &n:s.trucks_ ) is >> n;
+    s.drivers_.resize(sz); for(User ::Username    &u:s.drivers_) is >> u;
     return is;
 }
 std::ostream& operator<<(std::ostream &os, const Service &s){

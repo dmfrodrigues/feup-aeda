@@ -26,7 +26,8 @@ private:
     Address a_begin_;
     Address a_end_;
     Cargo *cargo_;
-    std::vector<Truck*> trucks_;
+    std::vector<Truck ::NumberPlate> trucks_;
+    std::vector<Driver::Username   > drivers_;
 public:
     static int next_id_;
 
@@ -47,7 +48,17 @@ public:
             Address a_begin, Address a_end,
             Cargo *cargo);
 
-    const std::string& get_id()const{ return id_; }
+    const std::string&      get_id      () const{ return id_         ; }
+    const Client::Username& get_client  () const{ return client_user_; }
+    const Person&           get_contact1() const{ return contact1_   ; }
+    const Person&           get_contact2() const{ return contact2_   ; }
+    const Time&             get_tbegin  () const{ return t_begin_    ; }
+    const Time&             get_tend    () const{ return t_end_      ; }
+    const Address&          get_address1() const{ return a_begin_    ; }
+    const Address&          get_address2() const{ return a_end_      ; }
+    const Cargo*            get_cargo   () const{ return cargo_      ; }
+    const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
+    const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Service &s);

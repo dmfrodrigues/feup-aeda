@@ -202,14 +202,15 @@ void App::start(){
 
     #endif
     #ifdef DIOGO
-        //display(trucks_[0]);
-        list_trucks();
         //save_all();
         //list_clients();
-        //list_managers();
         //list_drivers();
-    #endif/*
-    #if !defined(TELMO) && !defined(DIOGO)
+        //list_managers();
+        //list_trucks();
+        display(services_[0]);
+    #endif
+
+    /*#if !defined(TELMO) && !defined(DIOGO)
     // main app
         User *user = NULL;
         while (true) {
