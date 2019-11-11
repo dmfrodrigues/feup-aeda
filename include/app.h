@@ -90,7 +90,7 @@ private:
     void list_managers() const;
     void list_trucks  () const;
     void list_services() const;
-    bool addUser();
+    bool addUser(const User::Type &user_type);
     template<class Deriv> bool deleteUser(const User::Type &type);
     template<class Deriv> User* chooseUser(const User::Type &type);
     template<class Deriv> bool editUser(const User::Type &type); // manager function
