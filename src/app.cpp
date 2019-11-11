@@ -172,11 +172,12 @@ bool App::printUserMenu(User::Type user_type) {
                          "                                                               \n"
                          "Manager Management                Information visualization    \n"
                          "==============================    =============================\n"
-                         "Add client                [51]    Service list             [61]\n"
-                         "Edit client               [52]    Truck list               [62]\n"
-                         "Delete client             [53]    Client list              [63]\n"
+                         "Add manager               [51]    Service list             [61]\n"
+                         "Edit manager              [52]    Truck list               [62]\n"
+                         "Delete manager            [53]    Client list              [63]\n"
                          "                                  Driver list              [64]\n"
-                         "                                  $$$$$ things             [65]\n"
+                         "                                  Manager list             [65]\n"
+                         "                                  $$$$$ things             [66]\n"
                          "                                                               \n"
                          "Other operations                                               \n"
                          "===============================================================\n"
@@ -226,13 +227,25 @@ bool App::userMenu(User *user, User::Type user_type) {
                 }
             } else if (user_type == User::Type::manager) {
                 switch (option) {
-                case 11: break;                                 case 21: addTruck();     break;
-                case 12: break;                                 case 22: editTruck();    break;
-                case 13: break;                                 case 23: deleteTruck();  break;
+                case 11: break;                                             case 21: addTruck();                                        break;
+                case 12: break;                                             case 22: editTruck();                                       break;
+                case 13: break;                                             case 23: deleteTruck();                                     break;
 
-                case 31: addUser(User::Type::client);               break;  case 41: addUser(User::Type::driver);               break;
-                case 32: editUser<Client>(User::Type::client);      break;  case 42: editUser<Driver>(User::Type::driver);      break;
-                case 33: deleteUser<Client>(User::Type::client);    break;  case 43: deleteUser<Driver>(User::Type::driver);    break;
+                case 31: addUser(User::Type::client);               break;  case 41: addUser(User::Type::driver);                       break;
+                case 32: editUser<Client>(User::Type::client);      break;  case 42: editUser<Driver>(User::Type::driver);              break;
+                case 33: deleteUser<Client>(User::Type::client);    break;  case 43: deleteUser<Driver>(User::Type::driver);            break;
+
+                case 51: addUser(User::Type::manager);              break;  case 61: print_list(std::vector<const Service*>(services_.begin(), services_.end()));                                                   break;
+                case 52: editUser<Manager>(User::Type::manager);    break;  case 62: print_list(std::vector<const Truck*>(trucks_.begin(), trucks_.end()));                                                         break;
+                case 53: deleteUser<Manager>(User::Type::manager);  break;  case 63: print_list(filter<User, Client, User::Type>(std::vector<const User*>(users_.begin(), users_.end()), User::Type::client));      break;
+                                                                            case 64: print_list(filter<User, Driver, User::Type>(std::vector<const User*>(users_.begin(), users_.end()), User::Type::driver));      break;
+                                                                            case 65: print_list(filter<User, Manager, User::Type>(std::vector<const User*>(users_.begin(), users_.end()), User::Type::manager));    break;
+                                                                            case 66: break;
+
+
+                case 71: editUser<Manager>(user);                   break;
+                case 72: save_all();                                break;
+                case 73: return true;                               break;
 
                 default:
                     error("Invalid operation.");
