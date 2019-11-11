@@ -141,6 +141,7 @@ public:
     CargoRefrigerated(Weight weight, const std::string &description, TemperatureRange temperature_range);
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
+    const TemperatureRange& get_range() const{ return temperature_range_; }
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -178,6 +179,7 @@ public:
     CargoDangerous(Weight weight, const std::string &description, DangerLevel danger_level);
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
+    const Cargo::DangerLevel& get_dangerlevel() const{ return danger_level_; }
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -259,6 +261,7 @@ public:
     CargoTransRefrigerated():CargoTrans(){}
     CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, float temperature_factor);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
+    const TemperatureRange& get_range() const{ return temperature_range_; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
     const Temperature& get_reference_temperature() const{ return reference_temperature_; }
     const float& get_temperaturefactor() const{ return temperature_factor_; }

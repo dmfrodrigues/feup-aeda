@@ -51,6 +51,9 @@ public:
     TemperatureRange(){}
     TemperatureRange(const Temperature &tmin, const Temperature &tmax);
 
+    const Temperature& min() const{ return range_.first ; }
+    const Temperature& max() const{ return range_.second; }
+
     friend std::istream& operator>>(std::istream &is,       TemperatureRange &r);
     friend std::ostream& operator<<(std::ostream &os, const TemperatureRange &r);
 
