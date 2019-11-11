@@ -165,12 +165,12 @@ template<class Deriv> User* App::chooseUser(const User::Type &type) {
         std::string id;
         if (!utils::input("Choose user (username): ", id, std::cin, std::cout)) return NULL;
         User::Username username = User::Username(id);
-        std::vector<User*>::iterator it = find_user(username);
-        if (it == users_.end()) {
+        User *it = find_user(username);
+        if (it == NULL) {
             error("User doesn't exist (username doesn't have matches).");
             continue;
         } else {
-            return *it;
+            return it;
         }
     }
 }
