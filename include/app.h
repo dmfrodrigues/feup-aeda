@@ -72,10 +72,12 @@ private:
     static void list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Truck  *, const Truck  *)> &cmp);
+    static void list_sort_getcomp(int i, std::function<bool(const Service*, const Service*)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Driver *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Truck  *)> &cmp);
+    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Service*)> &cmp);
     template<class Deriv> void list(std::vector<const Deriv*> v) const;
     ///Commands
     static std::string prompt();
