@@ -177,7 +177,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
     */
 }
 
-template<class Deriv> void App::list(std::vector<const Deriv*> v) const{
+template<class T> void App::list(std::vector<const T*> v) const{
     const std::vector<const Deriv*> original = v;
     while(true){
         CLEAR();
