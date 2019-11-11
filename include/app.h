@@ -52,6 +52,10 @@ private:
     static void display(const Driver                 *p);
     static void display(const Manager                *p);
     static void display(const Truck                  *p);
+    static void display(const Cargo                  *p);
+    static void display(const CargoAnimal            *p);
+    static void display(const CargoRefrigerated      *p);
+    static void display(const CargoDangerous         *p);
     static void display(const CargoTrans             *p);
     static void display(const CargoTransAnimal       *p);
     static void display(const CargoTransRefrigerated *p);

@@ -150,6 +150,28 @@ void App::display(const Truck *p){
     std::cout << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
 
+void App::display(const Cargo *p){
+    std::cout << "│ [0] Weight (kg)   │ " << utils::ljust(utils::ftos("%.0f",(float )p->get_weight())       ,81) << "\t │\n"
+              << "│ [1] Description   │ " << utils::ljust(p->get_description()                              ,81) << "\t │\n";
+    switch(p->get_type()){
+      case Cargo::Animal      : display(dynamic_cast<const CargoAnimal      *>(p)); break;
+      case Cargo::Refrigerated: display(dynamic_cast<const CargoRefrigerated*>(p)); break;
+      case Cargo::Dangerous   : display(dynamic_cast<const CargoDangerous   *>(p)); break;
+      case Cargo::Normal      : break;
+      default: throw std::invalid_argument("invalid Cargo type");
+    }
+}
+
+void App::display(const CargoAnimal *p){
+
+}
+void App::display(const CargoRefrigerated *p){
+
+}
+void App::display(const CargoDangerous *p){
+
+}
+
 void App::display(const CargoTrans             *p){
     std::cout << "│ [0] Weight (kg)   │ " << utils::ljust(utils::ftos("%.0f",(float )p->get_weight())       ,81) << "\t │\n"
               << "│ [1] Description   │ " << utils::ljust(p->get_description()                              ,81) << "\t │\n"
@@ -177,13 +199,17 @@ void App::display(const Service *p) const{
     const Client *c = dynamic_cast<const Client*>(*utils::find_if(users_.begin(), users_.end(),
       [p](const User *q){ return (q->get_username() == p->get_client()); }));
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ [0] ID            │ " << utils::ljust(p->get_id()                                           ,81) << "\t │\n"
+              << "│ [0] ID            │ " << utils::ljust(p->get_id()                                          ,81) << "\t │\n"
               << "│ [1] Client        │ " << utils::ljust("["+std::string(c->get_username())+"] "+c->get_name()+c->get_address().format(" (%street, %district)"),81) << "\t │\n"
               << "│ [2] Contact 1     │ " << utils::ljust(p->get_contact1().get_name()+" / "+std::string(p->get_contact1().get_phonenumber()) ,81) << "\t │\n"
               << "│ [3] Contact 2     │ " << utils::ljust(p->get_contact2().get_name()+" / "+std::string(p->get_contact2().get_phonenumber()) ,81) << "\t │\n"
-              << "│ [4] Time begin    │ " << utils::ljust(p->get_tbegin().format("%Y/%m/%d %H:%M:%S")           ,81) << "\t │\n"
-              << "│ [5] Time end      │ " << utils::ljust(p->get_tend  ().format("%Y/%m/%d %H:%M:%S")           ,81) << "\t │\n"
+              << "│ [4] Time begin    │ " << utils::ljust(p->get_tbegin().format("%Y/%m/%d %H:%M:%S")          ,81) << "\t │\n"
+              << "│ [5] Time end      │ " << utils::ljust(p->get_tend  ().format("%Y/%m/%d %H:%M:%S")          ,81) << "\t │\n"
               << "│ [6] Address begin │ " << utils::ljust(p->get_abegin().format("%street (%postal, %city) [%district, %country]"),81) << "\t │\n"
-              << "│ [7] Address end   │ " << utils::ljust(p->get_aend  ().format("%street (%postal, %city) [%district, %country]"),81) << "\t │\n"
-              << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
+              << "│ [7] Address end   │ " << utils::ljust(p->get_aend  ().format("%street (%postal, %city) [%district, %country]"),81) << "\t │\n";
+    std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
+              << "│ [8] Cargo         : " << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())       ,81) << "\t │\n";
+    std::cout << "├───────────────────┬────────────────────────────────────────────────────────────────────────────────────┤\n";          
+    App::display(p->get_cargo());
+    std::cout << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
