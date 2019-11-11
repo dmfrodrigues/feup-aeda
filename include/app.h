@@ -48,14 +48,15 @@ private:
     static void print_list(const std::vector<const Driver *> &v);
     static void print_list(const std::vector<const Client *> &v);
     static void print_list(const std::vector<const Truck  *> &v);
-    static void display(const Client  *p);
-    static void display(const Driver  *p);
-    static void display(const Manager *p);
-    static void display(const Truck   *p);
+    static void display(const Client                 *p);
+    static void display(const Driver                 *p);
+    static void display(const Manager                *p);
+    static void display(const Truck                  *p);
     static void display(const CargoTrans             *p);
     static void display(const CargoTransAnimal       *p);
     static void display(const CargoTransRefrigerated *p);
     static void display(const CargoTransDangerous    *p);
+           void display(const Service                *p) const;
     ///Lists
     template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter(const std::vector<const Base*> &v, const Type &t);
     static void list_clients_commands();
