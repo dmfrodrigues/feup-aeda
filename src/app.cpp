@@ -198,12 +198,11 @@ void App::start(){
 
     #endif
     #ifdef DIOGO
-        //display(trucks_[0]);
-        list_trucks();
         //save_all();
-        //list_clients();
-        //list_managers();
-        //list_drivers();
+        list_clients();
+        list_drivers();
+        list_managers();
+        list_trucks();
     #endif
 }
 

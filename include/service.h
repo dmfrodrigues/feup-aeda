@@ -26,7 +26,7 @@ private:
     Address a_begin_;
     Address a_end_;
     Cargo *cargo_;
-    std::vector<Truck*> trucks_;
+    std::vector<Truck::NumberPlate> trucks_;
 public:
     static int next_id_;
 
