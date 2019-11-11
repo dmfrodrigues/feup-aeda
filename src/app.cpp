@@ -53,18 +53,22 @@ std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const U
     return ret;
 }
 
-const std::vector<User*>::iterator App::find_user(const User::Username &u){
-    return utils::find_if(users_.begin(), users_.end(), [u](const User *m){ return (m->get_username() == u); });
+User* App::find_user(const User::Username &u) const{
+    auto it = utils::find_if(users_.begin(), users_.end(), [u](const User *m){ return (m->get_username() == u); });
+    if(it != users_.end()) return *it;
+    else                   return NULL;
 }
 
-const std::vector<Truck*>::iterator App::find_truck(const Truck::NumberPlate &np) {
-    return utils::find_if(trucks_.begin(), trucks_.end(), [np](const Truck *truck) { return truck->get_numberplate() == np; });
+Truck* App::find_truck(const Truck::NumberPlate &np) const{
+    auto it = utils::find_if(trucks_.begin(), trucks_.end(), [np](const Truck *truck) { return truck->get_numberplate() == np; });
+    if(it != trucks_.end()) return *it;
+    else                    return NULL;
 }
 
 User* App::verifyUser(const std::string &username, const std::string &password) {
-    const std::vector<User*>::iterator it = find_user(Client::Username(username));
-    if (it == users_.end()) throw App::InvalidCredentials("Invalid username (username not found).");
-    if ((*it)->verifyCredentials(password)) return *it;
+    User *it = find_user(Client::Username(username));
+    if (it == NULL) throw App::InvalidCredentials("Invalid username (username not found).");
+    if (it->verifyCredentials(password)) return it;
     throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
 }
 

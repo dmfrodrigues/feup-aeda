@@ -48,6 +48,7 @@ private:
     static void print_list(const std::vector<const Driver *> &v);
     static void print_list(const std::vector<const Client *> &v);
     static void print_list(const std::vector<const Truck  *> &v);
+    static void print_list(const std::vector<const Service*> &v);
     static void display(const Client                 *p);
     static void display(const Driver                 *p);
     static void display(const Manager                *p);
@@ -105,8 +106,8 @@ private:
     bool editService();
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
-    const std::vector<User*>::iterator find_user(const User::Username &u);
-    const std::vector<Truck*>::iterator find_truck(const Truck::NumberPlate &np);
+    User* find_user(const User::Username &u) const;
+    Truck* find_truck(const Truck::NumberPlate &np) const;
     User* verifyUser(const std::string &username, const std::string &password);
 public:
     App(const std::string &base    ,

@@ -154,12 +154,12 @@ Truck* App::chooseTruck() {
         std::string id;
         if (!utils::input("Choose truck (number plate): ", id, std::cin, std::cout)) return NULL;
         Truck::NumberPlate number_plate = Truck::NumberPlate(Truck::NumberPlate::Number(id));
-        std::vector<Truck*>::iterator it = find_truck(number_plate);
-        if (it == trucks_.end()) {
+        Truck *it = find_truck(number_plate);
+        if (it == NULL) {
             error("Truck doesn't exist (number plate doesn't have matches).");
             continue;
         } else {
-            return *it;
+            return it;
         }
     }
     return NULL;
