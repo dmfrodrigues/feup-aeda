@@ -183,7 +183,7 @@ bool App::printUserMenu(User::Type user_type) {
     return true;
 }
 
-bool App::userMenu(User *user, User::Type user_type); {
+bool App::userMenu(User *user, User::Type user_type) {
     try {
         int option;
         while (true) {
@@ -199,7 +199,7 @@ bool App::userMenu(User *user, User::Type user_type); {
 
             }
         }
-    catch (...) {
+    } catch (...) {
         return false;
     }
     return true;
@@ -214,6 +214,7 @@ void App::start(){
     std::cout << "Check 1(login)\n";*/
     #ifdef TELMO
 
+        list_trucks();
         deleteTruck();
 
         wait();
