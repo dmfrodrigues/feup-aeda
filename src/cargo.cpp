@@ -10,7 +10,7 @@ const Currency    CargoTransRefrigerated::price_base_(200.0);
 const Temperature CargoTransRefrigerated::reference_temperature_(20.0);
 const Currency    CargoTransDangerous   ::price_base_(300.0);
 
-std::istream& input_Cargo(std::istream &is,       Cargo *c){
+std::istream& input_Cargo(std::istream &is,       Cargo *&c){
     if(c != NULL) delete c;
     unsigned t; is >> t;
     switch(t){
@@ -93,9 +93,9 @@ std::ostream& CargoDangerous::output(std::ostream &os) const{
 }
 
 
-std::istream& input_CargoTrans(std::istream &is,       CargoTrans *c){
+std::istream& input_CargoTrans(std::istream &is,       CargoTrans* &c){
     if(c != NULL) delete c;
-    unsigned t; is >> t;
+    int t; is >> t;
     switch(t){
         case Cargo::Type::Normal      : c = new CargoTrans            (); break;
         case Cargo::Type::Animal      : c = new CargoTransAnimal      (); break;

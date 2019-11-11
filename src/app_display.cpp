@@ -65,15 +65,26 @@ void App::print_list(const std::vector<const Manager*> &v){
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧═════════════════╛" << std::endl;
 }
 
+std::string App::get_cargo_string(const Truck *p){
+    std::string s = "";
+    const std::vector<const CargoTrans*> &w = p->get_cargo();
+    size_t sz;
+    if((sz = App::filter<CargoTrans,CargoTrans            ,Cargo::Type>(w, Cargo::Type::Normal      ).size())){ if(s != "") s += ", "; s += "Normal ("       + utils::itos((long long)sz) + ")"; }
+    if((sz = App::filter<CargoTrans,CargoTransAnimal      ,Cargo::Type>(w, Cargo::Type::Animal      ).size())){ if(s != "") s += ", "; s += "Animal ("       + utils::itos((long long)sz) + ")"; }
+    if((sz = App::filter<CargoTrans,CargoTransRefrigerated,Cargo::Type>(w, Cargo::Type::Refrigerated).size())){ if(s != "") s += ", "; s += "Refrigerated (" + utils::itos((long long)sz) + ")"; }
+    if((sz = App::filter<CargoTrans,CargoTransDangerous   ,Cargo::Type>(w, Cargo::Type::Dangerous   ).size())){ if(s != "") s += ", "; s += "Dangerous ("    + utils::itos((long long)sz) + ")"; }
+    return s;
+}
+
 void App::print_list(const std::vector<const Truck*> &v){
     std::cout << std::endl;
     std::cout << " ╶┬╴┌─╮╷ ╷╭─╴╷ ╱╭─╴ \n"
               << "  │ ├┬╯│ ││  │╱ ╰─╮ \n"
               << "  ╵ ╵╰╴╰─╯╰─╴│ ╲╶─╯ \n";
     std::cout << std::endl;
-    std::cout << "╒════════════════════════╤═══════════════╤═══════════════╤════════════════╤══════════════╤═════════════════╕" << std::endl;
-    std::cout << "│ Number plate [0]       │ Date [1]      │ Fuel [2]      │ Range (km) [3] │ Category [4] │ Cargo [5]       │" << std::endl;
-    std::cout << "╞════════════════════════╪═══════════════╪═══════════════╪════════════════╪══════════════╪═════════════════╡" << std::endl;
+    std::cout << "╒════════════════════════╤═══════════════╤═══════════════╤════════════════╤══════════════╤═══════════════════════════════════════════════════════════════╕" << std::endl;
+    std::cout << "│ Number plate [0]       │ Date [1]      │ Fuel [2]      │ Range (km) [3] │ Category [4] │ Cargo [5]                                                     │" << std::endl;
+    std::cout << "╞════════════════════════╪═══════════════╪═══════════════╪════════════════╪══════════════╪═══════════════════════════════════════════════════════════════╡" << std::endl;
     for(const Truck* p:v){
         std::cout << "│ "
                   << utils::ljust((std::string)p->get_numberplate()                 ,21) << "\t │ "
@@ -81,9 +92,10 @@ void App::print_list(const std::vector<const Truck*> &v){
                   << utils::ljust(Truck::fuel_string(p->get_fuel())                 ,12) << "\t │ "
                   << utils::rjust(utils::ftos("%.1f", (float)p->get_range())        ,14) <<   " │ "
                   << utils::ljust((std::string)p->get_category()                    ,11) << "\t │ "
+                  << utils::ljust(App::get_cargo_string(p)                          ,59) << "\t │ "
                   << std::endl;
     }
-    std::cout << "╘════════════════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═════════════════╛" << std::endl;
+    std::cout << "╘════════════════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═══════════════════════════════════════════════════════════════╛" << std::endl;
 
 }
 

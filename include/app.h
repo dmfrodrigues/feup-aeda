@@ -43,6 +43,7 @@ private:
     void load_all();
     void save_all();
     ///Display
+    static std::string get_cargo_string(const Truck *p);
     static void print_list(const std::vector<const Manager*> &v);
     static void print_list(const std::vector<const Driver *> &v);
     static void print_list(const std::vector<const Client *> &v);
@@ -56,7 +57,7 @@ private:
     static void display(const CargoTransRefrigerated *p);
     static void display(const CargoTransDangerous    *p);
     ///Lists
-    template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter_users(const std::vector<const Base*> &v, const Type &t);
+    template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter(const std::vector<const Base*> &v, const Type &t);
     static void list_clients_commands();
     static void list_drivers_commands();
     static void list_managers_commands();
@@ -123,10 +124,26 @@ public:
     };
 };
 
+template<class Base, class Deriv, class Type>
+std::vector<const Deriv*> App::filter(const std::vector<const Base*> &v, const Type &t){
+    std::vector<const Base*> v1 = utils::filter(v,
+        [&t](const Base *p){
+            return (p->get_type() == t);
+        }
+    );
+    std::vector<const Deriv*> retv = std::vector<const Deriv*>(v1.size());
+    std::transform(v1.begin(), v1.end(), retv.begin(), [](const Base *p){
+        const Deriv *ret = dynamic_cast<const Deriv*>(p);
+        if(ret == nullptr) throw std::bad_cast();
+        return ret;
+    });
+    return retv;
+}
+
 template<class Deriv> User* App::chooseUser(const User::Type &type) {
     while (true) {
         std::vector<const User*> v(users_.begin(), users_.end());
-        std::vector<const Deriv*> users_filter = App::filter_users<User,Deriv,User::Type>(v, type);
+        std::vector<const Deriv*> users_filter = App::filter<User,Deriv,User::Type>(v, type);
         print_list(users_filter);
         std::string id;
         if (!utils::input("Choose user (username): ", id, std::cin, std::cout)) return NULL;

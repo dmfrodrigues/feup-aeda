@@ -1,17 +1,5 @@
 #include "app.h"
 
-template<class Base, class Deriv, class Type>
-std::vector<const Deriv*> App::filter_users(const std::vector<const Base*> &v, const Type &t){
-    std::vector<const Base*> v1 = utils::filter(v, [&t](const Base *p){ return (p->get_type() == t); });
-    std::vector<const Deriv*> retv = std::vector<const Deriv*>(v1.size());
-    std::transform(v1.begin(), v1.end(), retv.begin(), [](const Base *p){
-        const Deriv *ret = dynamic_cast<const Deriv*>(p);
-        if(ret == nullptr) throw std::bad_cast();
-        return ret;
-    });
-    return retv;
-}
-
 void App::list_clients_commands(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
@@ -166,7 +154,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
 }
 
 template<class Base, class Deriv, class Type> void App::list(const std::vector<const Base*> &w, const Type &t) const{
-    std::vector<const Deriv*> v = filter_users<Base,Deriv,Type>(w, t);
+    std::vector<const Deriv*> v = App::filter<Base,Deriv,Type>(w, t);
     while(true){
         CLEAR();
         print_list(v);
@@ -208,7 +196,7 @@ template<class Base, class Deriv, class Type> void App::list(const std::vector<c
             //====RESET=========================================================
             if(s[0] == "reset"){
                 if(s.size() != 1) error("wrong number of arguments");
-                else              v = filter_users<Base,Deriv,Type>(w, t);
+                else              v = App::filter<Base,Deriv,Type>(w, t);
             }else
             //====BACK==========================================================
             if(s[0] == "back"){

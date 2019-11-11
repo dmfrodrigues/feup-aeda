@@ -18,8 +18,8 @@ typedef utils::ufloat<float> Weight;
  * @brief Description of cargo that a client may request to transport.
  */
 class Cargo {
-    friend std::istream& input_Cargo (std::istream &is,       Cargo *c);
-    friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
+    friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
+    friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 public:
     /**
      * @enum Type
@@ -82,7 +82,7 @@ public:
  * @brief Description of animal cargo that a client may request to transport.
  */
 class CargoAnimal: public Cargo{
-    friend std::istream& input_Cargo (std::istream &is,       Cargo *c);
+    friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 protected:
     virtual std::istream& input (std::istream &is);
@@ -109,7 +109,7 @@ public:
  * @brief Description of refrigerated cargo that a client may request to transport.
  */
 class CargoRefrigerated: public Cargo{
-    friend std::istream& input_Cargo (std::istream &is,       Cargo *c);
+    friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 private:
     TemperatureRange temperature_range_; /// @brief Range of temperature that cargo must be kept on.
@@ -138,7 +138,7 @@ public:
  * @brief Description of dangerous cargo that a client may request to transport.
  */
 class CargoDangerous: public Cargo{
-    friend std::istream& input_Cargo (std::istream &is,       Cargo *c);
+    friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 private:
     DangerLevel danger_level_;
@@ -167,7 +167,7 @@ public:
  * @brief Description of cargo that a truck can transport.
  */
 class CargoTrans: public Cargo{
-    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *c);
+    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
     static const Currency price_base_;
@@ -186,7 +186,7 @@ public:
  * @brief Description of animal cargo that a truck can transport.
  */
 class CargoTransAnimal: public CargoTrans{
-    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *c);
+    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
     static const Currency price_base_;
@@ -203,7 +203,7 @@ public:
  * @brief Description of refrigerated cargo that a truck can transport.
  */
 class CargoTransRefrigerated: public CargoTrans{
-    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *c);
+    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
     TemperatureRange temperature_range_;
@@ -223,7 +223,7 @@ public:
  * @brief Description of dangerous that a truck can transport.
  */
 class CargoTransDangerous: public CargoTrans{
-    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *c);
+    friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
     static const Currency price_base_;

@@ -90,7 +90,6 @@ std::istream& operator>>(std::istream &is,       Truck &t){
     size_t N; is >> N;
     t.cargo_ = std::vector<CargoTrans*>(N, NULL);
     for(CargoTrans* &p:t.cargo_){
-        p = new CargoTrans();
         input_CargoTrans(is, p);
     }
     return is;
