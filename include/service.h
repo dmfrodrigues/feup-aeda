@@ -53,6 +53,14 @@ public:
     friend std::istream& operator>>(std::istream &is,       Service &s);
     /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Service &s);
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //bool in(std::istream &is, std::ostream &os);
 };
 
 #endif //SERVICE_H_INCLUDED

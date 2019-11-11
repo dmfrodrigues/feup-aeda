@@ -128,6 +128,15 @@ public:
      * @return If the input was sucessful
      */
     bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    bool edit(int property, std::istream &is, std::ostream &os);
 };
 
 #endif /* end of include guard: TRUCK_H_INCLUDED */

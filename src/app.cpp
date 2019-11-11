@@ -57,6 +57,10 @@ const std::vector<User*>::iterator App::find_user(const User::Username &u){
     return utils::find_if(users_.begin(), users_.end(), [u](const User *m){ return (m->get_username() == u); });
 }
 
+const std::vector<Truck*>::iterator App::find_truck(const Truck::NumberPlate &np) {
+    return utils::find_if(trucks_.begin(), trucks_.end(), [np](const Truck *truck) { return truck->get_numberplate() == np; });
+}
+
 User* App::verifyUser(const std::string &username, const std::string &password) {
     const std::vector<User*>::iterator it = find_user(Client::Username(username));
     if (it == users_.end()) throw App::InvalidCredentials("Invalid username (username not found).");
@@ -190,11 +194,11 @@ void App::start(){
     std::cout << "Check 1(login)\n";*/
     #ifdef TELMO
 
-        editUser<Manager>(users_.at(0));
+        deleteTruck();
 
         wait();
 
-        list_clients();
+        list_trucks();
 
     #endif
     #ifdef DIOGO
@@ -204,7 +208,19 @@ void App::start(){
         //list_clients();
         //list_managers();
         //list_drivers();
-    #endif
+    #endif/*
+    #if !defined(TELMO) && !defined(DIOGO)
+    // main app
+        User *user = NULL;
+        while (true) {
+            if (!guestMenu(user)) break;
+
+            if (!userMenu(user)) break;
+        }
+
+
+
+    #endif*/
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):

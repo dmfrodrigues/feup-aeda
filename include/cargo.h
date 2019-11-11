@@ -77,6 +77,14 @@ public:
     const std::string& get_description() const{ return description_; }
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Normal; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -133,6 +141,14 @@ public:
     CargoRefrigerated(Weight weight, const std::string &description, TemperatureRange temperature_range);
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -162,6 +178,14 @@ public:
     CargoDangerous(Weight weight, const std::string &description, DangerLevel danger_level);
 
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -181,6 +205,14 @@ public:
     CargoTrans(Weight weight, const std::string &description, Currency expenses_per_km);
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
     const Currency& get_expensesperkm() const{ return expenses_per_km_; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -199,6 +231,14 @@ public:
     CargoTransAnimal(Weight weight, const std::string &description, Currency expenses_per_km);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -222,6 +262,14 @@ public:
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
     const Temperature& get_reference_temperature() const{ return reference_temperature_; }
     const float& get_temperaturefactor() const{ return temperature_factor_; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //virtual bool in(std::istream &is, std::ostream &os);
 };
 
 /**
@@ -242,6 +290,14 @@ public:
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
     const Cargo::DangerLevel& get_dangerlevel() const{ return danger_level_; }
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    //virtual bool in(std::istream &is, std::ostream &os);
 };
 
 #endif // CARGO_H_INCLUDED

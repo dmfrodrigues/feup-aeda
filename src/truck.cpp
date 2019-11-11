@@ -117,3 +117,37 @@ bool Truck::in(std::istream &is, std::ostream &os) {
 
     return true;
 }
+
+bool Truck::edit(int property, std::istream &is, std::ostream &os) {
+    switch (property) {
+    case 0:
+        if(!utils::input("Number Plate: ", [](Truck::NumberPlate &np, const std::string &s) {
+                                                np = Truck::NumberPlate(Truck::NumberPlate::Number(s)); },
+                                            number_plate_, is, os))                                                                         return false;
+        else                                                                                                                                return true;
+    break;
+    case 1:
+        if (!utils::input("Plate Register Date: ", [](Time &tm, const std::string &s) { tm = Time(s); },  plate_register_date_, is, os))    return false;
+        else                                                                                                                                return true;
+    break;
+    case 2:
+        if (!utils::input("Fuel: ", [](Truck::Fuel &fuel, const std::string &s) { fuel = Truck::processFuel(s); }, fuel_, is, os))          return false;
+        else                                                                                                                                return true;
+    break;
+    case 3:
+        if (!utils::input("Maximum reach: ", max_reach_, is, os))                                                                           return false;
+        else                                                                                                                                return true;
+    break;
+    case 4:
+        if (!utils::input("Category :", [](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os))   return false;
+        else                                                                                                                                return true;
+    break;
+    case 5:
+        // CARGO INPUT
+    break;
+    default:
+        return false;
+        break;
+    }
+    return true;
+}

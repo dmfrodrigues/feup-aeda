@@ -146,3 +146,39 @@ bool App::addTruck() {
     std::cout << "Truck added.\n";
     return true;
 }
+
+Truck* App::chooseTruck() {
+    while (true) {
+        std::vector<const Truck*> trucks(trucks_.begin(), trucks_.end());
+        print_list(trucks);
+        std::string id;
+        if (!utils::input("Choose truck (number plate): ", id, std::cin, std::cout)) return NULL;
+        Truck::NumberPlate number_plate = Truck::NumberPlate(Truck::NumberPlate::Number(id));
+        std::vector<Truck*>::iterator it = find_truck(number_plate);
+        if (it == trucks_.end()) {
+            error("Truck doesn't exist (number plate doesn't have matches).");
+            continue;
+        } else {
+            return *it;
+        }
+    }
+    return NULL;
+}
+
+bool App::deleteTruck() {
+    while (true) {
+        Truck *truck = App::chooseTruck();
+        if (truck == NULL) return false;
+        std::vector<Truck*>::iterator truck_it = std::find(trucks_.begin(), trucks_.end(), truck);
+        if (!utils::confirm("Confirm the deletion of truck \'" + (std::string)((*truck_it)->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        delete *truck_it;
+        trucks_.erase(truck_it);
+        std::cout << "Truck deleted.\n";
+        return true;
+    }
+    return false;
+}
+
+bool App::editTruck() {
+
+}

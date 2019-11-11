@@ -90,10 +90,18 @@ private:
     template<class Deriv> bool editUser(User *user); // edit own account
 
     bool addTruck();
-    bool deleteTruck(); // not implemented, waiting for list_trucks
+    Truck* chooseTruck();
+    bool deleteTruck();
+    bool editTruck();
+
+    bool addService();
+    Service* chooseService();
+    bool deleteService();
+    bool editService();
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
     const std::vector<User*>::iterator find_user(const User::Username &u);
+    const std::vector<Truck*>::iterator find_truck(const Truck::NumberPlate &np);
     User* verifyUser(const std::string &username, const std::string &password);
 public:
     App(const std::string &base    ,

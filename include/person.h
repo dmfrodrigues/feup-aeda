@@ -49,6 +49,7 @@ public:
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
+     * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
      */
@@ -136,6 +137,7 @@ public:
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
+     * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
      */
@@ -201,6 +203,7 @@ public:
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
+     * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
      */
@@ -257,6 +260,7 @@ public:
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
+     * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
      */
@@ -310,6 +314,7 @@ public:
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
+     * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
      */
@@ -362,6 +367,7 @@ public:
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
+     * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
      */
