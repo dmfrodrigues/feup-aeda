@@ -110,7 +110,7 @@ public:
         const std::string &clients ,
         const std::string &trucks  , const std::string &services);
 
-    bool guestMenu(User *user);
+    bool guestMenu(User* &user);
 
     bool userMenu(const User* const user);
 

@@ -124,7 +124,7 @@ public:
      * @brief Gets the type of user.
      * @return User type
      */
-    virtual Type get_type(void) const = 0;
+    virtual User::Type get_type(void) const = 0;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -190,7 +190,7 @@ public:
      * @brief Gets the type of user.
      * @return UserType::client type
      */
-    virtual Type get_type(void) const;
+    virtual User::Type get_type(void) const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -247,7 +247,7 @@ public:
      * @brief Gets the type of user.
      * @return User type
      */
-    virtual Type get_type(void) const = 0;
+    virtual User::Type get_type(void) const = 0;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -301,7 +301,7 @@ public:
      * @brief Gets the type of user.
      * @return UserType::manager type
      */
-    virtual Type get_type(void) const;
+    virtual User::Type get_type(void) const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -354,7 +354,7 @@ public:
      * @brief Gets the type of user.
      * @return UserType::driver type
      */
-    virtual Type get_type(void) const;
+    virtual User::Type get_type(void) const;
 
     /**
      * @brief Allows input field by field with descriptive messages.

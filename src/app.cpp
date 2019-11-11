@@ -68,7 +68,7 @@ User* App::verifyUser(const std::string &username, const std::string &password) 
     throw App::InvalidCredentials("Invalid credentials (password doesn't match).");
 }
 
-bool App::guestMenu(User *user) {
+bool App::guestMenu(User* &user) {
     try {
         while (true) {
             CLEAR();
@@ -92,7 +92,7 @@ bool App::guestMenu(User *user) {
                 error("Invalid operation.");
                 continue;
             } catch (...) {
-                wait();
+                error("Unkown error.");
                 continue;
             }
 
@@ -116,7 +116,6 @@ bool App::guestMenu(User *user) {
                     break;
                 default:
                     error("Invalid operation.");
-                    wait();
                     continue;
             }
             wait();
@@ -132,6 +131,7 @@ bool App::userMenu(const User* const user) {
     try {
         CLEAR();
         User::Type user_type = user->get_type();
+        printf("Reach1\n");
         if (user_type == User::Type::client) {
             std::cout << "Service Management                Account Management           \n"
                          "==============================    =============================\n"
@@ -210,7 +210,7 @@ void App::start(){
         display(services_[0]);
     #endif
 
-    /*#if !defined(TELMO) && !defined(DIOGO)
+    #if !defined(TELMO) && !defined(DIOGO)
     // main app
         User *user = NULL;
         while (true) {
@@ -218,10 +218,10 @@ void App::start(){
 
             if (!userMenu(user)) break;
         }
+        delete user;
 
 
-
-    #endif*/
+    #endif
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):
