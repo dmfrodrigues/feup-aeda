@@ -1,6 +1,7 @@
 #include "app.h"
 
-void App::list_clients_commands(){
+template<class T> void App::list_commands(){ T::unimplemented_function; }
+template<> void App::list_commands<Client>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
@@ -10,8 +11,7 @@ void App::list_clients_commands(){
               << "    back                Go back.\n";
     std::cout << std::endl;
 }
-
-void App::list_drivers_commands(){
+template<> void App::list_commands<Driver>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
@@ -21,8 +21,7 @@ void App::list_drivers_commands(){
               << "    back                Go back.\n";
     std::cout << std::endl;
 }
-
-void App::list_managers_commands(){
+template<> void App::list_commands<Manager>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
@@ -32,17 +31,7 @@ void App::list_managers_commands(){
               << "    back                Go back.\n";
     std::cout << std::endl;
 }
-
-void App::list_commands(const User::Type &t){
-    switch(t){
-        case User::Type::client : list_clients_commands (); break;
-        case User::Type::driver : list_drivers_commands (); break;
-        case User::Type::manager: list_managers_commands(); break;
-        default: break;
-    }
-}
-
-void App::list_commands(const Truck::Type &t){
+template<> void App::list_commands<Truck>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
@@ -146,12 +135,12 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
     }
 }
 
-template<class Base, class Deriv, class Type> void App::list(const std::vector<const Base*> &w, const Type &t) const{
-    std::vector<const Deriv*> v = App::filter<Base,Deriv,Type>(w, t);
+template<class Deriv> void App::list(std::vector<const Deriv*> v) const{
+    const std::vector<const Deriv*> original = v;
     while(true){
         CLEAR();
         print_list(v);
-        list_commands(t);
+        list_commands<Deriv>();
         std::vector<std::string> s = utils::parse_command(prompt());
         if(s.size() >= 1){
             //====SORT==========================================================
@@ -189,7 +178,7 @@ template<class Base, class Deriv, class Type> void App::list(const std::vector<c
             //====RESET=========================================================
             if(s[0] == "reset"){
                 if(s.size() != 1) error("wrong number of arguments");
-                else              v = App::filter<Base,Deriv,Type>(w, t);
+                else              v = original;
             }else
             //====BACK==========================================================
             if(s[0] == "back"){
@@ -204,20 +193,28 @@ template<class Base, class Deriv, class Type> void App::list(const std::vector<c
 
 void App::list_clients() const{
     std::vector<const User*> v(users_.begin(), users_.end());
-    list<User,Client ,User::Type>(v, User::Type::client);
+    std::vector<const Client*> w = App::filter<User,Client,User::Type>(v, User::Type::client);
+    list(w);
 }
 
 void App::list_drivers() const{
     std::vector<const User*> v(users_.begin(), users_.end());
-    list<User,Driver ,User::Type>(v, User::Type::driver);
+    std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
+    list(w);
 }
 
 void App::list_managers() const{
     std::vector<const User*> v(users_.begin(), users_.end());
-    list<User,Manager,User::Type>(v, User::Type::manager);
+    std::vector<const Manager*> w = App::filter<User,Manager,User::Type>(v, User::Type::manager);
+    list(w);
 }
 
 void App::list_trucks() const{
     std::vector<const Truck*> v(trucks_.begin(), trucks_.end());
-    list<Truck,Truck,Truck::Type>(v, Truck::Type::truck);
+    list(v);
+}
+
+void App::list_services() const{
+    std::vector<const Service*> v(services_.begin(), services_.end());
+    //list(v);
 }
