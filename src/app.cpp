@@ -170,13 +170,19 @@ bool App::printUserMenu(User::Type user_type) {
                          "Edit client               [32]    Edit driver              [42]\n"
                          "Delete client             [33]    Delete driver            [43]\n"
                          "                                                               \n"
-                         "Information visualization         Other operations             \n"
+                         "Manager Management                Information visualization    \n"
                          "==============================    =============================\n"
-                         "Service list              [51]    Edit account             [61]\n"
-                         "Truck list                [52]    Save                     [62]\n"
-                         "Client list               [53]    Exit                     [63]\n"
-                         "Driver list               [54]                                 \n"
-                         "$$$$$ things              [55]                                 \n"
+                         "Add client                [51]    Service list             [61]\n"
+                         "Edit client               [52]    Truck list               [62]\n"
+                         "Delete client             [53]    Client list              [63]\n"
+                         "                                  Driver list              [64]\n"
+                         "                                  $$$$$ things             [65]\n"
+                         "                                                               \n"
+                         "Other operations                                               \n"
+                         "===============================================================\n"
+                         "Edit account              [71]                                 \n"
+                         "Save                      [72]                                 \n"
+                         "Exit                      [73]                                 \n"
                          "                                                               \n";
         }
 
@@ -224,9 +230,9 @@ bool App::userMenu(User *user, User::Type user_type) {
                 case 12: break;                                 case 22: editTruck();    break;
                 case 13: break;                                 case 23: deleteTruck();  break;
 
-                case 31: addUser(User::Type::client)  ;                  break;  case 41: break;
-                case 32: editUser<Client>(User::Type::client)  ; break;  case 42: break;
-                case 33: deleteUser<Client>(User::Type::client); break;  case 43: break;
+                case 31: addUser(User::Type::client);               break;  case 41: addUser(User::Type::driver);               break;
+                case 32: editUser<Client>(User::Type::client);      break;  case 42: editUser<Driver>(User::Type::driver);      break;
+                case 33: deleteUser<Client>(User::Type::client);    break;  case 43: deleteUser<Driver>(User::Type::driver);    break;
 
                 default:
                     error("Invalid operation.");
