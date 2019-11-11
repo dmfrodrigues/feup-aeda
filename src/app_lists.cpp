@@ -6,8 +6,8 @@ template<class T> void App::list_commands(){ T::unimplemented_function; }
 template<> void App::list_commands<Client>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,4].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-4].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-4].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of client with username \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -16,8 +16,8 @@ template<> void App::list_commands<Client>(){
 template<> void App::list_commands<Driver>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-5].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-5].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of driver with username \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -26,8 +26,8 @@ template<> void App::list_commands<Driver>(){
 template<> void App::list_commands<Manager>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-5].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-5].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of manager with username \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -36,8 +36,8 @@ template<> void App::list_commands<Manager>(){
 template<> void App::list_commands<Truck>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-4].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-5].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of truck with number plate \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -47,7 +47,7 @@ template<> void App::list_commands<Truck>(){
 template<> void App::list_commands<Service>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [?,?].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,1,4-8].\n"
               << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [?,?].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of service with ID \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
@@ -102,17 +102,19 @@ void App::list_sort_getcomp(int i, std::function<bool(const Truck*, const Truck*
 }
 
 void App::list_sort_getcomp(int i, std::function<bool(const Service*, const Service*)> &cmp){
-    assert(0);
-    /*
     switch(i){
-        case 0: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_numberplate      () < p2->get_numberplate      ()); }; break;
-        case 1: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_plateregisterdate() < p2->get_plateregisterdate()); }; break;
-        case 2: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_fuel             () < p2->get_fuel             ()); }; break;
-        case 3: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_range            () < p2->get_range            ()); }; break;
-        case 4: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_category         () < p2->get_category         ()); }; break;
+        case 0: cmp = [](const Service *p1, const Service *p2){ return (p1->get_id    () < p2->get_id    ()); }; break;
+        case 1: cmp = [](const Service *p1, const Service *p2){ return (p1->get_client() < p2->get_client()); }; break;
+        case 4: cmp = [](const Service *p1, const Service *p2){ return (p1->get_tbegin() < p2->get_tbegin()); }; break;
+        case 5: cmp = [](const Service *p1, const Service *p2){ return (p1->get_tend  () < p2->get_tend  ()); }; break;
+        case 6: cmp = [](const Service *p1, const Service *p2){ return (p1->get_abegin().format("%district %city") < p2->get_abegin().format("%district %city")); }; break;
+        case 7: cmp = [](const Service *p1, const Service *p2){ return (p1->get_aend  ().format("%district %city") < p2->get_aend  ().format("%district %city")); }; break;
+        case 8: cmp = [](const Service *p1, const Service *p2){
+            if(p1->get_cargo()->get_type() != p2->get_cargo()->get_type()) return (p1->get_cargo()->get_type  () < p2->get_cargo()->get_type  ());
+            return                                                                (p1->get_cargo()->get_weight() < p2->get_cargo()->get_weight());
+        }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
-    */
 }
 
 void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client*)> &cmp){
@@ -163,18 +165,26 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
 }
 
 void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Service*)> &cmp){
-    assert(0);
-    /*
     switch(i){
-        case 0: cmp = [str](const Truck *p){ return (std::string(p->get_numberplate())            .find(str) != std::string::npos); }; break;
-        case 1: cmp = [str](const Truck *p){ return (p->get_plateregisterdate().format("%Y/%m/%d").find(str) != std::string::npos); }; break;
-        case 2: cmp = [str](const Truck *p){ return (Truck::fuel_string(p->get_fuel())            .find(str) != std::string::npos); }; break;
-        case 3: cmp = [str](const Truck *p){ return utils::feq((float)p->get_range(), std::stof(str), 0.1)                        ; }; break;
-        case 4: cmp = [str](const Truck *p){ return (std::string(p->get_category())               .find(str) != std::string::npos); }; break;
-        case 5: cmp = [str](const Truck *p){ return (App::get_cargo_string(p)                     .find(str) != std::string::npos); }; break;
+        case 0: cmp = [str](const Service *p){ return (std::string(p->get_id())                   .find(str) != std::string::npos); }; break;
+        case 1: cmp = [str](const Service *p){ return (std::string(p->get_client())               .find(str) != std::string::npos); }; break;
+        case 2: cmp = [str](const Service *p){ return ((std::string(p->get_contact1().get_name())+" "+std::string(p->get_contact1().get_phonenumber())).find(str) != std::string::npos); }; break;
+        case 3: cmp = [str](const Service *p){ return ((std::string(p->get_contact2().get_name())+" "+std::string(p->get_contact2().get_phonenumber())).find(str) != std::string::npos); }; break;
+        case 4: cmp = [str](const Service *p){ return (p->get_tbegin().format("%Y/%m/%d %H:%M:%S").find(str) != std::string::npos); }; break;
+        case 5: cmp = [str](const Service *p){ return (p->get_tend  ().format("%Y/%m/%d %H:%M:%S").find(str) != std::string::npos); }; break;
+        case 6: cmp = [str](const Service *p){ return (p->get_abegin().format("(%district) %city").find(str) != std::string::npos); }; break;
+        case 7: cmp = [str](const Service *p){ return (p->get_aend  ().format("(%district) %city").find(str) != std::string::npos); }; break;
+        case 9: cmp = [str](const Service *p){
+            const std::vector<Truck::NumberPlate> tv = p->get_trucks();
+            const std::vector<Driver::Username  > dv = p->get_drivers();
+            for(size_t j = 0; j < tv.size(); ++j){
+                if(std::string(tv[j]).find(str) != std::string::npos ||
+                   std::string(dv[j]).find(str) != std::string::npos) return true;
+            }
+            return false;
+        }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
-    */
 }
 
 template<class T> void App::list(std::vector<const T*> v) const{

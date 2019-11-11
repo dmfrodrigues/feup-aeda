@@ -119,7 +119,7 @@ void App::print_list(const std::vector<const Service*> &v) const{
                   << utils::ljust(std::string(c->get_username())             ,12) <<   " │ "
                   << utils::ljust(utils::ljust(p->get_contact1().get_name()  ,16)+" / "+std::string(p->get_contact1().get_phonenumber()), 37) << "\t │ "
                   << p->get_tbegin().format("%Y/%m/%d %H:%M")                     <<   " │ "
-                  << utils::ljust(p->get_abegin().format("%city (%district)"),25) << "\t │ "
+                  << utils::ljust(p->get_abegin().format("(%district) %city"),25) << "\t │ "
                   << utils::ljust(Cargo::type_string(p->get_cargo()->get_type()), 13) << " "
                   << utils::rjust(utils::ftos("%.1fT", float(p->get_cargo()->get_weight())/1000.0), 7) << " │ "
                   << utils::ljust("("+std::string(tv[0])+")", 14) + " " + utils::ljust(std::string(dv[0]), 13) << " │\n";
@@ -128,7 +128,7 @@ void App::print_list(const std::vector<const Service*> &v) const{
         else          std::cout << "             │ ";
         std::cout << utils::ljust(utils::ljust(p->get_contact2().get_name()  ,16)+" / "+std::string(p->get_contact2().get_phonenumber()), 37) << "\t │ "
                   << p->get_tend  ().format("%Y/%m/%d %H:%M")                     <<   " │ "
-                  << utils::ljust(p->get_aend  ().format("%city (%district)"),25) << "\t │ "
+                  << utils::ljust(p->get_aend  ().format("(%district) %city"),25) << "\t │ "
                   << utils::ljust(p->get_cargo()->get_description()          ,20) << "\t │ ";
         if(tv.size() > 1) std::cout << utils::ljust("("+std::string(tv[1])+")", 14) + " " + utils::ljust(std::string(dv[1]), 13) << " │\n";
         else              std::cout << "                             │\n";
