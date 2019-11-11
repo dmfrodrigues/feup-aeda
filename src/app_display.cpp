@@ -105,29 +105,39 @@ void App::print_list(const std::vector<const Service*> &v) const{
               << " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n";
     std::cout << std::endl;
 
-    std::cout << "╒════════╤════════════╤═══════════════╤═══════════════╤════════════════╤══════════════╤═══════════════════╤═════════════════╤═══════════╤══════════════════╕" << std::endl;
-    std::cout << "│ ID [0] │ Client [1] │ Contact 1 [2] │ Contact 2 [3] │ Time begin [4] │ Time end [5] │ [6] Address begin │ [7] Address end │ [8] Cargo │ [9] Truck/driver │" << std::endl;
-    std::cout << "╞════════╪════════════╪═══════════════╪═══════════════╪════════════════╪══════════════╪═══════════════════╪═════════════════╪═══════════╪══════════════════╡" << std::endl;
+    std::cout << "╒════════╤══════════════╤════════════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════════════╤══════════════════════════════╕\n"
+              << "│ ID [0] │ Client [1]   │ Contact 1 [2]                          │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:            │ [9] Truck/driver             │\n"
+              << "│        │              │ Contact 2 [3]                          │ Time end   [5]   │ Address end   [7]          │ Type       Weight [0] │                              │\n"
+              << "│        │              │                                        │                  │                            │ Description [1]       │                              │\n"
+              << "╞════════╪══════════════╪════════════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════════════╪══════════════════════════════╡\n";
     for(const Service* p:v){
         const User *c = App::find_user(p->get_client());
+        const std::vector<Truck::NumberPlate> &tv = p->get_trucks ();
+        const std::vector<Driver::Username  > &dv = p->get_drivers();
         std::cout << "│ "
-                  << utils::rjust(p->get_id()                                       , 6) <<   " │ ";
-        if(c == NULL) std::cout << utils::ljust(std::string(c->get_username())+" (DEL)",20) << "\t │ ";
-        else          std::cout << utils::ljust(std::string(c->get_username())+" "     ,20) << "\t │ ";
-
-        std::cout << std::endl;
-        /*
-        std::cout << "│ "
-                  << utils::ljust((std::string)p->get_numberplate()                 ,21) << "\t │ "
-                  << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")     ,10) << "\t │ "
-                  << utils::ljust(Truck::fuel_string(p->get_fuel())                 ,12) << "\t │ "
-                  << utils::rjust(utils::ftos("%.1f", (float)p->get_range())        ,14) <<   " │ "
-                  << utils::ljust((std::string)p->get_category()                    ,11) << "\t │ "
-                  << utils::ljust(App::get_cargo_string(p)                          ,59) << "\t │ "
-                  << std::endl;
-        */
+                  << utils::rjust(p->get_id()                                , 6) <<   " │ "
+                  << utils::ljust(std::string(c->get_username())             ,12) <<   " │ "
+                  << utils::ljust(utils::ljust(p->get_contact1().get_name()  ,16)+" / "+std::string(p->get_contact1().get_phonenumber()), 37) << "\t │ "
+                  << p->get_tbegin().format("%Y/%m/%d %H:%M")                     <<   " │ "
+                  << utils::ljust(p->get_abegin().format("%city (%district)"),25) << "\t │ "
+                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type()), 13) << " "
+                  << utils::rjust(utils::ftos("%.1fT", float(p->get_cargo()->get_weight())/1000.0), 7) << " │ "
+                  << utils::ljust("("+std::string(tv[0])+")", 14) + " " + utils::ljust(std::string(dv[0]), 13) << " │\n";
+        std::cout << "│        │ ";
+        if(c == NULL) std::cout << "(DELETED)    │ ";
+        else          std::cout << "             │ ";
+        std::cout << utils::ljust(utils::ljust(p->get_contact2().get_name()  ,16)+" / "+std::string(p->get_contact2().get_phonenumber()), 37) << "\t │ "
+                  << p->get_tend  ().format("%Y/%m/%d %H:%M")                     <<   " │ "
+                  << utils::ljust(p->get_aend  ().format("%city (%district)"),25) << "\t │ "
+                  << utils::ljust(p->get_cargo()->get_description()          ,20) << "\t │ ";
+        if(tv.size() > 1) std::cout << utils::ljust("("+std::string(tv[1])+")", 14) + " " + utils::ljust(std::string(dv[1]), 13) << " │\n";
+        else              std::cout << "                             │\n";
+        for(size_t i = 2; i < tv.size(); ++i){
+            std::cout << "│        │              │                                        │                  │                            │                       │ "
+                      << utils::ljust("("+std::string(tv[i])+")", 14) + " " + utils::ljust(std::string(dv[i]), 13) << " │\n";
+        }
     }
-    std::cout << "╘════════╧════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═══════════════════╧═════════════════╧═══════════╧══════════════════╛" << std::endl;
+    std::cout << "╘════════╧══════════════╧════════════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════════════╧══════════════════════════════╛" << std::endl;
 }
 
 void App::display(const Client *p){
