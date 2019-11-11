@@ -178,7 +178,7 @@ protected:
 public:
     CargoTrans(){}
     CargoTrans(Weight weight, const std::string &description, Currency expenses_per_km);
-    const Currency& get_pricebase    () const{ return price_base_     ; }
+    virtual const Currency& get_pricebase    () const{ return price_base_     ; }
     const Currency& get_expensesperkm() const{ return expenses_per_km_; }
 };
 
@@ -197,6 +197,7 @@ public:
     CargoTransAnimal():CargoTrans(){}
     CargoTransAnimal(Weight weight, const std::string &description, Currency expenses_per_km);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
+    virtual const Currency& get_pricebase    () const{ return price_base_     ; }
 };
 
 /**
@@ -209,14 +210,17 @@ private:
     TemperatureRange temperature_range_;
     static const Currency price_base_;
     static const Temperature reference_temperature_;
-    Currency expenses_per_deg_;
+    float temperature_factor_;
 protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoTransRefrigerated():CargoTrans(){}
-    CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, Currency expenses_per_deg);
+    CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, float temperature_factor);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
+    virtual const Currency& get_pricebase    () const{ return price_base_     ; }
+    const Temperature& get_reference_temperature() const{ return reference_temperature_; }
+    const float& get_temperaturefactor() const{ return temperature_factor_; }
 };
 
 /**
@@ -235,6 +239,7 @@ public:
     CargoTransDangerous():CargoTrans(){}
     CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
+    virtual const Currency& get_pricebase    () const{ return price_base_     ; }
 };
 
 #endif // CARGO_H_INCLUDED

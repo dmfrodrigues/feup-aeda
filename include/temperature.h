@@ -24,6 +24,8 @@ public:
     bool operator>=(const Temperature &t)const;
     bool operator<=(const Temperature &t)const;
 
+    explicit operator float() const{ return temp_; }
+
     friend std::istream& operator>>(std::istream &is,       Temperature &t);
     friend std::ostream& operator<<(std::ostream &os, const Temperature &t);
 

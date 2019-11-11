@@ -134,16 +134,16 @@ std::ostream& CargoTransAnimal::output(std::ostream &os) const{
     return CargoTrans::output(os);
 }
 
-CargoTransRefrigerated::CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, Currency expenses_per_deg):
-    CargoTrans(weight, description, expenses_per_km), expenses_per_deg_(expenses_per_deg){}
+CargoTransRefrigerated::CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, float temperature_factor):
+    CargoTrans(weight, description, expenses_per_km), temperature_factor_(temperature_factor){}
 std::istream& CargoTransRefrigerated::input(std::istream &is){
     CargoTrans::input(is);
-    is >> expenses_per_deg_;
+    is >> temperature_factor_;
     return is;
 }
 std::ostream& CargoTransRefrigerated::output(std::ostream &os) const{
     CargoTrans::output(os); os << "\n";
-    os << expenses_per_deg_;
+    os << temperature_factor_;
     return os;
 }
 
