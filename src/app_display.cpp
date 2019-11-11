@@ -134,7 +134,7 @@ void App::display(const Manager *p){
 void App::display(const Truck *p){
     std::cout << "╒══════════════════╤═════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] Number plate │ " << utils::ljust((std::string)p->get_numberplate()                     ,82) << "\t │\n"
-              << "│ [1] Date         │ " << utils::ljust(p->get_plateregisterdate().format("%m/%Y")            ,82) << "\t │\n"
+              << "│ [1] Date         │ " << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")         ,82) << "\t │\n"
               << "│ [2] Fuel         │ " << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,82) << "\t │\n"
               << "│ [3] Range (km)   │ " << utils::ljust(utils::ftos("%.1f", (float)p->get_range())            ,82) << "\t │\n"
               << "│ [4] Category     │ " << utils::ljust((std::string)p->get_category()                        ,82) << "\t │\n";

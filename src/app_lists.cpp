@@ -135,18 +135,15 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
 }
 
 void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Truck*)> &cmp){
-    cmp = [](const Truck *p){ return true; };
-    /*
     switch(i){
-        case 0: cmp = [str](const Manager *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
-        case 1: cmp = [str](const Manager *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
-        case 2: cmp = [str](const Manager *p){ return (p->get_address().format()        .find(str) != std::string::npos); }; break;
-        case 3: cmp = [str](const Manager *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }; break;
-        case 4: cmp = [str](const Manager *p){ return (std::string(p->get_vat        ()).find(str) != std::string::npos); }; break;
-        case 5: cmp = [str](const Manager *p){ return (Currency(std::stod(str))                    ==p->get_base_salary());};break;
+        case 0: cmp = [str](const Truck *p){ return (std::string(p->get_numberplate())            .find(str) != std::string::npos); }; break;
+        case 1: cmp = [str](const Truck *p){ return (p->get_plateregisterdate().format("%Y/%m/%d").find(str) != std::string::npos); }; break;
+        case 2: cmp = [str](const Truck *p){ return (Truck::fuel_string(p->get_fuel())            .find(str) != std::string::npos); }; break;
+        case 3: cmp = [str](const Truck *p){ return utils::feq(p->get_range(), std::stof(str), 0.1)                               ; }; break;
+        case 4: cmp = [str](const Truck *p){ return (std::string(p->get_category())               .find(str) != std::string::npos); }; break;
+        case 5: cmp = [str](const Truck *p){ return (App::get_cargo_string(p)                     .find(str) != std::string::npos); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
-    */
 }
 
 template<class Base, class Deriv, class Type> void App::list(const std::vector<const Base*> &w, const Type &t) const{

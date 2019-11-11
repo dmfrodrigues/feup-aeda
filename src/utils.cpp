@@ -131,6 +131,12 @@ std::vector<std::string> utils::parse_command(const std::string &s){
     return ret;
 }
 
+bool utils::feq(double n1, double n2, double e){
+    n1 -= n2;
+    n1 = (n1 < 0.0L? -n1 : n1);
+    return (n1 <= e);
+}
+
 ///STRING_REGEX
 utils::string_regex& utils::string_regex::operator=(const std::string &s){
     if(!std::regex_match(s, std::regex(REGEX_STR_)))

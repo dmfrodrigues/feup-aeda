@@ -106,6 +106,8 @@ namespace utils {
 
     std::vector<std::string> parse_command(const std::string &s);
 
+    bool feq(double n1, double n2, double e);
+
     template<class T, class Valid> std::vector<T*> filter(const std::vector<T*> &v, Valid valid);
     ///UFLOAT
     template<class T>
