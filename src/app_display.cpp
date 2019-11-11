@@ -98,17 +98,25 @@ void App::print_list(const std::vector<const Truck*> &v){
     std::cout << "╘════════════════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═══════════════════════════════════════════════════════════════╛" << std::endl;
 }
 
-void App::print_list(const std::vector<const Service*> &v){
+void App::print_list(const std::vector<const Service*> &v) const{
     std::cout << std::endl;
     std::cout << " ╭─╴╭─╴┌─╮╷   ┬ ╭─╴╭─╴╭─╴ \n"
               << " ╰─╮├─╴├┬╯│ ╱ │ │  ├─╴╰─╮ \n"
               << " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n";
     std::cout << std::endl;
-    /*
-    std::cout << "╒════════════════════════╤═══════════════╤═══════════════╤════════════════╤══════════════╤═══════════════════════════════════════════════════════════════╕" << std::endl;
-    std::cout << "│ Number plate [0]       │ Date [1]      │ Fuel [2]      │ Range (km) [3] │ Category [4] │ Cargo [5]                                                     │" << std::endl;
-    std::cout << "╞════════════════════════╪═══════════════╪═══════════════╪════════════════╪══════════════╪═══════════════════════════════════════════════════════════════╡" << std::endl;
-    for(const Truck* p:v){
+
+    std::cout << "╒════════╤════════════╤═══════════════╤═══════════════╤════════════════╤══════════════╤═══════════════════╤═════════════════╤═══════════╤══════════════════╕" << std::endl;
+    std::cout << "│ ID [0] │ Client [1] │ Contact 1 [2] │ Contact 2 [3] │ Time begin [4] │ Time end [5] │ [6] Address begin │ [7] Address end │ [8] Cargo │ [9] Truck/driver │" << std::endl;
+    std::cout << "╞════════╪════════════╪═══════════════╪═══════════════╪════════════════╪══════════════╪═══════════════════╪═════════════════╪═══════════╪══════════════════╡" << std::endl;
+    for(const Service* p:v){
+        const User *c = App::find_user(p->get_client());
+        std::cout << "│ "
+                  << utils::rjust(p->get_id()                                       , 6) <<   " │ ";
+        if(c == NULL) std::cout << utils::ljust(std::string(c->get_username())+" (DEL)",20) << "\t │ ";
+        else          std::cout << utils::ljust(std::string(c->get_username())+" "     ,20) << "\t │ ";
+
+        std::cout << std::endl;
+        /*
         std::cout << "│ "
                   << utils::ljust((std::string)p->get_numberplate()                 ,21) << "\t │ "
                   << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")     ,10) << "\t │ "
@@ -117,9 +125,9 @@ void App::print_list(const std::vector<const Service*> &v){
                   << utils::ljust((std::string)p->get_category()                    ,11) << "\t │ "
                   << utils::ljust(App::get_cargo_string(p)                          ,59) << "\t │ "
                   << std::endl;
+        */
     }
-    std::cout << "╘════════════════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═══════════════════════════════════════════════════════════════╛" << std::endl;
-    */
+    std::cout << "╘════════╧════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═══════════════════╧═════════════════╧═══════════╧══════════════════╛" << std::endl;
 }
 
 void App::display(const Client *p){

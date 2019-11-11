@@ -263,6 +263,8 @@ void App::start(){
         //list_drivers();
         //list_managers();
         //list_trucks();
+        display(services_[0]);
+        wait();
         list_services();
     #endif
 

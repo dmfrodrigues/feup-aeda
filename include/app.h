@@ -48,7 +48,7 @@ private:
     static void print_list(const std::vector<const Driver *> &v);
     static void print_list(const std::vector<const Client *> &v);
     static void print_list(const std::vector<const Truck  *> &v);
-    static void print_list(const std::vector<const Service*> &v);
+           void print_list(const std::vector<const Service*> &v) const;
     static void display(const Client                 *p);
     static void display(const Driver                 *p);
     static void display(const Manager                *p);
