@@ -35,6 +35,9 @@ public:
      * @return  string with formatted date
      */
     std::string format(const std::string &fmt = Time::DEFAULT_FORMAT) const;
+
+    bool operator< (const Time &t) const;
+
     /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Time::DEFAULT_FORMAT. */
     friend std::istream& operator>>(std::istream &is,       Time &t);
     /** @brief   Overload of <em> operator<< </em>. Prints in @ref Time::DEFAULT_FORMAT. */

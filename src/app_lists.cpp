@@ -45,7 +45,7 @@ void App::list_commands(const User::Type &t){
 void App::list_commands(const Truck::Type &t){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,5].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,4].\n"
               << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0,5].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of truck with number plate \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
@@ -89,18 +89,14 @@ void App::list_sort_getcomp(int i, std::function<bool(const Manager*, const Mana
 }
 
 void App::list_sort_getcomp(int i, std::function<bool(const Truck*, const Truck*)> &cmp){
-    cmp = [](const Truck *p1, const Truck *p2){ return true; };
-    /*
     switch(i){
-        case 0: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_username   () < p2->get_username   ()); }; break;
-        case 1: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_name       () < p2->get_name       ()); }; break;
-        case 2: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_address    () < p2->get_address    ()); }; break;
-        case 3: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }; break;
-        case 4: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_vat        () < p2->get_vat        ()); }; break;
-        case 5: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }; break;
+        case 0: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_numberplate      () < p2->get_numberplate      ()); }; break;
+        case 1: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_plateregisterdate() < p2->get_plateregisterdate()); }; break;
+        case 2: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_fuel             () < p2->get_fuel             ()); }; break;
+        case 3: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_range            () < p2->get_range            ()); }; break;
+        case 4: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_category         () < p2->get_category         ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
-    */
 }
 
 void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client*)> &cmp){

@@ -63,13 +63,13 @@ public:
         Category& operator=(const std::string &category);
     };
     enum Fuel : int{
-        Gasoline = 0,
-        Diesel,
-        Biodiesel,
-        Gas,
-        Hydrogen,
+        Biodiesel = 0,
+        Diesel = 1,
         Electric,
-        Hybrid
+        Gas,
+        Gasoline,
+        Hybrid,
+        Hydrogen
     };
     static std::string fuel_string(const Fuel &f);
     enum Type{

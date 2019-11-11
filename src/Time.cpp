@@ -16,6 +16,8 @@ std::string Time::format(const std::string &fmt) const{
     return std::string(buff);
 }
 
+bool Time::operator< (const Time &t) const{ return (format() < t.format()); }
+
 std::istream& operator>>(std::istream &is,       Time &t){
     std::string s;
     try{
