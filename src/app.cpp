@@ -127,11 +127,9 @@ bool App::guestMenu(User* &user) {
     return true;
 }
 
-bool App::userMenu(const User* const user) {
+bool App::printUserMenu(User::Type user_type) {
     try {
         CLEAR();
-        User::Type user_type = user->get_type();
-        printf("Reach1\n");
         if (user_type == User::Type::client) {
             std::cout << "Service Management                Account Management           \n"
                          "==============================    =============================\n"
@@ -185,6 +183,28 @@ bool App::userMenu(const User* const user) {
     return true;
 }
 
+bool App::userMenu(User *user, User::Type user_type); {
+    try {
+        int option;
+        while (true) {
+            if (!printUserMenu(user_type)) return false;
+
+            if (!utils::input(App::OPSTR, option, std::cin, std::cout)) return true;
+
+            if (user_type == User::Type::client) {
+
+            } else if (user_type == User::Type::driver) {
+
+            } else if (user_type == User::Type::manager) {
+
+            }
+        }
+    catch (...) {
+        return false;
+    }
+    return true;
+}
+
 void App::start(){
     /*
     User *user = NULL;
@@ -216,7 +236,12 @@ void App::start(){
         while (true) {
             if (!guestMenu(user)) break;
 
-            if (!userMenu(user)) break;
+            User::Type user_type = user->get_type();
+
+            if (!userMenu(user_type)) {
+                error("Unexpected error.");
+                break;
+            }
         }
         delete user;
 

@@ -112,7 +112,9 @@ public:
 
     bool guestMenu(User* &user);
 
-    bool userMenu(const User* const user);
+    bool printUserMenu(User::Type user_type);
+
+    bool userMenu(User *user, User::Type user_type);
 
     void start();
 
