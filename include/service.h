@@ -54,8 +54,8 @@ public:
     const Person&           get_contact2() const{ return contact2_   ; }
     const Time&             get_tbegin  () const{ return t_begin_    ; }
     const Time&             get_tend    () const{ return t_end_      ; }
-    const Address&          get_address1() const{ return a_begin_    ; }
-    const Address&          get_address2() const{ return a_end_      ; }
+    const Address&          get_abegin  () const{ return a_begin_    ; }
+    const Address&          get_aend    () const{ return a_end_      ; }
     const Cargo*            get_cargo   () const{ return cargo_      ; }
     const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
     const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }
