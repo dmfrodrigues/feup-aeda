@@ -170,5 +170,5 @@ void App::display(const CargoTransRefrigerated *p){
               << "│ [5] Temp factor  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_temperaturefactor())    , 82) << "\t │\n";
 }
 void App::display(const CargoTransDangerous    *p){
-
+    std::cout << "│ [4] Danger level │ " << utils::ljust(Cargo::dangerlevel_string(p->get_dangerlevel())          , 82) << "\t │\n";
 }

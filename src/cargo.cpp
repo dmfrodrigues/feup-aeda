@@ -39,6 +39,22 @@ std::string Cargo::type_string(const Type &t){
     }
 }
 
+std::string Cargo::dangerlevel_string(const DangerLevel &d){
+    switch(d){
+        case Cargo::DangerLevel::None            : return "None"            ;
+        case Cargo::DangerLevel::Miscellaneous   : return "Miscellaneous"   ;
+        case Cargo::DangerLevel::Gases           : return "Gases"           ;
+        case Cargo::DangerLevel::Flammable_Liq   : return "Flammable_Liq"   ;
+        case Cargo::DangerLevel::Flammable_Sol   : return "Flammable_Sol"   ;
+        case Cargo::DangerLevel::Oxydizing_Agents: return "Oxydizing_Agents";
+        case Cargo::DangerLevel::Explosives      : return "Explosives"      ;
+        case Cargo::DangerLevel::Corrosive       : return "Corrosive"       ;
+        case Cargo::DangerLevel::Toxic           : return "Toxic"           ;
+        case Cargo::DangerLevel::Radioactive     : return "Radioactive"     ;
+        default: throw std::invalid_argument("invalid Cargo::DangerLevel");
+    }
+}
+
 Cargo::Cargo(): weight_(0){}
 Cargo::Cargo(Weight weight, const std::string &description):weight_(weight), description_(description){}
 std::istream& Cargo::input(std::istream &is){

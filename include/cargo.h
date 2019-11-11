@@ -49,6 +49,7 @@ public:
         Radioactive,
     };
     static std::string type_string(const Type &t);
+    static std::string dangerlevel_string(const DangerLevel &d);
 private:
     Weight weight_; /// @brief Weight of an unit, total weight will be determined by the quantity and weight of an unit.
     std::string description_;
@@ -240,6 +241,7 @@ public:
     CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level);
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
+    const Cargo::DangerLevel& get_dangerlevel() const{ return danger_level_; }
 };
 
 #endif // CARGO_H_INCLUDED
