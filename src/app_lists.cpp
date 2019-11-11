@@ -177,19 +177,19 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
     */
 }
 
-template<class Deriv> void App::list(std::vector<const Deriv*> v) const{
-    const std::vector<const Deriv*> original = v;
+template<class T> void App::list(std::vector<const T*> v) const{
+    const std::vector<const T*> original = v;
     while(true){
         CLEAR();
         print_list(v);
-        list_commands<Deriv>();
+        list_commands<T>();
         std::vector<std::string> s = utils::parse_command(prompt());
         if(s.size() >= 1){
             //====SORT==========================================================
             if(s[0] == "sort"){
                 if(s.size() != 2){ error("wrong number of arguments"); continue; }
                 int i; try{ i = utils::stoi(s[1]); } catch(const std::invalid_argument &e){ error("invalid NUM"); continue; }
-                std::function<bool(const Deriv*, const Deriv*)> cmp;
+                std::function<bool(const T*, const T*)> cmp;
                 try{
                     list_sort_getcomp(i, cmp);
                     utils::mergesort(v,cmp);
@@ -199,7 +199,7 @@ template<class Deriv> void App::list(std::vector<const Deriv*> v) const{
             if(s[0] == "search"){
                 if(s.size() != 3){ error("wrong number of arguments"); continue; }
                 int i; try{ i = utils::stoi(s[1]); } catch(const std::invalid_argument &e){ error("invalid NUM"); continue; }
-                std::function<bool(const Deriv*)> cmp;
+                std::function<bool(const T*)> cmp;
                 try{
                     list_filter_getvalid(i, s[2], cmp);
                     v = utils::filter(v,cmp);
@@ -210,10 +210,10 @@ template<class Deriv> void App::list(std::vector<const Deriv*> v) const{
                 if(s.size() != 2){ error("wrong number of arguments"); continue; }
                 const std::string &u = s[1];
                 auto it = utils::find_if(v.begin(), v.end(),
-                  [&u](const Deriv *p){ return (std::string(p->get_id()) == u); });
+                  [&u](const T *p){ return (std::string(p->get_id()) == u); });
                 if(it == v.end()){ error("no such username in table"); continue; }
                 std::cout << std::endl;
-                display(dynamic_cast<const Deriv*>(*it));
+                display(dynamic_cast<const T*>(*it));
                 std::cout << std::endl;
                 wait();
             }else

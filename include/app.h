@@ -78,7 +78,7 @@ private:
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Truck  *)> &cmp);
     static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Service*)> &cmp);
-    template<class Deriv> void list(std::vector<const Deriv*> v) const;
+    template<class T> void list(std::vector<const T*> v) const;
     ///Commands
     static std::string prompt();
     static void wait();
