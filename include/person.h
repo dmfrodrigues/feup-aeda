@@ -149,7 +149,7 @@ public:
      * @param password Password to verify
      * @return If the credentials are valid
      */
-    bool verifyCredentials(const std::string &password);
+    bool verifyCredentials(const std::string &password) const;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       User &p);

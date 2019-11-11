@@ -129,7 +129,7 @@ bool User::edit(int property, std::istream&is, std::ostream &os) {
     }
 }
 
-bool User::verifyCredentials(const std::string &password) {
+bool User::verifyCredentials(const std::string &password) const{
     return this->password_ == Password(password);
 }
 
