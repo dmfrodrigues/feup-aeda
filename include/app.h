@@ -90,6 +90,7 @@ private:
     void list_managers() const;
     void list_trucks  () const;
     void list_services() const;
+    void list_services(const User *user) const;
     bool addUser(const User::Type &user_type);
     template<class Deriv> bool deleteUser(const User::Type &type);
     template<class Deriv> User* chooseUser(const User::Type &type);
@@ -103,12 +104,17 @@ private:
 
     bool addService();
     Service* chooseService();
+    Service* chooseService(const User *user);
     bool deleteService();
+    bool deleteService(const User *user);
     bool editService();
+    bool editService(const User *user);
 
-    std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t);
+    std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const;
+    std::vector<Service*> filter_services_by_user(const std::vector<Service*> &v, const User *user) const;
     User* find_user(const User::Username &u) const;
     Truck* find_truck(const Truck::NumberPlate &np) const;
+    Service* find_service(const std::string &id) const;
     User* verifyUser(const std::string &username, const std::string &password);
 public:
     App(const std::string &base    ,
@@ -160,9 +166,9 @@ std::vector<const Deriv*> App::filter(const std::vector<const Base*> &v, const T
 }
 
 template<class Deriv> User* App::chooseUser(const User::Type &type) {
+    std::vector<const User*> v(users_.begin(), users_.end());
+    std::vector<const Deriv*> users_filter = App::filter<User,Deriv,User::Type>(v, type);
     while (true) {
-        std::vector<const User*> v(users_.begin(), users_.end());
-        std::vector<const Deriv*> users_filter = App::filter<User,Deriv,User::Type>(v, type);
         print_list(users_filter);
         std::string id;
         if (!utils::input("Choose user (username): ", id, std::cin, std::cout)) return NULL;

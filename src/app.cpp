@@ -57,13 +57,22 @@ void App::request_service(){
 
 }
 
-std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t){
+std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const {
     std::vector<User*> ret;
     for(User *p:v){
         if(p->get_type() == t){
             ret.push_back(p);
         }
     }
+    return ret;
+}
+
+std::vector<Service*> App::filter_services_by_user(const std::vector<Service*> &v, const User *user) const {
+    std::vector<Service*> ret;
+    for (Service *s : v)
+        if (s->get_client() == user->get_username())
+            ret.push_back(s);
+
     return ret;
 }
 
@@ -76,6 +85,12 @@ User* App::find_user(const User::Username &u) const{
 Truck* App::find_truck(const Truck::NumberPlate &np) const{
     auto it = utils::find_if(trucks_.begin(), trucks_.end(), [np](const Truck *truck) { return truck->get_numberplate() == np; });
     if(it != trucks_.end()) return *it;
+    else                    return NULL;
+}
+
+Service* App::find_service(const std::string &id) const {
+    auto it = utils::find_if(services_.begin(), services_.end(), [id](const Service *service) { return service->get_id() == id; });
+    if(it != services_.end()) return *it;
     else                    return NULL;
 }
 
@@ -126,6 +141,7 @@ bool App::guestMenu(User* &user) {
                         return true;
                     } catch (App::InvalidCredentials &ic) {
                         error(ic.getMsg());
+                        continue;
                     }
                 }
                 break;
@@ -152,7 +168,7 @@ bool App::printUserMenu(User::Type user_type) {
             std::cout << "Service Management                Account Management            \n"
                          "══════════════════════════════    ══════════════════════════════\n"
                          "Request service           [11]    Edit account              [21]\n"
-                         "Edit service              [12]                                  \n"
+                         "Edit service              [12]    See account               [22]\n"
                          "Cancel service            [13]                                  \n"
                          "Service list              [14]                                  \n"
                          "                                                                \n";
@@ -160,7 +176,7 @@ bool App::printUserMenu(User::Type user_type) {
             std::cout << "Service Management                Account Management            \n"
                          "══════════════════════════════    ══════════════════════════════\n"
                          "Service list              [11]    Edit account              [21]\n"
-                         "Solicit lay-off           [12]                                  \n"
+                         "Solicit lay-off           [12]    See account               [22]\n"
                          "Resign                    [13]                                  \n"
                          "                                                                \n"
                          "Information visualization                                       \n"
@@ -193,8 +209,9 @@ bool App::printUserMenu(User::Type user_type) {
                          "Other operations                                                \n"
                          "════════════════════════════════════════════════════════════════\n"
                          "Edit account              [71]                                  \n"
-                         "Save                      [72]                                  \n"
-                         "Exit                      [73]                                  \n"
+                         "See account               [72]                                  \n"
+                         "Save                      [73]                                  \n"
+                         "Exit                      [74]                                  \n"
                          "                                                                \n";
         }
 
@@ -215,10 +232,10 @@ bool App::userMenu(User *user, User::Type user_type) {
 
             if (user_type == User::Type::client) {
                 switch (option) {
-                case 11: break;     case 21: editUser<Client>(user); break;
-                case 12: break;
+                case 11: break;                         case 21: editUser<Client>(user);                        break;
+                case 12: break;                         case 22: App::display(dynamic_cast<Client*>(user));     break;
                 case 13: break;
-                case 14: break;
+                case 14: list_services(user); break;
 
                 default:
                     error("Invalid operation.");
@@ -227,8 +244,8 @@ bool App::userMenu(User *user, User::Type user_type) {
 
             } else if (user_type == User::Type::driver) {
                 switch (option) {
-                case 11:                break;      case 21: editUser<Driver>(user);     break;
-                case 12:                break;
+                case 11:                break;      case 21: editUser<Driver>(user);                            break;
+                case 12:                break;      case 22: App::display(dynamic_cast<Driver*>(user));         break;
                 case 13:                break;
                 case 14: list_trucks();  break;
 
@@ -240,7 +257,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 switch (option) {
                 case 11: break;                                             case 21: addTruck();                                        break;
                 case 12: break;                                             case 22: editTruck();                                       break;
-                case 13: break;                                             case 23: deleteTruck();                                     break;
+                case 13: deleteService();                           break;  case 23: deleteTruck();                                     break;
 
                 case 31: addUser(User::Type::client);               break;  case 41: addUser(User::Type::driver);                       break;
                 case 32: editUser<Client>(User::Type::client);      break;  case 42: editUser<Driver>(User::Type::driver);              break;
@@ -254,9 +271,10 @@ bool App::userMenu(User *user, User::Type user_type) {
                                                                             case 66: break;
 
 
-                case 71: editUser<Manager>(user);                   break;
-                case 72: save_all();                                break;
-                case 73: return true;                               break;
+                case 71: editUser<Manager>(user);                       break;
+                case 72: App::display(dynamic_cast<Manager*>(user));    break;
+                case 73: save_all();                                    break;
+                case 74: return true;                                   break;
 
                 default:
                     error("Invalid operation.");
@@ -312,9 +330,6 @@ void App::start(){
                 break;
             }
         }
-        delete user;
-
-
     #endif
 }
 

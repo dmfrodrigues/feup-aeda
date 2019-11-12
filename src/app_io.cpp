@@ -119,9 +119,9 @@ bool App::addUser(const User::Type &user_type) {
 
     if(utils::find_if(users_.begin(), users_.end(),
       [user](const User* u){ return (u->get_username() == user->get_username()); }) != users_.end()){
-        User::Username id = user->get_username();
         delete user;
-        throw App::RepeatedId((std::string)id);
+        error("Repeated username (username already exists).");
+        return false;
     }
     users_.push_back(user);
     std::cout << "User added.\n";
@@ -133,9 +133,9 @@ bool App::addTruck() {
     if (!truck->in(std::cin, std::cout)) { delete truck; return false; }
     if(utils::find_if(trucks_.begin(), trucks_.end(),
       [&truck](const Truck* t){ return (t->get_id() == truck->get_id()); }) != trucks_.end()){
-        Truck::NumberPlate id = truck->get_id();
         delete truck;
-        throw App::RepeatedId((std::string)id);
+        error("Repeated ID (number plate already exists).");
+        return false;
     }
     trucks_.push_back(truck);
     std::cout << "Truck added.\n";
@@ -143,8 +143,8 @@ bool App::addTruck() {
 }
 
 Truck* App::chooseTruck() {
+    std::vector<const Truck*> trucks(trucks_.begin(), trucks_.end());
     while (true) {
-        std::vector<const Truck*> trucks(trucks_.begin(), trucks_.end());
         print_list(trucks);
         std::string id;
         if (!utils::input("Choose truck (number plate): ", id, std::cin, std::cout)) return NULL;
@@ -176,6 +176,7 @@ bool App::deleteTruck() {
 
 bool App::editTruck() {
     Truck *truck = App::chooseTruck();
+    if (truck == NULL) return false;
     std::vector<Truck*>::iterator it = std::find(trucks_.begin(), trucks_.end(), truck);
     if (it == trucks_.end()) return false;
     truck = *it;
@@ -196,4 +197,36 @@ bool App::editTruck() {
     delete truck;
     std::cout << "Truck edited.\n";
     return true;
+}
+
+Service* App::chooseService() {
+    std::vector<const Service*> services(services_.begin(), services_.end());
+    while (true) {
+        print_list(services);
+        std::string id;
+        if (!utils::input("Choose service id: ", id, std::cin, std::cout)) return NULL;
+        Service *it = find_service(id);
+        if (it == NULL) {
+            error("Service doesn't exist (id doesn't have matches).");
+            continue;
+        } else {
+            return it;
+        }
+    }
+    return NULL;
+}
+
+
+bool App::deleteService() {
+    while (true) {
+        Service *service = App::chooseService();
+        if (service == NULL) return false;
+        std::vector<Service*>::iterator service_it = std::find(services_.begin(), services_.end(), service);
+        if (!utils::confirm("Confirm the deletion of service \'" + ((*service_it)->get_id()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        delete *service_it;
+        services_.erase(service_it);
+        std::cout << "Service deleted.\n";
+        return true;
+    }
+    return false;
 }

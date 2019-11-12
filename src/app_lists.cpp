@@ -257,3 +257,8 @@ void App::list_services() const{
     std::vector<const Service*> v(services_.begin(), services_.end());
     list(v);
 }
+void App::list_services(const User *user) const{
+    std::vector<Service*> v = filter_services_by_user(services_, user);
+    std::vector<const Service*> w(v.begin(), v.end());
+    list(w);
+}
