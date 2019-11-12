@@ -30,12 +30,12 @@ private:
     Cargo *cargo_ = NULL;
     std::vector<Truck ::NumberPlate> trucks_;
     std::vector<Driver::Username   > drivers_;
-    Currency expenses;
-    Currency price;
+    Currency expenses_;
+    Currency price_;
 public:
     static int next_id_;
 
-    Service(){}
+    Service():expenses_(0), price_(0){}
 
     ~Service() { delete cargo_; }
 
@@ -52,7 +52,8 @@ public:
     Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
             Time t_begin, Time t_end,
             Address a_begin, Address a_end,
-            Cargo *cargo);
+            Cargo *cargo,
+            Currency expenses, Currency price);
 
     const std::string&      get_id      () const{ return id_         ; }
     const Client::Username& get_client  () const{ return client_user_; }
