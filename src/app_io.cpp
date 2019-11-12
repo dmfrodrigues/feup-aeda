@@ -30,7 +30,7 @@ size_t App::save_ptr(std::ofstream &os, const std::vector<Base*> &m_out){
     return m_out.size();
 }
 
-void App::load_all(){
+bool App::load_all(){
     for(const User *p:users_) delete p;
     users_ = std::vector<User*>();
     {
@@ -63,7 +63,30 @@ void App::load_all(){
         is >> Service::next_id_;
         size_t sz = load_ptr<Service,Service,std::string>(is, services_);
         std::cout << " loaded " << sz << std::endl;
+        {
+            std::vector<const User*> v(users_.begin(), users_.end());
+            std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
+            for(const Driver *p:w){
+                try{
+                    get_schedule(p);
+                }catch(const InvalidSchedule &e){
+                    std::cout << "Invalid schedule" << std::endl;
+                    return 1;
+                }
+            }
+        }
+        {
+            for(const Truck *p:trucks_){
+                try{
+                    get_schedule(p);
+                }catch(const InvalidSchedule &e){
+                    std::cout << "Invalid schedule" << std::endl;
+                    return 1;
+                }
+            }
+        }
     }
+    return true;
 }
 
 void App::save_all(){

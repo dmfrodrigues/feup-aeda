@@ -234,7 +234,7 @@ bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {
                 std::size_t order_number = (std::size_t)utils::stoi(cmd.at(2));
                 if (!utils::confirm("Confirm the deletion of cargo (yes/no): ", std::cin, std::cout)) return false;
                 delete cargo_.at(order_number);
-                cargo_.erase(cargo_.begin() + order_number);
+                cargo_.erase(cargo_.begin() + (long)order_number);
                 return true;
             } catch (std::invalid_argument &ia) {
                 std::cout << "Error: invalid command\n";

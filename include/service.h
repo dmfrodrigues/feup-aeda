@@ -16,8 +16,10 @@
  * @brief Class to store all the information concerning a transport service.
  */
 class Service{
+public:
+    typedef std::string ID;
 private:
-    std::string id_;
+    ID id_;
     Client::Username client_user_;
     Person contact1_;
     Person contact2_;
