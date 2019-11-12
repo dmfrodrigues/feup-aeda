@@ -189,25 +189,38 @@ bool App::printUserMenu(User::Type user_type) {
     try {
         CLEAR();
         if (user_type == User::Type::client) {
-            std::cout << "Service management                Account management            \n"
-                         "══════════════════════════════    ══════════════════════════════\n"
-                         "Request service           [11]    Edit account              [21]\n"
-                         "Edit service              [12]    See account               [22]\n"
-                         "Cancel service            [13]                                  \n"
-                         "Service list              [14]                                  \n"
-                         "                                                                \n";
+            std::cout <<    "╒═════════════════════════════════════════════╤═════════════════════════════════════════════╕\n"
+                            "│             Service Management              │             Account Management              │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│  Request service                       [11] │  Edit account                          [21] │\n"
+                            "│  Edit service                          [12] │  View account                          [22] │\n"
+                            "│  Cancel service                        [13] │                                             │\n"
+                            "│  Service list                          [14] │                                             │\n"
+                            "╞═════════════════════════════════════════════╡                                             │\n"
+                            "│                Other operations             │                                             │\n"
+                            "╞═════════════════════════════════════════════╡                                             │\n"
+                            "|  Log out                               [41] │                                             │\n"
+                            "|                                             │                                             │\n"
+                            "|                                             │                                             │\n"
+                            "|                                             │                                             │\n"
+                            "╘═════════════════════════════════════════════╧═════════════════════════════════════════════╛\n"
+                            "                                                                                             \n";
         } else if (user_type == User::Type::driver) {
-            std::cout << "Service management                Account management            \n"
-                         "══════════════════════════════    ══════════════════════════════\n"
-                         "Service list              [11]    Edit account              [21]\n"
-                         "Solicit lay-off           [12]    See account               [22]\n"
-                         "Resign                    [13]                                  \n"
-                         "                                                                \n"
-                         "Information visualization                                       \n"
-                         "══════════════════════════════    ══════════════════════════════\n"
-                         "Statistics                [31]                                  \n"
-                         "Trucks Information        [32]                                  \n"
-                         "                                                                \n";
+            std::cout <<    "╒═════════════════════════════════════════════╤═════════════════════════════════════════════╕\n"
+                            "│             Service Management              │               Account Management            │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│  Service list                          [11] │  Edit account                          [21] │\n"
+                            "│  Solicit lay-off                       [12] │  View account                          [22] │\n"
+                            "│  Resign                                [13] │                                             │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│          Information visualization          │                Other operations             │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "|  Statistics                            [31] │  Log out                               [41] │\n"
+                            "|  Trucks information                    [32] │                                             │\n"
+                            "|                                             │                                             │\n"
+                            "|                                             │                                             │\n"
+                            "╘═════════════════════════════════════════════╧═════════════════════════════════════════════╛\n"
+                            "                                                                                               \n";
         } else if (user_type == User::Type::manager) {
             std::cout << "Services management               Truck management              \n"
                          "══════════════════════════════    ══════════════════════════════\n"
@@ -305,7 +318,6 @@ bool App::userMenu(User *user, User::Type user_type) {
                     break;
                 }
             }
-            wait();
         }
     } catch (...) {
         return false;

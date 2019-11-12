@@ -213,6 +213,7 @@ bool App::editTruck() {
                           "     delete cargo [order_number]\n"
                           "Types available: Normal, Animal, Refrigerated, Dangerous.\n"
                           "Choose property to change (type cancel to finish): ", command, std::cin, std::cout)) break;
+        if (command == "0") { error("Property that can't be changed."); continue; }
         truck_copy->edit(command, std::cin, std::cout);
     }
     if (!utils::confirm("Confirm the edition of truck \'" + (std::string)(truck_copy->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) { delete truck_copy; return false; }
