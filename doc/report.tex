@@ -1,0 +1,72 @@
+\documentclass{article}
+% Margins
+\usepackage[top=35mm,bottom=35mm,left=25mm,right=25mm]{geometry}
+% Graphics and images
+\usepackage{graphicx}
+	\graphicspath{{./images/}}
+% Encodings (to render letters with diacritics and special characters)
+\usepackage[utf8]{inputenc}
+% Language
+\usepackage[portuguese]{babel}
+% Hyperreferences
+\usepackage{hyperref}
+% Section pagebreaks
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+% Source code
+\usepackage{listings}
+\usepackage{xcolor}
+\renewcommand{\lstlistingname}{Ficheiro}
+\lstset{
+    frame=tb, % draw frame at top and bottom of the code
+    tabsize=4, % tab space width
+    numbers=left, % display line numbers on the left
+	showstringspaces=false, % don't mark spaces in strings    
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red} % string color
+}
+% Tables with bold rows
+\usepackage{tabularx}
+\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
+\newcommand\clearrow{\global\let\rowmac\relax}
+\clearrow
+% Math stuff
+\usepackage[mathscr]{euscript}
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\newcommand{\expnumber}[2]{{#1}\mathrm{e}{#2}} % scientific notation
+% Definitions, theorems, remarks,...
+\usepackage{amsthm}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\renewcommand\qedsymbol{$\blacksquare$}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+% Metadata
+\title{Relatório}
+\author{Diogo Miguel Ferreira Rodrigues\\Telmo Baptista\\Luís}
+\date{15 de novembro de 2019}
+% Headers and footers
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{ \fancyplain{}{Relatório}}
+\lfoot{ \fancyplain{}{Uma coisa}}
+\rfoot{ \fancyplain{}{\thepage} }
+% Contents title
+\addto\captionsportuguese{\renewcommand*\contentsname{Índice}}
+% Document
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Secção}
+Olá!
+\subsection{Subsecção}
+Uma subsecção!
+\subsubsection{Subsubsecção}
+E agora uma subsubsecção!
+\end{document}

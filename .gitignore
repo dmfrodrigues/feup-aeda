@@ -4,3 +4,8 @@ obj/
 *.o
 *.a
 doc/doc/
+doc/*.aux
+doc/*.log
+doc/*.out
+doc/*.gz
+doc/*.toc
