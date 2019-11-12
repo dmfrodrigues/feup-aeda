@@ -116,6 +116,8 @@ public:
         const std::string &clients ,
         const std::string &trucks  , const std::string &services);
 
+    ~App();
+
     bool guestMenu(User* &user);
 
     bool printUserMenu(User::Type user_type);

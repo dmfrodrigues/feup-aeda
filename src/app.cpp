@@ -21,6 +21,20 @@ App::App(const std::string &base      ,
     load_all();
 }
 
+App::~App() {
+    for (User *user : users_)
+        delete user;
+    users_.clear();
+
+    for (Truck *truck : trucks_)
+        delete truck;
+    trucks_.clear();
+
+    for (Service *service : services_)
+        delete service;
+    services_.clear();
+}
+
 std::string App::prompt(){
     std::cout << OPSTR;
     std::string ret;

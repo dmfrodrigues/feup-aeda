@@ -102,7 +102,8 @@ public:
     Truck(const NumberPlate &number_plate, const Time     &plate_register_date,
           const Fuel        &fuel        , const Distance &max_reach          ,
           const Category    &category    , std::vector<CargoTrans*> cargo);
-    virtual ~Truck(){}
+
+    virtual ~Truck();
 
     const NumberPlate& get_numberplate      () const{ return number_plate_       ; }
     const NumberPlate& get_id               () const{ return get_numberplate()   ; }

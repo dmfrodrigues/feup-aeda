@@ -74,6 +74,12 @@ Truck::Truck(const NumberPlate &number_plate, const Time     &plate_register_dat
     fuel_        (fuel        ), max_reach_          (max_reach          ),
     category_    (category    ), cargo_              (cargo){}
 
+Truck::~Truck() {
+    for (CargoTrans *cargo : cargo_)
+        delete cargo;
+    cargo_.clear();
+}
+
 std::vector<const CargoTrans*> Truck::get_cargo() const{
     std::vector<const CargoTrans*> ret(cargo_.begin(), cargo_.end());
     return ret;

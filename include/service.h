@@ -33,6 +33,8 @@ public:
 
     Service(){}
 
+    ~Service() { delete cargo_; }
+
     /**
      * @brief Constructor that accepts all the information concerning a transport service.
      * @param   client_user     Pointer to @ref Client to which the service will be provided
