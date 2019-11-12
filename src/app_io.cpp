@@ -171,13 +171,19 @@ Truck* App::chooseTruck() {
         print_list(trucks);
         std::string id;
         if (!utils::input("Choose truck (number plate): ", id, std::cin, std::cout)) return NULL;
-        Truck::NumberPlate number_plate = Truck::NumberPlate(Truck::NumberPlate::Number(id));
-        Truck *it = find_truck(number_plate);
-        if (it == NULL) {
-            error("Truck doesn't exist (number plate doesn't have matches).");
+        try {
+            Truck::NumberPlate number_plate = Truck::NumberPlate(Truck::NumberPlate::Number(id));
+
+            Truck *it = find_truck(number_plate);
+            if (it == NULL) {
+                error("Truck doesn't exist (number plate doesn't have matches).");
+                continue;
+            } else {
+                return it;
+            }
+        } catch (utils::string_regex::FailedRegex &fr) {
+            error(fr.what());
             continue;
-        } else {
-            return it;
         }
     }
     return NULL;
@@ -202,6 +208,7 @@ bool App::editTruck() {
     if (truck == NULL) return false;
     std::vector<Truck*>::iterator it = std::find(trucks_.begin(), trucks_.end(), truck);
     if (it == trucks_.end()) return false;
+    bool is_edited = false;
     truck = *it;
     std::string command;
     Truck *truck_copy = Truck::deep_copy(truck); //#DIOGO
@@ -214,12 +221,14 @@ bool App::editTruck() {
                           "Types available: Normal, Animal, Refrigerated, Dangerous.\n"
                           "Choose property to change (type cancel to finish): ", command, std::cin, std::cout)) break;
         if (command == "0") { error("Property that can't be changed."); continue; }
-        truck_copy->edit(command, std::cin, std::cout);
+        if (truck_copy->edit(command, std::cin, std::cout)) is_edited = true;
     }
-    if (!utils::confirm("Confirm the edition of truck \'" + (std::string)(truck_copy->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) { delete truck_copy; return false; }
-    *it = truck_copy;
+    if (is_edited) {
+        if (!utils::confirm("Confirm the edition of truck \'" + (std::string)(truck_copy->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) { delete truck_copy; return false; }
+        *it = truck_copy;
+        std::cout << "Truck edited.\n";
+    }
     delete truck;
-    std::cout << "Truck edited.\n";
     return true;
 }
 
