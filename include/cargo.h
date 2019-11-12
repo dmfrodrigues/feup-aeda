@@ -85,6 +85,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 /**
@@ -120,6 +129,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 /**
@@ -158,6 +176,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 /**
@@ -196,6 +223,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 /**
@@ -223,6 +259,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 /**
@@ -249,6 +294,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 /**
@@ -281,6 +335,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 /**
@@ -309,6 +372,15 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
+
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be changed
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
 
 #endif // CARGO_H_INCLUDED

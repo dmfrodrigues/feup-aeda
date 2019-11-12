@@ -178,6 +178,7 @@ bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {
                 CargoTrans *cargo = new CargoTransDangerous();
                 if (!cargo->in(std::cin, std::cout)) { delete cargo; return false; }
                 cargo_.push_back(cargo);
+                std::cout << "Cargo added.\n";
                 return true;
             } else {
                 std::cout << "Error: Invalid cargo type.\n";
@@ -190,8 +191,41 @@ bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {
     } else if (cmd.size() == 4) {
         if (cmd.at(0) == "edit" && cmd.at(1) == "cargo") {
             try {
-                int cargo = utils::stoi(cmd.at(2));
+                std::size_t order_number = (std::size_t)utils::stoi(cmd.at(2));
                 int property = utils::stoi(cmd.at(3));
+                printf("%d\n", (order_number >= cargo_.size()));
+                if (order_number >= cargo_.size()) {
+                    std::cout << "Error: Cargo doesn't exist.\n";
+                    return false;
+                }
+                CargoTrans *cargo_copy;
+                Cargo::Type cargo_type = cargo_.at(order_number)->get_type();
+                switch(cargo_type) {
+                case Cargo::Type::Normal:
+                    cargo_copy = new CargoTrans();
+                    *dynamic_cast<CargoTrans*>(cargo_copy) = *dynamic_cast<CargoTrans*>(cargo_.at(order_number));
+                    break;
+                case Cargo::Type::Animal:
+                    cargo_copy = new CargoTransAnimal();
+                    *dynamic_cast<CargoTransAnimal*>(cargo_copy) = *dynamic_cast<CargoTransAnimal*>(cargo_.at(order_number));
+                    break;
+                case Cargo::Type::Refrigerated:
+                    cargo_copy = new CargoTransRefrigerated();
+                    *dynamic_cast<CargoTransRefrigerated*>(cargo_copy) = *dynamic_cast<CargoTransRefrigerated*>(cargo_.at(order_number));
+                    break;
+                case Cargo::Type::Dangerous:
+                    cargo_copy = new CargoTransDangerous();
+                    *dynamic_cast<CargoTransDangerous*>(cargo_copy) = *dynamic_cast<CargoTransDangerous*>(cargo_.at(order_number));
+                    break;
+                default:
+                    std::cout << "Invalid cargo type.\n";
+                    return false;
+                }
+                cargo_copy->edit(property, is, os);
+                if (!utils::confirm("Confirm the edition of cargo (yes/no): ", std::cin, std::cout)) { delete cargo_copy; return false; }
+                *cargo_.at(order_number) = *cargo_copy;
+                delete cargo_copy;
+                return true;
             } catch (std::invalid_argument &ia) {
                 std::cout << "Error: invalid command\n";
                 return false;
