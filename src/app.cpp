@@ -53,6 +53,14 @@ void App::error(const std::string &s){
     wait();
 }
 
+std::vector<std::pair<Time,Time>, Service::ID> App::get_schedule(const Driver *p) const{
+    //return std::vector<std::pair<Time,Time>, Service::ID>();
+}
+
+std::vector<std::pair<Time,Time>, Service::ID> App::get_schedule(const Truck  *p) const{
+    //return std::vector<std::pair<Time,Time>, Service::ID>();
+}
+
 std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const {
     std::vector<User*> ret;
     for(User *p:v){
