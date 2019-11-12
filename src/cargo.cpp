@@ -74,7 +74,7 @@ std::ostream& Cargo::output(std::ostream &os) const{
 }
 
 bool Cargo::in(std::istream &is, std::ostream &os) {
-    if (!utils::input("Weight: ", weight_, is, os)|
+    if (!utils::input("Weight: ", weight_, is, os)||
         !utils::input("Description: ", description_, is, os)) return false;
     return true;
 }
@@ -235,7 +235,7 @@ bool CargoTransRefrigerated::in(std::istream &is, std::ostream &os) {
     while (true) {
         try {
             float tmin, tmax;
-            if (!utils::input("Minimum temperature: ", tmin, is, os)|
+            if (!utils::input("Minimum temperature: ", tmin, is, os)||
                 !utils::input("Maximum temperature: ", tmax, is, os)) return false;
 
             TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
