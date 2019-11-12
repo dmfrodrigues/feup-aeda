@@ -53,12 +53,12 @@ void App::error(const std::string &s){
     wait();
 }
 
-std::vector<std::pair<Time,Time>, Service::ID> App::get_schedule(const Driver *p) const{
-    //return std::vector<std::pair<Time,Time>, Service::ID>();
+std::map<std::pair<Time,Time>, Service::ID> App::get_schedule(const Driver *p) const{
+    return std::map<std::pair<Time,Time>, Service::ID>();
 }
 
-std::vector<std::pair<Time,Time>, Service::ID> App::get_schedule(const Truck  *p) const{
-    //return std::vector<std::pair<Time,Time>, Service::ID>();
+std::map<std::pair<Time,Time>, Service::ID> App::get_schedule(const Truck  *p) const{
+    return std::map<std::pair<Time,Time>, Service::ID>();
 }
 
 std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const {
@@ -343,7 +343,7 @@ App::InvalidCredentials::InvalidCredentials(const std::string &msg):
 const std::string& App::InvalidCredentials::getMsg() const { return msg_; }
 
 App::RepeatedId::RepeatedId(const std::string &id):
-    runtime_error("Repeated id "+std::string(id)), id_(id){}
+    runtime_error("Repeated id "+id), id_(id){}
 const std::string& App::RepeatedId::get_id() const{ return id_; }
 
 App::InvalidSchedule::InvalidSchedule(const std::string &id):
