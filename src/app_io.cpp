@@ -176,7 +176,9 @@ bool App::deleteTruck() {
 
 bool App::editTruck() {
     Truck *truck = App::chooseTruck();
-    if (truck == NULL) return false;
+    std::vector<Truck*>::iterator it = std::find(trucks_.begin(), trucks_.end(), truck);
+    if (it == trucks_.end()) return false;
+    truck = *it;
     std::string command;
     Truck *truck_copy = Truck::deep_copy(truck); //#DIOGO
     while (true) {
@@ -190,8 +192,8 @@ bool App::editTruck() {
         truck_copy->edit(command, std::cin, std::cout);
     }
     if (!utils::confirm("Confirm the edition of truck \'" + (std::string)(truck_copy->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) { delete truck_copy; return false; }
-    std::swap(truck, truck_copy); //#DIOGO
-    delete truck_copy;
+    *it = truck_copy;
+    delete truck;
     std::cout << "Truck edited.\n";
     return true;
 }
