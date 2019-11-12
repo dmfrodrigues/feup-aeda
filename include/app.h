@@ -117,8 +117,8 @@ private:
     User* verifyUser(const std::string &username, const std::string &password);
 
     //Functions
-    std::map<std::pair<Time,Time>, Service::ID> get_schedule(const Driver *p) const;
-    std::map<std::pair<Time,Time>, Service::ID> get_schedule(const Truck  *p) const;
+    std::vector<std::pair<std::pair<Time,Time>, Service::ID> > get_schedule(const Driver *p) const;
+    std::vector<std::pair<std::pair<Time,Time>, Service::ID> > get_schedule(const Truck  *p) const;
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
