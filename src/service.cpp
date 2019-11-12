@@ -21,8 +21,20 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         return (p1->get_cargo()->get_weight() > p2->get_cargo()->get_weight());
     });
     size_t sz = std::min(tv.size(), dv.size());
-
-    return false;
+    Weight done(0.0);
+    size_t i = 0;
+    while(i < sz && done < cargo_->get_weight() && !utils::feq(float(done), float(cargo_->get_weight()), 1.0)){
+        trucks_.push_back(tv[i]->get_numberplate());
+        drivers_.push_back(dv[i]->get_username());
+        done += tv[i]->get_cargo()->get_weight();
+    }
+    if(done < cargo_->get_weight() && !utils::feq(float(done), float(cargo_->get_weight()), 1.0)){
+        trucks_.clear();
+        drivers_.clear();
+        return false;
+    }else{
+        return true;
+    }
 }
 
 std::istream& operator>>(std::istream &is,       Service &s){
