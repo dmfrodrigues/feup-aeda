@@ -23,6 +23,15 @@ Currency Service::get_price   () const{
     return price_;
 }
 
+bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv){
+    utils::mergesort(tv, [](const Truck *p1, const Truck *p2){
+        return (p1->get_cargo()->get_weight() > p2->get_cargo()->get_weight());
+    });
+    size_t sz = std::min(tv.size(), dv.size());
+
+    return false;
+}
+
 std::istream& operator>>(std::istream &is,       Service &s){
     is >> s.id_
        >> s.client_user_

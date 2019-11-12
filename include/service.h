@@ -66,8 +66,10 @@ public:
     const Cargo*            get_cargo   () const{ return cargo_      ; }
     const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
     const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }
-    Currency get_expenses() const;
-    Currency get_price   () const;
+    const Currency& get_expenses() const { return expenses_; };
+    const Currency& get_price   () const { return price_   ; };
+
+    bool allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv);
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Service &s);
