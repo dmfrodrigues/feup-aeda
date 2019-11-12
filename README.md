@@ -19,19 +19,19 @@
 - [ ] Clients can request a service, with origin, destination, travel time,...
 - [ ] List the monthly values the company gets from all its transports, from a given truck, and from all trucks of a given kind.
 - [x] List clients
-- [ ] List services
+- [x] List services
 
 ## ToDo
 
 ### Most priority
 
 #### Entities
-- [ ] Login for clients, managers and drivers
-- [ ] Add, remove and edit truck
-- [ ] Add, remove and edit client, manager and driver
+- [x] Login for clients, managers and drivers
+- [x] Add, remove and edit truck
+- [x] Add, remove and edit client, manager and driver
 - [ ] Allow clients and managers to add services
 - [x] Show list of clients
-- [ ] Show list of trucks
+- [x] Show list of trucks
 - [ ] Show to a driver a list of his services
 
 #### Services
