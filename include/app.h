@@ -40,7 +40,7 @@ private:
     ///File IO
     template<class Base, class Deriv, class ID> static size_t load_ptr(std::ifstream &is,       std::vector<Base*> &m_in );
     template<class Base, class Deriv          > static size_t save_ptr(std::ofstream &os, const std::vector<Base*> &m_out);
-    void load_all();
+    bool load_all();
     void save_all();
     ///Display
     static std::string get_cargo_string(const Truck *p);
@@ -84,7 +84,6 @@ private:
     static void wait();
     static void error(const std::string &s);
     ///Operations
-    void request_service();
     void list_clients () const;
     void list_drivers () const;
     void list_managers() const;
@@ -116,6 +115,10 @@ private:
     Truck* find_truck(const Truck::NumberPlate &np) const;
     Service* find_service(const std::string &id) const;
     User* verifyUser(const std::string &username, const std::string &password);
+
+    //Functions
+    std::vector<std::pair<Time,Time>, Service::ID> get_schedule(const Driver *p) const;
+    std::vector<std::pair<Time,Time>, Service::ID> get_schedule(const Truck  *p) const;
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
@@ -145,6 +148,14 @@ public:
         std::string id_;
     public:
         RepeatedId(const std::string &id);
+        const std::string& get_id() const;
+    };
+
+    class InvalidSchedule: public std::logic_error {
+    private:
+        std::string id_;
+    public:
+        InvalidSchedule(const std::string &id);
         const std::string& get_id() const;
     };
 };
