@@ -65,8 +65,8 @@ public:
     const Cargo*            get_cargo   () const{ return cargo_      ; }
     const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
     const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }
-    const Currency& get_expenses() const;
-    const Currency& get_price   () const;
+    Currency get_expenses() const;
+    Currency get_price   () const;
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Service &s);
