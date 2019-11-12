@@ -215,16 +215,19 @@ template<class Deriv> bool App::editUser(const User::Type &type) {
     int no_properties = 4 + (user_type == User::Type::manager || user_type == User::Type::driver);
     int option;
     Deriv user_copy = *dynamic_cast<Deriv*>(user);
+    bool is_edited = false;
     while (true) {
         option = 0;
         App::display(&user_copy);
         if (!utils::input("Choose property to change (type cancel to finish): ", option, std::cin, std::cout)) break;
         if (option <= 0 || option > no_properties) { App::error("Option outside of range."); continue; }
-        user_copy.edit(option, std::cin, std::cout);
+        if(user_copy.edit(option, std::cin, std::cout)) is_edited = true;
     }
-    if (!utils::confirm("Confirm the edition of user \'" + (std::string)(user_copy.get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
-    *user = user_copy;
-    std::cout << "User edited.\n";
+    if (is_edited) {
+        if (!utils::confirm("Confirm the edition of user \'" + (std::string)(user_copy.get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        *user = user_copy;
+        std::cout << "User edited.\n";
+    }
     return true;
 }
 
@@ -234,16 +237,19 @@ template<class Deriv> bool App::editUser(User *user) {
     int option;
 
     Deriv user_copy = *dynamic_cast<Deriv*>(user);
+    bool is_edited = false;
     while (true) {
         option = 0;
         App::display(&user_copy);
         if (!utils::input("Choose property to change (type cancel to finish): ", option, std::cin, std::cout)) break;
         if (option <= 0 || option > no_properties) { App::error("Option outside of range."); continue; }
-        user_copy.edit(option, std::cin, std::cout);
+        if (user_copy.edit(option, std::cin, std::cout)) is_edited = true;
     }
-    if (!utils::confirm("Confirm the changes (yes/no): ", std::cin, std::cout)) return false;
-    *user = user_copy;
-    std::cout << "Saved changes.\n";
+    if (is_edited) {
+        if (!utils::confirm("Confirm the changes (yes/no): ", std::cin, std::cout)) return false;
+        *user = user_copy;
+        std::cout << "Saved changes.\n";
+    }
     return true;
 }
 
