@@ -18,7 +18,7 @@ std::istream& Person::input(std::istream &is){
 }
 
 bool Person::in(std::istream &is, std::ostream &os) {
-    if (!utils::input("Name: ",         name_,        is, os)|
+    if (!utils::input("Name: ",         name_,        is, os)||
         !utils::input("Phone Number: ", phonenumber_, is, os)) return false;
     return true;
 }
@@ -90,7 +90,7 @@ std::istream& User::input(std::istream &is){
 
 bool User::in(std::istream &is, std::ostream &os) {
     if (!Person::in(is, os)) return false;
-    if (!utils::input("Username: ", username_, is, os)|
+    if (!utils::input("Username: ", username_, is, os)||
         !utils::input("Password: ", password_, is, os)) return false;
 
     if (!address_.in(is, os)) return false;
