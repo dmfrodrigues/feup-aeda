@@ -184,6 +184,17 @@ bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {
                 std::cout << "Error: Invalid cargo type.\n";
                 return false;
             }
+        } else if (cmd.at(0) == "delete" && cmd.at(1) == "cargo") {
+            try {
+                std::size_t order_number = (std::size_t)utils::stoi(cmd.at(2));
+                if (!utils::confirm("Confirm the deletion of cargo (yes/no): ", std::cin, std::cout)) return false;
+                delete cargo_.at(order_number);
+                cargo_.erase(cargo_.begin() + order_number);
+                return true;
+            } catch (std::invalid_argument &ia) {
+                std::cout << "Error: invalid command\n";
+                return false;
+            }
         } else {
             std::cout << "Error: invalid command\n";
             return false;
