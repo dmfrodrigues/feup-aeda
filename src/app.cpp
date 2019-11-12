@@ -69,8 +69,10 @@ bool App::get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Tim
     }
     utils::mergesort(ret);
     for(size_t i = 0; i+1 < ret.size(); ++i)
-        if(ret[i+1].first.first < ret[i].first.second) //if the next service starts before the previous ends
+        if(ret[i+1].first.first < ret[i].first.second){ //if the next service starts before the previous ends
+            ret.clear();
             return false;
+        }
     return true;
 }
 
@@ -90,8 +92,10 @@ bool App::get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Tim
     }
     utils::mergesort(ret);
     for(size_t i = 0; i+1 < ret.size(); ++i)
-        if(ret[i+1].first.first < ret[i].first.second) //if the next service starts before the previous ends
+        if(ret[i+1].first.first < ret[i].first.second){ //if the next service starts before the previous ends
+            ret.clear();
             return false;
+        }
     return true;
 }
 

@@ -65,17 +65,6 @@ void App::print_list(const std::vector<const Manager*> &v){
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧═════════════════╛" << std::endl;
 }
 
-std::string App::get_cargo_string(const Truck *p){
-    std::string s = "";
-    const std::vector<const CargoTrans*> &w = p->get_cargo();
-    size_t sz;
-    if((sz = App::filter<CargoTrans,CargoTrans            ,Cargo::Type>(w, Cargo::Type::Normal      ).size())){ if(s != "") s += ", "; s += "Normal ("       + utils::itos((long long)sz) + ")"; }
-    if((sz = App::filter<CargoTrans,CargoTransAnimal      ,Cargo::Type>(w, Cargo::Type::Animal      ).size())){ if(s != "") s += ", "; s += "Animal ("       + utils::itos((long long)sz) + ")"; }
-    if((sz = App::filter<CargoTrans,CargoTransRefrigerated,Cargo::Type>(w, Cargo::Type::Refrigerated).size())){ if(s != "") s += ", "; s += "Refrigerated (" + utils::itos((long long)sz) + ")"; }
-    if((sz = App::filter<CargoTrans,CargoTransDangerous   ,Cargo::Type>(w, Cargo::Type::Dangerous   ).size())){ if(s != "") s += ", "; s += "Dangerous ("    + utils::itos((long long)sz) + ")"; }
-    return s;
-}
-
 void App::print_list(const std::vector<const Truck*> &v){
     std::cout << std::endl;
     std::cout << " ╶┬╴┌─╮╷ ╷╭─╴╷ ╱╭─╴ \n"
@@ -92,7 +81,7 @@ void App::print_list(const std::vector<const Truck*> &v){
                   << utils::ljust(Truck::fuel_string(p->get_fuel())                 ,12) << "\t │ "
                   << utils::rjust(utils::ftos("%.1f", (float)p->get_range())        ,14) <<   " │ "
                   << utils::ljust((std::string)p->get_category()                    ,11) << "\t │ "
-                  << utils::ljust(App::get_cargo_string(p)                          ,59) << "\t │\n";
+                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())    ,59) << "\t │\n";
     }
     std::cout << "╘════════════════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═══════════════════════════════════════════════════════════════╛" << std::endl;
 }
@@ -178,15 +167,11 @@ void App::display(const Truck *p){
               << "│ [2] Fuel          │ " << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,81) << "\t │\n"
               << "│ [3] Range (km)    │ " << utils::ljust(utils::ftos("%.1f", (float)p->get_range())            ,81) << "\t │\n"
               << "│ [4] Category      │ " << utils::ljust((std::string)p->get_category()                        ,81) << "\t │\n";
-    auto cargo = p->get_cargo();
-    for(size_t i = 0; i < cargo.size(); ++i){
-        const CargoTrans *q = cargo[i];
-        std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
-                  << "│ [5] Cargo " << utils::rjust("#"+utils::itos((long long)i), 7)
-                                    << " : " + utils::ljust(Cargo::type_string(q->get_type()), 81) << "\t │\n"
-                  << "├───────────────────┬────────────────────────────────────────────────────────────────────────────────────┤\n";
-        App::display(q);
-    }
+    const CargoTrans *q = p->get_cargo();
+    std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
+              << "│ [5] Cargo         : "<< utils::ljust(Cargo::type_string(q->get_type()), 81) << "\t │\n"
+              << "├───────────────────┬────────────────────────────────────────────────────────────────────────────────────┤\n";
+    App::display(q);
     std::cout << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
 

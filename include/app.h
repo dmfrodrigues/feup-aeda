@@ -43,7 +43,6 @@ private:
     bool load_all();
     void save_all();
     ///Display
-    static std::string get_cargo_string(const Truck *p);
     static void print_list(const std::vector<const Manager*> &v);
     static void print_list(const std::vector<const Driver *> &v);
     static void print_list(const std::vector<const Client *> &v);

@@ -27,7 +27,7 @@ private:
     Time t_end_;
     Address a_begin_;
     Address a_end_;
-    Cargo *cargo_;
+    Cargo *cargo_ = NULL;
     std::vector<Truck ::NumberPlate> trucks_;
     std::vector<Driver::Username   > drivers_;
 public:

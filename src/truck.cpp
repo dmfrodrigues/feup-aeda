@@ -69,20 +69,17 @@ Truck::Truck(const Truck &t):
 
 Truck::Truck(const NumberPlate &number_plate, const Time     &plate_register_date,
              const Fuel        &fuel        , const Distance &max_reach          ,
-             const Category    &category    , std::vector<CargoTrans*> cargo):
+             const Category    &category    , CargoTrans *cargo):
     number_plate_(number_plate), plate_register_date_(plate_register_date),
     fuel_        (fuel        ), max_reach_          (max_reach          ),
     category_    (category    ), cargo_              (cargo){}
 
 Truck::~Truck() {
-    for (CargoTrans *cargo : cargo_)
-        delete cargo;
-    cargo_.clear();
+    delete cargo_;
 }
 
-std::vector<const CargoTrans*> Truck::get_cargo() const{
-    std::vector<const CargoTrans*> ret(cargo_.begin(), cargo_.end());
-    return ret;
+const CargoTrans* Truck::get_cargo() const{
+    return cargo_;
 }
 
 Truck* Truck::deep_copy(const Truck *truck) {
@@ -94,33 +91,32 @@ Truck* Truck::deep_copy(const Truck *truck) {
     copy->max_reach_            = truck->max_reach_;
     copy->category_             = truck->category_;
 
-    for (CargoTrans* cargo : truck->cargo_) {
-        CargoTrans *cargo_copy;
-        Cargo::Type cargo_type = cargo->get_type();
-        switch(cargo_type) {
-            case Cargo::Type::Normal:
-                cargo_copy = new CargoTrans();
-                *dynamic_cast<CargoTrans*>(cargo_copy) = *dynamic_cast<CargoTrans*>(cargo);
-                break;
-            case Cargo::Type::Animal:
-                cargo_copy = new CargoTransAnimal();
-                *dynamic_cast<CargoTransAnimal*>(cargo_copy) = *dynamic_cast<CargoTransAnimal*>(cargo);
-                break;
-            case Cargo::Type::Refrigerated:
-                cargo_copy = new CargoTransRefrigerated();
-                *dynamic_cast<CargoTransRefrigerated*>(cargo_copy) = *dynamic_cast<CargoTransRefrigerated*>(cargo);
-                break;
-            case Cargo::Type::Dangerous:
-                cargo_copy = new CargoTransDangerous();
-                *dynamic_cast<CargoTransDangerous*>(cargo_copy) = *dynamic_cast<CargoTransDangerous*>(cargo);
-                break;
-            default:
-                delete copy;
-                return NULL;
-        }
-        if (cargo_copy != NULL)     copy->cargo_.push_back(cargo_copy);
-        else { delete copy; return NULL; }
+    CargoTrans *cargo = truck->cargo_;
+    CargoTrans *cargo_copy;
+    Cargo::Type cargo_type = cargo->get_type();
+    switch(cargo_type) {
+        case Cargo::Type::Normal:
+            cargo_copy = new CargoTrans();
+            *dynamic_cast<CargoTrans*>(cargo_copy) = *dynamic_cast<CargoTrans*>(cargo);
+            break;
+        case Cargo::Type::Animal:
+            cargo_copy = new CargoTransAnimal();
+            *dynamic_cast<CargoTransAnimal*>(cargo_copy) = *dynamic_cast<CargoTransAnimal*>(cargo);
+            break;
+        case Cargo::Type::Refrigerated:
+            cargo_copy = new CargoTransRefrigerated();
+            *dynamic_cast<CargoTransRefrigerated*>(cargo_copy) = *dynamic_cast<CargoTransRefrigerated*>(cargo);
+            break;
+        case Cargo::Type::Dangerous:
+            cargo_copy = new CargoTransDangerous();
+            *dynamic_cast<CargoTransDangerous*>(cargo_copy) = *dynamic_cast<CargoTransDangerous*>(cargo);
+            break;
+        default:
+            delete copy;
+            return NULL;
     }
+    if (cargo_copy != NULL)     copy->cargo_ = cargo_copy;
+    else { delete copy; return NULL; }
     return copy;
 }
 
@@ -132,11 +128,8 @@ std::istream& operator>>(std::istream &is,       Truck &t){
     int i; is >> i; t.fuel_ = static_cast<Truck::Fuel>(i);
     is >> t.max_reach_;
     is >> t.category_;
-    size_t N; is >> N;
-    t.cargo_ = std::vector<CargoTrans*>(N, NULL);
-    for(CargoTrans* &p:t.cargo_){
-        input_CargoTrans(is, p);
-    }
+    t.cargo_ = NULL;
+    input_CargoTrans(is, t.cargo_);
     return is;
 }
 
@@ -145,11 +138,8 @@ std::ostream& operator<<(std::ostream &os, const Truck &t){
        << t.plate_register_date_  << "\n"
        << (int)t.fuel_            << "\n"
        << t.max_reach_            << "\n"
-       << t.category_             << "\n"
-       << t.cargo_.size()         << "\n";
-    for(size_t i = 0; i < t.cargo_.size(); ++i){
-        output_CargoTrans(os, t.cargo_[i]); if(i+1 != t.cargo_.size()) os << "\n";
-    }
+       << t.category_             << "\n";
+    output_CargoTrans(os, t.cargo_);
     return os;
 }
 
@@ -163,7 +153,7 @@ bool Truck::in(std::istream &is, std::ostream &os) {
     return true;
 }
 
-bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {
+bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {/*
     std::vector<std::string> cmd = utils::parse_command(command);
     if (cmd.size() == 1) {
         try {
@@ -287,6 +277,6 @@ bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {
                 return false;
             }
         }
-    }
+    }*/
     return true;
 }

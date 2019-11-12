@@ -151,7 +151,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         case 2: cmp = [str](const Truck *p){ return (Truck::fuel_string(p->get_fuel())            .find(str) != std::string::npos); }; break;
         case 3: cmp = [str](const Truck *p){ return utils::feq((float)p->get_range(), std::stof(str), 0.1)                        ; }; break;
         case 4: cmp = [str](const Truck *p){ return (std::string(p->get_category())               .find(str) != std::string::npos); }; break;
-        case 5: cmp = [str](const Truck *p){ return (App::get_cargo_string(p)                     .find(str) != std::string::npos); }; break;
+        case 5: cmp = [str](const Truck *p){ return (Cargo::type_string(p->get_cargo()->get_type()).find(str) != std::string::npos); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }

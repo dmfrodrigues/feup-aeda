@@ -84,7 +84,7 @@ private:
     Category category_; //A,B,C,D
 
     //second in pair is cost per kilometer of transporting a given Cargo
-    std::vector<CargoTrans*> cargo_;
+    CargoTrans *cargo_ = NULL;
 
 public:
     Truck(){}
@@ -101,7 +101,7 @@ public:
      */
     Truck(const NumberPlate &number_plate, const Time     &plate_register_date,
           const Fuel        &fuel        , const Distance &max_reach          ,
-          const Category    &category    , std::vector<CargoTrans*> cargo);
+          const Category    &category    , CargoTrans *cargo);
 
     virtual ~Truck();
 
@@ -111,7 +111,7 @@ public:
     const Fuel&        get_fuel             () const{ return fuel_               ; }
     const Distance&    get_range            () const{ return max_reach_          ; }
     const Category&    get_category         () const{ return category_           ; }
-    std::vector<const CargoTrans*> get_cargo() const;
+    const CargoTrans* get_cargo() const;
 
     virtual Type get_type(void) const;
 
