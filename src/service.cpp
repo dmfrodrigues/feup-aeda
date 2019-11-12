@@ -14,6 +14,13 @@ Service::Service(const Client::Username &client_user, const Person &contact1, co
                  a_begin_(a_begin), a_end_(a_end),
                  cargo_(cargo){}
 
+const Currency& Service::get_expenses() const{
+    return Currency(0);
+}
+const Currency& Service::get_price   () const{
+    return Currency(0);
+}
+
 std::istream& operator>>(std::istream &is,       Service &s){
     is >> s.id_
        >> s.client_user_
