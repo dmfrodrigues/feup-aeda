@@ -116,6 +116,8 @@ public:
 
     static Fuel processFuel(const std::string &s);
 
+    static Truck* deep_copy(const Truck *truck);
+
     /** @brief   Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Truck &t);
     /** @brief   Overload of <em> operator<< </em>. */
