@@ -4,7 +4,7 @@
 
 Temperature::Temperature():Temperature(20.0){}
 Temperature::Temperature(float temp){
-    if(temp < -273.15 || 100 < temp)
+    if(temp < -273.15 || 100.00 < temp)
         throw InvalidTemperature(temp);
     temp_ = temp;
 }
@@ -16,7 +16,12 @@ bool Temperature::operator==(const Temperature &t)const{ return !(*this < t || t
 bool Temperature::operator>=(const Temperature &t)const{ return !(*this < t); }
 bool Temperature::operator<=(const Temperature &t)const{ return !(*this > t); }
 
-std::istream& operator>>(std::istream &is,       Temperature &t){ return (is >> t.temp_); }
+std::istream& operator>>(std::istream &is,       Temperature &t){
+    float f;
+    is >> f;
+    try{ t = Temperature(f); }catch(...){ is.setstate(std::ios::failbit); }
+    return is;
+}
 std::ostream& operator<<(std::ostream &os, const Temperature &t){ return (os << t.temp_); }
 
 Temperature::InvalidTemperature::InvalidTemperature(const float &temp):
