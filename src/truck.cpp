@@ -79,6 +79,45 @@ std::vector<const CargoTrans*> Truck::get_cargo() const{
     return ret;
 }
 
+Truck* Truck::deep_copy(const Truck *truck) {
+    Truck *copy = new Truck();
+
+    copy->number_plate_         = truck->number_plate_;
+    copy->plate_register_date_  = truck->plate_register_date_;
+    copy->fuel_                 = truck->fuel_;
+    copy->max_reach_            = truck->max_reach_;
+    copy->category_             = truck->category_;
+
+    for (CargoTrans* cargo : truck->cargo_) {
+        CargoTrans *cargo_copy;
+        Cargo::Type cargo_type = cargo->get_type();
+        switch(cargo_type) {
+            case Cargo::Type::Normal:
+                cargo_copy = new CargoTrans();
+                *dynamic_cast<CargoTrans*>(cargo_copy) = *dynamic_cast<CargoTrans*>(cargo);
+                break;
+            case Cargo::Type::Animal:
+                cargo_copy = new CargoTransAnimal();
+                *dynamic_cast<CargoTransAnimal*>(cargo_copy) = *dynamic_cast<CargoTransAnimal*>(cargo);
+                break;
+            case Cargo::Type::Refrigerated:
+                cargo_copy = new CargoTransRefrigerated();
+                *dynamic_cast<CargoTransRefrigerated*>(cargo_copy) = *dynamic_cast<CargoTransRefrigerated*>(cargo);
+                break;
+            case Cargo::Type::Dangerous:
+                cargo_copy = new CargoTransDangerous();
+                *dynamic_cast<CargoTransDangerous*>(cargo_copy) = *dynamic_cast<CargoTransDangerous*>(cargo);
+                break;
+            default:
+                delete copy;
+                return NULL;
+        }
+        if (cargo_copy != NULL)     copy->cargo_.push_back(cargo_copy);
+        else { delete copy; return NULL; }
+    }
+    return copy;
+}
+
 Truck::Type Truck::get_type(void) const{ return Truck::Type::truck; }
 
 std::istream& operator>>(std::istream &is,       Truck &t){

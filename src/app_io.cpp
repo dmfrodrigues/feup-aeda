@@ -1,5 +1,7 @@
 #include "app.h"
 
+#include <algorithm>
+
 template<class Base, class Deriv, class ID>
 size_t App::load_ptr(std::ifstream &is, std::vector<Base*> &m_in){
     is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
@@ -176,17 +178,20 @@ bool App::editTruck() {
     Truck *truck = App::chooseTruck();
     if (truck == NULL) return false;
     std::string command;
+    Truck *truck_copy = Truck::deep_copy(truck); //#DIOGO
     while (true) {
-        App::display(truck);
+        App::display(truck_copy);
         if (!utils::input("To add/change cargo use command:\n"
                           "     add cargo [type]\n"
                           "     edit cargo [order_number] [property]\n"
                           "     delete cargo [order_number]\n"
-                          "Caution: Any change in the truck is definitive.\n"
                           "Types available: Normal, Animal, Refrigerated, Dangerous.\n"
                           "Choose property to change (type cancel to finish): ", command, std::cin, std::cout)) break;
-        truck->edit(command, std::cin, std::cout);
+        truck_copy->edit(command, std::cin, std::cout);
     }
+    if (!utils::confirm("Confirm the edition of truck \'" + (std::string)(truck_copy->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) { delete truck_copy; return false; }
+    std::swap(truck, truck_copy); //#DIOGO
+    delete truck_copy;
     std::cout << "Truck edited.\n";
     return true;
 }
