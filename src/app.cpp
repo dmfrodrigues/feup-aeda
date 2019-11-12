@@ -54,10 +54,30 @@ void App::error(const std::string &s){
 }
 
 std::map<std::pair<Time,Time>, Service::ID> App::get_schedule(const Driver *p) const{
+    Driver::Username u = p->get_username();
+    std::vector<const Service*> vs;{
+        std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
+            for(const Driver::Username &d:q->get_drivers()){
+                if(d == u) return true;
+            }
+            return false;
+        });
+        vs = std::vector<const Service*>(v.begin(), v.end());
+    }
     return std::map<std::pair<Time,Time>, Service::ID>();
 }
 
 std::map<std::pair<Time,Time>, Service::ID> App::get_schedule(const Truck  *p) const{
+    Truck::NumberPlate n = p->get_numberplate();
+    std::vector<const Service*> vs;{
+        std::vector<Service*> v = utils::filter(services_, [n](const Service *q){
+            for(const Truck::NumberPlate &t:q->get_trucks()){
+                if(t == n) return true;
+            }
+            return false;
+        });
+        vs = std::vector<const Service*>(v.begin(), v.end());
+    }
     return std::map<std::pair<Time,Time>, Service::ID>();
 }
 
