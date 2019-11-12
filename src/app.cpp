@@ -165,7 +165,7 @@ bool App::printUserMenu(User::Type user_type) {
     try {
         CLEAR();
         if (user_type == User::Type::client) {
-            std::cout << "Service Management                Account Management            \n"
+            std::cout << "Service management                Account management            \n"
                          "══════════════════════════════    ══════════════════════════════\n"
                          "Request service           [11]    Edit account              [21]\n"
                          "Edit service              [12]    See account               [22]\n"
@@ -173,7 +173,7 @@ bool App::printUserMenu(User::Type user_type) {
                          "Service list              [14]                                  \n"
                          "                                                                \n";
         } else if (user_type == User::Type::driver) {
-            std::cout << "Service Management                Account Management            \n"
+            std::cout << "Service management                Account management            \n"
                          "══════════════════════════════    ══════════════════════════════\n"
                          "Service list              [11]    Edit account              [21]\n"
                          "Solicit lay-off           [12]    See account               [22]\n"
@@ -185,19 +185,19 @@ bool App::printUserMenu(User::Type user_type) {
                          "Trucks Information        [32]                                  \n"
                          "                                                                \n";
         } else if (user_type == User::Type::manager) {
-            std::cout << "Services Management               Truck Management              \n"
+            std::cout << "Services management               Truck management              \n"
                          "══════════════════════════════    ══════════════════════════════\n"
                          "Add service               [11]    Add truck                 [21]\n"
                          "Edit service              [12]    Edit truck                [22]\n"
                          "Delete service            [13]    Delete truck              [23]\n"
                          "                                                                \n"
-                         "Client Management                 Driver Management             \n"
+                         "Client management                 Driver management             \n"
                          "══════════════════════════════    ══════════════════════════════\n"
                          "Add client                [31]    Add driver                [41]\n"
                          "Edit client               [32]    Edit driver               [42]\n"
                          "Delete client             [33]    Delete driver             [43]\n"
                          "                                                                \n"
-                         "Manager Management                Information visualization     \n"
+                         "Manager management                Information visualization     \n"
                          "══════════════════════════════    ══════════════════════════════\n"
                          "Add manager               [51]    Service list              [61]\n"
                          "Edit manager              [52]    Truck list                [62]\n"
