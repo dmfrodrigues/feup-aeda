@@ -118,37 +118,85 @@ bool Truck::in(std::istream &is, std::ostream &os) {
     return true;
 }
 
-bool Truck::edit(int property, std::istream &is, std::ostream &os) {
-    switch (property) {
-    case 0:
-        if(!utils::input("Number Plate: ", [](Truck::NumberPlate &np, const std::string &s) {
-                                                np = Truck::NumberPlate(Truck::NumberPlate::Number(s)); },
-                                            number_plate_, is, os))                                                                         return false;
-        else                                                                                                                                return true;
-    break;
-    case 1:
-        if (!utils::input("Plate Register Date: ", [](Time &tm, const std::string &s) { tm = Time(s); },  plate_register_date_, is, os))    return false;
-        else                                                                                                                                return true;
-    break;
-    case 2:
-        if (!utils::input("Fuel: ", [](Truck::Fuel &fuel, const std::string &s) { fuel = Truck::processFuel(s); }, fuel_, is, os))          return false;
-        else                                                                                                                                return true;
-    break;
-    case 3:
-        if (!utils::input("Maximum reach: ", max_reach_, is, os))                                                                           return false;
-        else                                                                                                                                return true;
-    break;
-    case 4:
-        if (!utils::input("Category :", [](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os))   return false;
-        else                                                                                                                                return true;
-    break;
-    case 5:
-        // CARGO INPUT
-
-    break;
-    default:
-        return false;
-        break;
+bool Truck::edit(std::string command, std::istream &is, std::ostream &os) {
+    std::vector<std::string> cmd = utils::parse_command(command);
+    if (cmd.size() == 1) {
+        try {
+            int property = utils::stoi(cmd.at(0));
+            switch (property) {
+            case 0:
+                if(!utils::input("Number Plate: ", [](Truck::NumberPlate &np, const std::string &s) {
+                                                        np = Truck::NumberPlate(Truck::NumberPlate::Number(s)); },
+                                                    number_plate_, is, os))                                                                         return false;
+                else                                                                                                                                return true;
+            break;
+            case 1:
+                if (!utils::input("Plate Register Date: ", [](Time &tm, const std::string &s) { tm = Time(s); },  plate_register_date_, is, os))    return false;
+                else                                                                                                                                return true;
+            break;
+            case 2:
+                if (!utils::input("Fuel: ", [](Truck::Fuel &fuel, const std::string &s) { fuel = Truck::processFuel(s); }, fuel_, is, os))          return false;
+                else                                                                                                                                return true;
+            break;
+            case 3:
+                if (!utils::input("Maximum reach: ", max_reach_, is, os))                                                                           return false;
+                else                                                                                                                                return true;
+            break;
+            case 4:
+                if (!utils::input("Category :", [](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os))   return false;
+                else                                                                                                                                return true;
+            break;
+            default:
+                std::cout << "Error: invalid command\n";
+                return false;
+                break;
+            }
+        } catch (std::invalid_argument &ia) {
+            std::cout << "Error: invalid command\n";
+            return false;
+        }
+    } else if (cmd.size() == 3) {
+        if (cmd.at(0) == "add" && cmd.at(1) == "cargo") {
+            std::string type = cmd.at(2);
+            utils::to_lower(type);
+            if (type == "normal") {
+                CargoTrans *cargo = new CargoTrans();
+                if (!cargo->in(std::cin, std::cout)) { delete cargo; return false; }
+                cargo_.push_back(cargo);
+                return true;
+            } else if (type == "animal") {
+                CargoTrans *cargo = new CargoTransAnimal();
+                if (!cargo->in(std::cin, std::cout)) { delete cargo; return false; }
+                cargo_.push_back(cargo);
+                return true;
+            } else if (type == "refrigerated") {
+                CargoTrans *cargo = new CargoTransRefrigerated();
+                if (!cargo->in(std::cin, std::cout)) { delete cargo; return false; }
+                cargo_.push_back(cargo);
+                return true;
+            } else if (type == "dangerous") {
+                CargoTrans *cargo = new CargoTransDangerous();
+                if (!cargo->in(std::cin, std::cout)) { delete cargo; return false; }
+                cargo_.push_back(cargo);
+                return true;
+            } else {
+                std::cout << "Error: Invalid cargo type.\n";
+                return false;
+            }
+        } else {
+            std::cout << "Error: invalid command\n";
+            return false;
+        }
+    } else if (cmd.size() == 4) {
+        if (cmd.at(0) == "edit" && cmd.at(1) == "cargo") {
+            try {
+                int cargo = utils::stoi(cmd.at(2));
+                int property = utils::stoi(cmd.at(3));
+            } catch (std::invalid_argument &ia) {
+                std::cout << "Error: invalid command\n";
+                return false;
+            }
+        }
     }
     return true;
 }
