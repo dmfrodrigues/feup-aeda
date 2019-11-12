@@ -16,13 +16,6 @@ Service::Service(const Client::Username &client_user, const Person &contact1, co
                  cargo_(cargo),
                  expenses_(expenses), price_(price){}
 
-Currency Service::get_expenses() const{
-    return expenses_;
-}
-Currency Service::get_price   () const{
-    return price_;
-}
-
 bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv){
     utils::mergesort(tv, [](const Truck *p1, const Truck *p2){
         return (p1->get_cargo()->get_weight() > p2->get_cargo()->get_weight());
