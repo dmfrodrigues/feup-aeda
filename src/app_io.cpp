@@ -30,7 +30,7 @@ size_t App::save_ptr(std::ofstream &os, const std::vector<Base*> &m_out){
     return m_out.size();
 }
 
-void App::load_all(){
+bool App::load_all(){
     for(const User *p:users_) delete p;
     users_ = std::vector<User*>();
     {
@@ -64,6 +64,7 @@ void App::load_all(){
         size_t sz = load_ptr<Service,Service,std::string>(is, services_);
         std::cout << " loaded " << sz << std::endl;
     }
+    return true;
 }
 
 void App::save_all(){
