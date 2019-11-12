@@ -53,7 +53,7 @@ void App::error(const std::string &s){
     wait();
 }
 
-std::vector<std::pair<std::pair<Time,Time>, Service::ID> > App::get_schedule(const Driver *p) const{
+bool App::get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const{
     Driver::Username u = p->get_username();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
@@ -63,12 +63,18 @@ std::vector<std::pair<std::pair<Time,Time>, Service::ID> > App::get_schedule(con
         });
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
-    //std::vector< std::pair<Time,Time> >
-
-    return std::vector<std::pair<std::pair<Time,Time>, Service::ID> >();
+    ret.clear();
+    for(const Service *q:vs){
+        ret.push_back(std::make_pair(std::make_pair(q->get_tbegin(),q->get_tend()),q->get_id()));
+    }
+    utils::mergesort(ret);
+    for(size_t i = 0; i+1 < ret.size(); ++i)
+        if(ret[i+1].first.first < ret[i].first.second) //if the next service starts before the previous ends
+            return false;
+    return true;
 }
 
-std::vector<std::pair<std::pair<Time,Time>, Service::ID> > App::get_schedule(const Truck  *p) const{
+bool App::get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const{
     Truck::NumberPlate u = p->get_numberplate();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
@@ -78,7 +84,15 @@ std::vector<std::pair<std::pair<Time,Time>, Service::ID> > App::get_schedule(con
         });
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
-    return std::vector<std::pair<std::pair<Time,Time>, Service::ID> >();
+    ret.clear();
+    for(const Service *q:vs){
+        ret.push_back(std::make_pair(std::make_pair(q->get_tbegin(),q->get_tend()),q->get_id()));
+    }
+    utils::mergesort(ret);
+    for(size_t i = 0; i+1 < ret.size(); ++i)
+        if(ret[i+1].first.first < ret[i].first.second) //if the next service starts before the previous ends
+            return false;
+    return true;
 }
 
 std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const {

@@ -113,12 +113,12 @@ private:
     std::vector<Service*> filter_services_by_user(const std::vector<Service*> &v, const User *user) const;
     User* find_user(const User::Username &u) const;
     Truck* find_truck(const Truck::NumberPlate &np) const;
-    Service* find_service(const std::string &id) const;
+    Service* find_service(const Service::ID &id) const;
     User* verifyUser(const std::string &username, const std::string &password);
 
     //Functions
-    std::vector<std::pair<std::pair<Time,Time>, Service::ID> > get_schedule(const Driver *p) const;
-    std::vector<std::pair<std::pair<Time,Time>, Service::ID> > get_schedule(const Truck  *p) const;
+    bool get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
+    bool get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,

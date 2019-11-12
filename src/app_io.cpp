@@ -66,24 +66,12 @@ bool App::load_all(){
         {
             std::vector<const User*> v(users_.begin(), users_.end());
             std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
-            for(const Driver *p:w){
-                try{
-                    get_schedule(p);
-                }catch(const InvalidSchedule &e){
-                    std::cout << "Invalid schedule" << std::endl;
-                    return 1;
-                }
-            }
+            std::vector<std::pair<std::pair<Time,Time>, Service::ID> > tmp;
+            for(const Driver *p:w) if(!get_schedule(p, tmp)) return false;
         }
         {
-            for(const Truck *p:trucks_){
-                try{
-                    get_schedule(p);
-                }catch(const InvalidSchedule &e){
-                    std::cout << "Invalid schedule" << std::endl;
-                    return 1;
-                }
-            }
+            std::vector<std::pair<std::pair<Time,Time>, Service::ID> > tmp;
+            for(const Truck *p:trucks_) if(!get_schedule(p, tmp)) return false;
         }
     }
     return true;
