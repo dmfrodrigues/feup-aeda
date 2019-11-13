@@ -1,6 +1,7 @@
 #include "app.h"
 
 #include <stdexcept>
+#include <cassert>
 
 void CLEAR(){
     int ev;
@@ -97,6 +98,44 @@ bool App::get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Tim
             return false;
         }
     return true;
+}
+
+std::vector<Driver*> App::get_available_drivers(const Time &tbegin, const Time &tend) const{
+    std::vector<Driver*> ret;
+    std::vector<User*> dv = App::filter_user_by_type(users_, User::Type::driver);
+    for(User *p:dv){
+        Driver *q = dynamic_cast<Driver*>(p);
+        std::vector<std::pair<std::pair<Time,Time>, Service::ID> > v;
+        assert(get_schedule(q, v));
+        bool available = true;
+        for(const auto &r:v){
+            if(std::min(tbegin, r.first.first) < std::max(tend, r.first.second)){
+                available = false;
+                break;
+            }
+        }
+        if(available) ret.push_back(q);
+    }
+    return ret;
+}
+std::vector<Truck *> App::get_available_trucks (const Time &tbegin, const Time &tend, const Cargo *c) const{
+    std::vector<Truck*> ret;
+    std::vector<Truck*> tv = utils::filter(trucks_, [c](const Truck *p){
+        return (p->get_cargo()->can_carry(c));
+    });
+    for(Truck *p:tv){
+        std::vector<std::pair<std::pair<Time,Time>, Service::ID> > v;
+        assert(get_schedule(p, v));
+        bool available = true;
+        for(const auto &r:v){
+            if(std::min(tbegin, r.first.first) < std::max(tend, r.first.second)){
+                available = false;
+                break;
+            }
+        }
+        if(available) ret.push_back(p);
+    }
+    return ret;
 }
 
 std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const {

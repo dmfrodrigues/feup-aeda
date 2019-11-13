@@ -307,6 +307,10 @@ bool CargoTrans::edit(int property, std::istream &is, std::ostream &os) {
     }
 }
 
+bool CargoTrans::can_carry(const Cargo *p) const{
+    return (get_type() == p->get_type());
+}
+
 CargoTransAnimal::CargoTransAnimal(Weight weight, const std::string &description, Currency expenses_per_km):
     CargoTrans(weight, description, expenses_per_km){}
 std::istream& CargoTransAnimal::input(std::istream &is){
@@ -322,6 +326,10 @@ bool CargoTransAnimal::in(std::istream &is, std::ostream &os) {
 
 bool CargoTransAnimal::edit(int property, std::istream &is, std::ostream &os) {
     return CargoTrans::edit(property, is, os);
+}
+
+bool CargoTransAnimal::can_carry(const Cargo *p) const{
+    return (get_type() == p->get_type());
 }
 
 CargoTransRefrigerated::CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, float temperature_factor):
@@ -403,6 +411,16 @@ bool CargoTransRefrigerated::edit(int property, std::istream &is, std::ostream &
     }
 }
 
+
+bool CargoTransRefrigerated::can_carry(const Cargo *p) const{
+    if(get_type() == p->get_type()){
+        const CargoRefrigerated *q = dynamic_cast<const CargoRefrigerated*>(p);
+        return (utils::feq(float(get_range().max()), float(q->get_range().min()), 0.01) ||
+                std::max(get_range().min(), q->get_range().min()) <
+                std::min(get_range().max(), q->get_range().max()));
+    }else return false;
+}
+
 CargoTransDangerous::CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level):
     CargoTrans(weight, description, expenses_per_km), danger_level_(danger_level){}
 std::istream& CargoTransDangerous::input(std::istream &is){
@@ -473,4 +491,12 @@ bool CargoTransDangerous::edit(int property, std::istream &is, std::ostream &os)
         return false;
         break;
     }
+}
+
+
+bool CargoTransDangerous::can_carry(const Cargo *p) const{
+    if(get_type() == p->get_type()){
+        const CargoDangerous *q = dynamic_cast<const CargoDangerous*>(p);
+        return (get_dangerlevel() == q->get_dangerlevel());
+    }else return false;
 }

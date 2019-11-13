@@ -268,6 +268,8 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
+
+    virtual bool can_carry(const Cargo *p) const;
 };
 
 /**
@@ -303,6 +305,8 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
+
+    virtual bool can_carry(const Cargo *p) const;
 };
 
 /**
@@ -344,6 +348,8 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
+
+    virtual bool can_carry(const Cargo *p) const;
 };
 
 /**
@@ -381,6 +387,8 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
+
+    virtual bool can_carry(const Cargo *p) const;
 };
 
 #endif // CARGO_H_INCLUDED

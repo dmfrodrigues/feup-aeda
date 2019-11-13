@@ -118,6 +118,8 @@ private:
     //Functions
     bool get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
     bool get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
+    std::vector<Driver*> get_available_drivers(const Time &tbegin, const Time &tend) const;
+    std::vector<Truck *> get_available_trucks (const Time &tbegin, const Time &tend, const Cargo *c) const;
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
