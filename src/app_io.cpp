@@ -323,7 +323,7 @@ bool App::addService() {
         std::cout << "Service added.\n";
         return true;
     }else{
-        std::cout << "Failed to add service.\n";
+        std::cout << "Failed to add service (cargo specified might not be supported).\n";
         return false;
     }
 }
@@ -348,7 +348,7 @@ bool App::addService(const User *user) {
         std::cout << "Service added.\n";
         return true;
     }else{
-        std::cout << "Failed to add service.\n";
+        std::cout << "Failed to add service (cargo specified might not be supported).\n";
         return false;
     }
 }
