@@ -67,24 +67,27 @@ void App::print_list(const std::vector<const Manager*> &v){
 }
 
 void App::print_list(const std::vector<const Truck*> &v){
-    std::cout << std::endl;
-    std::cout << " ╶┬╴┌─╮╷ ╷╭─╴╷ ╱╭─╴ \n"
-              << "  │ ├┬╯│ ││  │╱ ╰─╮ \n"
-              << "  ╵ ╵╰╴╰─╯╰─╴│ ╲╶─╯ \n";
-    std::cout << std::endl;
-    std::cout << "╒════════════════════════╤═══════════════╤═══════════════╤════════════════╤══════════════╤═══════════════════════════════════════════════════════════════╕\n"
-              << "│ Number plate [0]       │ Date [1]      │ Fuel [2]      │ Range (km) [3] │ Category [4] │ Cargo [5]                                                     │\n"
-              << "╞════════════════════════╪═══════════════╪═══════════════╪════════════════╪══════════════╪═══════════════════════════════════════════════════════════════╡\n";
+    std::cout << "\n"
+                 " ╶┬╴┌─╮╷ ╷╭─╴╷ ╱╭─╴ \n"
+                 "  │ ├┬╯│ ││  │╱ ╰─╮ \n"
+                 "  ╵ ╵╰╴╰─╯╰─╴│ ╲╶─╯ \n"
+                 "\n"
+                 "╒══════════════════╤════════════╤══════════════╤════════════════╤══════════════╤════════════════╤══════════════════╤════════════════╕\n"
+                 "│ Number plate [0] │ Date [1]   │ Fuel [2]     │ Range (km) [3] │ Category [4] │ Cargo type [5] │ Cargo weight [6] │ Price base [7] │\n"
+                 "╞══════════════════╪════════════╪══════════════╪════════════════╪══════════════╪════════════════╪══════════════════╪════════════════╡\n";
     for(const Truck* p:v){
         std::cout << "│ "
-                  << utils::ljust((std::string)p->get_numberplate()                 ,21) << "\t │ "
-                  << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")     ,10) << "\t │ "
-                  << utils::ljust(Truck::fuel_string(p->get_fuel())                 ,12) << "\t │ "
-                  << utils::rjust(utils::ftos("%.1f", (double)p->get_range())        ,14) <<   " │ "
-                  << utils::ljust((std::string)p->get_category()                    ,11) << "\t │ "
-                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())    ,59) << "\t │\n";
+                  << utils::ljust((std::string)p->get_numberplate()                     ,16) << " │ "
+                  << p->get_plateregisterdate().format("%Y/%m/%d")                           << " │ "
+                  << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,12) << " │ "
+                  << utils::rjust(utils::ftos("%.1f", (double)p->get_range())           ,14) << " │ "
+                  << utils::ljust((std::string)p->get_category()                        ,12) << " │ "
+                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())        ,14) << " │ "
+                  << utils::rjust(utils::ftos("%.1f", (double)p->get_cargo()->get_W())  ,16) << " │ "
+                  << utils::rjust(utils::ftos("%+.2f",(double)p->get_cargo()->get_P_B()),14) << " │\n";
     }
-    std::cout << "╘════════════════════════╧═══════════════╧═══════════════╧════════════════╧══════════════╧═══════════════════════════════════════════════════════════════╛" << std::endl;
+    std::cout << "╘══════════════════╧════════════╧══════════════╧════════════════╧══════════════╧════════════════╧══════════════════╧════════════════╛\n"
+              << std::flush;
 }
 
 void App::print_list(const std::vector<const Service*> &v) const{
@@ -94,17 +97,16 @@ void App::print_list(const std::vector<const Service*> &v) const{
         PRICE += p->get_price();
     }
     EXPENSES = -EXPENSES;
-    std::cout << std::endl;
-    std::cout << " ╭─╴╭─╴┌─╮╷   ┬ ╭─╴╭─╴╭─╴ \n"
-              << " ╰─╮├─╴├┬╯│ ╱ │ │  ├─╴╰─╮ \n"
-              << " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n";
-    std::cout << std::endl;
-
-    std::cout << "╒════════╤══════════════╤════════════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════════════╤══════════════════════════════╤═══════════════╤═══════════════╕\n"
-              << "│ ID [0] │ Client [1]   │ Contact 1 [2]                          │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:            │ [9] Truck/driver             │ Expenses [10] │ Price [11]    │\n"
-              << "│        │              │                                        │                  │                            │ Description [1]       │                              │               │               │\n"
-              << "│        │              │ Contact 2 [3]                          │ Time end   [5]   │ Address end   [7]          │ Type       Weight [0] │                              │               │               │\n"
-              << "╞════════╪══════════════╪════════════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════════════╪══════════════════════════════╪═══════════════╪═══════════════╡\n";
+    std::cout << "\n"
+                 " ╭─╴╭─╴┌─╮╷   ┬ ╭─╴╭─╴╭─╴ \n"
+                 " ╰─╮├─╴├┬╯│ ╱ │ │  ├─╴╰─╮ \n"
+                 " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n"
+                 "\n"
+                 "╒════════╤══════════════╤════════════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════════════╤══════════════════════════════╤═══════════════╤═══════════════╕\n"
+                 "│ ID [0] │ Client [1]   │ Contact 1 [2]                          │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:            │ [9] Truck/driver             │ Expenses [10] │ Price [11]    │\n"
+                 "│        │              │                                        │                  │                            │ Description [1]       │                              │               │               │\n"
+                 "│        │              │ Contact 2 [3]                          │ Time end   [5]   │ Address end   [7]          │ Type       Weight [0] │                              │               │               │\n"
+                 "╞════════╪══════════════╪════════════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════════════╪══════════════════════════════╪═══════════════╪═══════════════╡\n";
     for(const Service* p:v){
         const User *c = App::find_user(p->get_client());
         const std::vector<Truck::NumberPlate> &tv = p->get_trucks ();
@@ -143,43 +145,43 @@ void App::print_list(const std::vector<const Service*> &v) const{
 
 void App::display(const Client *p){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                        ,81) << "\t │\n"
-              << "│ [1] Name          │ " << utils::ljust((std::string)p->get_name()                            ,81) << "\t │\n"
-              << "│ [2] Address       │ " << utils::ljust(p->get_address().format("%street (%postal %city)")    ,81) << "\t │\n"
-              << "│ [3] Phone number  │ " << utils::ljust((std::string)p->get_phonenumber()                     ,81) << "\t │\n"
-              << "│ [4] VAT           │ " << utils::ljust((std::string)p->get_vat()                             ,81) << "\t │\n"
+              << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                       ,81) << "\t │\n"
+              << "│ [1] Name          │ " << utils::ljust((std::string)p->get_name()                           ,81) << "\t │\n"
+              << "│ [2] Address       │ " << utils::ljust(p->get_address().format("%street (%postal %city)")   ,81) << "\t │\n"
+              << "│ [3] Phone number  │ " << utils::ljust((std::string)p->get_phonenumber()                    ,81) << "\t │\n"
+              << "│ [4] VAT           │ " << utils::ljust((std::string)p->get_vat()                            ,81) << "\t │\n"
               << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
 
 void App::display(const Driver *p){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                        ,81) << "\t │\n"
-              << "│ [1] Name          │ " << utils::ljust((std::string)p->get_name()                            ,81) << "\t │\n"
-              << "│ [2] Address       │ " << utils::ljust(p->get_address().format("%street (%postal %city)")    ,81) << "\t │\n"
-              << "│ [3] Phone number  │ " << utils::ljust((std::string)p->get_phonenumber()                     ,81) << "\t │\n"
-              << "│ [4] VAT           │ " << utils::ljust((std::string)p->get_vat()                             ,81) << "\t │\n"
-              << "│ [5] Base salary   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())      ,81) << "\t │\n"
+              << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                       ,81) << "\t │\n"
+              << "│ [1] Name          │ " << utils::ljust((std::string)p->get_name()                           ,81) << "\t │\n"
+              << "│ [2] Address       │ " << utils::ljust(p->get_address().format("%street (%postal %city)")   ,81) << "\t │\n"
+              << "│ [3] Phone number  │ " << utils::ljust((std::string)p->get_phonenumber()                    ,81) << "\t │\n"
+              << "│ [4] VAT           │ " << utils::ljust((std::string)p->get_vat()                            ,81) << "\t │\n"
+              << "│ [5] Base salary   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())     ,81) << "\t │\n"
               << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
 
 void App::display(const Manager *p){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                        ,81) << "\t │\n"
-              << "│ [1] Name          │ " << utils::ljust((std::string)p->get_name()                            ,81) << "\t │\n"
-              << "│ [2] Address       │ " << utils::ljust(p->get_address().format("%street (%postal %city)")    ,81) << "\t │\n"
-              << "│ [3] Phone number  │ " << utils::ljust((std::string)p->get_phonenumber()                     ,81) << "\t │\n"
-              << "│ [4] VAT           │ " << utils::ljust((std::string)p->get_vat()                             ,81) << "\t │\n"
-              << "│ [5] Base salary   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())      ,81) << "\t │\n"
+              << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                       ,81) << "\t │\n"
+              << "│ [1] Name          │ " << utils::ljust((std::string)p->get_name()                           ,81) << "\t │\n"
+              << "│ [2] Address       │ " << utils::ljust(p->get_address().format("%street (%postal %city)")   ,81) << "\t │\n"
+              << "│ [3] Phone number  │ " << utils::ljust((std::string)p->get_phonenumber()                    ,81) << "\t │\n"
+              << "│ [4] VAT           │ " << utils::ljust((std::string)p->get_vat()                            ,81) << "\t │\n"
+              << "│ [5] Base salary   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())     ,81) << "\t │\n"
               << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
 
 void App::display(const Truck *p){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
-              << "│ [0] Number plate  │ " << utils::ljust((std::string)p->get_numberplate()                     ,81) << "\t │\n"
-              << "│ [1] Date          │ " << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")         ,81) << "\t │\n"
-              << "│ [2] Fuel          │ " << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,81) << "\t │\n"
-              << "│ [3] Range (km)    │ " << utils::ljust(utils::ftos("%.1f", (double)p->get_range())            ,81) << "\t │\n"
-              << "│ [4] Category      │ " << utils::ljust((std::string)p->get_category()                        ,81) << "\t │\n";
+              << "│ [0] Number plate  │ " << utils::ljust((std::string)p->get_numberplate()                    ,81) << "\t │\n"
+              << "│ [1] Date          │ " << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")        ,81) << "\t │\n"
+              << "│ [2] Fuel          │ " << utils::ljust(Truck::fuel_string(p->get_fuel())                    ,81) << "\t │\n"
+              << "│ [3] Range (km)    │ " << utils::ljust(utils::ftos("%.1f", (double)p->get_range())          ,81) << "\t │\n"
+              << "│ [4] Category      │ " << utils::ljust((std::string)p->get_category()                       ,81) << "\t │\n";
     const CargoTrans *q = p->get_cargo();
     std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
               << "│ [5] Cargo         : "<< utils::ljust(Cargo::type_string(q->get_type()), 81) << "\t │\n"
