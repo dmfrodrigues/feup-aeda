@@ -17,9 +17,17 @@ private:
     std::tm t_;
 public:
     /**
-     * @brief Default date format
+     * @brief Default date format for input from files
      */
     static const std::string DEFAULT_FORMAT;
+    /**
+     * @brief Default full date format for input by user
+     */
+    static const std::string DEFAULT_TIME_REGEX;
+    /**
+     * @brief Default hour format for input by user
+     */
+    static const std::string DEFAULT_HOUR_REGEX;
     /**
      * @brief Default time/date if none is set
      */
@@ -35,6 +43,23 @@ public:
      * @return  string with formatted date
      */
     std::string format(const std::string &fmt = Time::DEFAULT_FORMAT) const;
+
+    /**
+     * @brief Allows input of time in a friendly user way.
+     * Default format for time is: YYYY-mm-dd HH:MM:SS.
+     * @param time String containing input from user
+     * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time, std::runtime_error if error occurs on STL functions
+     */
+    void input_time(const std::string &time);
+
+    /**
+     * @brief Allows input of hour in a friendly user way.
+     * Default format for time is: HH:MM:SS.
+     * The date (year, month, day) will be set to the current date.
+     * @param hour String containing input from user
+     * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time
+     */
+    void input_hour(const std::string &hour);
 
     bool operator< (const Time &t) const;
     bool operator> (const Time &t) const{ return (t < *this); }

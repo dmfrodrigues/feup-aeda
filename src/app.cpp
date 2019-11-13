@@ -26,15 +26,18 @@ App::App(const std::string &base      ,
 
 App::~App() {
     for (User *user : users_)
-        delete user;
+        if (user != NULL)
+            delete user;
     users_.clear();
 
     for (Truck *truck : trucks_)
-        delete truck;
+        if (truck != NULL)
+            delete truck;
     trucks_.clear();
 
     for (Service *service : services_)
-        delete service;
+        if (service != NULL)
+            delete service;
     services_.clear();
 }
 
@@ -392,14 +395,15 @@ void App::start(){
     std::cout << "Check 1(login)\n";*/
     #ifdef TELMO
 
-        list_services();
+        Time t = Time();
 
-        addService();
+        t.input_time("2019/06/22 23:43:05");
 
-        wait();
+        std::cout << t << "\n";
 
-        list_services();
-        save_all();
+        t.input_hour("21:35:05");
+
+        std::cout << t << "\n";
 
     #endif
     #ifdef DIOGO
@@ -424,6 +428,7 @@ void App::start(){
                 break;
             }
         }
+        save_all();
     #endif
 }
 

@@ -150,6 +150,36 @@ bool Truck::in(std::istream &is, std::ostream &os) {
         !utils::input("Maximum reach: ", max_reach_, is, os)|
         !utils::input("Category: ",[](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os)) return false;
 
+    std::string type;
+    while (true) {
+        if (!utils::input("Types available: Normal, Animal, Refrigerated, Dangerous.\nCargo Type: ", type, is, os)) return false;
+
+        utils::to_lower(type);
+        if (type == "normal") {
+            CargoTrans *cargo = new CargoTrans();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "animal") {
+            CargoTransAnimal *cargo = new CargoTransAnimal();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "refrigerated") {
+            CargoTransRefrigerated *cargo = new CargoTransRefrigerated();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "dangerous") {
+            CargoTransDangerous *cargo = new CargoTransDangerous();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else {
+            std::cout << "Error: Invalid cargo type.\n";
+            continue;
+        }
+    }
     return true;
 }
 
