@@ -67,7 +67,7 @@ public:
      * @brief Constructor creates an empty service linked to a specific user.
      * @param   client_user     Pointer to @ref Client to which the service will be provided
      */
-    Service(const Client::Username &client_user): client_user_(client_user), expenses_(0), price_(0), id_(utils::itos(next_id_++)){}
+    Service(const Client::Username &client_user);
 
     const std::string&      get_id      () const{ return id_         ; }
     /// @brief Get client

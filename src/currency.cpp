@@ -15,6 +15,9 @@ Currency::operator double() const{
 Currency& Currency::operator=(const double &n){
     return (*this = Currency(n));
 }
+Currency Currency::operator+(const Currency &c) const{
+    return Currency(cents_+c.cents_);
+}
 
 Currency& Currency::operator+=(const Currency &c){
     cents_ += c.cents_;

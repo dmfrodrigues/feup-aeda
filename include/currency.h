@@ -32,6 +32,7 @@ public:
 
     explicit operator double() const;
     Currency& operator=(const double &n);
+    Currency  operator+(const Currency &c) const;
     Currency& operator+=(const Currency &c);
 
     /**

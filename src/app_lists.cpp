@@ -121,7 +121,7 @@ void App::list_sort_getcomp(int i, std::function<bool(const Service*, const Serv
         case 7: cmp = [](const Service *p1, const Service *p2){ return (p1->get_aend  ().format("%district %city") < p2->get_aend  ().format("%district %city")); }; break;
         case 8: cmp = [](const Service *p1, const Service *p2){
             if(p1->get_cargo()->get_type() != p2->get_cargo()->get_type()) return (p1->get_cargo()->get_type  () < p2->get_cargo()->get_type  ());
-            return                                                                (p1->get_cargo()->get_weight() < p2->get_cargo()->get_weight());
+            return                                                                (p1->get_cargo()->get_W() < p2->get_cargo()->get_W());
         }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
@@ -164,7 +164,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         case 0: cmp = [str](const Truck *p){ return (std::string(p->get_numberplate())            .find(str) != std::string::npos); }; break;
         case 1: cmp = [str](const Truck *p){ return (p->get_plateregisterdate().format("%Y/%m/%d").find(str) != std::string::npos); }; break;
         case 2: cmp = [str](const Truck *p){ return (Truck::fuel_string(p->get_fuel())            .find(str) != std::string::npos); }; break;
-        case 3: cmp = [str](const Truck *p){ return utils::feq((float)p->get_range(), std::stof(str), 0.1)                        ; }; break;
+        case 3: cmp = [str](const Truck *p){ return utils::feq((double)p->get_range(), std::stof(str), 0.1)                        ; }; break;
         case 4: cmp = [str](const Truck *p){ return (std::string(p->get_category())               .find(str) != std::string::npos); }; break;
         case 5: cmp = [str](const Truck *p){ return (Cargo::type_string(p->get_cargo()->get_type()).find(str) != std::string::npos); }; break;
         default: throw std::invalid_argument("NUM outside range");

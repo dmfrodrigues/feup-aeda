@@ -12,9 +12,6 @@
 #include <vector>
 #include <utility>
 
-/** @brief %Distance */
-typedef utils::ufloat<float> Distance;
-
 /**
  * @brief Superclass of all transports of the company.
  * @ref   Cargo

@@ -168,6 +168,8 @@ namespace utils {
         bool operator>(const ufloat<T> &t) const;
         /** @brief Overload of operator+= */
         ufloat<T>& operator+=(const ufloat<T> &t);
+        /** @brief overload of operator- */
+        ufloat<T> operator-(const ufloat<T> &t) const;
         /**
          * @brief Conversion to underlying type.
          */
@@ -288,6 +290,11 @@ namespace utils {
     };
 }
 
+/** @brief %Weight */
+typedef utils::ufloat<double> Weight;
+/** @brief %Distance */
+typedef utils::ufloat<double> Distance;
+
 template<class T, class Valid> std::vector<T*> utils::filter(const std::vector<T*> &v, Valid valid){
     std::vector<T*> ret;
     for(T* p:v){
@@ -312,6 +319,9 @@ template<class T> bool utils::ufloat<T>::operator>(const ufloat<T> &t) const{
 template<class T> utils::ufloat<T>& utils::ufloat<T>::operator+=(const ufloat<T> &t){
     u_ += t.u_;
     return *this;
+}
+template<class T> utils::ufloat<T> utils::ufloat<T>::operator-(const ufloat<T> &t) const{
+    return ufloat<T>(u_ - t.u_);
 }
 template<class T> utils::ufloat<T>::operator T() const{
     return u_;

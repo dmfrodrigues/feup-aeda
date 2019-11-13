@@ -2,13 +2,14 @@
 
 #include <cmath>
 #include <algorithm>
-#include "utils.h"
 
-const Currency    CargoTrans            ::price_base_(100.0);
-const Currency    CargoTransAnimal      ::price_base_(150.0);
-const Currency    CargoTransRefrigerated::price_base_(200.0);
-const Temperature CargoTransRefrigerated::reference_temperature_(20.0);
-const Currency    CargoTransDangerous   ::price_base_(300.0);
+#include "app.h"
+
+const Currency    CargoTrans            ::P_B_(100.0);
+const Currency    CargoTransAnimal      ::P_B_(150.0);
+const Currency    CargoTransRefrigerated::P_B_(200.0);
+const Temperature CargoTransRefrigerated::T0_(20.0);
+const Currency    CargoTransDangerous   ::P_B_(300.0);
 
 std::istream& input_Cargo(std::istream &is,       Cargo *&c){
     if(c != NULL) delete c;
@@ -55,12 +56,12 @@ std::string Cargo::dangerlevel_string(const DangerLevel &d){
     }
 }
 
-Cargo::Cargo(): weight_(0){}
-Cargo::Cargo(Weight weight, const std::string &description):weight_(weight), description_(description){}
+Cargo::Cargo(): W_(0){}
+Cargo::Cargo(Weight W, const std::string &description):W_(W), description_(description){}
 std::istream& Cargo::input(std::istream &is){
     try{
         std::string s;
-        is >> weight_;
+        is >> W_;
         is >> s; description_ = utils::urldecode(s);
     }catch(...){
         is.setstate(std::ios::failbit);
@@ -68,13 +69,13 @@ std::istream& Cargo::input(std::istream &is){
     return is;
 }
 std::ostream& Cargo::output(std::ostream &os) const{
-    os << weight_                        << "\n"
+    os << W_                        << "\n"
        << utils::urlencode(description_);
     return os;
 }
 
 bool Cargo::in(std::istream &is, std::ostream &os) {
-    if (!utils::input("Weight: ", weight_, is, os)||
+    if (!utils::input("Weight: ", W_, is, os)||
         !utils::input("Description: ", description_, is, os)) return false;
     return true;
 }
@@ -82,7 +83,7 @@ bool Cargo::in(std::istream &is, std::ostream &os) {
 bool Cargo::edit(int property, std::istream &is, std::ostream &os) {
     switch(property) {
     case 0:
-        if (!utils::input("Weight: ", weight_, is, os))             return false;
+        if (!utils::input("Weight: ", W_, is, os))             return false;
         else                                                        return true;
         break;
     case 1:
@@ -95,32 +96,22 @@ bool Cargo::edit(int property, std::istream &is, std::ostream &os) {
     }
 }
 
-CargoAnimal::CargoAnimal(Weight weight, const std::string &description):Cargo(weight, description){}
-std::istream& CargoAnimal::input(std::istream &is){
-    return Cargo::input(is);
-}
-std::ostream& CargoAnimal::output(std::ostream &os) const{
-    return Cargo::output(os);
-}
+CargoAnimal::CargoAnimal(Weight W, const std::string &description):Cargo(W, description){}
+std::istream& CargoAnimal::input(std::istream &is){ return Cargo::input(is); }
+std::ostream& CargoAnimal::output(std::ostream &os) const{ return Cargo::output(os); }
+bool CargoAnimal::in(std::istream &is, std::ostream &os) { return Cargo::in(is, os); }
+bool CargoAnimal::edit(int property, std::istream &is, std::ostream &os) { return Cargo::edit(property, is, os); }
 
-bool CargoAnimal::in(std::istream &is, std::ostream &os) {
-    return Cargo::in(is, os);
-}
-
-bool CargoAnimal::edit(int property, std::istream &is, std::ostream &os) {
-    return Cargo::edit(property, is, os);
-}
-
-CargoRefrigerated::CargoRefrigerated(Weight weight, const std::string &description, TemperatureRange temperature_range):
-    Cargo(weight, description), temperature_range_(temperature_range){}
+CargoRefrigerated::CargoRefrigerated(Weight W, const std::string &description, TemperatureRange Tr):
+    Cargo(W, description), Tr_(Tr){}
 std::istream& CargoRefrigerated::input(std::istream &is){
     Cargo::input(is);
-    is >> temperature_range_;
+    is >> Tr_;
     return is;
 }
 std::ostream& CargoRefrigerated::output(std::ostream &os) const{
     Cargo::output(os); os << "\n";
-    os << temperature_range_;
+    os << Tr_;
     return os;
 }
 
@@ -135,7 +126,7 @@ bool CargoRefrigerated::in(std::istream &is, std::ostream &os) {
 
             TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
 
-            temperature_range_ = temp_range;
+            Tr_ = temp_range;
             return true;
         } catch (TemperatureRange::InvalidTemperatureRange &itr) {
             std::cout << "Error: " << itr.what() << "\n";
@@ -161,7 +152,7 @@ bool CargoRefrigerated::edit(int property, std::istream &is, std::ostream &os) {
 
                 TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
 
-                temperature_range_ = temp_range;
+                Tr_ = temp_range;
                 return true;
             } catch (TemperatureRange::InvalidTemperatureRange &itr) {
                 std::cout << "Error: " << itr.what() << "\n";
@@ -178,8 +169,8 @@ bool CargoRefrigerated::edit(int property, std::istream &is, std::ostream &os) {
     }
 }
 
-CargoDangerous::CargoDangerous(Weight weight, const std::string &description, DangerLevel danger_level):
-    Cargo(weight, description), danger_level_(danger_level){}
+CargoDangerous::CargoDangerous(Weight W, const std::string &description, DangerLevel danger_level):
+    Cargo(W, description), danger_level_(danger_level){}
 std::istream& CargoDangerous::input(std::istream &is){
     Cargo::input(is);
     unsigned i; is >> i; danger_level_ = static_cast<Cargo::DangerLevel>(i);
@@ -269,22 +260,22 @@ std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c){
     return c->output(os);
 }
 
-CargoTrans::CargoTrans(Weight weight, const std::string &description, Currency expenses_per_km):
-    Cargo(weight, description), expenses_per_km_(expenses_per_km){}
+CargoTrans::CargoTrans(Weight W, const std::string &description, Currency E_D):
+    Cargo(W, description), E_D_(E_D){}
 std::istream& CargoTrans::input(std::istream &is){
     Cargo::input(is);
-    is >> expenses_per_km_;
+    is >> E_D_;
     return is;
 }
 std::ostream& CargoTrans::output(std::ostream &os) const{
     Cargo::output(os); os << "\n";
-    os << expenses_per_km_;
+    os << E_D_;
     return os;
 }
 
 bool CargoTrans::in(std::istream &is, std::ostream &os) {
     if(!Cargo::in(is, os)) return false;
-    if(!utils::input("Expenses per kilometer: ", expenses_per_km_, is, os)) return false;
+    if(!utils::input("Expenses per kilometer: ", E_D_, is, os)) return false;
     else                                                                    return true;
 }
 
@@ -298,7 +289,7 @@ bool CargoTrans::edit(int property, std::istream &is, std::ostream &os) {
         return false;
         break;
     case 3:
-        if(!utils::input("Expenses per kilometer: ", expenses_per_km_, is, os)) return false;
+        if(!utils::input("Expenses per kilometer: ", E_D_, is, os)) return false;
         else                                                                    return true;
         break;
     default:
@@ -307,49 +298,29 @@ bool CargoTrans::edit(int property, std::istream &is, std::ostream &os) {
     }
 }
 
-bool CargoTrans::can_carry(const Cargo *p) const{
-    return (get_type() == p->get_type());
-}
+bool CargoTrans::can_carry(const Cargo *p) const{ return (get_type() == p->get_type()); }
+Currency CargoTrans::get_E(Distance D, Weight W) const{ return Currency(double(D)*(get_E_D())); }
+Currency CargoTrans::get_P(Distance D, Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
 
-double CargoTrans::get_expensesfactor(const Cargo *p) const{
-    return expenses_per_km_;
-}
+CargoTransAnimal::CargoTransAnimal(Weight W, const std::string &description, Currency E_D): CargoTrans(W, description, E_D){}
+std::istream& CargoTransAnimal::input(std::istream &is){ return CargoTrans::input(is); }
+std::ostream& CargoTransAnimal::output(std::ostream &os) const{ return CargoTrans::output(os); }
+bool CargoTransAnimal::in(std::istream &is, std::ostream &os) { return CargoTrans::in(is, os); }
+bool CargoTransAnimal::edit(int property, std::istream &is, std::ostream &os) { return CargoTrans::edit(property, is, os); }
+bool CargoTransAnimal::can_carry(const Cargo *p) const{ return (get_type() == p->get_type()); }
+Currency CargoTransAnimal::get_E(Distance D, Weight W) const{ return Currency(double(D)*(get_E_D())); }
+Currency CargoTransAnimal::get_P(Distance D, Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
 
-CargoTransAnimal::CargoTransAnimal(Weight weight, const std::string &description, Currency expenses_per_km):
-    CargoTrans(weight, description, expenses_per_km){}
-std::istream& CargoTransAnimal::input(std::istream &is){
-    return CargoTrans::input(is);
-}
-std::ostream& CargoTransAnimal::output(std::ostream &os) const{
-    return CargoTrans::output(os);
-}
-
-bool CargoTransAnimal::in(std::istream &is, std::ostream &os) {
-    return CargoTrans::in(is, os);
-}
-
-bool CargoTransAnimal::edit(int property, std::istream &is, std::ostream &os) {
-    return CargoTrans::edit(property, is, os);
-}
-
-bool CargoTransAnimal::can_carry(const Cargo *p) const{
-    return (get_type() == p->get_type());
-}
-
-double CargoTransAnimal::get_expensesfactor(const Cargo *p) const{
-    return get_expensesperkm();
-}
-
-CargoTransRefrigerated::CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, float temperature_factor):
-    CargoTrans(weight, description, expenses_per_km), temperature_factor_(temperature_factor){}
+CargoTransRefrigerated::CargoTransRefrigerated(Weight W, const std::string &description, Currency E_D, float E_T):
+    CargoTrans(W, description, E_D), E_T_(E_T){}
 std::istream& CargoTransRefrigerated::input(std::istream &is){
     CargoTrans::input(is);
-    is >> temperature_factor_;
+    is >> E_T_;
     return is;
 }
 std::ostream& CargoTransRefrigerated::output(std::ostream &os) const{
     CargoTrans::output(os); os << "\n";
-    os << temperature_factor_;
+    os << E_T_;
     return os;
 }
 
@@ -364,7 +335,7 @@ bool CargoTransRefrigerated::in(std::istream &is, std::ostream &os) {
 
             TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
 
-            temperature_range_ = temp_range;
+            Tr_ = temp_range;
             break;
         } catch (TemperatureRange::InvalidTemperatureRange &itr) {
             std::cout << "Error: " << itr.what() << "\n";
@@ -375,7 +346,7 @@ bool CargoTransRefrigerated::in(std::istream &is, std::ostream &os) {
         }
     }
 
-    if (!utils::input("Temperature factor: ", temperature_factor_, is, os)) return false;
+    if (!utils::input("Temperature factor: ", E_T_, is, os)) return false;
     else                                                                    return true;
 }
 
@@ -393,7 +364,7 @@ bool CargoTransRefrigerated::edit(int property, std::istream &is, std::ostream &
 
                 TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
 
-                temperature_range_ = temp_range;
+                Tr_ = temp_range;
                 return true;
                 break;
             } catch (TemperatureRange::InvalidTemperatureRange &itr) {
@@ -410,7 +381,7 @@ bool CargoTransRefrigerated::edit(int property, std::istream &is, std::ostream &
         return false;
         break;
     case 6:
-        if (!utils::input("Temperature factor: ", temperature_factor_, is, os)) return false;
+        if (!utils::input("Temperature factor: ", E_T_, is, os)) return false;
         else                                                                    return true;
         break;
     default:
@@ -423,20 +394,23 @@ bool CargoTransRefrigerated::edit(int property, std::istream &is, std::ostream &
 bool CargoTransRefrigerated::can_carry(const Cargo *p) const{
     if(get_type() == p->get_type()){
         const CargoRefrigerated *q = dynamic_cast<const CargoRefrigerated*>(p);
-        return (utils::feq(double(get_range().max()), double(q->get_range().min()), 0.01) ||
-                std::max(get_range().min(), q->get_range().min()) <
-                std::min(get_range().max(), q->get_range().max()));
+        return (utils::feq(double(get_Tr().max()), double(q->get_Tr().min()), 0.01) ||
+                std::max(get_Tr().min(), q->get_Tr().min()) <
+                std::min(get_Tr().max(), q->get_Tr().max()));
     }else return false;
 }
 
-double CargoTransRefrigerated::get_expensesfactor(const Cargo *p) const{
+Currency CargoTransRefrigerated::get_E(Distance D, Weight W) const{ return Currency(double(D)*(get_E_D())); }
+Currency CargoTransRefrigerated::get_P(Distance D, Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
+/*
+double CargoTransRefrigerated::get_expenses(Distance D, Weight W) const{
     const CargoRefrigerated *q = dynamic_cast<const CargoRefrigerated*>(p);
-    double dT = std::fabs(double(std::min(q->get_range().max(), get_range().max())-reference_temperature_));
-    return get_expensesperkm()*(1.0L+temperature_factor_*dT);
+    double dT = std::fabs(double(std::min(q->get_Tr().max(), get_Tr().max())-T0_));
+    return get_expensesperkm()*(1.0L+E_T_*dT);
 }
-
-CargoTransDangerous::CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level):
-    CargoTrans(weight, description, expenses_per_km), danger_level_(danger_level){}
+*/
+CargoTransDangerous::CargoTransDangerous(Weight W, const std::string &description, Currency E_D, DangerLevel danger_level):
+    CargoTrans(W, description, E_D), danger_level_(danger_level){}
 std::istream& CargoTransDangerous::input(std::istream &is){
     CargoTrans::input(is);
     unsigned i; is >> i; danger_level_ = static_cast<Cargo::DangerLevel>(i);
@@ -515,6 +489,5 @@ bool CargoTransDangerous::can_carry(const Cargo *p) const{
     }else return false;
 }
 
-double CargoTransDangerous::get_expensesfactor(const Cargo *p) const{
-    return get_expensesperkm();
-}
+Currency CargoTransDangerous::get_E(Distance D, Weight W) const{ return Currency(double(D)*(get_E_D()));}
+Currency CargoTransDangerous::get_P(Distance D, Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }

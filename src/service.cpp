@@ -2,8 +2,6 @@
 
 #include "utils.h"
 
-#include "app.h"
-
 int Service::next_id_ = 0;
 
 Service::Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
@@ -18,29 +16,36 @@ Service::Service(const Client::Username &client_user, const Person &contact1, co
                  distance_(distance), cargo_(cargo),
                  expenses_(expenses), price_(price){}
 
+Service::Service(const Client::Username &client_user):
+    id_(utils::itos(next_id_++)), client_user_(client_user), expenses_(0), price_(0){}
+
 bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv){
     utils::mergesort(tv, [](const Truck *p1, const Truck *p2){
-        return (p1->get_cargo()->get_weight() > p2->get_cargo()->get_weight());
+        return (p1->get_cargo()->get_W() > p2->get_cargo()->get_W());
     });
     size_t sz = std::min(tv.size(), dv.size());
     Weight done(0.0);
     size_t i = 0;
-    while(i < sz && done < cargo_->get_weight() && !utils::feq(float(done), float(cargo_->get_weight()), 1.0)){
+    while(i < sz && done < cargo_->get_W() && !utils::feq(double(done), double(cargo_->get_W()), 1.0)){
         trucks_.push_back(tv[i]->get_numberplate());
         drivers_.push_back(dv[i]->get_username());
-        done += tv[i]->get_cargo()->get_weight();
+        done += tv[i]->get_cargo()->get_W();
     }
-    if(done < cargo_->get_weight() && !utils::feq(float(done), float(cargo_->get_weight()), 1.0)){
+    if(done < cargo_->get_W() && !utils::feq(double(done), double(cargo_->get_W()), 1.0)){
         trucks_.clear();
         drivers_.clear();
         return false;
     }else{
         expenses_ = 0.0;
-        for(size_t j = 0; j < sz; ++j){
-            expenses_ += Currency(float(distance_) * double(tv[j]->get_cargo()->get_expensesfactor(cargo_)));
-            price_ += tv[j]->get_cargo()->get_pricebase();
+        Weight W(0.0);
+        Weight dW;
+        for(const Truck *t:tv){
+            dW = std::min(t->get_cargo()->get_W(),
+                          cargo_->get_W() - W);
+            expenses_ += t->get_cargo()->get_E(distance_, dW);
+            price_    += t->get_cargo()->get_P(distance_, dW);
+            W += dW;
         }
-        price_ += Currency(double(expenses_) * (1.0 + App::rate));
         return true;
     }
 }
