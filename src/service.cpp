@@ -96,8 +96,8 @@ bool Service::in(std::istream &is, std::ostream &os) {
     if (!a_end_.in(is, os)) return false;
 
     while (true) {
-        if (!utils::input("Time to start the service: ", t_begin_, is, os)||
-            !utils::input("Time to end service: ", t_end_, is, os)) return false;
+        if (!utils::input("Time to start the service (YYYY/mm/dd HH:MM:SS): ", [](Time &time, const std::string &input) { time.input_time(input); }, t_begin_, is, os)||
+            !utils::input("Time to end service (YYYY/mm/dd HH:MM:SS): ",       [](Time &time, const std::string &input) { time.input_time(input); }, t_end_,   is, os)) return false;
 
         if (t_begin_ <= t_end_) break;
         std::cout << "Error: Initial time must be before end time\n";

@@ -37,7 +37,7 @@ void Time::input_time(const std::string &time) {
         Time new_time = Time(tm_formatted);
         this->t_ = new_time.t_;
     } else {
-        throw Time::InvalidTimeFormat(DEFAULT_TIME_REGEX);
+        throw Time::InvalidTimeFormat(time);
     }
 }
 
@@ -60,7 +60,7 @@ void Time::input_hour(const std::string &hour) {
         Time new_time = Time(tm_formatted);
         this->t_ = new_time.t_;
     } else {
-        throw Time::InvalidTimeFormat(DEFAULT_TIME_REGEX);
+        throw Time::InvalidTimeFormat(hour);
     }
 }
 
