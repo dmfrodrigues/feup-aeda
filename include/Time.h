@@ -79,13 +79,13 @@ public:
          * Also sets the string returned by <em> std::exception::what() </em>.
          * @param   fmt     Time format
          */
-        InvalidTime(const std::string date);
+        InvalidTime(const std::string &date);
         /**
          * @brief   Get date from which the exception was constructed.
          * @return  Date
          */
         const std::string& get_date() const;
-    }
+    };
 };
 
 #endif //TIME_H_INCLUDED

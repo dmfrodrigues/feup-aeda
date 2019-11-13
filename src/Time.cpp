@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream &os, const Time &t){
 }
 
 Time::InvalidTime::InvalidTime(const std::string &date):
-    std::invalid_argument("Invalid date: "+date);
+    std::invalid_argument("Invalid date: "+date),
     date_(date){}
 
 const std::string& Time::InvalidTime::get_date() const { return date_; }
