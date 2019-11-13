@@ -63,7 +63,12 @@ public:
             Distance distance, Cargo *cargo,
             Currency expenses, Currency price);
 
-    /// @brief Get id
+    /**
+     * @brief Constructor creates an empty service linked to a specific user.
+     * @param   client_user     Pointer to @ref Client to which the service will be provided
+     */
+    Service(const Client::Username &client_user): client_user_(client_user), expenses_(0), price_(0), id_(utils::itos(next_id_++)){}
+
     const std::string&      get_id      () const{ return id_         ; }
     /// @brief Get client
     const Client::Username& get_client  () const{ return client_user_; }
@@ -107,7 +112,7 @@ public:
      * @param os Output stream
      * @return If the input was sucessful
      */
-    //bool in(std::istream &is, std::ostream &os);
+    bool in(std::istream &is, std::ostream &os);
 };
 
 #endif //SERVICE_H_INCLUDED

@@ -37,6 +37,8 @@ public:
     std::string format(const std::string &fmt = Time::DEFAULT_FORMAT) const;
 
     bool operator< (const Time &t) const;
+    bool operator> (const Time &t) const{ return (t < *this); }
+    bool operator<=(const Time &t) const{ return !(*this > t); }
 
     /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Time::DEFAULT_FORMAT. */
     friend std::istream& operator>>(std::istream &is,       Time &t);

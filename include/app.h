@@ -113,8 +113,6 @@ private:
     Service* chooseService(const User *user);
     bool deleteService();
     bool deleteService(const User *user);
-    bool editService();
-    bool editService(const User *user);
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const;
     std::vector<Service*> filter_services_by_user(const std::vector<Service*> &v, const User *user) const;

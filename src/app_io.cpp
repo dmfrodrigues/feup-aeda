@@ -143,7 +143,7 @@ bool App::addTruck() {
     Truck *truck = new Truck();
     if (!truck->in(std::cin, std::cout)) { delete truck; return false; }
     if(utils::find_if(trucks_.begin(), trucks_.end(),
-      [&truck](const Truck* t){ return (t->get_id() == truck->get_id()); }) != trucks_.end()){
+      [truck](const Truck* t){ return (t->get_id() == truck->get_id()); }) != trucks_.end()){
         delete truck;
         error("Repeated ID (number plate already exists).");
         return false;
@@ -238,6 +238,40 @@ Service* App::chooseService() {
 }
 
 
+Service* App::chooseService(const User *user) {
+    std::vector<Service*> filtered = filter_services_by_user(services_, user);
+    std::vector<const Service*> services(filtered.begin(), filtered.end());
+
+    while (true) {
+        print_list(services);
+        std::string id;
+        if (!utils::input("Choose service id: ", id, std::cin, std::cout)) return NULL;
+        Service *it = find_service(id);
+        if (it == NULL || std::find(filtered.begin(), filtered.end(), it) == filtered.end()) {
+            error("Service doesn't exist (id doesn't have matches).");
+            continue;
+        } else {
+            return it;
+        }
+    }
+    return NULL;
+}
+
+bool App::deleteService(const User *user) {
+    while (true) {
+        Service *service = App::chooseService(user);
+        if (service == NULL) return false;
+        std::vector<Service*>::iterator service_it = std::find(services_.begin(), services_.end(), service);
+        if (!utils::confirm("Confirm the deletion of service \'" + ((*service_it)->get_id()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        delete *service_it;
+        services_.erase(service_it);
+        std::cout << "Service deleted.\n";
+        return true;
+    }
+    return false;
+}
+
+
 bool App::deleteService() {
     while (true) {
         Service *service = App::chooseService();
@@ -250,4 +284,28 @@ bool App::deleteService() {
         return true;
     }
     return false;
+}
+
+bool App::addService() {
+    Client *client = dynamic_cast<Client*>(chooseUser<Client>(User::Type::client));
+    if (client == NULL) return false;
+    Service *service = new Service(client->get_username());
+    if (service == NULL) return false;
+    if (!service->in(std::cin, std::cout)) { delete service; return false; }
+    if(utils::find_if(services_.begin(), services_.end(),
+      [service](const Service* s){ return (s->get_id() == service->get_id()); }) != services_.end()){
+        delete service;
+        error("Repeated ID (service with same ID already exists).");
+        Service::next_id_--; //infelizmente
+        return false;
+    }
+    std::vector<Truck*> tv = get_available_trucks(service->get_tbegin(), service->get_tend(), service->get_cargo());
+    std::vector<Driver*> dv = get_available_drivers(service->get_tbegin(), service->get_tend());
+    if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
+        services_.push_back(service);
+        std::cout << "Service added.\n";
+        return true;
+    }else{
+        return false;
+    }
 }
