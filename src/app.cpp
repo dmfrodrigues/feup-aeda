@@ -188,11 +188,13 @@ bool App::guestMenu(User* &user) {
     try {
         while (true) {
             CLEAR();
-            std::cout << "Agency SML                    \n"
-                         "══════════════════════════════\n"
-                         "Login                      [1]\n"
-                         "Exit                       [2]\n";
-
+            std::cout <<    "╒═══════════════════════════════════════════════════════════════════════════════════════════╕\n"
+                            "│                                         Agency SML                                        │\n"
+                            "╞═══════════════════════════════════════════════════════════════════════════════════════════╡\n"
+                            "│  Login                                                                                [1] │\n"
+                            "│  Exit                                                                                 [2] │\n"
+                            "╘═══════════════════════════════════════════════════════════════════════════════════════════╛\n"
+                            "                                                                                             \n";
             // LOGIN PROCESS
             std::string cmd; std::cout << "\n" << OPSTR; getline(std::cin, cmd);
             std::vector<std::string> v = utils::parse_command(cmd);
@@ -279,7 +281,7 @@ bool App::printUserMenu(User::Type user_type) {
                             "│                                             │                                             │\n"
                             "│                                             │                                             │\n"
                             "╘═════════════════════════════════════════════╧═════════════════════════════════════════════╛\n"
-                            "                                                                                               \n";
+                            "                                                                                             \n";
         } else if (user_type == User::Type::manager) {
             std::cout <<    "╒═════════════════════════════════════════════╤═════════════════════════════════════════════╕\n"
                             "│             Service Management              │               Truck Management              │\n"
@@ -288,38 +290,27 @@ bool App::printUserMenu(User::Type user_type) {
                             "│  Solicit lay-off                       [12] │  View account                          [22] │\n"
                             "│  Resign                                [13] │                                             │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
-                            "│          Information visualization          │                Other operations             │\n"
+                            "│              Client management              │               Driver Management             │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
-                            "│  Statistics                            [31] │  Log out                               [41] │\n";
-
-            std::cout << "Services management               Truck management              \n"
-                         "══════════════════════════════    ══════════════════════════════\n"
-                         "Add service               [11]    Add truck                 [21]\n"
-                         "Edit service              [12]    Edit truck                [22]\n"
-                         "Delete service            [13]    Delete truck              [23]\n"
-                         "                                                                \n"
-                         "Client management                 Driver management             \n"
-                         "══════════════════════════════    ══════════════════════════════\n"
-                         "Add client                [31]    Add driver                [41]\n"
-                         "Edit client               [32]    Edit driver               [42]\n"
-                         "Delete client             [33]    Delete driver             [43]\n"
-                         "                                                                \n"
-                         "Manager management                Information visualization     \n"
-                         "══════════════════════════════    ══════════════════════════════\n"
-                         "Add manager               [51]    Service list              [61]\n"
-                         "Edit manager              [52]    Truck list                [62]\n"
-                         "Delete manager            [53]    Client list               [63]\n"
-                         "                                  Driver list               [64]\n"
-                         "                                  Manager list              [65]\n"
-                         "                                  $$$$$ things              [66]\n"
-                         "                                                                \n"
-                         "Other operations                                                \n"
-                         "════════════════════════════════════════════════════════════════\n"
-                         "Edit account              [71]                                  \n"
-                         "See account               [72]                                  \n"
-                         "Save                      [73]                                  \n"
-                         "Exit                      [74]                                  \n"
-                         "                                                                \n";
+                            "│  Add client                            [31] │  Add driver                            [41] │\n"
+                            "│  Edit client                           [32] │  Edit driver                           [42] │\n"
+                            "│  Delete client                         [33] │  Delete driver                         [43] │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│              Manager management             │          Information visualization          │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│  Add manager                           [51] │  Service list                          [61] │\n"
+                            "│  Edit manager                          [52] │  Truck list                            [62] │\n"
+                            "│  Delete manager                        [53] │  Client list                           [63] │\n"
+                            "│                                             │  Driver list                           [64] │\n"
+                            "│                                             │  Manager list                          [65] │\n"
+                            "│                                             │  Statistics                            [66] │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│               Account Management            │                Other operations             │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│  Edit account                          [71] │  Save                                  [81] │\n"
+                            "│  View account                          [72] │  Log out                               [82] │\n"
+                            "╘═════════════════════════════════════════════╧═════════════════════════════════════════════╛\n"
+                            "                                                                                             \n";
         }
 
 
