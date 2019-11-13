@@ -4,18 +4,6 @@
 
 int Service::next_id_ = 0;
 
-Service::Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
-                 Time t_begin, Time t_end,
-                 Address a_begin, Address a_end,
-                 Distance distance, Cargo *cargo,
-                 Currency expenses, Currency price):
-                 id_(utils::itos(next_id_++)),
-                 client_user_(client_user), contact1_(contact1), contact2_(contact2),
-                 t_begin_(t_begin), t_end_(t_end),
-                 a_begin_(a_begin), a_end_(a_end),
-                 distance_(distance), cargo_(cargo),
-                 expenses_(expenses), price_(price){}
-
 Service::Service(const Client::Username &client_user):
     id_(utils::itos(next_id_++)), client_user_(client_user), expenses_(0), price_(0){}
 
@@ -43,7 +31,10 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
             dW = std::min(t->get_cargo()->get_W(),
                           cargo_->get_W() - W);
             if(t->get_cargo()->get_type() == Cargo::Type::Refrigerated){
-                CargoTransRefrigerated *p = dynamic_cast<CargoTransRefrigerated*>(t->get_cargo());
+                const CargoTransRefrigerated *p = dynamic_cast<const CargoTransRefrigerated*>(t->get_cargo());
+                const CargoRefrigerated      *q = dynamic_cast<const CargoRefrigerated     *>(cargo_);
+                expenses_ += p->get_E(distance_, dW, q->get_Tr());
+                price_    += p->get_P(distance_, dW, q->get_Tr());
             }else{
                 expenses_ += t->get_cargo()->get_E(distance_, dW);
                 price_    += t->get_cargo()->get_P(distance_, dW);

@@ -44,26 +44,6 @@ public:
     ~Service() { delete cargo_; }
 
     /**
-     * @brief Constructor that accepts all the information concerning a transport service.
-     * @param   client_user     Pointer to @ref Client to which the service will be provided
-     * @param   contact1        @ref Person that should be contacted on loading
-     * @param   contact2        @ref Person that should be contacted on arrival and unloading
-     * @param   t_begin         @ref Time at which the driver should leave the headquarters
-     * @param   t_end           @ref Time at which the driver is expected to reach the headquarters
-     * @param   a_begin         @ref Address at which the cargo should be loaded
-     * @param   a_end           @ref Address at which the cargo should be unloaded
-     * @param   distance        Distance between the two addresses
-     * @param   cargo           Pointer to cargo the client wants to be transported
-     * @param   expenses        Expenses this service had to the company
-     * @param   price           Price the company charged the client for this service
-     */
-    Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
-            Time t_begin, Time t_end,
-            Address a_begin, Address a_end,
-            Distance distance, Cargo *cargo,
-            Currency expenses, Currency price);
-
-    /**
      * @brief Constructor creates an empty service linked to a specific user.
      * @param   client_user     Pointer to @ref Client to which the service will be provided
      */
