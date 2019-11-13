@@ -52,7 +52,8 @@ public:
     static std::string type_string(const Type &t);
     static std::string dangerlevel_string(const DangerLevel &d);
 private:
-    Weight weight_; /// @brief Weight of an unit, total weight will be determined by the quantity and weight of an unit.
+    /// @brief Weight of an unit, total weight will be determined by the quantity and weight of an unit.
+    Weight weight_;
     std::string description_;
 protected:
     virtual std::istream& input (std::istream &is);

@@ -12,6 +12,15 @@ Currency::operator double() const{
     return double(cents_)/100.0;
 }
 
+Currency& Currency::operator=(const double &n){
+    return (*this = Currency(n));
+}
+
+Currency& Currency::operator+=(const Currency &c){
+    cents_ += c.cents_;
+    return *this;
+}
+
 std::ostream& operator<<(std::ostream &os, const Currency &c){
     std::stringstream ss;
     if(c.cents_ < 0) ss << "-";

@@ -26,9 +26,10 @@ void CLEAR();
 
 /** @brief Main class of the application. */
 class App{
+public:
+    static const float rate;
 private:
     ///PRIVATE VARIABLES
-    //Static const
     // Command string
     static const std::string OPSTR;
     //Paths

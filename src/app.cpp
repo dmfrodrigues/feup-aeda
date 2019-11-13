@@ -9,6 +9,8 @@ void CLEAR(){
         throw std::system_error(ev, std::system_category());
 }
 
+const float App::rate = 0.15;
+
 const std::string App::OPSTR = "Operation$ ";
 
 App::App(const std::string &base      ,

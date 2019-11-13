@@ -31,6 +31,8 @@ public:
     bool operator< (const Currency &c) const;
 
     explicit operator double() const;
+    Currency& operator=(const double &n);
+    Currency& operator+=(const Currency &c);
 
     /**
      * @brief   Overload of <em> operator>> </em>.

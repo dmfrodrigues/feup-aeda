@@ -27,6 +27,7 @@ private:
     Time t_end_;
     Address a_begin_;
     Address a_end_;
+    Distance distance_;
     Cargo *cargo_ = NULL;
     std::vector<Truck ::NumberPlate> trucks_;
     std::vector<Driver::Username   > drivers_;
@@ -52,7 +53,7 @@ public:
     Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
             Time t_begin, Time t_end,
             Address a_begin, Address a_end,
-            Cargo *cargo,
+            Distance distance, Cargo *cargo,
             Currency expenses, Currency price);
 
     const std::string&      get_id      () const{ return id_         ; }
@@ -63,6 +64,7 @@ public:
     const Time&             get_tend    () const{ return t_end_      ; }
     const Address&          get_abegin  () const{ return a_begin_    ; }
     const Address&          get_aend    () const{ return a_end_      ; }
+    const Distance&         get_distance() const{ return distance_   ; }
     const Cargo*            get_cargo   () const{ return cargo_      ; }
     const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
     const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }

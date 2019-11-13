@@ -2,18 +2,20 @@
 
 #include "utils.h"
 
+#include "app.h"
+
 int Service::next_id_ = 0;
 
 Service::Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
                  Time t_begin, Time t_end,
                  Address a_begin, Address a_end,
-                 Cargo *cargo,
+                 Distance distance, Cargo *cargo,
                  Currency expenses, Currency price):
                  id_(utils::itos(next_id_++)),
                  client_user_(client_user), contact1_(contact1), contact2_(contact2),
                  t_begin_(t_begin), t_end_(t_end),
                  a_begin_(a_begin), a_end_(a_end),
-                 cargo_(cargo),
+                 distance_(distance), cargo_(cargo),
                  expenses_(expenses), price_(price){}
 
 bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv){
@@ -33,6 +35,12 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         drivers_.clear();
         return false;
     }else{
+        expenses_ = 0.0;
+        for(size_t j = 0; j < sz; ++j){
+            expenses_ += Currency(float(distance_) * double(tv[j]->get_cargo()->get_expensesperkm(cargo_)));
+            price_ += tv[j]->get_cargo()->get_pricebase();
+        }
+        price_ += Currency(double(expenses_) * (1.0 + App::rate));
         return true;
     }
 }
