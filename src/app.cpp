@@ -402,13 +402,7 @@ void App::start(){
     #endif
     #ifdef DIOGO
         save_all();
-        //list_clients();
-        //list_drivers();
-        //list_managers();
-        //list_trucks();
-        //display(services_[0]);
-        //wait();
-        //list_services();
+        list_services();
     #endif
 
     #if !defined(TELMO) && !defined(DIOGO)
