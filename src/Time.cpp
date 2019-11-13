@@ -52,4 +52,4 @@ Time::InvalidTimeFormat::InvalidTimeFormat(const std::string &fmt):
 const std::string& Time::InvalidTimeFormat::get_format() const{ return fmt_; }
 
 const std::string Time::DEFAULT_FORMAT = "%Y%m%d_%H%M%S";
-const std::string Time::DEFAULT_TIME   = "00000000_000000";
+const std::string Time::DEFAULT_TIME   = "00010101_000000";
