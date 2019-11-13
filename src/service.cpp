@@ -37,7 +37,7 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
     }else{
         expenses_ = 0.0;
         for(size_t j = 0; j < sz; ++j){
-            expenses_ += Currency(float(distance_) * double(tv[j]->get_cargo()->get_expensesperkm(cargo_)));
+            expenses_ += Currency(float(distance_) * double(tv[j]->get_cargo()->get_expensesfactor(cargo_)));
             price_ += tv[j]->get_cargo()->get_pricebase();
         }
         price_ += Currency(double(expenses_) * (1.0 + App::rate));

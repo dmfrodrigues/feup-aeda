@@ -223,7 +223,7 @@ void App::display(const Cargo *p){
 void App::display(const CargoAnimal *p){
 }
 void App::display(const CargoRefrigerated *p){
-    std::cout << "│ [2] Temp range °C │ " << utils::ljust("["+utils::ftos("%.1f",(float )p->get_range().min())+", "+utils::ftos("%.1f",(float )p->get_range().max())+"]", 81) << "\t │\n";
+    std::cout << "│ [2] Temp range °C │ " << utils::ljust("["+utils::ftos("%.1f",(double)p->get_range().min())+", "+utils::ftos("%.1f",(double)p->get_range().max())+"]", 81) << "\t │\n";
 }
 void App::display(const CargoDangerous *p){
     std::cout << "│ [2] Danger level  │ " << utils::ljust(Cargo::dangerlevel_string(p->get_dangerlevel())   ,81) << "\t │\n";
@@ -245,8 +245,8 @@ void App::display(const CargoTrans             *p){
 void App::display(const CargoTransAnimal       *p){
 }
 void App::display(const CargoTransRefrigerated *p){
-    std::cout << "| [4] Temp range    │ " << utils::ljust("["+utils::ftos("%.1f",(float )p->get_range().min())+", "+utils::ftos("%.1f",(float )p->get_range().max())+"]", 81) << "\t │\n"
-              << "│ [5] Ref temp °C   │ " << utils::ljust(utils::ftos("%.1f",(float )p->get_reference_temperature()), 81) << "\t │\n"
+    std::cout << "| [4] Temp range    │ " << utils::ljust("["+utils::ftos("%.1f",(double)p->get_range().min())+", "+utils::ftos("%.1f",(double)p->get_range().max())+"]", 81) << "\t │\n"
+              << "│ [5] Ref temp °C   │ " << utils::ljust(utils::ftos("%.1f",(double)p->get_reference_temperature()), 81) << "\t │\n"
               << "│ [6] Temp factor   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_temperaturefactor())    , 81) << "\t │\n";
 }
 void App::display(const CargoTransDangerous    *p){
