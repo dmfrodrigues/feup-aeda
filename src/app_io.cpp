@@ -348,6 +348,7 @@ bool App::addService(const User *user) {
         std::cout << "Service added.\n";
         return true;
     }else{
+        std::cout << "Failed to add service.\n";
         return false;
     }
 }
