@@ -9,9 +9,9 @@ Time::Time(const std::string &s){
     ss >> std::get_time(&t_, Time::DEFAULT_FORMAT.c_str());
 
     if (t_.tm_sec   >= 60 ||
-        t_.tm_min   <= 0  ||
         t_.tm_min   >= 60 ||
         t_.tm_hour  >= 24 ||
+        t_.tm_mday  <= 0  ||
         t_.tm_mday  >  31 ||
         t_.tm_mon   >= 12)
         throw InvalidTime(s);
