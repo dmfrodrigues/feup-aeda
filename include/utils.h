@@ -216,7 +216,19 @@ namespace utils {
     /** @overload*/
     template<class T               > void mergesort(std::vector<T> &v){ utils::mergesort(v, std::less<T>()); }
 
+    /**
+     * @brief           Finds first element in [l,r) that evaluates true when provided to pred.
+     * @param   l       First iterator
+     * @param   r       Past-the-last iterator
+     * @param   pred    Boolean function with the same argument type as the type the iterators point to
+     */
     template<class Iterator, class Pred> Iterator find_if(Iterator l, Iterator r, Pred pred);
+    /**
+     * @brief       Finds first element in [l,r) that evaluates equal to obj.
+     * @param   l   First iterator
+     * @param   r   Past-the-last iterator
+     * @param   obj Object to find
+     */
     template<class Iterator, class T            > Iterator find   (Iterator l, Iterator r, T obj);
 
     /**
