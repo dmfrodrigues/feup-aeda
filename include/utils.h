@@ -153,15 +153,29 @@ namespace utils {
     private:
         T u_;
     public:
+        /**
+         * @brief Empty constructor.
+         */
         explicit ufloat():u_(0){}
+        /**
+         * @brief Constructor accepting value to be assigned to it.
+         */
         explicit ufloat(const T &u);
 
+        /** @brief Overload of operator< */
         bool operator<(const ufloat<T> &t) const;
+        /** @brief Overload of operator> */
         bool operator>(const ufloat<T> &t) const;
+        /** @brief Overload of operator+= */
         ufloat<T>& operator+=(const ufloat<T> &t);
+        /**
+         * @brief Conversion to underlying type.
+         */
         explicit operator T() const;
 
+        /** @brief Overload of operator>> */
         friend std::istream& operator>> <>(std::istream &is,       utils::ufloat<T> &u);
+        /** @brief Overload of operator<< */
         friend std::ostream& operator<< <>(std::ostream &os, const utils::ufloat<T> &u);
 
         /** @brief Exception class for reporting invalid UFloat (usually because it is negative) */
@@ -169,7 +183,15 @@ namespace utils {
         private:
             T u_;
         public:
+            /**
+             * @brief Constructor
+             * @param   u   Number that caused exception
+             */
             explicit InvalidUFloat(const T &u);
+
+            /**
+             * @brief Get number that caused exception.
+             */
             const T& get_ufloat() const;
         };
     };
@@ -181,14 +203,24 @@ namespace utils {
         std::string s_;
         std::string REGEX_STR_;
     public:
+        /**
+         * @brief Constructor accepting regex the strings is supposed to match.
+         * @param   REGEX_STR   Regex the strings are supposed to match.
+         */
         explicit string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
+        /** @brief Overload of operator= */
         string_regex& operator=(const std::string &s);
-
+        /**
+         * @brief Conversion of regex-checked string to std::string.
+         */
         explicit operator std::string() const;
+        /** @brief Overload of operator< */
         bool operator< (const utils::string_regex &s) const;
+        /** @brief Overload of operator== */
         bool operator==(const utils::string_regex &s) const;
-
+        /** @brief Overload of operator>> */
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
+        /** @brief Overload of operator<< */
         friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);
         /** @brief Exception thrown when string does not match regex */
         class FailedRegex: public std::invalid_argument{
@@ -196,7 +228,15 @@ namespace utils {
             const std::string s_;
             const std::string REGEX_STR_;
         public:
+            /**
+             * @brief Constructor accepting failing string and regex it was supposed to match.
+             * @param   s           Infringing string
+             * @param   REGEX_STR   Regex string s was supposed to match
+             */
             FailedRegex(const std::string &s, const std::string &REGEX_STR);
+            /**
+             * @brief Get infringing string.
+             */
             const std::string& get_string()const{ return s_; }
         };
     };

@@ -15,9 +15,13 @@ public:
     /** @brief Postal code. */
     class PostalCode: public utils::string_regex{
     public:
+        /// @brief Regex a postal code is supposed to match
         static const std::string REGEX_STR;
+        /// @brief Empty constructor
         explicit PostalCode();
+        /// @brief Constructor accepting postal code as string
         explicit PostalCode(const std::string &postal_code);
+        /// @brief Overload of operator=
         PostalCode& operator=(const std::string &postal_code);
     };
 private:
@@ -62,6 +66,9 @@ public:
      */
     std::string format(const std::string &fmt = DEFAULT_FORMAT) const;
 
+    /**
+     * @brief Overload of operator<
+     */
     bool operator<(const Address &a)const;
 
     /**

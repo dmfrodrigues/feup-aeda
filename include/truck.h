@@ -33,9 +33,10 @@ public:
             explicit Number();
             /**
              * @brief   Constructs from string containing number plate.
-             * @param   number  String with numberplate
+             * @param   plate   String with numberplate
              */
             explicit Number(const std::string &plate);
+            /** @brief Overload of operator=. */
             Number& operator=(const std::string &s);
         };
         /*
@@ -47,23 +48,34 @@ public:
         Number number_;
         //Country country_;
     public:
+        /** @brief Empty constructor. */
         explicit NumberPlate();
+        /** @brief Constructor accepting string */
         explicit NumberPlate(const Number &number);
+        /** @brief Convert to std::string */
         explicit operator std::string() const;
+        /** @brief Overload of operator<. */
         bool operator< (const NumberPlate &n) const;
+        /** @brief Overload of operator==.*/
         bool operator==(const NumberPlate &n) const;
-
+        /** @brief Overload of operator>> */
         friend std::istream& operator>>(std::istream &is,       NumberPlate &n);
+        /** @brief Overload of operator<< */
         friend std::ostream& operator<<(std::ostream &os, const NumberPlate &n);
     };
     /** @brief Vehicle category. */
     class Category: public utils::string_regex{
     public:
+        /** @brief Regex a vehicle category is supposed to match. */
         static const std::string REGEX_STR;
+        /** @brief Empty constructor. */
         explicit Category();
+        /** @brief Constructor accepting string as argument for construction. */
         explicit Category(const std::string &category);
+        /** @brief Overload of operator= */
         Category& operator=(const std::string &category);
     };
+    /** @brief %Fuel */
     enum Fuel : int{
         Biodiesel = 0,
         Diesel = 1,
@@ -73,7 +85,9 @@ public:
         Hybrid,
         Hydrogen
     };
+    /** @brief Convert Fuel to string to present in tables. */
     static std::string fuel_string(const Fuel &f);
+    /** @brief Type of truck (always truck, made to conform with Users that also have types) */
     enum Type{
         truck
     };
@@ -97,24 +111,35 @@ public:
     Truck(const Truck& t);
     /**
      * @brief Constructor of all information of a general truck.
-     * @param max_weight    Maximum weight the truck can transport
-     * @param max_reach     Maximum distance for the transport
-     * @param taxes         Tax that needs to be paid
+     * @param number_plate              Number plate of truck
+     * @param max_replate_register_date Number plate register date
+     * @param fuel                      Fuel
+     * @param max_reach                 Maximum reach of truck
+     * @param category                  Category of truck
+     * @param cargo                     Pointer to cargo the truck can transport
      */
     Truck(const NumberPlate &number_plate, const Time     &plate_register_date,
           const Fuel        &fuel        , const Distance &max_reach          ,
           const Category    &category    , CargoTrans *cargo);
 
+    /** @brief Destructor */
     virtual ~Truck();
 
+    /// @brief Get number plate.
     const NumberPlate& get_numberplate      () const{ return number_plate_       ; }
+    /// @brief Get number plate (in this case the same as number plate).
     const NumberPlate& get_id               () const{ return get_numberplate()   ; }
+    /// @brief Get number plate register date.
     const Time&        get_plateregisterdate() const{ return plate_register_date_; }
+    /// @brief Get fuel.
     const Fuel&        get_fuel             () const{ return fuel_               ; }
+    /// @brief Get maximum reach/range of the truck.
     const Distance&    get_range            () const{ return max_reach_          ; }
+    /// @brief Get category.
     const Category&    get_category         () const{ return category_           ; }
+    /// @brief Get cargo pointer.
     const CargoTrans* get_cargo() const;
-
+    /// @brief Get type of vehicle (always Truck)
     virtual Type get_type(void) const;
 
     static Fuel processFuel(const std::string &s);

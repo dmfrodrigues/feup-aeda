@@ -33,9 +33,12 @@ public:
      */
     Person(const std::string &name, const PhoneNumber &phonenumber);
 
+    /** @brief Destructor */
     virtual ~Person(){}
 
+    /** @brief Get name of person. */
     virtual const std::string& get_name() const final{ return name_; }
+    /** @brief Get phonenumber. */
     virtual const PhoneNumber& get_phonenumber() const final{ return phonenumber_; }
 
     /**
@@ -71,17 +74,25 @@ public:
     /** @brief %Username class. */
     class Username: public utils::string_regex{
     public:
+        /** @brief Regex a username is supposed to match. */
         static const std::string REGEX_STR;
+        /** @brief Empty constructor. */
         explicit Username();
+        /** @brief Constructor accepting string as argument for construction. */
         explicit Username(const std::string &username);
+        /** @brief Overload of operator= */
         Username& operator=(const std::string &s);
     };
     /** @brief %Password class. */
     class Password: public utils::string_regex{
     public:
+        /** @brief Regex a password is supposed to match. */
         static const std::string REGEX_STR;
+        /** @brief Empty constructor. */
         explicit Password();
+        /** @brief Constructor accepting string as argument for construction. */
         explicit Password(const std::string &password);
+        /** @brief Overload of operator= */
         Password& operator=(const std::string &s);
     };
 
@@ -110,16 +121,21 @@ public:
      * @param   name        String containing name of user
      * @param   phonenumber Phone number
      * @param   username    Unique username in the program
-     * @param   pswd        Password of the user
+     * @param   password    Password of the user
+     * @param   address     Address of the user
+     * @param   vat         VAT of the user
      */
     User(const std::string &name    , const PhoneNumber &phonenumber,
          const Username    &username, const Password    &password   ,
          const Address     &address , const VAT         &vat        );
 
-    /** @brief Get username */
+    /** @brief Get username. */
     const Username& get_username() const{ return username_     ; }
+    /** @brief Get id (which in this case is the username).*/
     const Username& get_id      () const{ return get_username(); }
+    /** @brief Get address. */
     const Address&  get_address () const{ return address_      ; }
+    /** @brief Get VAT number */
     const VAT&      get_vat     () const{ return vat_          ; }
     /**
      * @brief Gets the type of user.
@@ -146,7 +162,6 @@ public:
 
     /**
      * @brief Tests if credentials given match with user.
-     * @param username Username to verify
      * @param password Password to verify
      * @return If the credentials are valid
      */
