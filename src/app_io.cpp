@@ -170,7 +170,7 @@ Truck* App::chooseTruck() {
                 return it;
             }
         } catch (utils::string_regex::FailedRegex &fr) {
-            error(fr.what());
+            error(std::string(fr.what()) + std::string(" (invalid number plate)."));
             continue;
         }
     }
@@ -199,7 +199,7 @@ bool App::editTruck() {
     bool is_edited = false;
     truck = *it;
     std::string command;
-    Truck *truck_copy = Truck::deep_copy(truck); //#DIOGO
+    Truck *truck_copy = Truck::deep_copy(truck);
     while (true) {
         App::display(truck_copy);
         if (!utils::input("To add/change cargo use command:\n"
