@@ -12,7 +12,7 @@
  */
 class Temperature{
 private:
-    float temp_;
+    double temp_;
 public:
     Temperature();
     explicit Temperature(float temp);
@@ -24,7 +24,7 @@ public:
     bool operator>=(const Temperature &t)const;
     bool operator<=(const Temperature &t)const;
 
-    explicit operator float() const{ return temp_; }
+    explicit operator double() const{ return temp_; }
 
     friend std::istream& operator>>(std::istream &is,       Temperature &t);
     friend std::ostream& operator<<(std::ostream &os, const Temperature &t);

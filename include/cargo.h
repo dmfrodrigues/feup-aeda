@@ -244,7 +244,7 @@ class CargoTrans: public Cargo{
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
     static const Currency price_base_;
-    Currency expenses_per_km_;
+    double expenses_per_km_;
 protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
@@ -252,7 +252,7 @@ public:
     CargoTrans(){}
     CargoTrans(Weight weight, const std::string &description, Currency expenses_per_km);
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
-    const Currency& get_expensesperkm() const{ return expenses_per_km_; }
+    const double& get_expensesperkm() const{ return expenses_per_km_; }
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -272,6 +272,7 @@ public:
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
     virtual bool can_carry(const Cargo *p) const;
+    virtual double get_expensesfactor(const Cargo *p) const;
 };
 
 /**
@@ -309,6 +310,7 @@ public:
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
     virtual bool can_carry(const Cargo *p) const;
+    virtual double get_expensesfactor(const Cargo *p) const;
 };
 
 /**
@@ -321,7 +323,7 @@ private:
     TemperatureRange temperature_range_;
     static const Currency price_base_;
     static const Temperature reference_temperature_;
-    float temperature_factor_;
+    double temperature_factor_;
 protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
@@ -332,7 +334,7 @@ public:
     const TemperatureRange& get_range() const{ return temperature_range_; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
     const Temperature& get_reference_temperature() const{ return reference_temperature_; }
-    const float& get_temperaturefactor() const{ return temperature_factor_; }
+    const double& get_temperaturefactor() const{ return temperature_factor_; }
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -352,6 +354,7 @@ public:
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
     virtual bool can_carry(const Cargo *p) const;
+    virtual double get_expensesfactor(const Cargo *p) const;
 };
 
 /**
@@ -391,6 +394,7 @@ public:
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
     virtual bool can_carry(const Cargo *p) const;
+    virtual double get_expensesfactor(const Cargo *p) const;
 };
 
 #endif // CARGO_H_INCLUDED
