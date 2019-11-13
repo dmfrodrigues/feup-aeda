@@ -72,29 +72,32 @@ void App::print_list(const std::vector<const Truck*> &v){
                  "  │ ├┬╯│ ││  │╱ ╰─╮ \n"
                  "  ╵ ╵╰╴╰─╯╰─╴│ ╲╶─╯ \n"
                  "\n"
-                 "╒══════════════════╤════════════╤══════════════╤════════════════╤══════════════╤════════════════╤══════════════════╤════════════════╕\n"
-                 "│ Number plate [0] │ Date [1]   │ Fuel [2]     │ Range (km) [3] │ Category [4] │ Cargo type [5] │ Cargo weight [6] │ Price base [7] │\n"
-                 "╞══════════════════╪════════════╪══════════════╪════════════════╪══════════════╪════════════════╪══════════════════╪════════════════╡\n";
+                 "╒══════════════╤════════════╤══════════════╤══════════╤══════════╤══════════════╤════════════╤════════════════╤════════════╤════════════╕\n"
+                 "│ Number       │ Date [1]   │ Fuel [2]     │ Range    │ Category │ Cargo type   │ Cargo      │ Price base [7] │ Distance   │ Weight     │\n"
+                 "│ plate [0]    │            │              │ (km) [3] │ [4]      │ [5]          │ weight [6] │                │ factor [8] │ factor [9] │\n"
+                 "╞══════════════╪════════════╪══════════════╪══════════╪══════════╪══════════════╪════════════╪════════════════╪════════════╪════════════╡\n";
     for(const Truck* p:v){
         std::cout << "│ "
-                  << utils::ljust((std::string)p->get_numberplate()                     ,16) << " │ "
+                  << utils::ljust((std::string)p->get_numberplate()                     ,12) << " │ "
                   << p->get_plateregisterdate().format("%Y/%m/%d")                           << " │ "
                   << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,12) << " │ "
-                  << utils::rjust(utils::ftos("%.1f", (double)p->get_range())           ,14) << " │ "
-                  << utils::ljust((std::string)p->get_category()                        ,12) << " │ "
-                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())        ,14) << " │ "
-                  << utils::rjust(utils::ftos("%.1f", (double)p->get_cargo()->get_W())  ,16) << " │ "
-                  << utils::rjust(utils::ftos("%+.2f",(double)p->get_cargo()->get_P_B()),14) << " │\n";
+                  << utils::rjust(utils::ftos("%.1f", (double)p->get_range())           , 8) << " │ "
+                  << utils::ljust((std::string)p->get_category()                        , 8) << " │ "
+                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())        ,12) << " │ "
+                  << utils::rjust(utils::ftos("%.1f", (double)p->get_cargo()->get_W())  ,10) << " │ "
+                  << utils::rjust(utils::ftos("%+.2f",(double)p->get_cargo()->get_P_B()),14) << " │ "
+                  << utils::rjust(utils::ftos("%.4f", p->get_cargo()->get_E_D())        ,10) << " │ "
+                  << utils::rjust(utils::ftos("%.3fE-4",p->get_cargo()->get_E_W()*10000),10) << " │\n";
     }
-    std::cout << "╘══════════════════╧════════════╧══════════════╧════════════════╧══════════════╧════════════════╧══════════════════╧════════════════╛\n"
+    std::cout << "╘══════════════╧════════════╧══════════════╧══════════╧══════════╧══════════════╧════════════╧════════════════╧════════════╧════════════╛\n"
               << std::flush;
 }
 
 void App::print_list(const std::vector<const Service*> &v) const{
     Currency EXPENSES(0), PRICE(0);
     for(const Service *p:v){
-        EXPENSES += p->get_expenses();
-        PRICE += p->get_price();
+        EXPENSES += p->get_cost();
+        PRICE += p->get_revenue();
     }
     EXPENSES = -EXPENSES;
     std::cout << "\n"
@@ -119,8 +122,8 @@ void App::print_list(const std::vector<const Service*> &v) const{
                   << utils::ljust(p->get_abegin().format("(%district) %city")                                                           ,25) << "\t │ "
                   << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())                                                        ,13) <<   " │ "
                   << utils::ljust(std::string(tv[0]), 12) + " " + utils::ljust(std::string(dv[0])                                       ,12) <<   " │ "
-                  << utils::rjust(utils::ftos("%+.2f", -double(p->get_expenses()))                                                      ,11) <<   " │ "
-                  << utils::rjust(utils::ftos("%+.2f",  double(p->get_price   ()))                                                      ,11) <<   " │\n";
+                  << utils::rjust(utils::ftos("%+.2f", -double(p->get_cost   ()))                                                       ,11) <<   " │ "
+                  << utils::rjust(utils::ftos("%+.2f",  double(p->get_revenue()))                                                       ,11) <<   " │\n";
         std::cout << "│     │ ";
         if(c == NULL) std::cout << "(DELETED)    │ ";
         else          std::cout << "             │ ";
