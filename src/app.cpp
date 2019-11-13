@@ -194,7 +194,7 @@ bool App::guestMenu(User* &user) {
                             "│  Login                                  [1] │\n"
                             "│  Exit                                   [2] │\n"
                             "╘═════════════════════════════════════════════╛\n"
-                            "                                                                                             \n";
+                            "                                               \n";
             // LOGIN PROCESS
             std::string cmd; std::cout << "\n" << OPSTR; getline(std::cin, cmd);
             std::vector<std::string> v = utils::parse_command(cmd);
