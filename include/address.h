@@ -40,15 +40,6 @@ public:
      */
     Address();
     /**
-     * @brief Constructor with arguments.
-     * @param   street      Street name and house number, usually separated by comma.
-     * @param   postal_code Postal code.
-     * @param   city        City, usually in capital letters and associated to postal code.
-     * @param   district    District, province or state.
-     * @param   country     Country
-     */
-    Address(const std::string &street, const std::string &postal_code, const std::string &city, const std::string &district, const std::string &country);
-    /**
      * @brief   Format address to a given format.
      * @param   fmt String that contains the text to be written to the output string.
      *              It can optionally contain format specifiers that are replaced
@@ -65,11 +56,6 @@ public:
      *              <em> country   </em> | Country
      */
     std::string format(const std::string &fmt = DEFAULT_FORMAT) const;
-
-    /**
-     * @brief Overload of operator<
-     */
-    bool operator<(const Address &a)const;
 
     /**
      * @brief Allows input field by field with descriptive messages.

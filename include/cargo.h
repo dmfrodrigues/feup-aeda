@@ -51,7 +51,6 @@ public:
     /// @brief Convert danger level to string to show in tables
     static std::string dangerlevel_string(const DangerLevel &d);
 private:
-    /// @brief Weight of an unit, total weight will be determined by the quantity and weight of an unit.
     Weight W_;
     std::string description_;
 protected:

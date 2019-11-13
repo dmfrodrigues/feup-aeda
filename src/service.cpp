@@ -7,6 +7,8 @@ int Service::next_id_ = 0;
 Service::Service(const Client::Username &client_user):
     id_(utils::itos(next_id_++)), client_user_(client_user), expenses_(0), price_(0){}
 
+Service::~Service() { if(cargo_ != NULL) delete cargo_; }
+
 bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv){
     utils::mergesort(tv, [](const Truck *p1, const Truck *p2){
         return (p1->get_cargo()->get_W() > p2->get_cargo()->get_W());

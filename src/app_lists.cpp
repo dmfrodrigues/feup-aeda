@@ -71,33 +71,33 @@ template<> void App::list_commands<Service>(){
 
 void App::list_sort_getcomp(int i, std::function<bool(const Client *, const Client *)> &cmp){
     switch(i){
-        case 0: cmp = [](const Client *p1, const Client *p2){ return (p1->get_username   () < p2->get_username   ()); }; break;
-        case 1: cmp = [](const Client *p1, const Client *p2){ return (p1->get_name       () < p2->get_name       ()); }; break;
-        case 2: cmp = [](const Client *p1, const Client *p2){ return (p1->get_address    () < p2->get_address    ()); }; break;
-        case 3: cmp = [](const Client *p1, const Client *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }; break;
-        case 4: cmp = [](const Client *p1, const Client *p2){ return (p1->get_vat        () < p2->get_vat        ()); }; break;
+        case 0: cmp = [](const Client *p1, const Client *p2){ return (p1->get_username        () < p2->get_username        ()); }; break;
+        case 1: cmp = [](const Client *p1, const Client *p2){ return (p1->get_name            () < p2->get_name            ()); }; break;
+        case 2: cmp = [](const Client *p1, const Client *p2){ return (p1->get_address().format() < p2->get_address().format()); }; break;
+        case 3: cmp = [](const Client *p1, const Client *p2){ return (p1->get_phonenumber     () < p2->get_phonenumber     ()); }; break;
+        case 4: cmp = [](const Client *p1, const Client *p2){ return (p1->get_vat             () < p2->get_vat             ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
 void App::list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp){
     switch(i){
-        case 0: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_username   () < p2->get_username   ()); }; break;
-        case 1: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_name       () < p2->get_name       ()); }; break;
-        case 2: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_address    () < p2->get_address    ()); }; break;
-        case 3: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }; break;
-        case 4: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_vat        () < p2->get_vat        ()); }; break;
-        case 5: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }; break;
+        case 0: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_username        () < p2->get_username        ()); }; break;
+        case 1: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_name            () < p2->get_name            ()); }; break;
+        case 2: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_address().format() < p2->get_address().format()); }; break;
+        case 3: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_phonenumber     () < p2->get_phonenumber     ()); }; break;
+        case 4: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_vat             () < p2->get_vat             ()); }; break;
+        case 5: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_base_salary     () < p2->get_base_salary     ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
 void App::list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp){
     switch(i){
-        case 0: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_username   () < p2->get_username   ()); }; break;
-        case 1: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_name       () < p2->get_name       ()); }; break;
-        case 2: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_address    () < p2->get_address    ()); }; break;
-        case 3: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_phonenumber() < p2->get_phonenumber()); }; break;
-        case 4: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_vat        () < p2->get_vat        ()); }; break;
-        case 5: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_base_salary() < p2->get_base_salary()); }; break;
+        case 0: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_username        () < p2->get_username        ()); }; break;
+        case 1: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_name            () < p2->get_name            ()); }; break;
+        case 2: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_address().format() < p2->get_address().format()); }; break;
+        case 3: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_phonenumber     () < p2->get_phonenumber     ()); }; break;
+        case 4: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_vat             () < p2->get_vat             ()); }; break;
+        case 5: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_base_salary     () < p2->get_base_salary     ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }

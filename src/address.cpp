@@ -5,10 +5,7 @@
 const std::string Address::PostalCode::REGEX_STR = "^[0-9a-zA-Z -]{0,12}$";
 
 Address::PostalCode::PostalCode():string_regex(Address::PostalCode::REGEX_STR){}
-
-Address::PostalCode::PostalCode(const std::string &postal_code):PostalCode(){
-    *this = postal_code;
-}
+Address::PostalCode::PostalCode(const std::string &postal_code):PostalCode(){ *this = postal_code; }
 
 Address::PostalCode& Address::PostalCode::operator=(const std::string &postal_code){
     string_regex::operator=(postal_code);
@@ -18,8 +15,6 @@ Address::PostalCode& Address::PostalCode::operator=(const std::string &postal_co
 const std::string Address::DEFAULT_FORMAT = "%street\n%postal\n%city\n%district\n%country";
 
 Address::Address(){}
-Address::Address(const std::string &street, const std::string &postal_code, const std::string &city, const std::string &district, const std::string &country):
-                 street_(street), postal_code_(postal_code), city_(city), district_(district), country_(country){}
 
 std::string Address::format(const std::string &s) const{
     std::string ret = s;
@@ -32,17 +27,11 @@ std::string Address::format(const std::string &s) const{
 }
 
 bool Address::in(std::istream &is, std::ostream &os) {
-    if (!utils::input("Street: "     , street_,      is, os)||
-        !utils::input("Postal Code: ", postal_code_, is, os)||
-        !utils::input("City: "       , city_,        is, os)||
-        !utils::input("District: "   , district_,    is, os)||
-        !utils::input("Country: "    , country_,     is, os)) return false;
-
-    return true;
-}
-
-bool Address::operator<(const Address &a)const{
-    return (format() < a.format());
+    return (utils::input("Street: "     , street_,      is, os)&&
+            utils::input("Postal Code: ", postal_code_, is, os)&&
+            utils::input("City: "       , city_,        is, os)&&
+            utils::input("District: "   , district_,    is, os)&&
+            utils::input("Country: "    , country_,     is, os));
 }
 
 std::ostream& operator<<(std::ostream &os, const Address &a){
