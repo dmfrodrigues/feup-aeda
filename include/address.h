@@ -12,6 +12,7 @@
  */
 class Address{
 public:
+    /** @brief Postal code. */
     class PostalCode: public utils::string_regex{
     public:
         static const std::string REGEX_STR;

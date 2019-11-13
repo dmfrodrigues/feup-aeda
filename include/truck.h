@@ -12,6 +12,7 @@
 #include <vector>
 #include <utility>
 
+/** @brief %Distance */
 typedef utils::ufloat<float> Distance;
 
 /**
@@ -55,6 +56,7 @@ public:
         friend std::istream& operator>>(std::istream &is,       NumberPlate &n);
         friend std::ostream& operator<<(std::ostream &os, const NumberPlate &n);
     };
+    /** @brief Vehicle category. */
     class Category: public utils::string_regex{
     public:
         static const std::string REGEX_STR;

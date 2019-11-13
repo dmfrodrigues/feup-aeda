@@ -12,6 +12,7 @@
 #include <utility>
 #include <stdexcept>
 
+/** @brief %Weight */
 typedef utils::ufloat<float> Weight;
 
 /**

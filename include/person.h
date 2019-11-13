@@ -76,6 +76,7 @@ public:
         explicit Username(const std::string &username);
         Username& operator=(const std::string &s);
     };
+    /** @brief %Password class. */
     class Password: public utils::string_regex{
     public:
         static const std::string REGEX_STR;

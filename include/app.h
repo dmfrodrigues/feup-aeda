@@ -17,8 +17,14 @@
     #define CLEAR_MACRO() system("clear")
 #endif
 
+/**
+ * @brief Clears the screen.
+ *
+ * Designed to work at least in Windows32/64 and Unix.
+ */
 void CLEAR();
 
+/** @brief Main class of the application. */
 class App{
 private:
     ///PRIVATE VARIABLES
@@ -136,6 +142,7 @@ public:
 
     void start();
 
+    /** @brief Exception class to report invalid credentials */
     class InvalidCredentials: public std::runtime_error {
     private:
         std::string msg_;
@@ -144,6 +151,7 @@ public:
         const std::string& getMsg() const;
     };
 
+    /** @brief Exception class to report repeated IDs */
     class RepeatedId: public std::runtime_error {
     private:
         std::string id_;
@@ -152,6 +160,7 @@ public:
         const std::string& get_id() const;
     };
 
+    /** @brief Exception class to report an invalid schedule */
     class InvalidSchedule: public std::logic_error {
     private:
         std::string id_;

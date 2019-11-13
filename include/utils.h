@@ -15,7 +15,9 @@ namespace utils{
     template<class T> class ufloat;
 }
 
+/** @brief Overload of operator>> for utils::ufloat. */
 template<class T> std::istream& operator>>(std::istream &is,       utils::ufloat<T> &u);
+/** @brief Overload of operator<< for utils::ufloat. */
 template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat<T> &u);
 
 /** @brief Utilities */
@@ -60,9 +62,21 @@ namespace utils {
      */
     std::string itos(const long long int &i);
 
+    /**
+     * @brief       Convert double to std::string using specified format.
+     * @param   fmt Format to output
+     * @param   n   Number to convert to std::string
+     * @return      Converted std::string
+     */
     std::string ftos(const std::string &fmt, const double &n);
 
+    /**
+     * @brief       Convert string to integer.
+     * @param   str String containing integer
+     * @return      Result of the conversion to integer
+     */
     int stoi(const std::string &str);
+
     /**
      * @brief       Replace all occurences of a string.
      * @param   s   Original string
@@ -104,12 +118,36 @@ namespace utils {
     */
     std::string rjust(std::string s, size_t sz);
 
+    /**
+     * @brief        Parse string into a vector of arguments, similar to how shell parsing works.
+     * @param    s   Command to parse with arguments
+     * @return       Vector with command elements
+     */
     std::vector<std::string> parse_command(const std::string &s);
 
+    /**
+     * @brief       Evaluate if two doubles are similar enough to be considered equal.
+     *
+     * If the absolute difference between n1 and n2 is smaller than e, the function
+     * returns true; otherwise, it returns false.
+     * @param   n1  First number
+     * @param   n2  Second number
+     * @param   e   Maximum difference below which two numbers are considered equal
+     */
     bool feq(double n1, double n2, double e);
 
+    /**
+     * @brief       Filters std::vector using a function as argument.
+     *
+     * The function returns a vector of pointers corresponding to the elements of v
+     * that evaluated as true in valid.
+     * @param   v       vector of pointers
+     * @param   valid   Boolean function to filter vector
+     * @return          vector of elements of v that evaluated true
+     */
     template<class T, class Valid> std::vector<T*> filter(const std::vector<T*> &v, Valid valid);
-    ///UFLOAT
+
+    /** @brief Unsigned floats. Makes necessary checks. */
     template<class T>
     class ufloat{
     private:
@@ -126,6 +164,7 @@ namespace utils {
         friend std::istream& operator>> <>(std::istream &is,       utils::ufloat<T> &u);
         friend std::ostream& operator<< <>(std::ostream &os, const utils::ufloat<T> &u);
 
+        /** @brief Exception class for reporting invalid UFloat (usually because it is negative) */
         class InvalidUFloat: public std::invalid_argument{
         private:
             T u_;
@@ -161,14 +200,25 @@ namespace utils {
             const std::string& get_string()const{ return s_; }
         };
     };
-    ///MERGESORT
+
+    /**
+     * @brief       Sort vector in range according to a sorting parameter.
+     *
+     * Uses mergesort for complexity O(N log N).
+     * @param   v       Vector to sort
+     * @param   l       First element to be sorted in v
+     * @param   r       Past-the-last element to be sorted in v
+     * @param   comp    Comparison function, receiving arguments of the same type as the vector
+     */
     template<class T, class Compare> void mergesort(std::vector<T> &v, const size_t &l, const size_t &r, Compare comp);
+    /** @overload*/
     template<class T, class Compare> void mergesort(std::vector<T> &v, Compare comp){ utils::mergesort(v, 0, v.size(), comp); }
+    /** @overload*/
     template<class T               > void mergesort(std::vector<T> &v){ utils::mergesort(v, std::less<T>()); }
-    ///LINEARFIND
+
     template<class Iterator, class Pred> Iterator find_if(Iterator l, Iterator r, Pred pred);
     template<class Iterator, class T            > Iterator find   (Iterator l, Iterator r, T obj);
-    ///OBJECT INPUT
+
     /**
      * @brief Verify is string given is cancel command ("cancel").
      * @param s String to be verified
@@ -178,14 +228,14 @@ namespace utils {
     template<class T> bool input(const std::string &msg, T &object, std::istream &is, std::ostream &os);
     template<> bool input<std::string>(const std::string &msg, std::string &object, std::istream &is, std::ostream &os);
     template<class T, class Func> bool input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os);
-    ///INVALID ITERATOR
+
+    /** @brief Exception class to report invalid iterator */
     class InvalidIterator : public std::invalid_argument {
     public:
         InvalidIterator();
     };
 }
 
-///FILTER
 template<class T, class Valid> std::vector<T*> utils::filter(const std::vector<T*> &v, Valid valid){
     std::vector<T*> ret;
     for(T* p:v){
@@ -196,7 +246,6 @@ template<class T, class Valid> std::vector<T*> utils::filter(const std::vector<T
     return ret;
 }
 
-///UFLOAT
 template<class T> utils::ufloat<T>::ufloat(const T &u){
     if(u < 0.0)
         throw utils::ufloat<T>::InvalidUFloat(u);
@@ -222,7 +271,6 @@ template<class T> utils::ufloat<T>::InvalidUFloat::InvalidUFloat(const T &u):
     u_(u){}
 template<class T> const T& utils::ufloat<T>::InvalidUFloat::get_ufloat()const{ return u_; }
 
-///MEGESORT
 template<class T, class Compare> void utils::mergesort(std::vector<T> &v, const size_t &l, const size_t &r, Compare comp){
     if(r-l <= 1) return;
     size_t m = l + (r-l)/2;
@@ -239,7 +287,6 @@ template<class T, class Compare> void utils::mergesort(std::vector<T> &v, const 
     std::copy(w.begin(), w.end(), v.begin()+(long)l);
 }
 
-///LINEAR FIND
 template<class Iterator, class Pred> Iterator utils::find_if(Iterator l, Iterator r, Pred pred){
     Iterator i = l;
     while(i != r){
@@ -251,7 +298,7 @@ template<class Iterator, class Pred> Iterator utils::find_if(Iterator l, Iterato
 template<class Iterator, class T   > Iterator utils::find   (Iterator l, Iterator r, T obj){
     return utils::find_if(l, r, [obj](const T &t){ return (t == obj); });
 }
-///OBJECT INPUT
+
 template<class T> bool utils::input(const std::string &msg, T &object, std::istream &is, std::ostream &os) {
     std::string input;
     std::stringstream ss; ss.exceptions(std::stringstream::failbit | std::stringstream::badbit);
