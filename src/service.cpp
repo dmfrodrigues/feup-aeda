@@ -79,3 +79,57 @@ std::ostream& operator<<(std::ostream &os, const Service &s){
        << s.price_;
     return os;
 }
+
+bool Service::in(std::istream &is, std::ostream &os) {
+    os << "Person to contact on pick-up of merchandise:\n";
+    if (!contact1_.in(is, os)) return false;
+    os << "Address to pick-up merchandise:\n";
+    if (!a_begin_.in(is, os)) return false;
+
+    os << "Person to contact on delivery of merchandise:\n";
+    if (!contact2_.in(is, os)) return false;
+    os << "Address to delivery merchandise:\n";
+    if (!a_end_.in(is, os)) return false;
+
+    while (true) {
+        if (!utils::input("Time to start the service: ", t_begin_, is, os)||
+            !utils::input("Time to end service: ", t_end_, is, os)) return false;
+
+        if (t_begin_ <= t_end_) break;
+        std::cout << "Error: Initial time must be before end time\n";
+    }
+
+    if (!utils::input("Distance: ", distance_, is, os)) return false;
+
+    std::string type;
+    while (true) {
+        if (!utils::input("Types available: Normal, Animal, Refrigerated, Dangerous.\nCargo Type: ", type, is, os)) return false;
+
+        utils::to_lower(type);
+        if (type == "normal") {
+            Cargo *cargo = new Cargo();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "animal") {
+            CargoAnimal *cargo = new CargoAnimal();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "refrigerated") {
+            CargoRefrigerated *cargo = new CargoRefrigerated();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "dangerous") {
+            CargoDangerous *cargo = new CargoDangerous();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else {
+            std::cout << "Error: Invalid cargo type.\n";
+            continue;
+        }
+    }
+    return true;
+}

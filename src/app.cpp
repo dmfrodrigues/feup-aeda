@@ -323,13 +323,13 @@ bool App::userMenu(User *user, User::Type user_type) {
             if (!utils::input(App::OPSTR, option, std::cin, std::cout)) return true;
 
             if (user_type == User::Type::client) {
-                //SERVICE MANAGEMENT                                            //
                 switch (option) {
+                //SERVICE MANAGEMENT                                            //ACCOUNT MANAGEMENT
                 case 11: break;                                                 case 21: editUser<Client>(user);                        break;
                 case 12: break;                                                 case 22: App::display(dynamic_cast<Client*>(user));     break;
                 case 13: break;
                 case 14: list_services(user); break;
-
+                //OTHER OPERATIONS
                 default:
                     error("Invalid operation.");
                     break;
@@ -337,12 +337,12 @@ bool App::userMenu(User *user, User::Type user_type) {
 
             } else if (user_type == User::Type::driver) {
                 switch (option) {
-                //SERVICE MANAGEMENT                                            ACCOUNT MANAGEMENT
+                //INFORMATION VISUALIZATION                                     //ACCOUNT MANAGEMENT
                 case 11:                break;                                  case 21: editUser<Driver>(user);                            break;
                 case 12:                break;                                  case 22: App::display(dynamic_cast<Driver*>(user));         break;
                 case 13:                break;
                 case 14: list_trucks();  break;
-                //INFORMATION VISUALIZATION
+                //OTHER OPERATIONS
 
                 default:
                     error("Invalid operation.");
@@ -350,14 +350,17 @@ bool App::userMenu(User *user, User::Type user_type) {
                 }
             } else if (user_type == User::Type::manager) {
                 switch (option) {
+                //SERVICE MANAGEMENT                                            //TRUCK MAANAGEMENT
                 case 11: break;                                                 case 21: addTruck();                                        break;
                 case 12: break;                                                 case 22: editTruck();                                       break;
                 case 13: deleteService();                           break;      case 23: deleteTruck();                                     break;
 
+                //CLIENT MANAGEMENT                                             //DRIVER MANAGEMENT
                 case 31: addUser(User::Type::client);               break;      case 41: addUser(User::Type::driver);                       break;
                 case 32: editUser<Client>(User::Type::client);      break;      case 42: editUser<Driver>(User::Type::driver);              break;
                 case 33: deleteUser<Client>(User::Type::client);    break;      case 43: deleteUser<Driver>(User::Type::driver);            break;
 
+                //MANAGER MANAGEMENT                                            //INFORMATION VISUALIZATION
                 case 51: addUser(User::Type::manager);              break;      case 61: list_services();                                   break;
                 case 52: editUser<Manager>(User::Type::manager);    break;      case 62: list_trucks();                                     break;
                 case 53: deleteUser<Manager>(User::Type::manager);  break;      case 63: list_clients();                                    break;
@@ -365,7 +368,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                                                                                 case 65: list_managers();                                   break;
                                                                                 case 66: break;
 
-
+                //ACCOUNT MANAGEMENT                                            //OTHER OPERATIONS
                 case 71: editUser<Manager>(user);                       break;
                 case 72: App::display(dynamic_cast<Manager*>(user));    break;
                 case 73: save_all();                                    break;
@@ -392,12 +395,14 @@ void App::start(){
     std::cout << "Check 1(login)\n";*/
     #ifdef TELMO
 
-        list_trucks();
-        deleteTruck();
+        list_services();
+
+        addService();
 
         wait();
 
-        list_trucks();
+        list_services();
+        save_all();
 
     #endif
     #ifdef DIOGO
