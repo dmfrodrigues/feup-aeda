@@ -45,14 +45,11 @@ public:
  * @brief Store temperature range as a min/max pair, providing validation for min<max.
  */
 class TemperatureRange{
-private:
-    std::pair<Temperature,Temperature> range_;
 public:
+    Temperature min, max;
+
     TemperatureRange(){}
     TemperatureRange(const Temperature &tmin, const Temperature &tmax);
-
-    const Temperature& min() const{ return range_.first ; }
-    const Temperature& max() const{ return range_.second; }
 
     friend std::istream& operator>>(std::istream &is,       TemperatureRange &r);
     friend std::ostream& operator<<(std::ostream &os, const TemperatureRange &r);
@@ -62,10 +59,10 @@ public:
      */
     class InvalidTemperatureRange: public std::invalid_argument{
     private:
-        std::pair<Temperature,Temperature> range_;
+        Temperature min, max;
     public:
         InvalidTemperatureRange(const Temperature &tmin, const Temperature &tmax);
-        const std::pair<Temperature,Temperature>& get_temperature_range() const;
+        std::pair<Temperature,Temperature> get_temperature_range() const;
     };
 };
 

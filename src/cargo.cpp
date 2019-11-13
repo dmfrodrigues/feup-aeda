@@ -82,17 +82,9 @@ bool Cargo::in(std::istream &is, std::ostream &os) {
 
 bool Cargo::edit(int property, std::istream &is, std::ostream &os) {
     switch(property) {
-    case 0:
-        if (!utils::input("Weight: ", W_, is, os))             return false;
-        else                                                        return true;
-        break;
-    case 1:
-        if (!utils::input("Description: ", description_, is, os))   return false;
-        else                                                        return true;
-        break;
-    default:
-        return false;
-        break;
+        case 0: return utils::input("Weight: "     , W_          , is, os);
+        case 1: return utils::input("Description: ", description_, is, os);
+        default: return false;
     }
 }
 
@@ -264,12 +256,14 @@ CargoTrans::CargoTrans(Weight W, const std::string &description, Currency E_D):
     Cargo(W, description), E_D_(E_D){}
 std::istream& CargoTrans::input(std::istream &is){
     Cargo::input(is);
-    is >> E_D_;
+    is >> E_D_
+       >> E_W_;
     return is;
 }
 std::ostream& CargoTrans::output(std::ostream &os) const{
     Cargo::output(os); os << "\n";
-    os << E_D_;
+    os << E_D_ << "\n"
+       << E_W_;
     return os;
 }
 
@@ -315,12 +309,14 @@ CargoTransRefrigerated::CargoTransRefrigerated(Weight W, const std::string &desc
     CargoTrans(W, description, E_D), E_T_(E_T){}
 std::istream& CargoTransRefrigerated::input(std::istream &is){
     CargoTrans::input(is);
-    is >> E_T_;
+    is >> E_T_
+       >> Tr_.min >> Tr_.max;
     return is;
 }
 std::ostream& CargoTransRefrigerated::output(std::ostream &os) const{
     CargoTrans::output(os); os << "\n";
-    os << E_T_;
+    os << E_T_ << "\n"
+       << Tr_.min << " " << Tr_.max;
     return os;
 }
 
@@ -394,9 +390,9 @@ bool CargoTransRefrigerated::edit(int property, std::istream &is, std::ostream &
 bool CargoTransRefrigerated::can_carry(const Cargo *p) const{
     if(get_type() == p->get_type()){
         const CargoRefrigerated *q = dynamic_cast<const CargoRefrigerated*>(p);
-        return (utils::feq(double(get_Tr().max()), double(q->get_Tr().min()), 0.01) ||
-                std::max(get_Tr().min(), q->get_Tr().min()) <
-                std::min(get_Tr().max(), q->get_Tr().max()));
+        return (utils::feq(double(get_Tr().max), double(q->get_Tr().min), 0.01) ||
+                std::max(get_Tr().min, q->get_Tr().min) <
+                std::min(get_Tr().max, q->get_Tr().max));
     }else return false;
 }
 
@@ -405,7 +401,7 @@ Currency CargoTransRefrigerated::get_P(Distance D, Weight W) const{ return Curre
 /*
 double CargoTransRefrigerated::get_expenses(Distance D, Weight W) const{
     const CargoRefrigerated *q = dynamic_cast<const CargoRefrigerated*>(p);
-    double dT = std::fabs(double(std::min(q->get_Tr().max(), get_Tr().max())-T0_));
+    double dT = std::fabs(double(std::min(q->get_Tr().max, get_Tr().max)-T0_));
     return get_expensesperkm()*(1.0L+E_T_*dT);
 }
 */

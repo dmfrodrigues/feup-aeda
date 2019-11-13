@@ -248,6 +248,7 @@ class CargoTrans: public Cargo{
 private:
     static const Currency P_B_;
     double E_D_;
+    double E_W_;
 protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
@@ -259,6 +260,8 @@ public:
     virtual const Currency& get_P_B    () const{ return P_B_     ; }
     /// @brief Get expenses per km
     const double& get_E_D() const{ return E_D_; }
+    /// @brief get expenses per kg
+    const double& get_E_W() const{ return E_W_; }
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -333,10 +336,10 @@ class CargoTransRefrigerated: public CargoTrans{
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
-    TemperatureRange Tr_;
     static const Currency P_B_;
     static const Temperature T0_;
     double E_T_;
+    TemperatureRange Tr_;
 protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;

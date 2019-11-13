@@ -32,14 +32,15 @@ const float& Temperature::InvalidTemperature::get_temperature() const{ return te
 TemperatureRange::TemperatureRange(const Temperature &tmin, const Temperature &tmax){
     if(tmin > tmax)
         throw TemperatureRange::InvalidTemperatureRange(tmin, tmax);
-    range_ = std::pair<Temperature,Temperature>(tmin, tmax);
+    min = tmin;
+    max = tmax;
 }
 
 
-std::istream& operator>>(std::istream &is,       TemperatureRange &r){ return (is >> r.range_.first        >> r.range_.second); }
-std::ostream& operator<<(std::ostream &os, const TemperatureRange &r){ return (os << r.range_.first << " " << r.range_.second); }
+std::istream& operator>>(std::istream &is,       TemperatureRange &r){ return (is >> r.min        >> r.max); }
+std::ostream& operator<<(std::ostream &os, const TemperatureRange &r){ return (os << r.min << " " << r.max); }
 
 TemperatureRange::InvalidTemperatureRange::InvalidTemperatureRange(const Temperature &tmin, const Temperature &tmax):
     std::invalid_argument("Invalid temperature range"),
-    range_(tmin, tmax){}
-const std::pair<Temperature,Temperature>& TemperatureRange::InvalidTemperatureRange::get_temperature_range() const{ return range_; }
+    min(tmin), max(tmax){}
+std::pair<Temperature,Temperature> TemperatureRange::InvalidTemperatureRange::get_temperature_range() const{ return std::pair<Temperature,Temperature>(min,max); }
