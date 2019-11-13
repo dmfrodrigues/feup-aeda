@@ -3,7 +3,7 @@
 0
 joanammf
 Joana%20Maria%20Monteiro%20Fonseca
-(+351)%2091%20734%209147
+%28%2B351%29%2091%20734%209147
 Bruno%20Barbosa%20Mileto
 91%20603%2045%2032
 20191115_030000
@@ -11,12 +11,13 @@ Bruno%20Barbosa%20Mileto
 Avenida%20Doutor%20Viviano%20Ferreira%2010
 2430-030 LEIRIA
 Leiria Portugal
-Abenida%20Fernando%20Avillez,%20999
+Abenida%20Fernando%20Avillez%2C%20999
 123-456 PONTEVEDRA
-Galiza España
+Galiza Espa%C3%B1a
 0
 12000
 Carnival%20costumes.
 1
-02-52-FF
-afonso1975
+02-52-FF afonso1975
+250.00
+300.00

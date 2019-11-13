@@ -30,12 +30,12 @@ private:
     Cargo *cargo_ = NULL;
     std::vector<Truck ::NumberPlate> trucks_;
     std::vector<Driver::Username   > drivers_;
-    Currency expenses;
-    Currency price;
+    Currency expenses_;
+    Currency price_;
 public:
     static int next_id_;
 
-    Service(){}
+    Service():expenses_(0), price_(0){}
 
     ~Service() { delete cargo_; }
 
@@ -52,7 +52,8 @@ public:
     Service(const Client::Username &client_user, const Person &contact1, const Person &contact2,
             Time t_begin, Time t_end,
             Address a_begin, Address a_end,
-            Cargo *cargo);
+            Cargo *cargo,
+            Currency expenses, Currency price);
 
     const std::string&      get_id      () const{ return id_         ; }
     const Client::Username& get_client  () const{ return client_user_; }
@@ -65,8 +66,10 @@ public:
     const Cargo*            get_cargo   () const{ return cargo_      ; }
     const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
     const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }
-    Currency get_expenses() const;
-    Currency get_price   () const;
+    const Currency& get_expenses() const { return expenses_; };
+    const Currency& get_price   () const { return price_   ; };
+
+    bool allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv);
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Service &s);
