@@ -73,6 +73,7 @@ private:
     static void list_clients_commands();
     static void list_drivers_commands();
     static void list_managers_commands();
+    template<class T> static bool extra_commands(const std::vector<std::string> &s, std::vector<const T*> &v);
     template<class T> static void list_commands();
     static void list_sort_getcomp(int i, std::function<bool(const Client *, const Client *)> &cmp);
     static void list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp);

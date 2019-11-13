@@ -2,6 +2,20 @@
 
 #include <cassert> //#DEV
 
+template<class T> bool App::extra_commands(const std::vector<std::string> &s, std::vector<const T*> &v){
+    return false;
+}
+template<> bool App::extra_commands<Service>(const std::vector<std::string> &s, std::vector<const Service*> &v){
+    if(s[0] == "time" && s.size() == 3){
+        Time t1(s[1]);
+        Time t2(s[2]);
+        v = utils::filter(v, [t1, t2](const Service *p){
+            return (t1 <= p->get_tbegin() && p->get_tbegin() < t2);
+        });
+        return true;
+    }else return false;
+}
+
 template<class T> void App::list_commands(){ T::unimplemented_function; }
 template<> void App::list_commands<Client >(){
     std::cout << "\n"
@@ -46,8 +60,9 @@ template<> void App::list_commands<Truck  >(){
 template<> void App::list_commands<Service>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
+              << "    time \033[4mDATE1\033[0m \033[4mDATE2\033[0m    Restrict list to services started between two time points.\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,1,4-8].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-7,9].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-9]. In case 8, only the cargo type is considered.\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of service with ID \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -165,6 +180,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         case 5: cmp = [str](const Service *p){ return (p->get_tend  ().format("%Y/%m/%d %H:%M:%S").find(str) != std::string::npos); }; break;
         case 6: cmp = [str](const Service *p){ return (p->get_abegin().format("(%district) %city").find(str) != std::string::npos); }; break;
         case 7: cmp = [str](const Service *p){ return (p->get_aend  ().format("(%district) %city").find(str) != std::string::npos); }; break;
+        case 8: cmp = [str](const Service *p){ return (Cargo::type_string(p->get_cargo()->get_type()).find(str) != std::string::npos); }; break;
         case 9: cmp = [str](const Service *p){
             const std::vector<Truck::NumberPlate> tv = p->get_trucks();
             const std::vector<Driver::Username  > dv = p->get_drivers();
@@ -228,8 +244,8 @@ template<class T> void App::list(std::vector<const T*> v) const{
                 if(s.size() != 1) error("wrong number of arguments");
                 else              return;
             }else
-            //====ERROR=========================================================
-                error("unrecognized command");
+            //====EXTRA COMMANDS================================================
+            if(!extra_commands<T>(s, v)) error("unrecognized command");
         }
     }
 }

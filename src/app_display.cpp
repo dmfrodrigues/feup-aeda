@@ -93,11 +93,11 @@ void App::print_list(const std::vector<const Service*> &v) const{
               << " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n";
     std::cout << std::endl;
 
-    std::cout << "╒════════╤══════════════╤════════════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════════════╤══════════════════════════════╕\n"
-              << "│ ID [0] │ Client [1]   │ Contact 1 [2]                          │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:            │ [9] Truck/driver             │\n"
-              << "│        │              │ Contact 2 [3]                          │ Time end   [5]   │ Address end   [7]          │ Type       Weight [0] │                              │\n"
-              << "│        │              │                                        │                  │                            │ Description [1]       │                              │\n"
-              << "╞════════╪══════════════╪════════════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════════════╪══════════════════════════════╡\n";
+    std::cout << "╒════════╤══════════════╤════════════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════════════╤══════════════════════════════╤═══════════════╤═══════════════╕\n"
+              << "│ ID [0] │ Client [1]   │ Contact 1 [2]                          │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:            │ [9] Truck/driver             │ Expenses [10] │ Price [11]    │\n"
+              << "│        │              │                                        │                  │                            │ Description [1]       │                              │               │               │\n"
+              << "│        │              │ Contact 2 [3]                          │ Time end   [5]   │ Address end   [7]          │ Type       Weight [0] │                              │               │               │\n"
+              << "╞════════╪══════════════╪════════════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════════════╪══════════════════════════════╪═══════════════╪═══════════════╡\n";
     for(const Service* p:v){
         const User *c = App::find_user(p->get_client());
         const std::vector<Truck::NumberPlate> &tv = p->get_trucks ();
@@ -110,7 +110,9 @@ void App::print_list(const std::vector<const Service*> &v) const{
                   << utils::ljust(p->get_abegin().format("(%district) %city"),25) << "\t │ "
                   << utils::ljust(Cargo::type_string(p->get_cargo()->get_type()), 13) << " "
                   << utils::rjust(utils::ftos("%.1fT", float(p->get_cargo()->get_weight())/1000.0), 7) << " │ "
-                  << utils::ljust("("+std::string(tv[0])+")", 14) + " " + utils::ljust(std::string(dv[0]), 13) << " │\n";
+                  << utils::ljust("("+std::string(tv[0])+")", 14) + " " + utils::ljust(std::string(dv[0]), 13) << " │ "
+                  << utils::rjust(utils::ftos("%+.2f", -double(p->get_expenses())), 13) << " │ "
+                  << utils::rjust(utils::ftos("%+.2f",  double(p->get_price   ())), 13) << " │\n";
         std::cout << "│        │ ";
         if(c == NULL) std::cout << "(DELETED)    │ ";
         else          std::cout << "             │ ";
@@ -118,14 +120,14 @@ void App::print_list(const std::vector<const Service*> &v) const{
                   << p->get_tend  ().format("%Y/%m/%d %H:%M")                     <<   " │ "
                   << utils::ljust(p->get_aend  ().format("(%district) %city"),25) << "\t │ "
                   << utils::ljust(p->get_cargo()->get_description()          ,20) << "\t │ ";
-        if(tv.size() > 1) std::cout << utils::ljust("("+std::string(tv[1])+")", 14) + " " + utils::ljust(std::string(dv[1]), 13) << " │\n";
-        else              std::cout << "                             │\n";
+        if(tv.size() > 1) std::cout << utils::ljust("("+std::string(tv[1])+")", 14) + " " + utils::ljust(std::string(dv[1]), 13) << " │               │               │\n";
+        else              std::cout << "                             │               │               │\n";
         for(size_t i = 2; i < tv.size(); ++i){
             std::cout << "│        │              │                                        │                  │                            │                       │ "
-                      << utils::ljust("("+std::string(tv[i])+")", 14) + " " + utils::ljust(std::string(dv[i]), 13) << " │\n";
+                      << utils::ljust("("+std::string(tv[i])+")", 14) + " " + utils::ljust(std::string(dv[i]), 13) << " │               │               │\n";
         }
     }
-    std::cout << "╘════════╧══════════════╧════════════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════════════╧══════════════════════════════╛" << std::endl;
+    std::cout << "╘════════╧══════════════╧════════════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════════════╧══════════════════════════════╧═══════════════╧═══════════════╛" << std::endl;
 }
 
 void App::display(const Client *p){
