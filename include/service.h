@@ -41,7 +41,7 @@ public:
     /** @brief Empty constructor. */
     Service():expenses_(0), price_(0){}
     /** @brief Destructor */
-    ~Service() { delete cargo_; }
+    ~Service();
 
     /**
      * @brief Constructor creates an empty service linked to a specific user.
@@ -49,6 +49,7 @@ public:
      */
     Service(const Client::Username &client_user);
 
+    /// @brief Get ID
     const std::string&      get_id      () const{ return id_         ; }
     /// @brief Get client
     const Client::Username& get_client  () const{ return client_user_; }
