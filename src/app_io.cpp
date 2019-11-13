@@ -306,6 +306,7 @@ bool App::addService() {
         std::cout << "Service added.\n";
         return true;
     }else{
+        std::cout << "Failed to add service.\n";
         return false;
     }
 }

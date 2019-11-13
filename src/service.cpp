@@ -55,7 +55,8 @@ std::istream& operator>>(std::istream &is,       Service &s){
        >> s.t_begin_
        >> s.t_end_
        >> s.a_begin_
-       >> s.a_end_;
+       >> s.a_end_
+       >> s.distance_;
     input_Cargo(is, s.cargo_);
     size_t sz; is >> sz;
     s.trucks_ .resize(sz); s.drivers_.resize(sz);
@@ -72,7 +73,8 @@ std::ostream& operator<<(std::ostream &os, const Service &s){
        << s.t_begin_      << "\n"
        << s.t_end_        << "\n"
        << s.a_begin_      << "\n"
-       << s.a_end_        << "\n";
+       << s.a_end_        << "\n"
+       << s.distance_     << "\n";
     output_Cargo(os, s.cargo_); os << "\n";
     size_t sz = s.trucks_.size();
     os << sz << "\n";
