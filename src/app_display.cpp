@@ -106,14 +106,15 @@ void App::print_list(const std::vector<const Service*> &v) const{
                  " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n"
                  "\n"
                  "╒═════╤══════════════╤═══════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════╤═══════════════════════════╤═════════════╤═════════════╕\n"
-                 "│ ID  │ Client [1]   │ Contact 1 [2]                     │ Time begin [4]   │ Address begin [6]          │ Cargo:        │ [10] Truck/driver         │ Costs       │ Revenue     │\n"
-                 "│ [0] │              │                                   │                  │                            │ Type [8]      │                           │ [11]        │ [12]        │\n"
-                 "│     │              │ Contact 2 [3]                     │ Time end   [5]   │ Address end   [7]          │ Weight [9]    │                           │             │             │\n"
+                 "│ ID  │ Client [1]   │ Contact 1 [2]                     │ Time begin [4]   │ Address begin [6]          │ Cargo:        │ [11] Truck/driver         │ Costs       │ Revenue     │\n"
+                 "│ [0] │              │ Contact 2 [3]                     │ Time end   [5]   │ Address end   [7]          │ Type   [ 9]   │                           │ [12]        │ [13]        │\n"
+                 "│     │              │                                   │                  │ Distance (km) [8]          │ Weight [10]   │                           │             │             │\n"
                  "╞═════╪══════════════╪═══════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n";
     for(const Service* p:v){
         const User *c = App::find_user(p->get_client());
         const std::vector<Truck::NumberPlate> &tv = p->get_trucks ();
         const std::vector<Driver::Username  > &dv = p->get_drivers();
+        ///LINE 1 ==============================================================
         std::cout << "│ "
                   << utils::rjust(p->get_id()                                                                                           , 3) <<   " │ "
                   << utils::ljust(std::string(c->get_username())                                                                        ,12) <<   " │ "
@@ -124,6 +125,7 @@ void App::print_list(const std::vector<const Service*> &v) const{
                   << utils::ljust(std::string(tv[0]), 12) + " " + utils::ljust(std::string(dv[0])                                       ,12) <<   " │ "
                   << utils::rjust(utils::ftos("%+.2f", -double(p->get_cost   ()))                                                       ,11) <<   " │ "
                   << utils::rjust(utils::ftos("%+.2f",  double(p->get_revenue()))                                                       ,11) <<   " │\n";
+        ///LINE 2 ==============================================================
         std::cout << "│     │ ";
         if(c == NULL) std::cout << "(DELETED)    │ ";
         else          std::cout << "             │ ";
@@ -131,9 +133,15 @@ void App::print_list(const std::vector<const Service*> &v) const{
                   << p->get_tend  ().format("%Y/%m/%d %H:%M")                                                                                <<   " │ "
                   << utils::ljust(p->get_aend  ().format("(%district) %city")                                                           ,25) << "\t │ "
                   << utils::rjust(utils::ftos("%.1fT", double(p->get_cargo()->get_W())/1000.0)                                          ,13) <<   " │ ";
-        if(tv.size() > 1) std::cout << utils::ljust("("+std::string(tv[1])+")", 14) + " " + utils::ljust(std::string(dv[1]), 12) << " │               │               │\n";
+        if(tv.size() > 1) std::cout << utils::ljust(std::string(tv[1]), 12) + " " + utils::ljust(std::string(dv[1]), 12) << " │               │               │\n";
         else              std::cout << "                          │             │             │\n";
-        for(size_t i = 2; i < tv.size(); ++i){
+        ///LINE 3 ==============================================================
+        std::cout << "│     │              │                                   │                  │"
+                  << utils::rjust(utils::ftos("%.1f", double(p->get_distance())), 25) << "\t │               │ ";
+        if(tv.size() > 2) std::cout << utils::ljust(std::string(tv[2]), 12) + " " + utils::ljust(std::string(dv[2]), 12) << " │               │               │\n";
+        else              std::cout << "                          │             │             │\n";
+        ///LINE >=4 ============================================================
+        for(size_t i = 3; i < tv.size(); ++i){
             std::cout << "│        │              │                                   │                  │                            │                       │ "
                       << utils::ljust(std::string(tv[i]), 12) + " " + utils::ljust(std::string(dv[i]), 13) << " │               │               │\n";
         }

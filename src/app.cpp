@@ -411,8 +411,8 @@ void App::start(){
         //list_clients();
         //list_drivers();
         //list_managers();
-        list_trucks();
-        //list_services();
+        //list_trucks();
+        list_services();
         //list_services();
         //addService();
         //wait();
