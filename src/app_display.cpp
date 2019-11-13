@@ -102,44 +102,43 @@ void App::print_list(const std::vector<const Service*> &v) const{
                  " ╰─╮├─╴├┬╯│ ╱ │ │  ├─╴╰─╮ \n"
                  " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n"
                  "\n"
-                 "╒════════╤══════════════╤════════════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════════════╤══════════════════════════════╤═══════════════╤═══════════════╕\n"
-                 "│ ID [0] │ Client [1]   │ Contact 1 [2]                          │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:            │ [9] Truck/driver             │ Expenses [10] │ Price [11]    │\n"
-                 "│        │              │                                        │                  │                            │ Description [1]       │                              │               │               │\n"
-                 "│        │              │ Contact 2 [3]                          │ Time end   [5]   │ Address end   [7]          │ Type       Weight [0] │                              │               │               │\n"
-                 "╞════════╪══════════════╪════════════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════════════╪══════════════════════════════╪═══════════════╪═══════════════╡\n";
+                 "╒═════╤══════════════╤═══════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════╤═══════════════════════════╤═════════════╤═════════════╕\n"
+                 "│ ID  │ Client [1]   │ Contact 1 [2]                     │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:    │ [9] Truck/driver          │ Costs       │ Revenue     │\n"
+                 "│ [0] │              │                                   │                  │                            │ Type          │                           │ [10]        │ [11]        │\n"
+                 "│     │              │ Contact 2 [3]                     │ Time end   [5]   │ Address end   [7]          │ Weight [0]    │                           │             │             │\n"
+                 "╞═════╪══════════════╪═══════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n";
     for(const Service* p:v){
         const User *c = App::find_user(p->get_client());
         const std::vector<Truck::NumberPlate> &tv = p->get_trucks ();
         const std::vector<Driver::Username  > &dv = p->get_drivers();
         std::cout << "│ "
-                  << utils::rjust(p->get_id()                                , 6) <<   " │ "
-                  << utils::ljust(std::string(c->get_username())             ,12) <<   " │ "
-                  << utils::ljust(utils::ljust(p->get_contact1().get_name()  ,16)+" / "+std::string(p->get_contact1().get_phonenumber()), 37) << "\t │ "
-                  << p->get_tbegin().format("%Y/%m/%d %H:%M")                     <<   " │ "
-                  << utils::ljust(p->get_abegin().format("(%district) %city"),25) << "\t │ "
-                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type()), 13) << " "
-                  << utils::rjust(utils::ftos("%.1fT", double(p->get_cargo()->get_W())/1000.0), 7) << " │ "
-                  << utils::ljust("("+std::string(tv[0])+")", 14) + " " + utils::ljust(std::string(dv[0]), 13) << " │ "
-                  << utils::rjust(utils::ftos("%+.2f", -double(p->get_expenses())), 13) << " │ "
-                  << utils::rjust(utils::ftos("%+.2f",  double(p->get_price   ())), 13) << " │\n";
-        std::cout << "│        │ ";
+                  << utils::rjust(p->get_id()                                                                                           , 3) <<   " │ "
+                  << utils::ljust(std::string(c->get_username())                                                                        ,12) <<   " │ "
+                  << utils::ljust(utils::ljust(p->get_contact1().get_name()  ,11)+" / "+std::string(p->get_contact1().get_phonenumber()),32) << "\t │ "
+                  << p->get_tbegin().format("%Y/%m/%d %H:%M")                                                                                <<   " │ "
+                  << utils::ljust(p->get_abegin().format("(%district) %city")                                                           ,25) << "\t │ "
+                  << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())                                                        ,13) <<   " │ "
+                  << utils::ljust(std::string(tv[0]), 12) + " " + utils::ljust(std::string(dv[0])                                       ,12) <<   " │ "
+                  << utils::rjust(utils::ftos("%+.2f", -double(p->get_expenses()))                                                      ,11) <<   " │ "
+                  << utils::rjust(utils::ftos("%+.2f",  double(p->get_price   ()))                                                      ,11) <<   " │\n";
+        std::cout << "│     │ ";
         if(c == NULL) std::cout << "(DELETED)    │ ";
         else          std::cout << "             │ ";
-        std::cout << utils::ljust(utils::ljust(p->get_contact2().get_name()  ,16)+" / "+std::string(p->get_contact2().get_phonenumber()), 37) << "\t │ "
-                  << p->get_tend  ().format("%Y/%m/%d %H:%M")                     <<   " │ "
-                  << utils::ljust(p->get_aend  ().format("(%district) %city"),25) << "\t │ "
-                  << utils::ljust(p->get_cargo()->get_description()          ,20) << "\t │ ";
-        if(tv.size() > 1) std::cout << utils::ljust("("+std::string(tv[1])+")", 14) + " " + utils::ljust(std::string(dv[1]), 13) << " │               │               │\n";
-        else              std::cout << "                             │               │               │\n";
+        std::cout << utils::ljust(utils::ljust(p->get_contact2().get_name()  ,11)+" / "+std::string(p->get_contact2().get_phonenumber()),32) << "\t │ "
+                  << p->get_tend  ().format("%Y/%m/%d %H:%M")                                                                                <<   " │ "
+                  << utils::ljust(p->get_aend  ().format("(%district) %city")                                                           ,25) << "\t │ "
+                  << utils::rjust(utils::ftos("%.1fT", double(p->get_cargo()->get_W())/1000.0)                                          ,13) <<   " │ ";
+        if(tv.size() > 1) std::cout << utils::ljust("("+std::string(tv[1])+")", 14) + " " + utils::ljust(std::string(dv[1]), 12) << " │               │               │\n";
+        else              std::cout << "                          │             │             │\n";
         for(size_t i = 2; i < tv.size(); ++i){
-            std::cout << "│        │              │                                        │                  │                            │                       │ "
-                      << utils::ljust("("+std::string(tv[i])+")", 14) + " " + utils::ljust(std::string(dv[i]), 13) << " │               │               │\n";
+            std::cout << "│        │              │                                   │                  │                            │                       │ "
+                      << utils::ljust(std::string(tv[i]), 12) + " " + utils::ljust(std::string(dv[i]), 13) << " │               │               │\n";
         }
     }
-    std::cout << "╘════════╧══════════════╧════════════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════════════╪══════════════════════════════╪═══════════════╪═══════════════╡\n"
-              << "                                                                                                                                         │                        TOTAL │ "+utils::rjust(utils::ftos("%+.2f", double(EXPENSES)), 13)
-                                                                                                                                                                                                       +" │ "+utils::rjust(utils::ftos("%+.2f", double(PRICE)), 13)+" │\n"
-              << "                                                                                                                                         ╘══════════════════════════════╧═══════════════╧═══════════════╛\n"
+    std::cout << "╘═════╧══════════════╧═══════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n"
+              << "                                                                                                                         │                     TOTAL │ "+utils::rjust(utils::ftos("%+.2f", double(EXPENSES)), 11)
+                                                                                                                                                                                  +" │ "+utils::rjust(utils::ftos("%+.2f", double(PRICE)), 11)+" │\n"
+              << "                                                                                                                         ╘═══════════════════════════╧═════════════╧═════════════╛\n"
               << std::flush;
 }
 
