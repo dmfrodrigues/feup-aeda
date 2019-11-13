@@ -61,8 +61,8 @@ template<> void App::list_commands<Service>(){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    time \033[4mDATE1\033[0m \033[4mDATE2\033[0m    Restrict list to services started between two time points.\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,1,4-8].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-9]. In case 8, only the cargo type is considered.\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0,1,4-9,11,12].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-12].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of service with ID \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -116,16 +116,16 @@ void App::list_sort_getcomp(int i, std::function<bool(const Truck  *, const Truc
 }
 void App::list_sort_getcomp(int i, std::function<bool(const Service*, const Service*)> &cmp){
     switch(i){
-        case 0: cmp = [](const Service *p1, const Service *p2){ return (p1->get_id    () < p2->get_id    ()); }; break;
-        case 1: cmp = [](const Service *p1, const Service *p2){ return (p1->get_client() < p2->get_client()); }; break;
-        case 4: cmp = [](const Service *p1, const Service *p2){ return (p1->get_tbegin() < p2->get_tbegin()); }; break;
-        case 5: cmp = [](const Service *p1, const Service *p2){ return (p1->get_tend  () < p2->get_tend  ()); }; break;
-        case 6: cmp = [](const Service *p1, const Service *p2){ return (p1->get_abegin().format("%district %city") < p2->get_abegin().format("%district %city")); }; break;
-        case 7: cmp = [](const Service *p1, const Service *p2){ return (p1->get_aend  ().format("%district %city") < p2->get_aend  ().format("%district %city")); }; break;
-        case 8: cmp = [](const Service *p1, const Service *p2){
-            if(p1->get_cargo()->get_type() != p2->get_cargo()->get_type()) return (p1->get_cargo()->get_type  () < p2->get_cargo()->get_type  ());
-            return                                                                (p1->get_cargo()->get_W() < p2->get_cargo()->get_W());
-        }; break;
+        case 0 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_id                              () < p2->get_id                              ()); }; break;
+        case 1 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_client                          () < p2->get_client                          ()); }; break;
+        case 4 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_tbegin                          () < p2->get_tbegin                          ()); }; break;
+        case 5 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_tend                            () < p2->get_tend                            ()); }; break;
+        case 6 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_abegin().format("%district %city") < p2->get_abegin().format("%district %city")); }; break;
+        case 7 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_aend  ().format("%district %city") < p2->get_aend  ().format("%district %city")); }; break;
+        case 8 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_cargo()->get_type               () < p2->get_cargo()->get_type               ()); }; break;
+        case 9 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_cargo()->get_W                  () < p2->get_cargo()->get_W                  ()); }; break;
+        case 11: cmp = [](const Service *p1, const Service *p2){ return (p1->get_cost                            () < p2->get_cost                            ()); }; break;
+        case 12: cmp = [](const Service *p1, const Service *p2){ return (p1->get_revenue                         () < p2->get_revenue                         ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
@@ -175,16 +175,17 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
 }
 void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Service*)> &cmp){
     switch(i){
-        case 0: cmp = [str](const Service *p){ return (std::string(p->get_id())                   .find(str) != std::string::npos); }; break;
-        case 1: cmp = [str](const Service *p){ return (std::string(p->get_client())               .find(str) != std::string::npos); }; break;
-        case 2: cmp = [str](const Service *p){ return ((std::string(p->get_contact1().get_name())+" "+std::string(p->get_contact1().get_phonenumber())).find(str) != std::string::npos); }; break;
-        case 3: cmp = [str](const Service *p){ return ((std::string(p->get_contact2().get_name())+" "+std::string(p->get_contact2().get_phonenumber())).find(str) != std::string::npos); }; break;
-        case 4: cmp = [str](const Service *p){ return (p->get_tbegin().format("%Y/%m/%d %H:%M:%S").find(str) != std::string::npos); }; break;
-        case 5: cmp = [str](const Service *p){ return (p->get_tend  ().format("%Y/%m/%d %H:%M:%S").find(str) != std::string::npos); }; break;
-        case 6: cmp = [str](const Service *p){ return (p->get_abegin().format("(%district) %city").find(str) != std::string::npos); }; break;
-        case 7: cmp = [str](const Service *p){ return (p->get_aend  ().format("(%district) %city").find(str) != std::string::npos); }; break;
-        case 8: cmp = [str](const Service *p){ return (Cargo::type_string(p->get_cargo()->get_type()).find(str) != std::string::npos); }; break;
-        case 9: cmp = [str](const Service *p){
+        case 0 : cmp = [str](const Service *p){ return (std::string(p->get_id())                   .find(str) != std::string::npos); }; break;
+        case 1 : cmp = [str](const Service *p){ return (std::string(p->get_client())               .find(str) != std::string::npos); }; break;
+        case 2 : cmp = [str](const Service *p){ return ((std::string(p->get_contact1().get_name())+" "+std::string(p->get_contact1().get_phonenumber())).find(str) != std::string::npos); }; break;
+        case 3 : cmp = [str](const Service *p){ return ((std::string(p->get_contact2().get_name())+" "+std::string(p->get_contact2().get_phonenumber())).find(str) != std::string::npos); }; break;
+        case 4 : cmp = [str](const Service *p){ return (p->get_tbegin().format("%Y/%m/%d %H:%M:%S").find(str) != std::string::npos); }; break;
+        case 5 : cmp = [str](const Service *p){ return (p->get_tend  ().format("%Y/%m/%d %H:%M:%S").find(str) != std::string::npos); }; break;
+        case 6 : cmp = [str](const Service *p){ return (p->get_abegin().format("(%district) %city").find(str) != std::string::npos); }; break;
+        case 7 : cmp = [str](const Service *p){ return (p->get_aend  ().format("(%district) %city").find(str) != std::string::npos); }; break;
+        case 8 : cmp = [str](const Service *p){ return (Cargo::type_string(p->get_cargo()->get_type()).find(str) != std::string::npos); }; break;
+        case 9 : cmp = [str](const Service *p){ return (utils::ftos("%.1T",double(p->get_cargo()->get_W())/1000.0).find(str) != std::string::npos); }; break;
+        case 10: cmp = [str](const Service *p){
             const std::vector<Truck::NumberPlate> tv = p->get_trucks();
             const std::vector<Driver::Username  > dv = p->get_drivers();
             for(size_t j = 0; j < tv.size(); ++j){
@@ -193,6 +194,8 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
             }
             return false;
         }; break;
+        case 11: cmp = [str](const Service *p){ return (utils::ftos("%+.2",-double(p->get_cost   ())).find(str) != std::string::npos); }; break;
+        case 12: cmp = [str](const Service *p){ return (utils::ftos("%+.2",+double(p->get_revenue())).find(str) != std::string::npos); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }

@@ -5,7 +5,7 @@
 int Service::next_id_ = 0;
 
 Service::Service(const Client::Username &client_user):
-    id_(utils::itos(next_id_++)), client_user_(client_user), expenses_(0), price_(0){}
+    id_(utils::itos(next_id_++)), client_user_(client_user), cost_(0), revenue_(0){}
 
 Service::~Service() { if(cargo_ != NULL) delete cargo_; }
 
@@ -26,7 +26,7 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         drivers_.clear();
         return false;
     }else{
-        expenses_ = 0.0;
+        cost_ = 0.0;
         Weight W(0.0);
         Weight dW;
         for(const Truck *t:tv){
@@ -35,11 +35,11 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
             if(t->get_cargo()->get_type() == Cargo::Type::Refrigerated){
                 const CargoTransRefrigerated *p = dynamic_cast<const CargoTransRefrigerated*>(t->get_cargo());
                 const CargoRefrigerated      *q = dynamic_cast<const CargoRefrigerated     *>(cargo_);
-                expenses_ += p->get_E(distance_, dW, q->get_Tr());
-                price_    += p->get_P(distance_, dW, q->get_Tr());
+                cost_    += p->get_E(distance_, dW, q->get_Tr());
+                revenue_ += p->get_P(distance_, dW, q->get_Tr());
             }else{
-                expenses_ += t->get_cargo()->get_E(distance_, dW);
-                price_    += t->get_cargo()->get_P(distance_, dW);
+                cost_    += t->get_cargo()->get_E(distance_, dW);
+                revenue_ += t->get_cargo()->get_P(distance_, dW);
             }
             W += dW;
         }
@@ -55,13 +55,14 @@ std::istream& operator>>(std::istream &is,       Service &s){
        >> s.t_begin_
        >> s.t_end_
        >> s.a_begin_
-       >> s.a_end_;
+       >> s.a_end_
+       >> s.distance_;
     input_Cargo(is, s.cargo_);
     size_t sz; is >> sz;
     s.trucks_ .resize(sz); s.drivers_.resize(sz);
     for(size_t i = 0; i < sz; ++i) is >> s.trucks_[i] >> s.drivers_[i];
-    is >> s.expenses_
-       >> s.price_;
+    is >> s.cost_
+       >> s.revenue_;
     return is;
 }
 std::ostream& operator<<(std::ostream &os, const Service &s){
@@ -72,13 +73,14 @@ std::ostream& operator<<(std::ostream &os, const Service &s){
        << s.t_begin_      << "\n"
        << s.t_end_        << "\n"
        << s.a_begin_      << "\n"
-       << s.a_end_        << "\n";
+       << s.a_end_        << "\n"
+       << s.distance_     << "\n";
     output_Cargo(os, s.cargo_); os << "\n";
     size_t sz = s.trucks_.size();
     os << sz << "\n";
     for(size_t i = 0; i < sz; ++i) os << s.trucks_[i] << " " << s.drivers_[i] << "\n";
-    os << s.expenses_ << "\n"
-       << s.price_;
+    os << s.cost_ << "\n"
+       << s.revenue_;
     return os;
 }
 
