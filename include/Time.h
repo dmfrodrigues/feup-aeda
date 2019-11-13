@@ -27,7 +27,7 @@ public:
     /**
      * @brief Default hour format for input by user
      */
-    static const std::string DEFAULT_HOUR_REGEX;
+    static const std::string DEFAULT_DATE_REGEX;
     /**
      * @brief Default time/date if none is set
      */
@@ -48,18 +48,18 @@ public:
      * @brief Allows input of time in a friendly user way.
      * Default format for time is: YYYY-mm-dd HH:MM:SS.
      * @param time String containing input from user
-     * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time, std::runtime_error if error occurs on STL functions
+     * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time
      */
     void input_time(const std::string &time);
 
     /**
-     * @brief Allows input of hour in a friendly user way.
-     * Default format for time is: HH:MM:SS.
-     * The date (year, month, day) will be set to the current date.
+     * @brief Allows input of date in a friendly user way.
+     * Default format for time is: YYYY-mm-dd.
+     * The hours, minutes and seconds will be set to the 00:00:00.
      * @param hour String containing input from user
      * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time
      */
-    void input_hour(const std::string &hour);
+    void input_date(const std::string &date);
 
     bool operator< (const Time &t) const;
     bool operator> (const Time &t) const{ return (t < *this); }

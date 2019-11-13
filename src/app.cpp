@@ -401,7 +401,7 @@ void App::start(){
 
         std::cout << t << "\n";
 
-        t.input_hour("21:35:05");
+        t.input_date("2019/11/13");
 
         std::cout << t << "\n";
 

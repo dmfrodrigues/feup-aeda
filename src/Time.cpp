@@ -41,26 +41,18 @@ void Time::input_time(const std::string &time) {
     }
 }
 
-void Time::input_hour(const std::string &hour) {
-    static std::regex hour_regex(DEFAULT_HOUR_REGEX);
+void Time::input_date(const std::string &date) {
+    static std::regex hour_regex(DEFAULT_DATE_REGEX);
     std::smatch matches;
 
-    if (std::regex_match(hour, matches, hour_regex)) {
-        std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    if (std::regex_match(date, matches, hour_regex)) {
 
-        std::time_t time_now = std::chrono::system_clock::to_time_t(now);
-
-        std::tm *tm_p = std::localtime(&time_now);
-
-        if (tm_p == NULL) throw std::runtime_error("Failed to get current time.");
-
-        std::string tm_formatted = utils::itos(tm_p->tm_year + 1900) + utils::itos(tm_p->tm_mon + 1) + utils::itos(tm_p->tm_mday) +
-                                    "_" + matches[1].str() + matches[2].str() + matches[3].str();
+        std::string tm_formatted = matches[1].str() + matches[2].str() + matches[3].str() + "_000000";
 
         Time new_time = Time(tm_formatted);
         this->t_ = new_time.t_;
     } else {
-        throw Time::InvalidTimeFormat(hour);
+        throw Time::InvalidTimeFormat(date);
     }
 }
 
@@ -93,5 +85,5 @@ const std::string& Time::InvalidTimeFormat::get_format() const{ return fmt_; }
 
 const std::string Time::DEFAULT_FORMAT = "%Y%m%d_%H%M%S";
 const std::string Time::DEFAULT_TIME_REGEX = "^(\\d{4})/(\\d{2})/(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})$";
-const std::string Time::DEFAULT_HOUR_REGEX = "^(\\d{2}):(\\d{2}):(\\d{2})$";
+const std::string Time::DEFAULT_DATE_REGEX = "^(\\d{4})/(\\d{2})/(\\d{2})$";
 const std::string Time::DEFAULT_TIME   = "00010101_000000";
