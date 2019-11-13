@@ -188,13 +188,13 @@ bool App::guestMenu(User* &user) {
     try {
         while (true) {
             CLEAR();
-            std::cout <<    "╒═══════════════════════════════════════════════════════════════════════════════════════════╕\n"
-                            "│                                         Agency SML                                        │\n"
-                            "╞═══════════════════════════════════════════════════════════════════════════════════════════╡\n"
-                            "│  Login                                                                                [1] │\n"
-                            "│  Exit                                                                                 [2] │\n"
-                            "╘═══════════════════════════════════════════════════════════════════════════════════════════╛\n"
-                            "                                                                                             \n";
+            std::cout <<    "╒═════════════════════════════════════════════╕\n"
+                            "│                 Agency SML                  │\n"
+                            "╞═════════════════════════════════════════════╡\n"
+                            "│  Login                                  [1] │\n"
+                            "│  Exit                                   [2] │\n"
+                            "╘═════════════════════════════════════════════╛\n"
+                            "                                               \n";
             // LOGIN PROCESS
             std::string cmd; std::cout << "\n" << OPSTR; getline(std::cin, cmd);
             std::vector<std::string> v = utils::parse_command(cmd);
@@ -407,13 +407,7 @@ void App::start(){
     #endif
     #ifdef DIOGO
         save_all();
-        //list_clients();
-        //list_drivers();
-        //list_managers();
-        //list_trucks();
-        //display(services_[0]);
-        //wait();
-        //list_services();
+        list_services();
     #endif
 
     #if !defined(TELMO) && !defined(DIOGO)

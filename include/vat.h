@@ -26,7 +26,7 @@ public:
      * @exception   VAT::VATTooLong When VAT is longer than the maximum size
      */
     explicit VAT(const std::string &vat);
-
+    /** @brief Overload of operator=. */
     VAT& operator=(const std::string &s);
 };
 

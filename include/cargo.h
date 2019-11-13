@@ -49,7 +49,9 @@ public:
         Toxic,
         Radioactive,
     };
+    /// @brief Convert type to string to show in tables
     static std::string type_string(const Type &t);
+    /// @brief Convert danger level to string to show in tables
     static std::string dangerlevel_string(const DangerLevel &d);
 private:
     /// @brief Weight of an unit, total weight will be determined by the quantity and weight of an unit.
@@ -73,11 +75,13 @@ public:
      * @throws InvalidWeight If the weight value is invalid.
      */
     Cargo(Weight weight, const std::string &description);
+    /** @brief Destructor */
     virtual ~Cargo(){};
-
+    /// @brief Get weight
     const Weight&      get_weight     () const{ return weight_     ; }
+    /// @brief Get description
     const std::string& get_description() const{ return description_; }
-
+    /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Normal; }
 
     /**
@@ -121,7 +125,7 @@ public:
      * @throws InvalidWeight If the weight value is invalid.
      */
     CargoAnimal(Weight weight, const std::string &description);
-
+    /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
 
     /**
@@ -167,8 +171,9 @@ public:
      * @throws InvalidWeight If the weight value is invalid.
      */
     CargoRefrigerated(Weight weight, const std::string &description, TemperatureRange temperature_range);
-
+    /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
+    /// @brief Get temperature range
     const TemperatureRange& get_range() const{ return temperature_range_; }
 
     /**
@@ -214,8 +219,9 @@ public:
      * @throws InvalidWeight If the weight value is invalid.
      */
     CargoDangerous(Weight weight, const std::string &description, DangerLevel danger_level);
-
+    /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
+    /// @brief Get danger level
     const Cargo::DangerLevel& get_dangerlevel() const{ return danger_level_; }
 
     /**
@@ -249,9 +255,12 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
+    /** @brief Empty constructor */
     CargoTrans(){}
     CargoTrans(Weight weight, const std::string &description, Currency expenses_per_km);
+    /// @brief Get price base
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
+    /// @brief Get expenses per km
     const double& get_expensesperkm() const{ return expenses_per_km_; }
 
     /**
@@ -270,8 +279,9 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
-
+    /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
+    /// @brief Get real amount of expenses per km.
     virtual double get_expensesfactor(const Cargo *p) const;
 };
 
@@ -289,6 +299,7 @@ protected:
 public:
     CargoTransAnimal():CargoTrans(){}
     CargoTransAnimal(Weight weight, const std::string &description, Currency expenses_per_km);
+    /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
 
@@ -308,8 +319,9 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
-
+    /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
+    /// @brief Get real amount of expenses per km.
     virtual double get_expensesfactor(const Cargo *p) const;
 };
 
@@ -330,6 +342,7 @@ protected:
 public:
     CargoTransRefrigerated():CargoTrans(){}
     CargoTransRefrigerated(Weight weight, const std::string &description, Currency expenses_per_km, float temperature_factor);
+    /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
     const TemperatureRange& get_range() const{ return temperature_range_; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
@@ -352,8 +365,9 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
-
+    /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
+    /// @brief Get real amount of expenses per km.
     virtual double get_expensesfactor(const Cargo *p) const;
 };
 
@@ -372,6 +386,7 @@ protected:
 public:
     CargoTransDangerous():CargoTrans(){}
     CargoTransDangerous(Weight weight, const std::string &description, Currency expenses_per_km, DangerLevel danger_level);
+    /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
     virtual const Currency& get_pricebase    () const{ return price_base_     ; }
     const Cargo::DangerLevel& get_dangerlevel() const{ return danger_level_; }
@@ -392,8 +407,9 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
-
+    /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
+    /// @brief Get real amount of expenses per km.
     virtual double get_expensesfactor(const Cargo *p) const;
 };
 
