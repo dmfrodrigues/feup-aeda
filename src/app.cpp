@@ -254,9 +254,8 @@ bool App::printUserMenu(User::Type user_type) {
                             "│             Service Management              │             Account Management              │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│  Request service                       [11] │  Edit account                          [21] │\n"
-                            "│  Edit service                          [12] │  View account                          [22] │\n"
-                            "│  Cancel service                        [13] │                                             │\n"
-                            "│  Service list                          [14] │                                             │\n"
+                            "│  Cancel service                        [12] │  View account                          [22] │\n"
+                            "│  Service list                          [13] │                                             │\n"
                             "╞═════════════════════════════════════════════╡                                             │\n"
                             "│                Other operations             │                                             │\n"
                             "╞═════════════════════════════════════════════╡                                             │\n"
@@ -281,8 +280,8 @@ bool App::printUserMenu(User::Type user_type) {
                             "│             Service Management              │               Truck Management              │\n"
                             "├─────────────────────────────────────────────┼─────────────────────────────────────────────┤\n"
                             "│  Add service                           [11] │  Add truck                             [21] │\n"
-                            "│  Edit service                          [12] │  Edit truck                            [22] │\n"
-                            "│  Delete service                        [13] │  Delete truck                          [23] │\n"
+                            "│  Delete service                        [12] │  Edit truck                            [22] │\n"
+                            "│                                             │  Delete truck                          [23] │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│              Client management              │               Driver Management             │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
@@ -325,11 +324,11 @@ bool App::userMenu(User *user, User::Type user_type) {
             if (user_type == User::Type::client) {
                 switch (option) {
                 //SERVICE MANAGEMENT                                            //ACCOUNT MANAGEMENT
-                case 11: break;                                                 case 21: editUser<Client>(user);                        break;
-                case 12: break;                                                 case 22: App::display(dynamic_cast<Client*>(user));     break;
-                case 13: break;
-                case 14: list_services(user); break;
+                case 11: addService(user); wait();                   break;     case 21: editUser<Client>(user); wait();                    break;
+                case 12: deleteService(user); wait();                break;     case 22: App::display(dynamic_cast<Client*>(user)); wait(); break;
+                case 13: list_services(user);                        break;
                 //OTHER OPERATIONS
+                case 31: return true;                                break;
                 default:
                     error("Invalid operation.");
                     break;
@@ -338,41 +337,39 @@ bool App::userMenu(User *user, User::Type user_type) {
             } else if (user_type == User::Type::driver) {
                 switch (option) {
                 //INFORMATION VISUALIZATION                                     //ACCOUNT MANAGEMENT
-                case 11:                break;                                  case 21: editUser<Driver>(user);                            break;
-                case 12:                break;                                  case 22: App::display(dynamic_cast<Driver*>(user));         break;
-                case 13:                break;
-                case 14: list_trucks();  break;
+                case 11: list_services();                            break;     case 21: editUser<Driver>(user); wait();                    break;
+                case 12: list_trucks();                              break;     case 22: App::display(dynamic_cast<Driver*>(user)); wait(); break;
+                case 13:                                             break;
                 //OTHER OPERATIONS
-
+                case 31: return true;                                break;
                 default:
                     error("Invalid operation.");
                     break;
                 }
+
             } else if (user_type == User::Type::manager) {
                 switch (option) {
                 //SERVICE MANAGEMENT                                            //TRUCK MAANAGEMENT
-                case 11: break;                                                 case 21: addTruck();                                        break;
-                case 12: break;                                                 case 22: editTruck();                                       break;
-                case 13: deleteService();                           break;      case 23: deleteTruck();                                     break;
+                case 11: addService(); wait();                      break;      case 21: addTruck(); wait();                                break;
+                case 12: deleteService(); wait();                   break;      case 22: editTruck(); wait();                               break;
+                                                                                case 23: deleteTruck(); wait();                             break;
 
                 //CLIENT MANAGEMENT                                             //DRIVER MANAGEMENT
-                case 31: addUser(User::Type::client);               break;      case 41: addUser(User::Type::driver);                       break;
-                case 32: editUser<Client>(User::Type::client);      break;      case 42: editUser<Driver>(User::Type::driver);              break;
-                case 33: deleteUser<Client>(User::Type::client);    break;      case 43: deleteUser<Driver>(User::Type::driver);            break;
+                case 31: addUser(User::Type::client); wait();       break;      case 41: addUser(User::Type::driver); wait();                      break;
+                case 32: editUser<Client>(User::Type::client); wait(); break;      case 42: editUser<Driver>(User::Type::driver); wait();             break;
+                case 33: deleteUser<Client>(User::Type::client); wait(); break;      case 43: deleteUser<Driver>(User::Type::driver); wait();           break;
 
                 //MANAGER MANAGEMENT                                            //INFORMATION VISUALIZATION
-                case 51: addUser(User::Type::manager);              break;      case 61: list_services();                                   break;
-                case 52: editUser<Manager>(User::Type::manager);    break;      case 62: list_trucks();                                     break;
-                case 53: deleteUser<Manager>(User::Type::manager);  break;      case 63: list_clients();                                    break;
+                case 51: addUser(User::Type::manager); wait();             break;      case 61: list_services();                                   break;
+                case 52: editUser<Manager>(User::Type::manager); wait();    break;      case 62: list_trucks();                                     break;
+                case 53: deleteUser<Manager>(User::Type::manager); wait();  break;      case 63: list_clients();                                    break;
                                                                                 case 64: list_drivers();                                    break;
                                                                                 case 65: list_managers();                                   break;
-                                                                                case 66: break;
+                                                                                case 66:                                                    break;
 
                 //ACCOUNT MANAGEMENT                                            //OTHER OPERATIONS
-                case 71: editUser<Manager>(user);                       break;
-                case 72: App::display(dynamic_cast<Manager*>(user));    break;
-                case 73: save_all();                                    break;
-                case 74: return true;                                   break;
+                case 71: editUser<Manager>(user); wait(); wait();                       break;  case 81: save_all();                                    break;
+                case 72: App::display(dynamic_cast<Manager*>(user)); wait();    break;  case 82: return true;                                   break;
 
                 default:
                     error("Invalid operation.");

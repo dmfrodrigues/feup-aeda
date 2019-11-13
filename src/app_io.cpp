@@ -113,6 +113,8 @@ void App::save_all(){
 
 
 bool App::addUser(const User::Type &user_type) {
+    CLEAR();
+    std::cout << "Adding user.\n";
     User *user;
     if (user_type == User::Type::client) {
         user = new Client();
@@ -140,6 +142,8 @@ bool App::addUser(const User::Type &user_type) {
 }
 
 bool App::addTruck() {
+    CLEAR();
+    std::cout << "Adding truck.\n";
     Truck *truck = new Truck();
     if (!truck->in(std::cin, std::cout)) { delete truck; return false; }
     if(utils::find_if(trucks_.begin(), trucks_.end(),
@@ -154,6 +158,7 @@ bool App::addTruck() {
 }
 
 Truck* App::chooseTruck() {
+    std::cout << "Choosing truck.\n";
     std::vector<const Truck*> trucks(trucks_.begin(), trucks_.end());
     while (true) {
         print_list(trucks);
@@ -178,6 +183,8 @@ Truck* App::chooseTruck() {
 }
 
 bool App::deleteTruck() {
+    CLEAR();
+    std::cout << "Deleting truck.\n";
     while (true) {
         Truck *truck = App::chooseTruck();
         if (truck == NULL) return false;
@@ -192,6 +199,8 @@ bool App::deleteTruck() {
 }
 
 bool App::editTruck() {
+    CLEAR();
+    std::cout << "Editing truck.\n";
     Truck *truck = App::chooseTruck();
     if (truck == NULL) return false;
     std::vector<Truck*>::iterator it = std::find(trucks_.begin(), trucks_.end(), truck);
@@ -221,6 +230,7 @@ bool App::editTruck() {
 }
 
 Service* App::chooseService() {
+    std::cout << "Choosing service.\n";
     std::vector<const Service*> services(services_.begin(), services_.end());
     while (true) {
         print_list(services);
@@ -239,6 +249,7 @@ Service* App::chooseService() {
 
 
 Service* App::chooseService(const User *user) {
+    std::cout << "Choosing service.\n";
     std::vector<Service*> filtered = filter_services_by_user(services_, user);
     std::vector<const Service*> services(filtered.begin(), filtered.end());
 
@@ -258,6 +269,8 @@ Service* App::chooseService(const User *user) {
 }
 
 bool App::deleteService(const User *user) {
+    CLEAR();
+    std::cout << "Deleting service.\n";
     while (true) {
         Service *service = App::chooseService(user);
         if (service == NULL) return false;
@@ -273,6 +286,8 @@ bool App::deleteService(const User *user) {
 
 
 bool App::deleteService() {
+    CLEAR();
+    std::cout << "Deleting service.\n";
     while (true) {
         Service *service = App::chooseService();
         if (service == NULL) return false;
@@ -287,9 +302,35 @@ bool App::deleteService() {
 }
 
 bool App::addService() {
+    CLEAR();
+    std::cout << "Adding service.\n";
     Client *client = dynamic_cast<Client*>(chooseUser<Client>(User::Type::client));
     if (client == NULL) return false;
     Service *service = new Service(client->get_username());
+    if (service == NULL) return false;
+    if (!service->in(std::cin, std::cout)) { delete service; return false; }
+    if(utils::find_if(services_.begin(), services_.end(),
+      [service](const Service* s){ return (s->get_id() == service->get_id()); }) != services_.end()){
+        delete service;
+        error("Repeated ID (service with same ID already exists).");
+        Service::next_id_--; //infelizmente
+        return false;
+    }
+    std::vector<Truck*> tv = get_available_trucks(service->get_tbegin(), service->get_tend(), service->get_cargo());
+    std::vector<Driver*> dv = get_available_drivers(service->get_tbegin(), service->get_tend());
+    if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
+        services_.push_back(service);
+        std::cout << "Service added.\n";
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool App::addService(const User *user) {
+    CLEAR();
+    std::cout << "Adding service.\n";
+    Service *service = new Service(dynamic_cast<const Client*>(user)->get_username());
     if (service == NULL) return false;
     if (!service->in(std::cin, std::cout)) { delete service; return false; }
     if(utils::find_if(services_.begin(), services_.end(),

@@ -109,6 +109,7 @@ private:
     bool editTruck();
 
     bool addService();
+    bool addService(const User *user);
     Service* chooseService();
     Service* chooseService(const User *user);
     bool deleteService();
@@ -187,6 +188,7 @@ std::vector<const Deriv*> App::filter(const std::vector<const Base*> &v, const T
 }
 
 template<class Deriv> User* App::chooseUser(const User::Type &type) {
+    std::cout << "Choosing user.\n";
     std::vector<const User*> v(users_.begin(), users_.end());
     std::vector<const Deriv*> users_filter = App::filter<User,Deriv,User::Type>(v, type);
     while (true) {
@@ -205,6 +207,8 @@ template<class Deriv> User* App::chooseUser(const User::Type &type) {
 }
 
 template<class Deriv> bool App::deleteUser(const User::Type &type) {
+    CLEAR();
+    std::cout << "Deleting user.\n";
     while (true) {
         User *user = App::chooseUser<Deriv>(type);
         if (user == NULL) return false;
@@ -219,6 +223,8 @@ template<class Deriv> bool App::deleteUser(const User::Type &type) {
 }
 
 template<class Deriv> bool App::editUser(const User::Type &type) {
+    CLEAR();
+    std::cout << "Editing user.\n";
     User *user = App::chooseUser<Deriv>(type);
     if (user == NULL) return false;
     User::Type user_type = user->get_type();
@@ -242,6 +248,8 @@ template<class Deriv> bool App::editUser(const User::Type &type) {
 }
 
 template<class Deriv> bool App::editUser(User *user) {
+    CLEAR();
+    std::cout << "Editing user.\n";
     User::Type user_type = user->get_type();
     int no_properties = 4 + (user_type == User::Type::manager || user_type == User::Type::driver);
     int option;
