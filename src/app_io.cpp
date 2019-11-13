@@ -24,7 +24,7 @@ size_t App::save_ptr(std::ofstream &os, const std::vector<Base*> &m_out){
     os.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     os << m_out.size() << "\n";
     for(const Base* p:m_out){
-        os << *dynamic_cast<const Deriv*>(p) << "\n";
+        os << "\n" << *dynamic_cast<const Deriv*>(p) << "\n";
     }
     os << std::flush;
     return m_out.size();

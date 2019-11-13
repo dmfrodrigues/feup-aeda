@@ -1,4 +1,5 @@
 8
+
 Bruno%20Sousa%20Santos
 %28%2B351%29%2091%20399%2098%2073
 brunoss
@@ -8,6 +9,7 @@ Rua%20Doutor%20Alfredo%20Freitas%2055
 Aveiro Portugal
 288383828
 875.21
+
 Alberta%20Andreia%20Alves%20Fernandes
 96%20202%2011%2017
 aaaf23
@@ -17,6 +19,7 @@ Avenida%20Afonso%20Henriques%20192
 Viseu Portugal
 399498743
 754.75
+
 Marina%20Dias%20Martins
 %28%2B351%29%2093%20345%2064%2053
 marinamartins
@@ -26,6 +29,7 @@ Avenida%20Paris%2033
 Braga Portugal
 388340492
 665.02
+
 Marcos%20Rodrigo%20Albuquerque%20Martins
 96%20335%2012%2012
 marmartins21
@@ -35,6 +39,7 @@ Travessa%20da%20Aldeia%20Velha%2021
 Porto Portugal
 110293392
 754.75
+
 Afonso%20Miguel%20Paiva%20Rodrigues
 %28%2B351%29%2091%20945%2064%2031
 afonso1975
@@ -44,6 +49,7 @@ Rua%20Municipal%20da%20Venda%20Nova
 Beja Portugal
 993818283
 665.02
+
 Camila%20Barbosa%20Ferreira
 %28%2B351%29%2091%20123%2013%2083
 camilaferr
@@ -53,6 +59,7 @@ Rua%20Principal%20293
 Porto Portugal
 991882102
 754.75
+
 Diogo%20Afonso%20Correia%20Carvalho
 92%20118%2094%2010
 diogocc
@@ -62,6 +69,7 @@ Rua%20Doutor%20Afonso%20Carvalho%20112
 Aveiro Portugal
 388839202
 665.02
+
 Manuel%20Henrique%20Castro%20Cardoso
 %28%2B351%29%2093%20128%2001%2002
 manel0101
