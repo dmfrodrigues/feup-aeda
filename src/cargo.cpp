@@ -304,16 +304,16 @@ bool CargoDangerous     ::in(std::istream &is, std::ostream &os) {
     while (true) {
         if (!utils::input(msg, input, is, os)) return false;
         utils::to_lower(input);
-        if (input == "none"                 ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;             break; }
-        if (input == "miscellaneous"        ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;    break; }
-        if (input == "gases"                ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "flammable solids"     ||  input == "4")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "oxydizing agents"     ||  input == "5")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "explosives"           ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "corrosive"            ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "toxic"                ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "radioactive"          ||  input == "9")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
+        if (input == "none"                 ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;                     break; }
+        if (input == "miscellaneous"        ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;            break; }
+        if (input == "gases"                ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;                    break; }
+        if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Flammable_Liq;            break; }
+        if (input == "flammable solids"     ||  input == "4")   { danger_level_ = Cargo::DangerLevel::Flammable_Sol;            break; }
+        if (input == "oxydizing agents"     ||  input == "5")   { danger_level_ = Cargo::DangerLevel::Oxydizing_Agents;         break; }
+        if (input == "explosives"           ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Explosives;               break; }
+        if (input == "corrosive"            ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Corrosive;                break; }
+        if (input == "toxic"                ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Toxic;                    break; }
+        if (input == "radioactive"          ||  input == "9")   { danger_level_ = Cargo::DangerLevel::Radioactive;              break; }
         else { std::cout << "Error: Invalid danger level.\n"; }
     }
     return true;
@@ -325,19 +325,19 @@ bool CargoTransDangerous::in(std::istream &is, std::ostream &os) {
                       "                 Flammable Liquids(3) | Flammable Solids(4) | Oxydizing Agents(5)\n"
                       "                 Explosives(6) | Corrosive(7) | Toxic (8) | Radioactive(9)\nDanger Level: ";
     while (true) {
-        if (!utils::input(msg, input, is, os)) return false;
-        utils::to_lower(input);
-        if (input == "none"                 ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;             break; }
-        if (input == "miscellaneous"        ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;    break; }
-        if (input == "gases"                ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "flammable solids"     ||  input == "4")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "oxydizing agents"     ||  input == "5")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "explosives"           ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "corrosive"            ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "toxic"                ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        if (input == "radioactive"          ||  input == "9")   { danger_level_ = Cargo::DangerLevel::Gases;            break; }
-        else { std::cout << "Error: Invalid danger level.\n"; }
+      if (!utils::input(msg, input, is, os)) return false;
+      utils::to_lower(input);
+      if (input == "none"                 ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;                     break; }
+      if (input == "miscellaneous"        ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;            break; }
+      if (input == "gases"                ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;                    break; }
+      if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Flammable_Liq;            break; }
+      if (input == "flammable solids"     ||  input == "4")   { danger_level_ = Cargo::DangerLevel::Flammable_Sol;            break; }
+      if (input == "oxydizing agents"     ||  input == "5")   { danger_level_ = Cargo::DangerLevel::Oxydizing_Agents;         break; }
+      if (input == "explosives"           ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Explosives;               break; }
+      if (input == "corrosive"            ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Corrosive;                break; }
+      if (input == "toxic"                ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Toxic;                    break; }
+      if (input == "radioactive"          ||  input == "9")   { danger_level_ = Cargo::DangerLevel::Radioactive;              break; }
+      else { std::cout << "Error: Invalid danger level.\n"; }
     }
     return true;
 }
