@@ -32,14 +32,14 @@ private:
     Cargo *cargo_ = NULL;
     std::vector<Truck ::NumberPlate> trucks_;
     std::vector<Driver::Username   > drivers_;
-    Currency expenses_;
-    Currency price_;
+    Currency cost_;
+    Currency revenue_;
 public:
     /** @brief ID of next service*/
     static int next_id_;
 
     /** @brief Empty constructor. */
-    Service():expenses_(0), price_(0){}
+    Service():cost_(0), revenue_(0){}
     /** @brief Destructor */
     ~Service();
 
@@ -73,10 +73,10 @@ public:
     const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
     /// @brief Get drivers assigned to this service
     const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }
-    /// @brief Get expenses of making this service
-    const Currency& get_expenses() const { return expenses_; };
-    /// @brief Get price charged to the client for this service
-    const Currency& get_price   () const { return price_   ; };
+    /// @brief Get cost of making this service
+    const Currency& get_cost   () const { return cost_; };
+    /// @brief Get revenue from this service
+    const Currency& get_revenue() const { return revenue_   ; };
     /**
      * @brief Allocate service to the necessary number of trucks and drivers
      */

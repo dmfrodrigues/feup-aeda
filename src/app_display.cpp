@@ -103,9 +103,9 @@ void App::print_list(const std::vector<const Service*> &v) const{
                  " ╶─╯╰─╴╵╰╴│╱  ┴ ╰─╴╰─╴╶─╯ \n"
                  "\n"
                  "╒═════╤══════════════╤═══════════════════════════════════╤══════════════════╤════════════════════════════╤═══════════════╤═══════════════════════════╤═════════════╤═════════════╕\n"
-                 "│ ID  │ Client [1]   │ Contact 1 [2]                     │ Time begin [4]   │ Address begin [6]          │ Cargo [8]:    │ [9] Truck/driver          │ Costs       │ Revenue     │\n"
-                 "│ [0] │              │                                   │                  │                            │ Type          │                           │ [10]        │ [11]        │\n"
-                 "│     │              │ Contact 2 [3]                     │ Time end   [5]   │ Address end   [7]          │ Weight [0]    │                           │             │             │\n"
+                 "│ ID  │ Client [1]   │ Contact 1 [2]                     │ Time begin [4]   │ Address begin [6]          │ Cargo:        │ [10] Truck/driver         │ Costs       │ Revenue     │\n"
+                 "│ [0] │              │                                   │                  │                            │ Type [8]      │                           │ [11]        │ [12]        │\n"
+                 "│     │              │ Contact 2 [3]                     │ Time end   [5]   │ Address end   [7]          │ Weight [9]    │                           │             │             │\n"
                  "╞═════╪══════════════╪═══════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n";
     for(const Service* p:v){
         const User *c = App::find_user(p->get_client());
