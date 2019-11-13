@@ -110,18 +110,6 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoAnimal():Cargo(){}
-    /**
-     * @brief Constructs a cargo.
-     * @param quantity Quantity of cargo
-     * @param cargo_type Type of cargo
-     * @param danger_level Danger level of the cargo
-     * @param W Weight of an unit of cargo
-     * @param Tr Range of temperature that cargo must be kept on
-     * @ref DangerLevel
-     * @throws InvalidTemperatureRange If the temperature range is invalid.
-     * @throws InvalidWeight If the weight value is invalid.
-     */
-    CargoAnimal(Weight W, const std::string &description);
     /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
 
@@ -156,18 +144,6 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoRefrigerated():Cargo(){}
-    /**
-     * @brief Constructs a cargo.
-     * @param quantity Quantity of cargo
-     * @param cargo_type Type of cargo
-     * @param danger_level Danger level of the cargo
-     * @param W Weight of an unit of cargo
-     * @param Tr Range of temperature that cargo must be kept on
-     * @ref DangerLevel
-     * @throws InvalidTemperatureRange If the temperature range is invalid.
-     * @throws InvalidWeight If the weight value is invalid.
-     */
-    CargoRefrigerated(Weight W, const std::string &description, TemperatureRange Tr);
     /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
     /// @brief Get temperature range
@@ -204,18 +180,6 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoDangerous():Cargo(){}
-    /**
-     * @brief Constructs a cargo.
-     * @param quantity Quantity of cargo
-     * @param cargo_type Type of cargo
-     * @param danger_level Danger level of the cargo
-     * @param W Weight of an unit of cargo
-     * @param Tr Range of temperature that cargo must be kept on
-     * @ref DangerLevel
-     * @throws InvalidTemperatureRange If the temperature range is invalid.
-     * @throws InvalidWeight If the weight value is invalid.
-     */
-    CargoDangerous(Weight W, const std::string &description, DangerLevel danger_level);
     /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
     /// @brief Get danger level
@@ -300,7 +264,6 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoTransAnimal():CargoTrans(){}
-    CargoTransAnimal(Weight W, const std::string &description, Currency E_D);
     /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
     virtual const Currency& get_P_B    () const{ return P_B_     ; }
@@ -345,7 +308,6 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     CargoTransRefrigerated():CargoTrans(){}
-    CargoTransRefrigerated(Weight W, const std::string &description, Currency E_D, float E_T);
     /// @brief Get type
     virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
     const TemperatureRange& get_Tr() const{ return Tr_; }
@@ -372,9 +334,9 @@ public:
     /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
     /// @brief Get real amount of expenses.
-    virtual Currency get_E(Distance D, Weight W) const;
+    virtual Currency get_E(Distance D, Weight W, TemperatureRange Tr) const;
     /// @brief Get real price.
-    virtual Currency get_P(Distance D, Weight W) const;
+    virtual Currency get_P(Distance D, Weight W, TemperatureRange Tr) const;
 };
 
 /**

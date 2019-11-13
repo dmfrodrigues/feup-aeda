@@ -42,8 +42,12 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         for(const Truck *t:tv){
             dW = std::min(t->get_cargo()->get_W(),
                           cargo_->get_W() - W);
-            expenses_ += t->get_cargo()->get_E(distance_, dW);
-            price_    += t->get_cargo()->get_P(distance_, dW);
+            if(t->get_cargo()->get_type() == Cargo::Type::Refrigerated){
+                CargoTransRefrigerated *p = dynamic_cast<CargoTransRefrigerated*>(t->get_cargo());
+            }else{
+                expenses_ += t->get_cargo()->get_E(distance_, dW);
+                price_    += t->get_cargo()->get_P(distance_, dW);
+            }
             W += dW;
         }
         return true;

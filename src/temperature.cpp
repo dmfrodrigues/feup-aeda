@@ -8,8 +8,8 @@ Temperature::Temperature(float temp){
         throw InvalidTemperature(temp);
     temp_ = temp;
 }
-Temperature Temperature::operator+(const Temperature &t) const{ return Temperature(temp_+t.temp_); }
-Temperature Temperature::operator-(const Temperature &t) const{ return Temperature(temp_-t.temp_); }
+double Temperature::operator+(const Temperature &t) const{ return temp_+t.temp_; }
+double Temperature::operator-(const Temperature &t) const{ return temp_-t.temp_; }
 bool Temperature::operator< (const Temperature &t)const{ return (temp_ < t.temp_); }
 bool Temperature::operator> (const Temperature &t)const{ return (t < *this); }
 bool Temperature::operator==(const Temperature &t)const{ return !(*this < t || t < *this); }

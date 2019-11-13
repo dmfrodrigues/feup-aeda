@@ -16,8 +16,8 @@ private:
 public:
     Temperature();
     explicit Temperature(float temp);
-    Temperature operator+(const Temperature &t) const;
-    Temperature operator-(const Temperature &t) const;
+    double operator+(const Temperature &t) const;
+    double operator-(const Temperature &t) const;
     bool operator< (const Temperature &t)const;
     bool operator> (const Temperature &t)const;
     bool operator==(const Temperature &t)const;
