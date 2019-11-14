@@ -15,12 +15,14 @@ private:
     double temp_;
 public:
     Temperature();
-    explicit Temperature(float temp);
-    double operator+(const Temperature &t) const;
-    double operator-(const Temperature &t) const;
+    explicit Temperature(double temp);
+
+    double      operator+(const Temperature &t) const;
+    double      operator-(const Temperature &t) const;
+
+    bool operator==(const Temperature &t)const;
     bool operator< (const Temperature &t)const;
     bool operator> (const Temperature &t)const;
-    bool operator==(const Temperature &t)const;
     bool operator>=(const Temperature &t)const;
     bool operator<=(const Temperature &t)const;
 
@@ -34,10 +36,10 @@ public:
      */
     class InvalidTemperature: public std::invalid_argument{
     private:
-        float temp_;
+        double temp_;
     public:
-        InvalidTemperature(const float &temp);
-        const float& get_temperature()const;
+        InvalidTemperature(const double &temp);
+        const double& get_temperature()const;
     };
 };
 
@@ -48,7 +50,7 @@ class TemperatureRange{
 public:
     Temperature min, max;
 
-    TemperatureRange(){}
+    TemperatureRange();
     TemperatureRange(const Temperature &tmin, const Temperature &tmax);
 
     friend std::istream& operator>>(std::istream &is,       TemperatureRange &r);
