@@ -3,8 +3,7 @@
 #include "utils.h"
 
 ///PERSON
-Person::Person(const std::string &name, const PhoneNumber &phonenumber):
-               name_(name), phonenumber_(phonenumber){}
+Person::Person(){}
 
 std::istream& Person::input(std::istream &is){
     std::string s; is >> s;
@@ -67,12 +66,7 @@ User::Password& User::Password::operator=(const std::string &s){
     return *this;
 }
 //User
-User::User(const std::string &name    , const PhoneNumber &phonenumber,
-           const Username    &username, const Password    &password   ,
-           const Address     &address , const VAT         &vat        ):
-           Person(name, phonenumber),
-           username_(username), password_(password),
-           address_ (address ), vat_ (vat ){}
+User::User():Person(){}
 
 std::istream& User::input(std::istream &is){
     Person::input(is);
@@ -144,10 +138,7 @@ std::ostream& operator<<(std::ostream &os, const User &p){
 }
 
 ///CLIENT
-Client::Client(const std::string &name   , const PhoneNumber &phonenumber,
-               const Username    &user   , const Password    &password   ,
-               const Address     &address, const VAT         &vat        ):
-               User(name, phonenumber, user, password, address, vat){}
+Client::Client():User(){}
 
 std::istream& Client::input(std::istream &is){
     User::input(is);
@@ -171,12 +162,7 @@ std::ostream& operator<<(std::ostream &os, const Client &p){
 }
 
 ///EMPLOYEE
-Employee::Employee(const std::string &name       , const PhoneNumber &phonenumber,
-                   const Username    &user       , const Password    &password   ,
-                   const Address     &address    , const VAT      &vat           ,
-                   const Currency    &base_salary):
-                   User(name, phonenumber, user, password, address, vat),
-                   base_salary_(base_salary){}
+Employee::Employee():User(){}
 
 std::istream& Employee::input(std::istream &is){
     User::input(is);
@@ -216,11 +202,7 @@ std::ostream& operator<<(std::ostream &os, const Employee &p){
 }
 
 ///MANAGER
-Manager::Manager(const std::string &name       , const PhoneNumber &phonenumber,
-                 const Username    &user       , const Password    &password   ,
-                 const Address     &address    , const VAT         &vat        ,
-                 const Currency    &base_salary):
-                 Employee(name, phonenumber, user, password, address, vat, base_salary){}
+Manager::Manager():Employee(){}
 
 User::Type Manager::get_type() const { return User::Type::manager; }
 
@@ -244,11 +226,7 @@ std::ostream& operator<<(std::ostream &os, const Manager &p){
 }
 
 ///DRIVER
-Driver::Driver(const std::string &name       , const PhoneNumber &phonenumber,
-               const Username    &user       , const Password    &password   ,
-               const Address     &address    , const VAT         &vat        ,
-               const Currency    &base_salary):
-               Employee(name, phonenumber, user, password, address, vat, base_salary){}
+Driver::Driver():Employee(){}
 
 std::istream& Driver ::input(std::istream &is){
    Employee::input(is);

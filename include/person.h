@@ -25,13 +25,7 @@ protected:
     virtual std::istream& input(std::istream &is);
 public:
     /** @brief Empty constructor */
-    Person(){}
-    /**
-     * @brief Constructor accepting a name and a phone number.
-     * @param   name        String containing name of person
-     * @param   phonenumber Phone number
-     */
-    Person(const std::string &name, const PhoneNumber &phonenumber);
+    Person();
 
     /** @brief Destructor */
     virtual ~Person(){}
@@ -115,19 +109,7 @@ protected:
     virtual std::istream& input(std::istream &is);
 public:
     /** @brief Empty constructor */
-    User():Person(){}
-    /**
-     * @brief Constructor accepting a name, a phone number and credentials.
-     * @param   name        String containing name of user
-     * @param   phonenumber Phone number
-     * @param   username    Unique username in the program
-     * @param   password    Password of the user
-     * @param   address     Address of the user
-     * @param   vat         VAT of the user
-     */
-    User(const std::string &name    , const PhoneNumber &phonenumber,
-         const Username    &username, const Password    &password   ,
-         const Address     &address , const VAT         &vat        );
+    User();
 
     /** @brief Get username. */
     const Username& get_username() const{ return username_     ; }
@@ -188,19 +170,7 @@ protected:
     virtual std::istream& input(std::istream &is);
 public:
     /** @brief Empty constructor */
-    Client():User(){}
-    /**
-     * @brief Constructor accepting all information to construct a client.
-     * @param   name        String containing name of client
-     * @param   phonenumber Phone number
-     * @param   user        Unique username in the program
-     * @param   pswd        Password of the client
-     * @param   address     Billing address of the client
-     * @param   vat         VAT number of the client for billing purposes
-     */
-    Client(const std::string &name   , const PhoneNumber &phonenumber,
-           const Username    &user   , const Password    &password   ,
-           const Address     &address, const VAT         &vat        );
+    Client();
 
     /**
      * @brief Gets the type of user.
@@ -243,19 +213,7 @@ protected:
     virtual std::istream& input(std::istream &is);
 public:
     /** @brief Empty constructor */
-    Employee():User(){}
-    /**
-     * @brief Constructor accepting all information to construct an employee.
-     * @param   name        String containing name of employee
-     * @param   phonenumber Phone number
-     * @param   user        Unique username in the program
-     * @param   pswd        Password of the client
-     * @param   base_salary Base salary of the employee
-     */
-    Employee(const std::string &name       , const PhoneNumber &phonenumber,
-             const Username    &user       , const Password    &password   ,
-             const Address     &address    , const VAT      &vat           ,
-             const Currency    &base_salary);
+    Employee();
 
     Currency get_base_salary() const{ return base_salary_; }
 
@@ -299,19 +257,7 @@ protected:
     virtual std::istream& input(std::istream &is);
 public:
     /** @brief Empty constructor */
-    Manager():Employee(){}
-    /**
-     * @brief Constructor accepting all information to construct a manager.
-     * @param   name        String containing name of manager
-     * @param   phonenumber Phone number
-     * @param   user        Unique username in the program
-     * @param   pswd        Password of the manager
-     * @param   base_salary Base salary of the manager
-     */
-    Manager(const std::string &name       , const PhoneNumber &phonenumber,
-            const Username    &user       , const Password    &password   ,
-            const Address     &address    , const VAT      &vat           ,
-            const Currency    &base_salary);
+    Manager();
 
     /**
      * @brief Gets the type of user.
@@ -352,19 +298,7 @@ protected:
     virtual std::istream& input(std::istream &is);
 public:
     /** @brief Empty constructor */
-    Driver():Employee(){}
-    /**
-     * @brief Constructor accepting all information to construct a driver.
-     * @param   name        String containing name of driver
-     * @param   phonenumber Phone number
-     * @param   user        Unique username in the program
-     * @param   pswd        Password of the driver
-     * @param   base_salary Base salary of the driver
-     */
-    Driver(const std::string &name       , const PhoneNumber &phonenumber,
-           const Username    &user       , const Password    &password   ,
-           const Address     &address    , const VAT      &vat           ,
-           const Currency    &base_salary);
+    Driver();
 
     /**
      * @brief Gets the type of user.
