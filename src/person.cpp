@@ -85,10 +85,10 @@ std::istream& User::input(std::istream &is){
 
 User::User():Person(){}
 
-const Username& User::get_username() const{ return username_     ; }
-const Username& User::get_id      () const{ return get_username(); }
-const Address&  User::get_address () const{ return address_      ; }
-const VAT&      User::get_vat     () const{ return vat_          ; }
+const User::Username& User::get_username() const{ return username_     ; }
+const User::Username& User::get_id      () const{ return get_username(); }
+const Address&        User::get_address () const{ return address_      ; }
+const VAT&            User::get_vat     () const{ return vat_          ; }
 
 bool User::in(std::istream &is, std::ostream &os) {
     if (!Person::in(is, os)) return false;
