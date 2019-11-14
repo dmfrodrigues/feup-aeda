@@ -1,5 +1,8 @@
 \documentclass{beamer}
+% Encodings (to render letters with diacritics and special characters)
 \usepackage[utf8]{inputenc}
+% Language
+\usepackage[portuguese]{babel}
 
 \usetheme{Madrid}
 \usecolortheme{default}
@@ -12,6 +15,8 @@
 \newcommand{\email}[1]{
 {\footnotesize \texttt{\href{mailto:#1}{#1}} }
 }
+
+\usepackage[style=british]{csquotes}
 
 \usepackage{tabularx}
  
@@ -32,9 +37,15 @@
 
 \begin{document}
 \frame{\titlepage}
+
 \begin{frame}
-\frametitle{Sample frame title}
-This is a text in the first frame. This is a text in the first frame. This is a text in the first frame.
+\frametitle{Problema: Empresa de Transporte de Mercadorias}
+\begin{quote}
+Modelar um problema recorrendo ao paradigma da orientação por objetos e usar a linguagem C++ para implementar a solução correspondente.
+\end{quote}
+\begin{quote}
+A empresa Transportes SML é especialista no transporte de mercadorias. A empresa possui um número fixo de camiões de diferentes tipos, específicos para o transporte de determinada mercadoria...
+\end{quote}
 \end{frame}
  
 \end{document}
