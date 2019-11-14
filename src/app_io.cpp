@@ -189,7 +189,7 @@ bool App::deleteTruck() {
         Truck *truck = App::chooseTruck();
         if (truck == NULL) return false;
         std::vector<Truck*>::iterator truck_it = std::find(trucks_.begin(), trucks_.end(), truck);
-        if (!utils::confirm("Confirm the deletion of truck \'" + (std::string)((*truck_it)->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        if (!confirm("Confirm the deletion of truck \'" + std::string((*truck_it)->get_numberplate()) + "\' (yes/no): ")) return false;
         delete *truck_it;
         trucks_.erase(truck_it);
         std::cout << "Truck deleted.\n";
@@ -221,7 +221,7 @@ bool App::editTruck() {
         if (truck_copy->edit(command, std::cin, std::cout)) is_edited = true;
     }
     if (is_edited) {
-        if (!utils::confirm("Confirm the edition of truck \'" + (std::string)(truck_copy->get_numberplate()) + "\' (yes/no): ", std::cin, std::cout)) { delete truck_copy; return false; }
+        if (!confirm("Confirm the edition of truck \'" + std::string(truck_copy->get_numberplate()) + "\' (yes/no): ")) { delete truck_copy; return false; }
         *it = truck_copy;
         std::cout << "Truck edited.\n";
     }
@@ -275,7 +275,7 @@ bool App::deleteService(const User *user) {
         Service *service = App::chooseService(user);
         if (service == NULL) return false;
         std::vector<Service*>::iterator service_it = std::find(services_.begin(), services_.end(), service);
-        if (!utils::confirm("Confirm the deletion of service \'" + ((*service_it)->get_id()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        if (!confirm("Confirm the deletion of service \'" + (*service_it)->get_id() + "\' (yes/no): ")) return false;
         delete *service_it;
         services_.erase(service_it);
         std::cout << "Service deleted.\n";
@@ -292,7 +292,7 @@ bool App::deleteService() {
         Service *service = App::chooseService();
         if (service == NULL) return false;
         std::vector<Service*>::iterator service_it = std::find(services_.begin(), services_.end(), service);
-        if (!utils::confirm("Confirm the deletion of service \'" + ((*service_it)->get_id()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        if (!confirm("Confirm the deletion of service \'" + (*service_it)->get_id() + "\' (yes/no): ")) return false;
         delete *service_it;
         services_.erase(service_it);
         std::cout << "Service deleted.\n";

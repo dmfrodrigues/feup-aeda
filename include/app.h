@@ -89,6 +89,12 @@ private:
     ///Commands
     static std::string prompt();
     static void wait();
+    /**
+     * @brief Confirms user input via a yes/no validation.
+     * @param msg Message to display before asking for input
+     * @return True if input is 'yes', false if inputs a 'no'
+     */
+    static bool confirm(const std::string &msg);
     static void error(const std::string &s);
     ///Operations
     void list_clients () const;
@@ -213,7 +219,7 @@ template<class Deriv> bool App::deleteUser(const User::Type &type) {
         User *user = App::chooseUser<Deriv>(type);
         if (user == NULL) return false;
         std::vector<User*>::iterator user_it = std::find(users_.begin(), users_.end(), user);
-        if (!utils::confirm("Confirm the deletion of user \'" + (std::string)((*user_it)->get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        if (!confirm("Confirm the deletion of user \'" + std::string((*user_it)->get_username()) + "\' (yes/no): ")) return false;
         delete *user_it;
         users_.erase(user_it);
         std::cout << "User deleted.\n";
@@ -240,7 +246,7 @@ template<class Deriv> bool App::editUser(const User::Type &type) {
         if(user_copy.edit(option, std::cin, std::cout)) is_edited = true;
     }
     if (is_edited) {
-        if (!utils::confirm("Confirm the edition of user \'" + (std::string)(user_copy.get_username()) + "\' (yes/no): ", std::cin, std::cout)) return false;
+        if (!confirm("Confirm the edition of user \'" + std::string(user_copy.get_username()) + "\' (yes/no): ")) return false;
         *user = user_copy;
         std::cout << "User edited.\n";
     }
@@ -264,7 +270,7 @@ template<class Deriv> bool App::editUser(User *user) {
         if (user_copy.edit(option, std::cin, std::cout)) is_edited = true;
     }
     if (is_edited) {
-        if (!utils::confirm("Confirm the changes (yes/no): ", std::cin, std::cout)) return false;
+        if (!confirm("Confirm the changes (yes/no): ")) return false;
         *user = user_copy;
         std::cout << "Saved changes.\n";
     }

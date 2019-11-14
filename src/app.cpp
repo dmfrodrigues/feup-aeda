@@ -54,6 +54,18 @@ void App::wait(){
     std::getline(std::cin, b);
 }
 
+bool App::confirm(const std::string &msg) {
+    std::string input;
+    while (true) {
+        if (!utils::input(msg, input, std::cin, std::cout)) return false;
+        utils::to_lower(input);
+        if (input == "yes" || input == "y" || input == "no" || input == "n") break;
+        std::cout << "Error: Only \'yes\'/\'y\' or \'no\'/\'n\' are valid options.\n";
+    }
+    if (input == "yes" || input == "y") return true;
+    std::cout << "Operation cancelled.\n"; return false;
+}
+
 void App::error(const std::string &s){
     std::cerr << "Error: " << s << std::endl;
     wait();

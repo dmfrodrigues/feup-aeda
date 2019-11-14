@@ -47,15 +47,6 @@ namespace utils {
     void to_lower(std::string &s);
 
     /**
-     * @brief Confirms user input via a yes/no validation.
-     * @param msg Message to display before asking for input
-     * @param is Input stream
-     * @param os Output stream
-     * @return True if input is 'yes', false if inputs a 'no'
-     */
-    bool confirm(std::string msg, std::istream &is, std::ostream &os);
-
-    /**
      * @brief       Convert integer to string.
      * @param   i   Integer to convert
      * @return      String that resulted from converting \a i.
@@ -271,7 +262,7 @@ namespace utils {
      * @param   r   Past-the-last iterator
      * @param   obj Object to find
      */
-    template<class Iterator, class T            > Iterator find   (Iterator l, Iterator r, T obj);
+    template<class Iterator, class T   > Iterator find   (Iterator l, Iterator r, T obj);
 
     /**
      * @brief Verify is string given is cancel command ("cancel").
@@ -282,12 +273,6 @@ namespace utils {
     template<class T> bool input(const std::string &msg, T &object, std::istream &is, std::ostream &os);
     template<> bool input<std::string>(const std::string &msg, std::string &object, std::istream &is, std::ostream &os);
     template<class T, class Func> bool input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os);
-
-    /** @brief Exception class to report invalid iterator */
-    class InvalidIterator : public std::invalid_argument {
-    public:
-        InvalidIterator();
-    };
 }
 
 /** @brief %Weight */
