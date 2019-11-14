@@ -135,12 +135,15 @@ utils::string_regex& utils::string_regex::operator=(const std::string &s){
 utils::string_regex::operator std::string() const{
     return s_;
 }
-bool utils::string_regex::operator<(const utils::string_regex &s) const{
-    return ((std::string)*this < (std::string)s);
-}
-bool utils::string_regex::operator==(const utils::string_regex &s) const{
-    return ((std::string)*this == (std::string)s);
-}
+
+bool utils::string_regex::operator==(const utils::string_regex &s) const{ return ((std::string)*this == (std::string)s);}
+bool utils::string_regex::operator!=(const utils::string_regex &s) const{ return !(*this == s); }
+bool utils::string_regex::operator< (const utils::string_regex &s) const{ return ((std::string)*this <  (std::string)s); }
+bool utils::string_regex::operator> (const utils::string_regex &s) const{ return (s < *this); }
+bool utils::string_regex::operator<=(const utils::string_regex &s) const{ return !(*this > s); }
+bool utils::string_regex::operator>=(const utils::string_regex &s) const{ return !(*this < s); }
+
+
 namespace utils{
     std::istream& operator>>(std::istream &is,       utils::string_regex &s){
         std::string ss; is >> ss;

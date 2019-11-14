@@ -153,14 +153,24 @@ namespace utils {
          */
         explicit ufloat(const T &u);
 
-        /** @brief Overload of operator< */
-        bool operator<(const ufloat<T> &t) const;
-        /** @brief Overload of operator> */
-        bool operator>(const ufloat<T> &t) const;
+        /** @brief Overload of operator==. */
+        bool operator==(const ufloat<T> &s) const;
+        /** @brief Overload of operator!=. */
+        bool operator!=(const ufloat<T> &s) const;
+        /** @brief Overload of operator<. */
+        bool operator< (const ufloat<T> &s) const;
+        /** @brief Overload of operator>. */
+        bool operator> (const ufloat<T> &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator<=(const ufloat<T> &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator>=(const ufloat<T> &s) const;
+
         /** @brief Overload of operator+= */
         ufloat<T>& operator+=(const ufloat<T> &t);
         /** @brief overload of operator- */
         ufloat<T> operator-(const ufloat<T> &t) const;
+
         /**
          * @brief Conversion to underlying type.
          */
@@ -203,19 +213,29 @@ namespace utils {
         explicit string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
         /** @brief Overload of operator= */
         string_regex& operator=(const std::string &s);
-        /**
-         * @brief Conversion of regex-checked string to std::string.
-         */
+
+        /** @brief Conversion of regex-checked string to std::string. */
         explicit operator std::string() const;
-        /** @brief Overload of operator< */
-        bool operator< (const utils::string_regex &s) const;
-        /** @brief Overload of operator== */
+
+        /** @brief Overload of operator==. */
         bool operator==(const utils::string_regex &s) const;
-        /** @brief Overload of operator>> */
+        /** @brief Overload of operator!=. */
+        bool operator!=(const utils::string_regex &s) const;
+        /** @brief Overload of operator<. */
+        bool operator< (const utils::string_regex &s) const;
+        /** @brief Overload of operator>. */
+        bool operator> (const utils::string_regex &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator<=(const utils::string_regex &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator>=(const utils::string_regex &s) const;
+
+        /** @brief Overload of operator>>. */
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
-        /** @brief Overload of operator<< */
+        /** @brief Overload of operator<<. */
         friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);
         /** @brief Exception thrown when string does not match regex */
+
         class FailedRegex: public std::invalid_argument{
         private:
             const std::string s_;
@@ -295,12 +315,26 @@ template<class T> utils::ufloat<T>::ufloat(const T &u){
         throw utils::ufloat<T>::InvalidUFloat(u);
     u_ = u;
 }
-template<class T> bool utils::ufloat<T>::operator<(const ufloat<T> &t) const{
+
+template<class T> bool utils::ufloat<T>::operator==(const ufloat<T> &t) const{
+    return (u_ == t.u_);
+}
+template<class T> bool utils::ufloat<T>::operator!=(const ufloat<T> &t) const{
+    return (u_ != t.u_);
+}
+template<class T> bool utils::ufloat<T>::operator< (const ufloat<T> &t) const{
     return (u_ < t.u_);
 }
-template<class T> bool utils::ufloat<T>::operator>(const ufloat<T> &t) const{
+template<class T> bool utils::ufloat<T>::operator> (const ufloat<T> &t) const{
     return (u_ > t.u_);
 }
+template<class T> bool utils::ufloat<T>::operator<=(const ufloat<T> &t) const{
+    return (u_ <= t.u_);
+}
+template<class T> bool utils::ufloat<T>::operator>=(const ufloat<T> &t) const{
+    return (u_ >= t.u_);
+}
+
 template<class T> utils::ufloat<T>& utils::ufloat<T>::operator+=(const ufloat<T> &t){
     u_ += t.u_;
     return *this;
