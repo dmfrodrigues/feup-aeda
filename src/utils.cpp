@@ -22,18 +22,6 @@ void utils::to_lower(std::string &s) {
     std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) -> unsigned char { return std::tolower(c); });
 }
 
-bool utils::confirm(std::string msg, std::istream &is, std::ostream &os) {
-    std::string input;
-    while (true) {
-        if (!utils::input(msg, input, is, os)) return false;
-        to_lower(input);
-        if (input == "yes" || input == "y" || input == "no" || input == "n") break;
-        std::cout << "Error: Only \'yes\'/\'y\' or \'no\'/\'n\' are valid options.\n";
-    }
-    if (input == "yes" || input == "y") return true;
-    os << "Operation cancelled.\n"; return false;
-}
-
 std::string utils::itos(const long long int &i){
     std::stringstream ss;
     ss << i;
@@ -147,12 +135,15 @@ utils::string_regex& utils::string_regex::operator=(const std::string &s){
 utils::string_regex::operator std::string() const{
     return s_;
 }
-bool utils::string_regex::operator<(const utils::string_regex &s) const{
-    return ((std::string)*this < (std::string)s);
-}
-bool utils::string_regex::operator==(const utils::string_regex &s) const{
-    return ((std::string)*this == (std::string)s);
-}
+
+bool utils::string_regex::operator==(const utils::string_regex &s) const{ return ((std::string)*this == (std::string)s);}
+bool utils::string_regex::operator!=(const utils::string_regex &s) const{ return !(*this == s); }
+bool utils::string_regex::operator< (const utils::string_regex &s) const{ return ((std::string)*this <  (std::string)s); }
+bool utils::string_regex::operator> (const utils::string_regex &s) const{ return (s < *this); }
+bool utils::string_regex::operator<=(const utils::string_regex &s) const{ return !(*this > s); }
+bool utils::string_regex::operator>=(const utils::string_regex &s) const{ return !(*this < s); }
+
+
 namespace utils{
     std::istream& operator>>(std::istream &is,       utils::string_regex &s){
         std::string ss; is >> ss;
@@ -186,7 +177,3 @@ template<> bool utils::input<std::string>(const std::string &msg, std::string &o
         }
     }
 }
-
-///INVALID ITERATOR
-utils::InvalidIterator::InvalidIterator():
-    std::invalid_argument("Invalid iterator (iterator is out of the range)") {}

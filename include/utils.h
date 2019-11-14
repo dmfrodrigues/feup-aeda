@@ -47,15 +47,6 @@ namespace utils {
     void to_lower(std::string &s);
 
     /**
-     * @brief Confirms user input via a yes/no validation.
-     * @param msg Message to display before asking for input
-     * @param is Input stream
-     * @param os Output stream
-     * @return True if input is 'yes', false if inputs a 'no'
-     */
-    bool confirm(std::string msg, std::istream &is, std::ostream &os);
-
-    /**
      * @brief       Convert integer to string.
      * @param   i   Integer to convert
      * @return      String that resulted from converting \a i.
@@ -162,14 +153,24 @@ namespace utils {
          */
         explicit ufloat(const T &u);
 
-        /** @brief Overload of operator< */
-        bool operator<(const ufloat<T> &t) const;
-        /** @brief Overload of operator> */
-        bool operator>(const ufloat<T> &t) const;
+        /** @brief Overload of operator==. */
+        bool operator==(const ufloat<T> &s) const;
+        /** @brief Overload of operator!=. */
+        bool operator!=(const ufloat<T> &s) const;
+        /** @brief Overload of operator<. */
+        bool operator< (const ufloat<T> &s) const;
+        /** @brief Overload of operator>. */
+        bool operator> (const ufloat<T> &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator<=(const ufloat<T> &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator>=(const ufloat<T> &s) const;
+
         /** @brief Overload of operator+= */
         ufloat<T>& operator+=(const ufloat<T> &t);
         /** @brief overload of operator- */
         ufloat<T> operator-(const ufloat<T> &t) const;
+
         /**
          * @brief Conversion to underlying type.
          */
@@ -212,19 +213,29 @@ namespace utils {
         explicit string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
         /** @brief Overload of operator= */
         string_regex& operator=(const std::string &s);
-        /**
-         * @brief Conversion of regex-checked string to std::string.
-         */
+
+        /** @brief Conversion of regex-checked string to std::string. */
         explicit operator std::string() const;
-        /** @brief Overload of operator< */
-        bool operator< (const utils::string_regex &s) const;
-        /** @brief Overload of operator== */
+
+        /** @brief Overload of operator==. */
         bool operator==(const utils::string_regex &s) const;
-        /** @brief Overload of operator>> */
+        /** @brief Overload of operator!=. */
+        bool operator!=(const utils::string_regex &s) const;
+        /** @brief Overload of operator<. */
+        bool operator< (const utils::string_regex &s) const;
+        /** @brief Overload of operator>. */
+        bool operator> (const utils::string_regex &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator<=(const utils::string_regex &s) const;
+        /** @brief Overload of operator<= .*/
+        bool operator>=(const utils::string_regex &s) const;
+
+        /** @brief Overload of operator>>. */
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
-        /** @brief Overload of operator<< */
+        /** @brief Overload of operator<<. */
         friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);
         /** @brief Exception thrown when string does not match regex */
+
         class FailedRegex: public std::invalid_argument{
         private:
             const std::string s_;
@@ -271,7 +282,7 @@ namespace utils {
      * @param   r   Past-the-last iterator
      * @param   obj Object to find
      */
-    template<class Iterator, class T            > Iterator find   (Iterator l, Iterator r, T obj);
+    template<class Iterator, class T   > Iterator find   (Iterator l, Iterator r, T obj);
 
     /**
      * @brief Verify is string given is cancel command ("cancel").
@@ -282,12 +293,6 @@ namespace utils {
     template<class T> bool input(const std::string &msg, T &object, std::istream &is, std::ostream &os);
     template<> bool input<std::string>(const std::string &msg, std::string &object, std::istream &is, std::ostream &os);
     template<class T, class Func> bool input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os);
-
-    /** @brief Exception class to report invalid iterator */
-    class InvalidIterator : public std::invalid_argument {
-    public:
-        InvalidIterator();
-    };
 }
 
 /** @brief %Weight */
@@ -310,12 +315,26 @@ template<class T> utils::ufloat<T>::ufloat(const T &u){
         throw utils::ufloat<T>::InvalidUFloat(u);
     u_ = u;
 }
-template<class T> bool utils::ufloat<T>::operator<(const ufloat<T> &t) const{
+
+template<class T> bool utils::ufloat<T>::operator==(const ufloat<T> &t) const{
+    return (u_ == t.u_);
+}
+template<class T> bool utils::ufloat<T>::operator!=(const ufloat<T> &t) const{
+    return (u_ != t.u_);
+}
+template<class T> bool utils::ufloat<T>::operator< (const ufloat<T> &t) const{
     return (u_ < t.u_);
 }
-template<class T> bool utils::ufloat<T>::operator>(const ufloat<T> &t) const{
+template<class T> bool utils::ufloat<T>::operator> (const ufloat<T> &t) const{
     return (u_ > t.u_);
 }
+template<class T> bool utils::ufloat<T>::operator<=(const ufloat<T> &t) const{
+    return (u_ <= t.u_);
+}
+template<class T> bool utils::ufloat<T>::operator>=(const ufloat<T> &t) const{
+    return (u_ >= t.u_);
+}
+
 template<class T> utils::ufloat<T>& utils::ufloat<T>::operator+=(const ufloat<T> &t){
     u_ += t.u_;
     return *this;
