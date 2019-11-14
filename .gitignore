@@ -9,3 +9,6 @@ doc/*.log
 doc/*.out
 doc/*.gz
 doc/*.toc
+doc/*.nav
+doc/*.snm
+doc/*.pdf

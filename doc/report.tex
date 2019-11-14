@@ -1,72 +1,41 @@
-\documentclass{article}
-% Margins
-\usepackage[top=35mm,bottom=35mm,left=25mm,right=25mm]{geometry}
-% Graphics and images
-\usepackage{graphicx}
-	\graphicspath{{./images/}}
-% Encodings (to render letters with diacritics and special characters)
+\documentclass{beamer}
 \usepackage[utf8]{inputenc}
-% Language
-\usepackage[portuguese]{babel}
-% Hyperreferences
-\usepackage{hyperref}
-% Section pagebreaks
-\usepackage{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
-% Source code
-\usepackage{listings}
-\usepackage{xcolor}
-\renewcommand{\lstlistingname}{Ficheiro}
-\lstset{
-    frame=tb, % draw frame at top and bottom of the code
-    tabsize=4, % tab space width
-    numbers=left, % display line numbers on the left
-	showstringspaces=false, % don't mark spaces in strings    
-    commentstyle=\color{green}, % comment color
-    keywordstyle=\color{blue}, % keyword color
-    stringstyle=\color{red} % string color
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\pdfstringdefDisableCommands{
+  \def\\{}
+  \def\texttt#1{<#1>}
 }
-% Tables with bold rows
+
+\newcommand{\email}[1]{
+{\footnotesize \texttt{\href{mailto:#1}{#1}} }
+}
+
 \usepackage{tabularx}
-\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
-\newcommand\clearrow{\global\let\rowmac\relax}
-\clearrow
-% Math stuff
-\usepackage[mathscr]{euscript}
-\usepackage{amsmath,amssymb}
-\usepackage{mathtools}
-\usepackage{enumitem}
-\newcommand{\expnumber}[2]{{#1}\mathrm{e}{#2}} % scientific notation
-% Definitions, theorems, remarks,...
-\usepackage{amsthm}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{lemma}[theorem]{Lemma}
-\renewcommand\qedsymbol{$\blacksquare$}
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-% Metadata
-\title{Relatório}
-\author{Diogo Miguel Ferreira Rodrigues\\Telmo Baptista\\Luís}
-\date{15 de novembro de 2019}
-% Headers and footers
-\usepackage{fancyhdr}
-\pagestyle{fancyplain}
-\fancyhf{}
-\lhead{ \fancyplain{}{Relatório}}
-\lfoot{ \fancyplain{}{Uma coisa}}
-\rfoot{ \fancyplain{}{\thepage} }
-% Contents title
-\addto\captionsportuguese{\renewcommand*\contentsname{Índice}}
-% Document
+ 
+%Information to be included in the title page:
+\AtBeginDocument{
+\title[Tema 5 (Parte 1)]{Empresa de Transporte de Mercadorias (Parte 1)}
+\subtitle{Transportes SML}
+\author[T5G3]{
+\begin{tabular}{r l}
+	\email{up201806429@fe.up.pt} & Diogo Miguel Ferreira Rodrigues        \\
+	\email{up201806554@fe.up.pt} & Telmo Alexandre Espirito Santo Baptista\\
+	\email{up201306340@fe.up.pt} & Luís Paulo da Rocha Miranda
+\end{tabular}
+}
+\institute[FEUP/AEDA]{Faculdade de Engenharia da Universidade do Porto \\ Algoritmos e Estruturas de Dados (AEDA) - Turma 5, grupo 3} 
+\date[16/nov/2019]{16 de novembro de 2019}
+}
+
 \begin{document}
-\maketitle
-\tableofcontents
-\section{Secção}
-Olá!
-\subsection{Subsecção}
-Uma subsecção!
-\subsubsection{Subsubsecção}
-E agora uma subsubsecção!
+\frame{\titlepage}
+\begin{frame}
+\frametitle{Sample frame title}
+This is a text in the first frame. This is a text in the first frame. This is a text in the first frame.
+\end{frame}
+ 
 \end{document}
+
