@@ -16,7 +16,7 @@
 - [x] Use linear structures to manage entities
 - [x] Allow for total and partial listings with user-defined criteria
 - [x] Use different ordering criteria in the listings
-- [ ] Clients can request a service, with origin, destination, travel time,...
+- [x] Clients can request a service, with origin, destination, travel time,...
 - [ ] List the monthly values the company gets from all its transports, from a given truck, and from all trucks of a given kind.
 - [x] List clients
 - [x] List services
@@ -29,7 +29,7 @@
 - [x] Login for clients, managers and drivers
 - [x] Add, remove and edit truck
 - [x] Add, remove and edit client, manager and driver
-- [ ] Allow clients and managers to add services
+- [x] Allow clients and managers to add services
 - [x] Show list of clients
 - [x] Show list of trucks
 - [ ] Show to a driver a list of his services

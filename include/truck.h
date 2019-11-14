@@ -117,7 +117,9 @@ public:
     /// @brief Get category.
     const Category&    get_category         () const;
     /// @brief Get cargo pointer.
-    const CargoTrans* get_cargo() const;
+    const CargoTrans*  get_cargo            () const;
+    /// @brief Get cargo pointer (non-const)
+    CargoTrans*&       get_cargo_nc         ()      ;
     /// @brief Get type of vehicle (always Truck)
     virtual Type get_type(void) const;
 
@@ -139,12 +141,12 @@ public:
     bool in(std::istream &is, std::ostream &os);
     /**
      * @brief Allows edition of property specified.
-     * @param command Command to add/edit cargo
+     * @param property Property to be edited
      * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
      */
-    bool edit(std::string command, std::istream &is, std::ostream &os);
+    bool edit(int property, std::istream &is, std::ostream &os);
 };
 
 #endif /* end of include guard: TRUCK_H_INCLUDED */

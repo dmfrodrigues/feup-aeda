@@ -163,28 +163,28 @@ bool CargoRefrigerated::edit(int property, std::istream &is, std::ostream &os) {
 
     switch (property) {
         case 2:
-        while (true) {
-            try {
-                float tmin, tmax;
-                if (!utils::input("Minimum temperature: ", tmin, is, os)||
-                !utils::input("Maximum temperature: ", tmax, is, os)) return false;
+            while (true) {
+                try {
+                    float tmin, tmax;
+                    if (!utils::input("Minimum temperature: ", tmin, is, os)||
+                    !utils::input("Maximum temperature: ", tmax, is, os)) return false;
 
-                TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
+                    TemperatureRange temp_range = TemperatureRange(Temperature(tmin), Temperature(tmax));
 
-                Tr_ = temp_range;
-                return true;
-            } catch (TemperatureRange::InvalidTemperatureRange &itr) {
-                std::cout << "Error: " << itr.what() << "\n";
-            } catch (Temperature::InvalidTemperature &it) {
-                std::cout << it.what() << "\n";
-            } catch (...) {
-                std::cout << "Error: Invalid input\n";
+                    Tr_ = temp_range;
+                    return true;
+                } catch (TemperatureRange::InvalidTemperatureRange &itr) {
+                    std::cout << "Error: " << itr.what() << "\n";
+                } catch (Temperature::InvalidTemperature &it) {
+                    std::cout << it.what() << "\n";
+                } catch (...) {
+                    std::cout << "Error: Invalid input\n";
+                }
             }
-        }
-        break;
+            break;
         default:
-        return false;
-        break;
+            return false;
+            break;
     }
 }
 
@@ -211,32 +211,32 @@ bool CargoDangerous::edit(int property, std::istream &is, std::ostream &os) {
 
     switch (property) {
         case 2:
-        {
-            std::string input;
-            std::string msg = "Danger Levels -> None(0) | Miscellaneous(1) | Gases(2)\n"
-            "  Flammable Liquids(3) | Flammable Solids(4) | Oxydizing Agents(5)\n"
-            "  Explosives(6) | Corrosive(7) | Toxic (8) | Radioactive(9)\nDanger Level: ";
-            while (true) {
-                if (!utils::input(msg, input, is, os)) return false;
-                utils::to_lower(input);
-                if (input == "none"  ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;   break; }
-                if (input == "miscellaneous"   ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;    break; }
-                if (input == "gases" ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                if (input == "flammable solids"||  input == "4")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                if (input == "oxydizing agents"||  input == "5")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                if (input == "explosives" ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                if (input == "corrosive"  ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                if (input == "toxic" ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                if (input == "radioactive"||  input == "9")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
-                else { std::cout << "Error: Invalid danger level.\n"; }
+            {
+                std::string input;
+                std::string msg = "Danger Levels -> None(0) | Miscellaneous(1) | Gases(2)\n"
+                "  Flammable Liquids(3) | Flammable Solids(4) | Oxydizing Agents(5)\n"
+                "  Explosives(6) | Corrosive(7) | Toxic (8) | Radioactive(9)\nDanger Level: ";
+                while (true) {
+                    if (!utils::input(msg, input, is, os)) return false;
+                    utils::to_lower(input);
+                    if (input == "none"  ||  input == "0")   { danger_level_ = Cargo::DangerLevel::None;   break; }
+                    if (input == "miscellaneous"   ||  input == "1")   { danger_level_ = Cargo::DangerLevel::Miscellaneous;    break; }
+                    if (input == "gases" ||  input == "2")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    if (input == "flammable liquids"    ||  input == "3")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    if (input == "flammable solids"||  input == "4")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    if (input == "oxydizing agents"||  input == "5")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    if (input == "explosives" ||  input == "6")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    if (input == "corrosive"  ||  input == "7")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    if (input == "toxic" ||  input == "8")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    if (input == "radioactive"||  input == "9")   { danger_level_ = Cargo::DangerLevel::Gases;  break; }
+                    else { std::cout << "Error: Invalid danger level.\n"; }
+                }
+                return true;
             }
-            return true;
-        }
-        break;
+            break;
         default:
-        return false;
-        break;
+            return false;
+            break;
     }
 }
 bool CargoDangerous::in(std::istream &is, std::ostream &os) {
@@ -285,14 +285,16 @@ const double&   CargoTrans::get_E_W() const{ return E_W_; }
 
 bool CargoTrans::in(std::istream &is, std::ostream &os) {
     if(!Cargo::in(is, os)) return false;
-    if(!utils::input("Expenses per kilometer: ", E_D_, is, os)) return false;
-    else   return true;
+    if(!utils::input("Distance factor: ", E_D_, is, os)) return false;
+    if(!utils::input("Weight factor: ", E_W_, is, os))   return false;
+    else                                                 return true;
 }
 bool CargoTrans::edit(int property, std::istream &is, std::ostream &os) {
     if (property < 2 && !Cargo::edit(property, is, os)) return false;
     switch (property) {
         case 2: std::cout << "Error: Base price can't be changed.\n"; return false;
-        case 3: return utils::input("Expenses per kilometer: ", E_D_, is, os);
+        case 3: return utils::input("Distance factor: ", E_D_, is, os);
+        case 4: return utils::input("Weight factor: ", E_W_, is, os);
         default: return false;
     }
 }
@@ -347,11 +349,11 @@ bool CargoTransRefrigerated::in(std::istream &is, std::ostream &os) {
     else   return true;
 }
 bool CargoTransRefrigerated::edit(int property, std::istream &is, std::ostream &os) {
-    if (property < 3)
-    if (!CargoTrans::edit(property, is, os)) return false;
+    if (property <= 4)
+        if (!CargoTrans::edit(property, is, os)) return false;
 
     switch (property) {
-        case 4:
+        case 5:
         while (true) {
             try {
                 float tmin, tmax;
@@ -372,11 +374,11 @@ bool CargoTransRefrigerated::edit(int property, std::istream &is, std::ostream &
             }
         }
         break;
-        case 5:
-        std::cout << "Error: Base price can't be changed.\n";
+        case 6:
+        std::cout << "Error: Reference temperature can't be changed.\n";
         return false;
         break;
-        case 6:
+        case 7:
         if (!utils::input("Temperature factor: ", E_T_, is, os)) return false;
         else   return true;
         break;
@@ -428,11 +430,11 @@ bool CargoTransDangerous::in(std::istream &is, std::ostream &os) {
     return true;
 }
 bool CargoTransDangerous::edit(int property, std::istream &is, std::ostream &os) {
-    if (property < 3)
+    if (property <= 4)
     if (!CargoTrans::edit(property, is, os)) return false;
 
     switch (property) {
-        case 4:
+        case 5:
         {
             std::string input;
             std::string msg = "Danger Levels -> None(0) | Miscellaneous(1) | Gases(2)\n"

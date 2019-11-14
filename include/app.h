@@ -113,6 +113,8 @@ private:
     Truck* chooseTruck();
     bool deleteTruck();
     bool editTruck();
+    bool change_truck_cargo(CargoTrans *&cargo, const Cargo::Type &type);
+    bool edit_truck_cargo(CargoTrans *&cargo, int property);
 
     bool addService();
     bool addService(const User *user);
@@ -133,6 +135,11 @@ private:
     bool get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
     std::vector<Driver*> get_available_drivers(const Time &tbegin, const Time &tend) const;
     std::vector<Truck *> get_available_trucks (const Time &tbegin, const Time &tend, const Cargo *c) const;
+
+    // Menus
+    bool guestMenu(User* &user);
+    bool printUserMenu(User::Type user_type);
+    bool userMenu(User *user, User::Type user_type);
 public:
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
@@ -140,12 +147,6 @@ public:
         const std::string &trucks  , const std::string &services);
 
     ~App();
-
-    bool guestMenu(User* &user);
-
-    bool printUserMenu(User::Type user_type);
-
-    bool userMenu(User *user, User::Type user_type);
 
     void start();
 

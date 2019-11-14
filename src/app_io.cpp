@@ -211,21 +211,127 @@ bool App::editTruck() {
     Truck *truck_copy = Truck::deep_copy(truck);
     while (true) {
         App::display(truck_copy);
-        if (!utils::input("To add/change cargo use command:\n"
-                          "     add cargo [type]\n"
-                          "     edit cargo [order_number] [property]\n"
-                          "     delete cargo [order_number]\n"
+        if (!utils::input("To change/edit cargo use command (changing cargo will override the existing cargo):\n"
+                          "     change cargo \033[4mtype\033[0m\n"
+                          "     edit cargo \033[4mproperty\033[0m\n"
                           "Types available: Normal, Animal, Refrigerated, Dangerous.\n"
                           "Choose property to change (type cancel to finish): ", command, std::cin, std::cout)) break;
         if (command == "0") { error("Property that can't be changed."); continue; }
-        if (truck_copy->edit(command, std::cin, std::cout)) is_edited = true;
+        std::vector<std::string> cmd = utils::parse_command(command);
+        try {
+            if (cmd.size() == 1) {
+                int property = utils::stoi(cmd.at(0));
+                if (truck_copy->edit(property, std::cin, std::cout)) is_edited = true;
+            } else if (cmd.size() == 3) {
+                if (cmd.at(0) == "change" && cmd.at(1) == "cargo") {
+                    std::string type = cmd.at(2);
+                    utils::to_lower(type);
+                    if (type == "normal") {
+                        if (change_truck_cargo(truck_copy->get_cargo_nc(), Cargo::Type::Normal)) is_edited = true;
+                        continue;
+                    } else if (type == "animal") {
+                        if (change_truck_cargo(truck_copy->get_cargo_nc(), Cargo::Type::Animal)) is_edited = true;
+                        continue;
+                    } else if (type == "refrigerated") {
+                        if (change_truck_cargo(truck_copy->get_cargo_nc(), Cargo::Type::Refrigerated)) is_edited = true;
+                        continue;
+                    } else if (type == "dangerous") {
+                        if (change_truck_cargo(truck_copy->get_cargo_nc(), Cargo::Type::Dangerous)) is_edited = true;
+                        continue;
+                    } else {
+                        error("Invalid cargo type.\n");
+                        continue;
+                    }
+                } else if (cmd.at(0) == "edit" && cmd.at(1) == "cargo") {
+                    int property = utils::stoi(cmd.at(2));
+                    if (edit_truck_cargo(truck_copy->get_cargo_nc(), property)) is_edited = true;
+                    continue;
+                } else {
+                    error("Invalid command.\n");
+                    continue;
+                }
+            } else {
+                error("Invalid command.\n");
+                continue;
+            }
+        } catch (std::invalid_argument &ia) {
+            error("Invalid command.\n");
+            continue;
+        } catch (std::exception &ex) {
+            error(ex.what());
+            continue;
+        }
     }
     if (is_edited) {
-        if (!confirm("Confirm the edition of truck \'" + std::string(truck_copy->get_numberplate()) + "\' (yes/no): ")) { delete truck_copy; return false; }
+        if (!App::confirm("Confirm the edition of truck \'" + std::string(truck_copy->get_numberplate()) + "\' (yes/no): ")) { delete truck_copy; return false; }
         *it = truck_copy;
         std::cout << "Truck edited.\n";
+        return true;
     }
-    delete truck;
+    return false;
+}
+
+bool App::change_truck_cargo(CargoTrans *&cargo, const Cargo::Type &type) {
+    CargoTrans *cargo_copy;
+    switch (type) {
+    case Cargo::Type::Normal:
+        cargo_copy = new CargoTrans();
+        if (!cargo_copy->in(std::cin, std::cout)) { delete cargo; return false; }
+        break;
+    case Cargo::Type::Animal:
+        cargo_copy = new CargoTransAnimal();
+        if (!cargo_copy->in(std::cin, std::cout)) { delete cargo; return false; }
+        break;
+    case Cargo::Type::Refrigerated:
+        cargo_copy = new CargoTransRefrigerated();
+        if (!cargo_copy->in(std::cin, std::cout)) { delete cargo; return false; }
+        break;
+    case Cargo::Type::Dangerous:
+        cargo_copy = new CargoTransDangerous();
+        if (!cargo_copy->in(std::cin, std::cout)) { delete cargo; return false; }
+        break;
+    default:
+        error("Invalid cargo type.");
+        return false;
+        break;
+    }
+    if (!App::confirm("Confirm the change of cargo, this will override the existing cargo (yes/no): ")) { delete cargo_copy; return false; }
+    if (cargo != NULL) delete cargo;
+    cargo = cargo_copy;
+    std::cout << "Cargo changed.\n";
+    return true;
+}
+
+bool App::edit_truck_cargo(CargoTrans *&cargo, int property) {
+    if (cargo == NULL) { error("Invalid cargo."); return false; }
+    CargoTrans *cargo_copy;
+    Cargo::Type cargo_type = cargo->get_type();
+    switch(cargo_type) {
+    case Cargo::Type::Normal:
+        cargo_copy = new CargoTrans();
+        *dynamic_cast<CargoTrans*>(cargo_copy) = *dynamic_cast<CargoTrans*>(cargo);
+        break;
+    case Cargo::Type::Animal:
+        cargo_copy = new CargoTransAnimal();
+        *dynamic_cast<CargoTransAnimal*>(cargo_copy) = *dynamic_cast<CargoTransAnimal*>(cargo);
+        break;
+    case Cargo::Type::Refrigerated:
+        cargo_copy = new CargoTransRefrigerated();
+        *dynamic_cast<CargoTransRefrigerated*>(cargo_copy) = *dynamic_cast<CargoTransRefrigerated*>(cargo);
+        break;
+    case Cargo::Type::Dangerous:
+        cargo_copy = new CargoTransDangerous();
+        *dynamic_cast<CargoTransDangerous*>(cargo_copy) = *dynamic_cast<CargoTransDangerous*>(cargo);
+        break;
+    default:
+        error("Invalid cargo type");
+        return false;
+    }
+    cargo_copy->edit(property, std::cin, std::cout);
+    if (!App::confirm("Confirm the edition of cargo (yes/no): ")) { delete cargo_copy; return false; }
+    *cargo = *cargo_copy;
+    delete cargo_copy;
+    std::cout << "Cargo edited.\n";
     return true;
 }
 
