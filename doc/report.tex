@@ -44,9 +44,145 @@
 Modelar um problema recorrendo ao paradigma da orientação por objetos e usar a linguagem C++ para implementar a solução correspondente.
 \end{quote}
 \begin{quote}
-A empresa Transportes SML é especialista no transporte de mercadorias. A empresa possui um número fixo de camiões de diferentes tipos, específicos para o transporte de determinada mercadoria...
+A empresa Transportes SML é especialista no transporte de mercadorias. A empresa possui um número fixo de camiões de diferentes tipos, específicos para o transporte de determinada mercadoria [...]
+\end{quote}
+\begin{quote}
+Os clientes [...] podem requisitar serviços de transporte de mercadorias, [...] (o que) pode obrigar ao uso de múltiplos camiões por parte da empresa.
+\end{quote}
+\begin{quote}
+Interessa conhecer os valores mensais que a empresa retira dos seus serviços de transporte, para cada um dos tipos de camião e no geral. Deve ser possível monitorar os clientes da empresa e serviços efetuados.
 \end{quote}
 \end{frame}
+
+\begin{frame}
+\frametitle{Solução}
+Os utilizadores da aplicação devem fazer login, e possuem permissões diferentes consoante o seu tipo:
+\begin{itemize}
+	\item Funcionário (\texttt{Employee})
+	\begin{itemize}
+		\item Gestor (\texttt{Manager})
+		\item Condutor (\texttt{Driver})
+	\end{itemize}
+	\item Cliente (\texttt{Client})
+\end{itemize}
+
+Um só tipo de camiões (\texttt{Truck}), que pode carregar uma carga (\texttt{Cargo}) de um dos tipos, cujo preço de transporte varia:
+\begin{itemize}
+	\item Normal (\texttt{Normal})
+	\item Animal (\texttt{Animal})
+	\item Refrigerada (\texttt{Refrigerated})
+	\item Perigoso (\texttt{Dangerous})
+\end{itemize}
+
+Todos os utilizadores podem ver e editar as suas informações pessoais.
+O cliente pode ver e editar os seus serviços ativos, ou requisitar um novo. 
+O condutor pode ver e editar os seus serviços ativos, bem como ver a lista de camiões disponíveis e as suas estatísticas mensais..
+O gestor pode fazer tudo isto e ainda ver as listas de clientes e funcionários (completas ou filtradas por um argumento específico), com possibilidade de edição para qualquer um destes, além de poder ver os valores mensais de toda a empresa e outras estatísticas.
+\end{frame}
+
+\begin{frame}
+Quando um cliente requisita um serviço, são atribuídos automaticamente condutores e camiões.
+Algoritmo de ordenação mergesort, pesquisa linear
+\end{frame}
+
+\begin{frame}
+\frametitle{Diagrama de classes}
+***** Falar sobre a organizaçao das classes etc?? por exemplo: Foram implementadas as classes “Person” (da qual derivam “Client” e “Employee”, da qual derivam “Driver” e “Manager”), “Trucks”, “Cargo” e “Service”.  ****
+- algoritmos relevantes - estava a pensar falarmos aqui da atribuiçao dos serviços
+
+- diagrama de classes
+- diagrama de classes
+\end{frame}
+
+\begin{frame}
+\frametitle{Estrutura de ficheiros}
+clients.txt\\
+Guarda a lista de todos os usuários no seguinte formato: Nome; Número de telemóvel; Nome de utilizador; Password; Morada (Rua e número; Código-Postal; Distrito e País); NIF;\\
+drivers.txt/managers.txt\\
+Guarda a lista de todos os condutores no mesmo formato dos clientes, com uma linha extra equivalente ao salário.
+trucks.txt\\
+Guarda a lista de todos os camiões da empresa no seguinte formato: Matrícula; Data da matrícula; Combustível (de 0 a 6, de acordo com o tipo); Alcance (em km); Categoria; Número de cargas; Lista de cargas (Peso; Descrição; Preço por km; custo de refrigeração ou nível de perigo, caso se aplique);
+services.txt - falta completar
+\end{frame}
  
+\begin{frame}
+\frametitle{Tratamento de exceções}
+Aqui pra ja so fiz a lista das exceçoes que vi serem tratadas, falta atualizar quando o trabalho estiver pronto e falar um pouco sobre elas provavelmente (nao tenho a certeza do q a prof quer aqui)
+%Time::InvalidTimeFormat::InvalidTimeFormat(const std::string \&fmt)
+%std::invalid_argument::invalid_argument(const std:string \&arg)
+%Temperature::InvalidTemperature::InvalidTemperature(const float \&temp)
+%utils::string_regex::FailedRegex::FailedRegex(const std::string \&s, const std::string \&REGEX_STR)
+%* std::system_error::system_error
+%App::InvalidCredentials::InvalidCredentials(const std::string \&msg)
+%App::RepeatedId::RepeatedId(const std::string \&id)
+%App::InvalidSchedule::InvalidSchedule(const std::string \&id)
+\end{frame}
+
+\begin{frame}
+\frametitle{Lista de funcionalidades} 
+Clients can request a service, with origin, destination, travel time,...\\
+Show list of clients; add edit or remove clients;\\
+ Show list of trucks; add edit or remove trucks;\\
+ Login for clients, managers and drivers\\
+ Add, remove and edit truck\\
+ Add, remove and edit client, manager and driver\\
+ When a driver arrives to a place, he needs to have someone's contact for loading/unloading, which might or might not be the client for whom the service is being made\\
+
+(tenho atualizado conforme tem sido feito, é capaz de ja ter mais alguma coisa desde ontem a noite, mas tambem mais vale so atualizar no fim)
+\end{frame}
+
+\begin{frame}
+AS VÁRIAS LISTAS E OPÇÕES DAS LISTAS (ORDENAÇÃO, FILTRAGEM,...)
+\end{frame}
+
+\begin{frame}
+\frametitle{Destaque de funcionalidade}
+\end{frame}
+
+\begin{frame}
+\frametitle{Dificuldades}
+Trabalho de grupo = colaboração + trabalho individual\\
+Neste trabalho as classes estavam muito interligadas umas com as outras e com a estrutura da aplicação, pelo que foi dificil compartimentar tarefas e classes/funções
+\end{frame}
+
+\begin{frame}
+\begin{minipage}[t]{0.33\linewidth}
+	\textbf{Diogo Rodrigues}
+	{\footnotesize \begin{itemize}
+		\item \texttt{utils}: quase tudo, incluindo \texttt{stringregex}, \texttt{mergesort}, \texttt{findif}		
+		\item \texttt{Person} e todas as classes derivadas
+		\item \texttt{Truck}: reescreveu
+		\item \texttt{Cargo}: reescreveu				
+		\item I/O ficheiros
+		\item \texttt{App}: tabelas, opções das tabelas e mostrar detalhes de entidades
+		\item \texttt{Time}, \texttt{Address}, \texttt{Phonenumber}, \texttt{Temperature}, \texttt{VAT}
+		\item \texttt{Service} e função de alocação
+	\end{itemize} }
+\end{minipage}%
+\begin{minipage}[t]{0.33\linewidth}
+	\textbf{Telmo Baptista}
+	{\footnotesize \begin{itemize}
+		\item \texttt{utils}: algumas funções
+		\item \texttt{App}: input do utilizador; adição, edição e remoção de entidades
+		\item \texttt{Cargo}: implementou
+		\item \texttt{Person}: alguns métodos
+		\item \texttt{Time}: algumas funções
+		\item \texttt{Truck}: implementou
+	\end{itemize} }
+\end{minipage}%
+\begin{minipage}[t]{0.33\linewidth}
+	\textbf{Luís Miranda}
+	{\footnotesize \begin{itemize}
+		\item Organização da app
+		\item Permissões
+		\item Dados
+		\item Testes
+		\item Apresentação
+	\end{itemize} }
+\end{minipage}
+\end{frame}
 \end{document}
 
+
+
+%	Implementou parte de utils & Implementou algumas funções de utils
