@@ -39,44 +39,52 @@ public:
     static int next_id_;
 
     /** @brief Empty constructor. */
-    Service():cost_(0), revenue_(0){}
-    /** @brief Destructor */
-    ~Service();
-
+    Service();
     /**
      * @brief Constructor creates an empty service linked to a specific user.
      * @param   client_user     Pointer to @ref Client to which the service will be provided
      */
     Service(const Client::Username &client_user);
+    /** @brief Destructor */
+    ~Service();
 
     /// @brief Get ID
-    const std::string&      get_id      () const{ return id_         ; }
+    const std::string&      get_id      () const;
     /// @brief Get client
-    const Client::Username& get_client  () const{ return client_user_; }
+    const Client::Username& get_client  () const;
     /// @brief Get contact 1
-    const Person&           get_contact1() const{ return contact1_   ; }
+    const Person&           get_contact1() const;
     /// @brief Get contact 2
-    const Person&           get_contact2() const{ return contact2_   ; }
+    const Person&           get_contact2() const;
     /// @brief Get time of arrival to loading address
-    const Time&             get_tbegin  () const{ return t_begin_    ; }
+    const Time&             get_tbegin  () const;
     /// @brief Get time of arrival to unloading address
-    const Time&             get_tend    () const{ return t_end_      ; }
+    const Time&             get_tend    () const;
     /// @brief Get loading address
-    const Address&          get_abegin  () const{ return a_begin_    ; }
+    const Address&          get_abegin  () const;
     /// @brief Get unloading address
-    const Address&          get_aend    () const{ return a_end_      ; }
+    const Address&          get_aend    () const;
     /// @brief Get distance between the two addresses
-    const Distance&         get_distance() const{ return distance_   ; }
+    const Distance&         get_distance() const;
     /// @brief Get pointer to cargo
-    const Cargo*            get_cargo   () const{ return cargo_      ; }
+    const Cargo*            get_cargo   () const;
     /// @brief Get trucks assigned to this service
-    const std::vector<Truck ::NumberPlate>& get_trucks () const{ return trucks_ ; }
+    const std::vector<Truck ::NumberPlate>& get_trucks () const;
     /// @brief Get drivers assigned to this service
-    const std::vector<Driver::Username   >& get_drivers() const{ return drivers_; }
+    const std::vector<Driver::Username   >& get_drivers() const;
     /// @brief Get cost of making this service
-    const Currency& get_cost   () const { return cost_; };
+    const Currency& get_cost   () const;
     /// @brief Get revenue from this service
-    const Currency& get_revenue() const { return revenue_   ; };
+    const Currency& get_revenue() const;
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    bool in(std::istream &is, std::ostream &os);
+
     /**
      * @brief Allocate service to the necessary number of trucks and drivers
      */
@@ -86,14 +94,6 @@ public:
     friend std::istream& operator>>(std::istream &is,       Service &s);
     /** @brief Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Service &s);
-
-    /**
-     * @brief Allows input field by field with descriptive messages.
-     * @param is Input stream
-     * @param os Output stream
-     * @return If the input was sucessful
-     */
-    bool in(std::istream &is, std::ostream &os);
 };
 
 #endif //SERVICE_H_INCLUDED

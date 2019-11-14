@@ -4,10 +4,79 @@
 
 int Service::next_id_ = 0;
 
+Service::Service():cost_(0), revenue_(0){}
 Service::Service(const Client::Username &client_user):
     id_(utils::itos(next_id_++)), client_user_(client_user), cost_(0), revenue_(0){}
-
 Service::~Service() { if(cargo_ != NULL) delete cargo_; }
+
+const std::string&      Service::get_id      () const{ return id_         ; }
+const Client::Username& Service::get_client  () const{ return client_user_; }
+const Person&           Service::get_contact1() const{ return contact1_   ; }
+const Person&           Service::get_contact2() const{ return contact2_   ; }
+const Time&             Service::get_tbegin  () const{ return t_begin_    ; }
+const Time&             Service::get_tend    () const{ return t_end_      ; }
+const Address&          Service::get_abegin  () const{ return a_begin_    ; }
+const Address&          Service::get_aend    () const{ return a_end_      ; }
+const Distance&         Service::get_distance() const{ return distance_   ; }
+const Cargo*            Service::get_cargo   () const{ return cargo_      ; }
+const std::vector<Truck ::NumberPlate>& Service::get_trucks () const{ return trucks_ ; }
+const std::vector<Driver::Username   >& Service::get_drivers() const{ return drivers_; }
+const Currency& Service::get_cost   () const { return cost_; }
+const Currency& Service::get_revenue() const { return revenue_   ; }
+
+bool Service::in(std::istream &is, std::ostream &os) {
+    os << "Person to contact on pick-up of merchandise:\n";
+    if (!contact1_.in(is, os)) return false;
+    os << "Address to pick-up merchandise:\n";
+    if (!a_begin_.in(is, os)) return false;
+
+    os << "Person to contact on delivery of merchandise:\n";
+    if (!contact2_.in(is, os)) return false;
+    os << "Address to delivery merchandise:\n";
+    if (!a_end_.in(is, os)) return false;
+
+    while (true) {
+        if (!utils::input("Time to start the service (YYYY/mm/dd HH:MM:SS): ", [](Time &time, const std::string &input) { time.input_time(input); }, t_begin_, is, os)||
+            !utils::input("Time to end service (YYYY/mm/dd HH:MM:SS): ",       [](Time &time, const std::string &input) { time.input_time(input); }, t_end_,   is, os)) return false;
+
+        if (t_begin_ <= t_end_) break;
+        std::cout << "Error: Initial time must be before end time\n";
+    }
+
+    if (!utils::input("Distance: ", distance_, is, os)) return false;
+
+    std::string type;
+    while (true) {
+        if (!utils::input("Types available: Normal, Animal, Refrigerated, Dangerous.\nCargo Type: ", type, is, os)) return false;
+
+        utils::to_lower(type);
+        if (type == "normal") {
+            Cargo *cargo = new Cargo();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "animal") {
+            CargoAnimal *cargo = new CargoAnimal();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "refrigerated") {
+            CargoRefrigerated *cargo = new CargoRefrigerated();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else if (type == "dangerous") {
+            CargoDangerous *cargo = new CargoDangerous();
+            if (!cargo->in(is, os)) { delete cargo; return false; }
+            cargo_ = cargo;
+            break;
+        } else {
+            std::cout << "Error: Invalid cargo type.\n";
+            continue;
+        }
+    }
+    return true;
+}
 
 bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv){
     utils::mergesort(tv, [](const Truck *p1, const Truck *p2){
@@ -82,58 +151,4 @@ std::ostream& operator<<(std::ostream &os, const Service &s){
     os << s.cost_ << "\n"
        << s.revenue_;
     return os;
-}
-
-bool Service::in(std::istream &is, std::ostream &os) {
-    os << "Person to contact on pick-up of merchandise:\n";
-    if (!contact1_.in(is, os)) return false;
-    os << "Address to pick-up merchandise:\n";
-    if (!a_begin_.in(is, os)) return false;
-
-    os << "Person to contact on delivery of merchandise:\n";
-    if (!contact2_.in(is, os)) return false;
-    os << "Address to delivery merchandise:\n";
-    if (!a_end_.in(is, os)) return false;
-
-    while (true) {
-        if (!utils::input("Time to start the service (YYYY/mm/dd HH:MM:SS): ", [](Time &time, const std::string &input) { time.input_time(input); }, t_begin_, is, os)||
-            !utils::input("Time to end service (YYYY/mm/dd HH:MM:SS): ",       [](Time &time, const std::string &input) { time.input_time(input); }, t_end_,   is, os)) return false;
-
-        if (t_begin_ <= t_end_) break;
-        std::cout << "Error: Initial time must be before end time\n";
-    }
-
-    if (!utils::input("Distance: ", distance_, is, os)) return false;
-
-    std::string type;
-    while (true) {
-        if (!utils::input("Types available: Normal, Animal, Refrigerated, Dangerous.\nCargo Type: ", type, is, os)) return false;
-
-        utils::to_lower(type);
-        if (type == "normal") {
-            Cargo *cargo = new Cargo();
-            if (!cargo->in(is, os)) { delete cargo; return false; }
-            cargo_ = cargo;
-            break;
-        } else if (type == "animal") {
-            CargoAnimal *cargo = new CargoAnimal();
-            if (!cargo->in(is, os)) { delete cargo; return false; }
-            cargo_ = cargo;
-            break;
-        } else if (type == "refrigerated") {
-            CargoRefrigerated *cargo = new CargoRefrigerated();
-            if (!cargo->in(is, os)) { delete cargo; return false; }
-            cargo_ = cargo;
-            break;
-        } else if (type == "dangerous") {
-            CargoDangerous *cargo = new CargoDangerous();
-            if (!cargo->in(is, os)) { delete cargo; return false; }
-            cargo_ = cargo;
-            break;
-        } else {
-            std::cout << "Error: Invalid cargo type.\n";
-            continue;
-        }
-    }
-    return true;
 }
