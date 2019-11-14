@@ -26,14 +26,13 @@ protected:
 public:
     /** @brief Empty constructor */
     Person();
-
     /** @brief Destructor */
-    virtual ~Person(){}
+    virtual ~Person();
 
     /** @brief Get name of person. */
-    virtual const std::string& get_name() const final{ return name_; }
+    virtual const std::string& get_name() const final;
     /** @brief Get phonenumber. */
-    virtual const PhoneNumber& get_phonenumber() const final{ return phonenumber_; }
+    virtual const PhoneNumber& get_phonenumber() const final;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -42,7 +41,6 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
-
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
@@ -112,13 +110,13 @@ public:
     User();
 
     /** @brief Get username. */
-    const Username& get_username() const{ return username_     ; }
+    const Username& get_username() const;
     /** @brief Get id (which in this case is the username).*/
-    const Username& get_id      () const{ return get_username(); }
+    const Username& get_id      () const;
     /** @brief Get address. */
-    const Address&  get_address () const{ return address_      ; }
+    const Address&  get_address () const;
     /** @brief Get VAT number */
-    const VAT&      get_vat     () const{ return vat_          ; }
+    const VAT&      get_vat     () const;
     /**
      * @brief Gets the type of user.
      * @return User type
@@ -132,7 +130,6 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
-
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
@@ -185,7 +182,6 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
-
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
@@ -215,7 +211,7 @@ public:
     /** @brief Empty constructor */
     Employee();
 
-    Currency get_base_salary() const{ return base_salary_; }
+    const Currency& get_base_salary() const;
 
     /**
      * @brief Gets the type of user.
@@ -230,7 +226,6 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
-
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
@@ -313,7 +308,6 @@ public:
      * @return If the input was sucessful
      */
     virtual bool in(std::istream &is, std::ostream &os);
-
     /**
      * @brief Allows edition of property specified.
      * @param property Property to be changed
@@ -322,7 +316,6 @@ public:
      * @return If the edit was sucessful
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
-
 
     /** @brief Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Driver &p);

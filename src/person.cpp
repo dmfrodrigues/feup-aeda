@@ -3,8 +3,6 @@
 #include "utils.h"
 
 ///PERSON
-Person::Person(){}
-
 std::istream& Person::input(std::istream &is){
     std::string s; is >> s;
     try{
@@ -16,12 +14,17 @@ std::istream& Person::input(std::istream &is){
     return is;
 }
 
+Person::Person(){}
+Person::~Person(){}
+
+const std::string& Person::get_name       () const { return name_; }
+const PhoneNumber& Person::get_phonenumber() const { return phonenumber_; }
+
 bool Person::in(std::istream &is, std::ostream &os) {
     if (!utils::input("Name: ",         name_,        is, os)||
         !utils::input("Phone Number: ", phonenumber_, is, os)) return false;
     return true;
 }
-
 bool Person::edit(int property, std::istream&is, std::ostream &os) {
     switch(property) {
     case 0:
@@ -66,8 +69,6 @@ User::Password& User::Password::operator=(const std::string &s){
     return *this;
 }
 //User
-User::User():Person(){}
-
 std::istream& User::input(std::istream &is){
     Person::input(is);
     std::string s;
@@ -82,6 +83,13 @@ std::istream& User::input(std::istream &is){
     return is;
 }
 
+User::User():Person(){}
+
+const Username& User::get_username() const{ return username_     ; }
+const Username& User::get_id      () const{ return get_username(); }
+const Address&  User::get_address () const{ return address_      ; }
+const VAT&      User::get_vat     () const{ return vat_          ; }
+
 bool User::in(std::istream &is, std::ostream &os) {
     if (!Person::in(is, os)) return false;
     if (!utils::input("Username: ", username_, is, os)||
@@ -93,7 +101,6 @@ bool User::in(std::istream &is, std::ostream &os) {
 
     return true;
 }
-
 bool User::edit(int property, std::istream&is, std::ostream &os) {
     switch(property) {
     case 0:
@@ -138,19 +145,18 @@ std::ostream& operator<<(std::ostream &os, const User &p){
 }
 
 ///CLIENT
-Client::Client():User(){}
-
 std::istream& Client::input(std::istream &is){
     User::input(is);
     return is;
 }
+
+Client::Client():User(){}
 
 User::Type Client::get_type() const { return User::Type::client; }
 
 bool Client::in(std::istream &is, std::ostream &os) {
     return User::in(is, os);
 }
-
 bool Client::edit(int property, std::istream&is, std::ostream &os) {
     return User::edit(property, is, os);
 }
@@ -162,13 +168,15 @@ std::ostream& operator<<(std::ostream &os, const Client &p){
 }
 
 ///EMPLOYEE
-Employee::Employee():User(){}
-
 std::istream& Employee::input(std::istream &is){
     User::input(is);
     is >> base_salary_;
     return is;
 }
+
+Employee::Employee():User(){}
+
+const Currency& Employee::get_base_salary() const{ return base_salary_; }
 
 bool Employee::in(std::istream &is, std::ostream &os) {
     if (!User::in(is, os)) return false;
@@ -177,7 +185,6 @@ bool Employee::in(std::istream &is, std::ostream &os) {
 
     return true;
 }
-
 bool Employee::edit(int property, std::istream&is, std::ostream &os) {
     if (property < 5)
         return User::edit(property, is, os);
@@ -202,19 +209,18 @@ std::ostream& operator<<(std::ostream &os, const Employee &p){
 }
 
 ///MANAGER
-Manager::Manager():Employee(){}
-
-User::Type Manager::get_type() const { return User::Type::manager; }
-
 std::istream& Manager::input(std::istream &is){
     Employee::input(is);
     return is;
 }
 
+Manager::Manager():Employee(){}
+
+User::Type Manager::get_type() const { return User::Type::manager; }
+
 bool Manager::in(std::istream &is, std::ostream &os) {
     return Employee::in(is, os);
 }
-
 bool Manager::edit(int property, std::istream&is, std::ostream &os) {
     return Employee::edit(property, is, os);
 }
@@ -226,19 +232,18 @@ std::ostream& operator<<(std::ostream &os, const Manager &p){
 }
 
 ///DRIVER
-Driver::Driver():Employee(){}
-
 std::istream& Driver ::input(std::istream &is){
    Employee::input(is);
    return is;
 }
+
+Driver::Driver():Employee(){}
 
 User::Type Driver::get_type() const { return User::Type::driver; }
 
 bool Driver::in(std::istream &is, std::ostream &os) {
     return Employee::in(is, os);
 }
-
 bool Driver::edit(int property, std::istream&is, std::ostream &os) {
     return Employee::edit(property, is, os);
 }
