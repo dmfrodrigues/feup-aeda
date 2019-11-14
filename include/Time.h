@@ -51,7 +51,6 @@ public:
      * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time
      */
     void input_time(const std::string &time);
-
     /**
      * @brief Allows input of date in a friendly user way.
      * Default format for time is: YYYY-mm-dd.
@@ -61,9 +60,12 @@ public:
      */
     void input_date(const std::string &date);
 
+    bool operator==(const Time &t) const;
+    bool operator!=(const Time &t) const;
     bool operator< (const Time &t) const;
-    bool operator> (const Time &t) const{ return (t < *this); }
-    bool operator<=(const Time &t) const{ return !(*this > t); }
+    bool operator> (const Time &t) const;
+    bool operator<=(const Time &t) const;
+    bool operator>=(const Time &t) const;
 
     /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Time::DEFAULT_FORMAT. */
     friend std::istream& operator>>(std::istream &is,       Time &t);
