@@ -100,40 +100,22 @@ private:
     CargoTrans *cargo_ = NULL;
 
 public:
-    Truck(){}
-    /**
-     * @brief Copy Constructor.
-     * @param truck Truck that will be used to form the new truck
-     */
-    Truck(const Truck& t);
-    /**
-     * @brief Constructor of all information of a general truck.
-     * @param number_plate              Number plate of truck
-     * @param max_replate_register_date Number plate register date
-     * @param fuel                      Fuel
-     * @param max_reach                 Maximum reach of truck
-     * @param category                  Category of truck
-     * @param cargo                     Pointer to cargo the truck can transport
-     */
-    Truck(const NumberPlate &number_plate, const Time     &plate_register_date,
-          const Fuel        &fuel        , const Distance &max_reach          ,
-          const Category    &category    , CargoTrans *cargo);
-
+    Truck();
     /** @brief Destructor */
     virtual ~Truck();
 
     /// @brief Get number plate.
-    const NumberPlate& get_numberplate      () const{ return number_plate_       ; }
+    const NumberPlate& get_numberplate      () const;
     /// @brief Get number plate (in this case the same as number plate).
-    const NumberPlate& get_id               () const{ return get_numberplate()   ; }
+    const NumberPlate& get_id               () const;
     /// @brief Get number plate register date.
-    const Time&        get_plateregisterdate() const{ return plate_register_date_; }
+    const Time&        get_plateregisterdate() const;
     /// @brief Get fuel.
-    const Fuel&        get_fuel             () const{ return fuel_               ; }
+    const Fuel&        get_fuel             () const;
     /// @brief Get maximum reach/range of the truck.
-    const Distance&    get_range            () const{ return max_reach_          ; }
+    const Distance&    get_range            () const;
     /// @brief Get category.
-    const Category&    get_category         () const{ return category_           ; }
+    const Category&    get_category         () const;
     /// @brief Get cargo pointer.
     const CargoTrans* get_cargo() const;
     /// @brief Get type of vehicle (always Truck)
@@ -155,7 +137,6 @@ public:
      * @return If the input was sucessful
      */
     bool in(std::istream &is, std::ostream &os);
-
     /**
      * @brief Allows edition of property specified.
      * @param command Command to add/edit cargo
