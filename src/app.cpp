@@ -328,7 +328,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 switch (option) {
                 //SERVICE MANAGEMENT                                            //ACCOUNT MANAGEMENT
                 case 11: addService(user); wait();                   break;     case 21: editUser<Client>(user); wait();                    break;
-                case 12: deleteService(user); wait();                break;     case 22: App::display(dynamic_cast<Client*>(user)); wait(); break;
+                case 12: deleteService(user); wait();                break;     case 22: CLEAR(); App::display(dynamic_cast<Client*>(user)); wait(); break;
                 case 13: list_services(user);                        break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
@@ -341,7 +341,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 switch (option) {
                 //INFORMATION VISUALIZATION                                     //ACCOUNT MANAGEMENT
                 case 11: list_services();                            break;     case 21: editUser<Driver>(user); wait();                    break;
-                case 12: list_trucks();                              break;     case 22: App::display(dynamic_cast<Driver*>(user)); wait(); break;
+                case 12: list_trucks();                              break;     case 22: CLEAR(); App::display(dynamic_cast<Driver*>(user)); wait(); break;
                 case 13:                                             break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
@@ -372,7 +372,7 @@ bool App::userMenu(User *user, User::Type user_type) {
 
                 //ACCOUNT MANAGEMENT                                            //OTHER OPERATIONS
                 case 71: editUser<Manager>(user); wait(); wait();                       break;  case 81: save_all();                                    break;
-                case 72: App::display(dynamic_cast<Manager*>(user)); wait();    break;  case 82: return true;                                   break;
+                case 72: CLEAR(); App::display(dynamic_cast<Manager*>(user)); wait();    break;  case 82: return true;                                   break;
 
                 default:
                     error("Invalid operation.");
