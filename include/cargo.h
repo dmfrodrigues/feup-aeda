@@ -16,8 +16,6 @@
  * @brief Description of cargo that a client may request to transport.
  */
 class Cargo {
-    friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
-    friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 public:
     /**
      * @enum Type
@@ -29,7 +27,6 @@ public:
         Refrigerated,
         Dangerous,
     };
-
     /**
      * @enum DangerLevel
      * @brief Dangerous Goods Classification.
@@ -50,6 +47,9 @@ public:
     static std::string type_string(const Type &t);
     /// @brief Convert danger level to string to show in tables
     static std::string dangerlevel_string(const DangerLevel &d);
+
+    friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
+    friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 private:
     Weight W_;
     std::string description_;
@@ -59,26 +59,14 @@ protected:
 public:
     /** @brief Default constructor. */
     Cargo();
-    /**
-     * @brief Constructs a cargo.
-     * @param quantity Quantity of cargo
-     * @param cargo_type Type of cargo
-     * @param danger_level Danger level of the cargo
-     * @param W Weight of an unit of cargo
-     * @param Tr Range of temperature that cargo must be kept on
-     * @ref DangerLevel
-     * @throws InvalidTemperatureRange If the temperature range is invalid.
-     * @throws InvalidWeight If the weight value is invalid.
-     */
-    Cargo(Weight W, const std::string &description);
     /** @brief Destructor */
-    virtual ~Cargo(){};
+    virtual ~Cargo();
     /// @brief Get weight
-    const Weight&      get_W          () const{ return W_                ; }
+    const Weight&      get_W          () const;
     /// @brief Get description
-    const std::string& get_description() const{ return description_      ; }
+    const std::string& get_description() const;
     /// @brief Get type
-    virtual Cargo::Type get_type      () const{ return Cargo::Type::Normal; }
+    virtual Cargo::Type get_type      () const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -108,9 +96,9 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    CargoAnimal():Cargo(){}
+    CargoAnimal();
     /// @brief Get type
-    virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
+    virtual Cargo::Type get_type() const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -142,11 +130,11 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    CargoRefrigerated():Cargo(){}
+    CargoRefrigerated();
     /// @brief Get type
-    virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
+    virtual Cargo::Type get_type() const;
     /// @brief Get temperature range
-    const TemperatureRange& get_Tr() const{ return Tr_; }
+    const TemperatureRange& get_Tr() const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -178,11 +166,11 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    CargoDangerous():Cargo(){}
+    CargoDangerous();
     /// @brief Get type
-    virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
+    virtual Cargo::Type get_type() const;
     /// @brief Get danger level
-    const Cargo::DangerLevel& get_dangerlevel() const{ return danger_level_; }
+    const Cargo::DangerLevel& get_dangerlevel() const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -217,14 +205,13 @@ protected:
     virtual std::ostream& output(std::ostream &os) const;
 public:
     /** @brief Empty constructor */
-    CargoTrans(){}
-    CargoTrans(Weight W, const std::string &description, Currency E_D);
+    CargoTrans();
     /// @brief Get price base
-    virtual const Currency& get_P_B    () const{ return P_B_     ; }
+    virtual const Currency& get_P_B() const;
     /// @brief Get expenses per km
-    const double& get_E_D() const{ return E_D_; }
+    const double& get_E_D() const;
     /// @brief get expenses per kg
-    const double& get_E_W() const{ return E_W_; }
+    const double& get_E_W() const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -262,10 +249,10 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    CargoTransAnimal():CargoTrans(){}
+    CargoTransAnimal();
     /// @brief Get type
-    virtual Cargo::Type get_type() const{ return Cargo::Type::Animal; }
-    virtual const Currency& get_P_B    () const{ return P_B_     ; }
+    virtual Cargo::Type get_type() const;
+    virtual const Currency& get_P_B() const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -306,13 +293,13 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    CargoTransRefrigerated():CargoTrans(){}
+    CargoTransRefrigerated();
     /// @brief Get type
-    virtual Cargo::Type get_type() const{ return Cargo::Type::Refrigerated; }
-    const TemperatureRange& get_Tr() const{ return Tr_; }
-    virtual const Currency& get_P_B    () const{ return P_B_     ; }
-    const Temperature& get_T0() const{ return T0_; }
-    const double& get_E_T() const{ return E_T_; }
+    virtual Cargo::Type get_type() const;
+    const TemperatureRange& get_Tr() const;
+    virtual const Currency& get_P_B() const;
+    const Temperature& get_T0() const;
+    const double& get_E_T() const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -351,12 +338,12 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    CargoTransDangerous():CargoTrans(){}
-    CargoTransDangerous(Weight W, const std::string &description, Currency E_D, DangerLevel danger_level);
+    CargoTransDangerous();
+
     /// @brief Get type
-    virtual Cargo::Type get_type() const{ return Cargo::Type::Dangerous; }
-    virtual const Currency& get_P_B    () const{ return P_B_     ; }
-    const Cargo::DangerLevel& get_dangerlevel() const{ return danger_level_; }
+    virtual Cargo::Type get_type() const;
+    virtual const Currency& get_P_B    () const;
+    const Cargo::DangerLevel& get_dangerlevel() const;
 
     /**
      * @brief Allows input field by field with descriptive messages.
