@@ -22,33 +22,30 @@ public:
      */
     explicit Currency(double amount = 0.0L);
 
-    /**
-     * @brief       Overload of <em> operator== </em>.
-     * @param   c   Right-hand side of the comparison
-     * @return      Truth value of the comparison
-     */
-    bool operator==(const Currency &c) const;
-    bool operator< (const Currency &c) const;
-    explicit operator double() const;
-    Currency& operator=(const double &n);
-    Currency  operator+(const Currency &c) const;
+    Currency  operator+ (const Currency &c) const;
+    Currency  operator- (const Currency &c) const;
+    Currency  operator+ ()                  const;
+    Currency  operator- ()                  const;
     Currency& operator+=(const Currency &c);
-    Currency& operator-();
+    Currency& operator-=(const Currency &c);
 
-    /**
-     * @brief   Overload of <em> operator>> </em>.
-     */
+    bool      operator==(const Currency &c) const;
+    bool      operator!=(const Currency &c) const;
+    bool      operator< (const Currency &c) const;
+    bool      operator> (const Currency &c) const;
+    bool      operator<=(const Currency &c) const;
+    bool      operator>=(const Currency &c) const;
+
+    Currency& operator=(const double &n);
+    explicit operator double() const;
+
+    /** @brief   Overload of <em> operator>> </em>. */
     friend std::istream& operator>>(std::istream &is,       Currency &c);
 
-    /**
-     * @brief   Overload of <em> operator<< </em>.
-     */
+    /** @brief   Overload of <em> operator<< </em>. */
     friend std::ostream& operator<<(std::ostream &os, const Currency &c);
 
-    /**
-     * @brief Gets the amount of money
-     * @return The amount of cents
-     */
+    /** @brief Gets the amount of money in cents.*/
     long long int getCents(void) const;
 
 };

@@ -5,13 +5,22 @@
 
 Currency::Currency(double amount):cents_(100.0L*amount+(amount > 0.0L ? 0.5L : -0.5L)){}
 
-bool      Currency::operator==(const Currency &c) const { return (cents_ == c.cents_); }
-bool      Currency::operator< (const Currency &c) const { return (cents_ <  c.cents_); }
-Currency& Currency::operator= (const double   &n)       { return (*this = Currency(n)); }
 Currency  Currency::operator+ (const Currency &c) const { return Currency(cents_+c.cents_); }
+Currency  Currency::operator- (const Currency &c) const { return Currency(cents_-c.cents_); }
+Currency  Currency::operator+ ()                  const { return Currency(+cents_); }
+Currency  Currency::operator- ()                  const { return Currency(-cents_); }
 Currency& Currency::operator+=(const Currency &c)       { cents_ += c.cents_; return *this; }
+Currency& Currency::operator-=(const Currency &c)       { cents_ -= c.cents_; return *this; }
+
+bool      Currency::operator==(const Currency &c) const { return (cents_ == c.cents_); }
+bool      Currency::operator!=(const Currency &c) const { return (cents_ != c.cents_); }
+bool      Currency::operator< (const Currency &c) const { return (cents_ <  c.cents_); }
+bool      Currency::operator> (const Currency &c) const { return (cents_ >  c.cents_); }
+bool      Currency::operator<=(const Currency &c) const { return (cents_ <= c.cents_); }
+bool      Currency::operator>=(const Currency &c) const { return (cents_ >= c.cents_); }
+
+Currency& Currency::operator= (const double   &n)       { return (*this = Currency(n)); }
           Currency::operator double()             const { return double(cents_)/100.0; }
-Currency& Currency::operator- ()                        { cents_ = -cents_; return *this; }
 
 std::ostream& operator<<(std::ostream &os, const Currency &c){
     std::stringstream ss;
