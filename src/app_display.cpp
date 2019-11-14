@@ -21,7 +21,6 @@ void App::print_list(const std::vector<const Client*> &v){
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╛\n"
               << std::flush;
 }
-
 void App::print_list(const std::vector<const Driver*> &v){
     std::cout << "\n"
                  " ┌─╮┌─╮ ┬ ╷  ╭─╴┌─╮╭─╴ \n"
@@ -43,7 +42,6 @@ void App::print_list(const std::vector<const Driver*> &v){
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧═════════════════╛\n"
               << std::flush;
 }
-
 void App::print_list(const std::vector<const Manager*> &v){
     std::cout << "\n"
                  " ╭┬╮╭─╮╷ ╷╭─╮╭─╮╭─╴┌─╮╭─╴ \n"
@@ -65,7 +63,6 @@ void App::print_list(const std::vector<const Manager*> &v){
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧═════════════════╛\n"
               << std::flush;
 }
-
 void App::print_list(const std::vector<const Truck*> &v){
     std::cout << "\n"
                  " ╶┬╴┌─╮╷ ╷╭─╴╷ ╱╭─╴ \n"
@@ -92,7 +89,6 @@ void App::print_list(const std::vector<const Truck*> &v){
     std::cout << "╘══════════════╧════════════╧══════════════╧══════════╧══════════╧══════════════╧════════════╧════════════════╧════════════╧════════════╛\n"
               << std::flush;
 }
-
 void App::print_list(const std::vector<const Service*> &v) const{
     Currency EXPENSES(0), PRICE(0);
     for(const Service *p:v){
@@ -162,7 +158,6 @@ void App::display(const Client *p){
               << "│ [4] VAT           │ " << utils::ljust((std::string)p->get_vat()                            ,81) << "\t │\n"
               << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
-
 void App::display(const Driver *p){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                       ,81) << "\t │\n"
@@ -173,7 +168,6 @@ void App::display(const Driver *p){
               << "│ [5] Base salary   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())     ,81) << "\t │\n"
               << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
-
 void App::display(const Manager *p){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                       ,81) << "\t │\n"
@@ -184,7 +178,6 @@ void App::display(const Manager *p){
               << "│ [5] Base salary   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_base_salary())     ,81) << "\t │\n"
               << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
-
 void App::display(const Truck *p){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] Number plate  │ " << utils::ljust((std::string)p->get_numberplate()                    ,81) << "\t │\n"
@@ -199,7 +192,6 @@ void App::display(const Truck *p){
     App::display(q);
     std::cout << "╘═══════════════════╧════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
-
 void App::display(const Service *p) const{
     const User *c = App::find_user(p->get_client());
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
@@ -211,13 +203,14 @@ void App::display(const Service *p) const{
               << "│ [4] Time begin    │ " << utils::ljust(p->get_tbegin().format("%Y/%m/%d %H:%M:%S")          ,81) << "\t │\n"
               << "│ [5] Time end      │ " << utils::ljust(p->get_tend  ().format("%Y/%m/%d %H:%M:%S")          ,81) << "\t │\n"
               << "│ [6] Address begin │ " << utils::ljust(p->get_abegin().format("%street (%postal, %city) [%district, %country]"),81) << "\t │\n"
-              << "│ [7] Address end   │ " << utils::ljust(p->get_aend  ().format("%street (%postal, %city) [%district, %country]"),81) << "\t │\n";
+              << "│ [7] Address end   │ " << utils::ljust(p->get_aend  ().format("%street (%postal, %city) [%district, %country]"),81) << "\t │\n"
+              << "│ [8] Distance (km) │ " << utils::ljust(utils::ftos("%.1f",double(p->get_distance())),81) << "\t │\n";
     std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
-              << "│ [8] Cargo         : " << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())       ,81) << "\t │\n"
+              << "│ [9] Cargo         : " << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())       ,81) << "\t │\n"
               << "├───────────────────┬────────────────────────────────────────────────────────────────────────────────────┤\n";
     App::display(p->get_cargo());
     std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
-              << "│ [9] Truck/driver                                                                                       │\n"
+              << "│ [10] Truck/driver                                                                                      │\n"
               << "├───────────────────┬────────────────────────────────────────────────────────────────────────────────────┤\n";
     const auto &tv = p->get_trucks ();
     const auto &dv = p->get_drivers();
@@ -244,7 +237,6 @@ void App::display(const Cargo *p){
       default: throw std::invalid_argument("invalid Cargo type");
     }
 }
-
 void App::display(const CargoAnimal *p){
 }
 void App::display(const CargoRefrigerated *p){
@@ -255,10 +247,11 @@ void App::display(const CargoDangerous *p){
 }
 
 void App::display(const CargoTrans             *p){
-    std::cout << "│ [0] Weight (kg)   │ " << utils::ljust(utils::ftos("%.0f",(double)p->get_W())       ,81) << "\t │\n"
-              << "│ [1] Description   │ " << utils::ljust(p->get_description()                              ,81) << "\t │\n"
-              << "| [2] Price base €  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_P_B())    ,81)<< "\t │\n"
-              << "│ [3] Expenses €/km │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_E_D()),81)<<"\t │\n";
+    std::cout << "│ [0] Weight (kg)   │ " << utils::ljust(utils::ftos("%.0f",(double)p->get_W())  ,81) << "\t │\n"
+              << "│ [1] Description   │ " << utils::ljust(p->get_description()                    ,81) << "\t │\n"
+              << "| [2] Price base €  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_P_B()),81) << "\t │\n"
+              << "│ [3] Dist factor   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_E_D()),81) << "\t │\n"
+              << "│ [4] Weight factor │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_E_W()),81) << "\t │\n";
     switch(p->get_type()){
         case Cargo::Animal      : display(dynamic_cast<const CargoTransAnimal      *>(p)); break;
         case Cargo::Refrigerated: display(dynamic_cast<const CargoTransRefrigerated*>(p)); break;
@@ -270,10 +263,10 @@ void App::display(const CargoTrans             *p){
 void App::display(const CargoTransAnimal       *p){
 }
 void App::display(const CargoTransRefrigerated *p){
-    std::cout << "| [4] Temp range    │ " << utils::ljust("["+utils::ftos("%.1f",(double)p->get_Tr().min)+", "+utils::ftos("%.1f",(double)p->get_Tr().max)+"]", 81) << "\t │\n"
-              << "│ [5] Ref temp °C   │ " << utils::ljust(utils::ftos("%.1f",(double)p->get_T0()), 81) << "\t │\n"
-              << "│ [6] Temp factor   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_E_T())    , 81) << "\t │\n";
+    std::cout << "| [5] Temp range    │ " << utils::ljust("["+utils::ftos("%.1f",(double)p->get_Tr().min)+", "+utils::ftos("%.1f",(double)p->get_Tr().max)+"]", 81) << "\t │\n"
+              << "│ [6] Ref temp °C   │ " << utils::ljust(utils::ftos("%.1f",(double)p->get_T0()), 81) << "\t │\n"
+              << "│ [7] Temp factor   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_E_T())    , 81) << "\t │\n";
 }
 void App::display(const CargoTransDangerous    *p){
-    std::cout << "│ [4] Danger level  │ " << utils::ljust(Cargo::dangerlevel_string(p->get_dangerlevel())          , 81) << "\t │\n";
+    std::cout << "│ [5] Danger level  │ " << utils::ljust(Cargo::dangerlevel_string(p->get_dangerlevel())          , 81) << "\t │\n";
 }
