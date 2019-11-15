@@ -3,7 +3,7 @@ obj/
 *.app
 *.o
 *.a
-documentacao/doc/
+documentacao/
 *.aux
 *.log
 *.out
@@ -11,3 +11,4 @@ documentacao/doc/
 *.toc
 *.nav
 *.snm
+*.zip
