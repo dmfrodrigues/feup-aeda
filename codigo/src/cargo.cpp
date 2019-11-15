@@ -279,6 +279,7 @@ std::ostream& CargoTrans::output(std::ostream &os) const{
 
 CargoTrans::CargoTrans(){}
 
+Cargo::Type     CargoTrans::get_type() const{ return Cargo::Type::Normal; }
 const Currency& CargoTrans::get_P_B() const{ return P_B_; }
 const double&   CargoTrans::get_E_D() const{ return E_D_; }
 const double&   CargoTrans::get_E_W() const{ return E_W_; }

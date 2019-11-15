@@ -15,13 +15,13 @@ public:
     /** @brief Postal code. */
     class PostalCode: public utils::string_regex{
     public:
-        /// @brief Regex a postal code is supposed to match
+        /// @brief Regex a postal code is supposed to match.
         static const std::string REGEX_STR;
-        /// @brief Empty constructor
+        /// @brief Empty constructor.
         explicit PostalCode();
-        /// @brief Constructor accepting postal code as string
+        /// @brief Constructor accepting postal code as \p std::string.
         explicit PostalCode(const std::string &postal_code);
-        /// @brief Overload of operator=
+        /// @brief Overload of \a operator= .
         PostalCode& operator=(const std::string &postal_code);
     };
 private:
@@ -36,7 +36,7 @@ public:
      */
     static const std::string DEFAULT_FORMAT;
     /**
-     * @brief Constructor with no arguments
+     * @brief Empty constructor.
      */
     Address();
     /**
@@ -65,9 +65,9 @@ public:
      */
     bool in(std::istream &is, std::ostream &os);
 
-    /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Address::DEFAULT_FORMAT. */
+    /** @brief   Overload of \a operator>>. Expects input in @ref Address::DEFAULT_FORMAT. */
     friend std::istream& operator>>(std::istream &is, Address &a);
-    /** @brief   Overload of <em> operator<< </em>. Prints in @ref Address::DEFAULT_FORMAT.*/
+    /** @brief   Overload of \a operator<<. Prints in @ref Address::DEFAULT_FORMAT.*/
     friend std::ostream& operator<<(std::ostream &os, const Address &a);
 };
 

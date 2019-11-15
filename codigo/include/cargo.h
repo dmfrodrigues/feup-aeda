@@ -19,7 +19,7 @@ class Cargo {
 public:
     /**
      * @enum Type
-     * @brief Types of cargo
+     * @brief Types of cargo.
      */
     enum Type : int {
         Normal = 0,
@@ -29,7 +29,7 @@ public:
     };
     /**
      * @enum DangerLevel
-     * @brief Dangerous Goods Classification.
+     * @brief Dangerous goods classification.
      */
     enum DangerLevel : int {
         None = 0,
@@ -43,29 +43,29 @@ public:
         Toxic,
         Radioactive,
     };
-    /// @brief Convert type to string to show in tables
+    /// @brief Convert @ref Cargo::Type to \a std::string to show in tables.
     static std::string type_string(const Type &t);
-    /// @brief Convert danger level to string to show in tables
+    /// @brief Convert @ref Cargo::DangerLevel to \a std::string to show in tables.
     static std::string dangerlevel_string(const DangerLevel &d);
 
     /**
-     * @brief Input from file to Cargo pointer.
+     * @brief Input from file to @ref Cargo pointer.
      *
-     * The first element decides what is the real type of the Cargo, thus
-     * allowing for a dynamic_cast and a call to the correct input function.
+     * The first element decides what is the real type of the cargo, thus
+     * allowing for a \a dynamic_cast and a call to the correct input function.
      * @param   is  Input stream to extract data from
-     * @param   c   Pointer to Cargo that will be created from the data read
-     * @return      Same as is
+     * @param   c   Pointer to @ref Cargo that will be created from the data read
+     * @return      Same as \p is
      */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     /**
-     * @brief Output to file from Cargo pointer.
+     * @brief Output to file from @ref Cargo pointer.
      *
-     * The appropriate checks are made to determine the real type of c, and
+     * The appropriate checks are made to determine the real type of \p c, and
      * call the correct output function.
      * @param   os  Output stream to insert data to
-     * @param   c   Pointer to cargo to be printed to os
-     * @return      Same as os
+     * @param   c   Pointer to cargo to be printed to \p os
+     * @return      Same as \p os
      */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 private:
@@ -73,28 +73,33 @@ private:
     std::string description_;
 protected:
     /**
-     * @brief Input from stream to current object.
+     * @brief Input from \a std::istream to current object.
      * @param   is  Input stream to read from
-     * @return      Same as is
+     * @return      Same as \p is
      */
     virtual std::istream& input (std::istream &is);
     /**
-     * @brief Output to stream from current object.
+     * @brief Output to \a std::ostream from current object.
      * @param   os  Output stream to write to
-     * @return      Same as os
+     * @return      Same as \p os
      */
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    /** @brief Default constructor. */
+    /// @brief Empty constructor.
     Cargo();
-    /** @brief Destructor */
+    /// @brief Destructor.
     virtual ~Cargo();
-    /// @brief Get weight
-    const Weight&       get_W          () const;
-    /// @brief Get description
-    const std::string&  get_description() const;
-    /// @brief Get type
+
+    /**
+     * @brief Get cargo type.
+     * @return Cargo::Type::Normal
+     */
     virtual Cargo::Type get_type      () const;
+    /// @brief Get weight.
+    const Weight&       get_W          () const;
+    /// @brief Get description.
+    const std::string&  get_description() const;
+
 
     /**
      * @brief Allows input field by field with descriptive messages.
@@ -121,11 +126,25 @@ class CargoAnimal: public Cargo{
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 protected:
+    /**
+     * @brief Input from \a std::istream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as \p is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to \a std::ostream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as \p os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
+    /// @brief Empty constructor.
     CargoAnimal();
-    /// @brief Get type
+    /**
+     * @brief Get cargo type.
+     * @return Cargo::Type::Animal
+     */
     virtual Cargo::Type get_type() const;
 
     /**
@@ -153,15 +172,30 @@ class CargoRefrigerated: public Cargo{
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 private:
-    TemperatureRange Tr_; /// @brief Range of temperature that cargo must be kept on.
+    /// @brief Range of temperature that cargo must be kept on.
+    TemperatureRange Tr_;
 protected:
+    /**
+     * @brief Input from \a std::istream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as \p is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to \a std::ostream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as \p os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
+    /// @brief Empty constructor.
     CargoRefrigerated();
-    /// @brief Get type
+    /**
+     * @brief Get cargo type.
+     * @return Cargo::Type::Refrigerated
+     */
     virtual Cargo::Type get_type() const;
-    /// @brief Get temperature range
+    /// @brief Get temperature range.
     const TemperatureRange& get_Tr() const;
 
     /**
@@ -191,13 +225,27 @@ class CargoDangerous: public Cargo{
 private:
     DangerLevel danger_level_;
 protected:
+    /**
+     * @brief Input from \a std::istream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as \p is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to \a std::ostream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as \p os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
+    /// @brief Empty constructor.
     CargoDangerous();
-    /// @brief Get type
+    /**
+     * @brief Get cargo type.
+     * @return Cargo::Type::Dangerous
+     */
     virtual Cargo::Type get_type() const;
-    /// @brief Get danger level
+    /// @brief Get danger level.
     const Cargo::DangerLevel& get_dangerlevel() const;
 
     /**
@@ -222,23 +270,56 @@ public:
  * @brief Description of cargo that a truck can transport.
  */
 class CargoTrans: public Cargo{
+    /**
+     * @brief Input from file to CargoTrans pointer.
+     *
+     * The first element decides what is the real type of the CargoTrans, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to CargoTrans that will be created from the data read
+     * @return      Same as \p is
+     */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
+    /**
+     * @brief Output to file from Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to CargoTrans to be printed to \p os
+     * @return      Same as \p os
+     */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
     static const Currency P_B_;
     double E_D_;
     double E_W_;
 protected:
+    /**
+     * @brief Input from \a std::istream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as \p is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to \a std::ostream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as \p os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    /** @brief Empty constructor */
+    /// @brief Empty constructor.
     CargoTrans();
-    /// @brief Get price base
+    /**
+     * @brief Get cargo type.
+     * @return Cargo::Type::Normal
+     */
+    virtual Cargo::Type get_type() const;
+    /// @brief Get price base.
     virtual const Currency& get_P_B() const;
-    /// @brief Get expenses per km
+    /// @brief Get expenses per km.
     const double& get_E_D() const;
-    /// @brief get expenses per kg
+    /// @brief get expenses per kg.
     const double& get_E_W() const;
 
     /**
@@ -274,12 +355,25 @@ class CargoTransAnimal: public CargoTrans{
 private:
     static const Currency P_B_;
 protected:
+    /**
+     * @brief Input from \a std::istream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as \p is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to \a std::ostream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as \p os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    /** @brief Default Constructor. */
+    /// @brief Empty constructor.
     CargoTransAnimal();
-    /// @brief Get type
+    /**
+     * @brief Get cargo type.
+     * @return Cargo::Type::Animal
+     */
     virtual Cargo::Type get_type() const;
     /// @brief Get base price of cargo.
     virtual const Currency& get_P_B() const;
@@ -320,12 +414,25 @@ private:
     double E_T_;
     TemperatureRange Tr_;
 protected:
+    /**
+     * @brief Input from \a std::istream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as \p is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to \a std::ostream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as \p os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    /** @brief Default Constructor. */
+    /// @brief Empty constructor.
     CargoTransRefrigerated();
-    /// @brief Get type.
+    /**
+     * @brief Get cargo type.
+     * @return Cargo::Type::Refrigerated
+     */
     virtual Cargo::Type get_type() const;
     /// @brief Get temperature range.
     const TemperatureRange& get_Tr() const;
@@ -369,14 +476,24 @@ private:
     static const Currency P_B_;
     DangerLevel danger_level_;
 protected:
+    /**
+     * @brief Input from \a std::istream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as \p is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to \a std::ostream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as \p os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
-    /** @brief Default Constructor. */
+    /// @brief Empty constructor.
     CargoTransDangerous();
 
     /**
-     * @brief Get cargo type
+     * @brief Get cargo type.
      * @return Cargo::Type::Dangerous
      */
     virtual Cargo::Type get_type() const;
