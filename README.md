@@ -4,12 +4,12 @@
 
 ## Requirements
 
-- [x] Use adequate classes to represent the entities envolved
+- [x] Use adequate classes to represent the entities involved
 - [x] The classes should have attributes that are adequate to caracterizing the most important concepts of the entities
 - [x] Consider adequate relations between classes
 - [x] Use the concepts of inheritance and polymorphism
 - [x] User data should be saved in files, to use in future executions
-- [ ] Conveniently treat possible exceptions
+- [x] Conveniently treat possible exceptions
 - [x] Use search and sorting algorithms
 - [ ] Implemented classes should be documented
 - [ ] Allow for basic operations CRUD (create, read, update, delete)
@@ -17,7 +17,7 @@
 - [x] Allow for total and partial listings with user-defined criteria
 - [x] Use different ordering criteria in the listings
 - [x] Clients can request a service, with origin, destination, travel time,...
-- [ ] List the monthly values the company gets from all its transports, from a given truck, and from all trucks of a given kind.
+- [x] List the monthly values the company gets from all its transports, from a given truck, and from all trucks of a given kind.
 - [x] List clients
 - [x] List services
 
