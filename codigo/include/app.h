@@ -342,7 +342,20 @@ private:
     //Functions
     bool get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
     bool get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
+    /**
+     * @brief Get available drivers to go to a service.
+     * @param tbegin    Time when service begin
+     * @param tend      Time when service ends
+     * @return  Vector containing the available drivers
+     */
     std::vector<Driver*> get_available_drivers(const Time &tbegin, const Time &tend) const;
+    /**
+     * @brief Get available trucks to go to a service.
+     * @param tbegin    Time when service begin
+     * @param tend      Time when service ends
+     * @param c         Cargo that needs to be transported
+     * @return  Vector containing the available drivers
+     */
     std::vector<Truck *> get_available_trucks (const Time &tbegin, const Time &tend, const Cargo *c) const;
 
     // Menus
