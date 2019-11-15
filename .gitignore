@@ -1,5 +1,6 @@
-bin/
-obj/
+codigo/bin/
+codigo/obj/
+codigo/lib/
 *.app
 *.o
 *.a
