@@ -1,4 +1,6 @@
+cd codigo
 make clean
+cd ..
 rm -rf documentacao/
 doxygen doxygen.config
 pdflatex apresentacao.tex
