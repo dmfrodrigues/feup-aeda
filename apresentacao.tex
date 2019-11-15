@@ -47,7 +47,7 @@ Modelar um problema recorrendo ao paradigma da orientação por objetos e usar a
 A empresa Transportes SML é especialista no transporte de mercadorias. A empresa possui um número fixo de camiões de diferentes tipos, específicos para o transporte de determinada mercadoria [...]
 \end{quote}
 \begin{quote}
-Os clientes [...] podem requisitar serviços de transporte de mercadorias, [...] (o que) pode obrigar ao uso de múltiplos camiões por parte da empresa.
+Os clientes podem requisitar serviços de transporte de mercadorias, o que pode obrigar ao uso de múltiplos camiões por parte da empresa.
 \end{quote}
 \begin{quote}
 Interessa conhecer os valores mensais que a empresa retira dos seus serviços de transporte, para cada um dos tipos de camião e no geral. Deve ser possível monitorar os clientes da empresa e serviços efetuados.
@@ -76,19 +76,20 @@ Um só tipo de camiões (\texttt{Truck}), que pode carregar uma carga (\texttt{C
 
 Todos os utilizadores podem ver e editar as suas informações pessoais.
 O cliente pode ver e editar os seus serviços ativos, ou requisitar um novo. 
-O condutor pode ver e editar os seus serviços ativos, bem como ver a lista de camiões disponíveis e as suas estatísticas mensais..
-O gestor pode fazer tudo isto e ainda ver as listas de clientes e funcionários (completas ou filtradas por um argumento específico), com possibilidade de edição para qualquer um destes, além de poder ver os valores mensais de toda a empresa e outras estatísticas.
+O condutor pode ver e editar os seus serviços ativos, bem como ver a lista de camiões disponíveis e as suas estatísticas mensais.
 \end{frame}
 
 \begin{frame}
+\frametitle{Solução(cont.)}
+
+O gestor pode fazer tudo isto e ainda ver as listas de clientes e funcionários (completas ou filtradas por um argumento específico), com possibilidade de edição para qualquer um destes, além de poder ver os valores mensais de toda a empresa e outras estatísticas.\\
 Quando um cliente requisita um serviço, são atribuídos automaticamente condutores e camiões.
-Algoritmo de ordenação mergesort, pesquisa linear
+Foram utilizados os algoritmos de ordenação mergesort e pesquisa linear para este efeito.
 \end{frame}
 
 \begin{frame}
 \frametitle{Diagrama de classes}
-***** Falar sobre a organizaçao das classes etc?? por exemplo: Foram implementadas as classes “Person” (da qual derivam “Client” e “Employee”, da qual derivam “Driver” e “Manager”), “Trucks”, “Cargo” e “Service”.  ****
-- algoritmos relevantes - estava a pensar falarmos aqui da atribuiçao dos serviços
+
 
 - diagrama de classes
 - diagrama de classes
@@ -101,13 +102,14 @@ Guarda a lista de todos os usuários no seguinte formato: Nome; Número de telem
 drivers.txt/managers.txt\\
 Guarda a lista de todos os condutores no mesmo formato dos clientes, com uma linha extra equivalente ao salário.
 trucks.txt\\
-Guarda a lista de todos os camiões da empresa no seguinte formato: Matrícula; Data da matrícula; Combustível (de 0 a 6, de acordo com o tipo); Alcance (em km); Categoria; Número de cargas; Lista de cargas (Peso; Descrição; Preço por km; custo de refrigeração ou nível de perigo, caso se aplique);
-services.txt - falta completar
+Guarda a lista de todos os camiões da empresa no seguinte formato: Matrícula; Data da matrícula; Combustível (de 0 a 6, de acordo com o tipo); Alcance (em km); Categoria; Número de cargas; Lista de cargas (Peso; Descrição; Preço por km; custo de refrigeração ou nível de perigo, caso se aplique);\\
+services.txt\\
+Guarda a lista dos serviços no seguinte formato: ID; nome de utilizador (cliente); nome e número de telemóvel do contacto 1; nome e número de telefone do contacto 2; hora de início; hora de fim; distância; tipo de carga; peso da carga; descriçao da carga; número de condutores alocados para esse serviço; Info dos condutores (matricula e nome de utilizador); custo do serviço; preço cobrado ao cliente;
 \end{frame}
  
 \begin{frame}
 \frametitle{Tratamento de exceções}
-Aqui pra ja so fiz a lista das exceçoes que vi serem tratadas, falta atualizar quando o trabalho estiver pronto e falar um pouco sobre elas provavelmente (nao tenho a certeza do q a prof quer aqui)
+Lista das exceçoes + breve explicação de cada uma
 %Time::InvalidTimeFormat::InvalidTimeFormat(const std::string \&fmt)
 %std::invalid_argument::invalid_argument(const std:string \&arg)
 %Temperature::InvalidTemperature::InvalidTemperature(const float \&temp)
@@ -120,15 +122,13 @@ Aqui pra ja so fiz a lista das exceçoes que vi serem tratadas, falta atualizar 
 
 \begin{frame}
 \frametitle{Lista de funcionalidades} 
-Clients can request a service, with origin, destination, travel time,...\\
-Show list of clients; add edit or remove clients;\\
- Show list of trucks; add edit or remove trucks;\\
- Login for clients, managers and drivers\\
- Add, remove and edit truck\\
- Add, remove and edit client, manager and driver\\
- When a driver arrives to a place, he needs to have someone's contact for loading/unloading, which might or might not be the client for whom the service is being made\\
-
-(tenho atualizado conforme tem sido feito, é capaz de ja ter mais alguma coisa desde ontem a noite, mas tambem mais vale so atualizar no fim)
+Os clientes podem requisitar serviços, com origem, destino, duração da viagem, ...\\
+Mostrar lista de clientes e funcionários; adicionar, editar ou remover clientes e funcionários;\\
+Mostrar lists de camiões; adicionar, editar ou remover camiões; \\
+Mostrar lista de serviços; adicionar, editar ou remover um serviço;\\
+Login para clientes, gestores e condutores;\\
+Quando um condutor chega ao destino, tem de ter um contacto que pode, ou nao, ser do cliente.\\
+Os gestores podem ver valores mensais de lucro de um camião específico, um tipo de camiões, ou totais;\\
 \end{frame}
 
 \begin{frame}
@@ -185,4 +185,3 @@ Neste trabalho as classes estavam muito interligadas umas com as outras e com a 
 
 
 
-%	Implementou parte de utils & Implementou algumas funções de utils
