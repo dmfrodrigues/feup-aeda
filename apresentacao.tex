@@ -16,6 +16,16 @@
 {\footnotesize \texttt{\href{mailto:#1}{#1}} }
 }
 
+\usepackage{listings}
+\lstset{
+    frame=tb, % draw frame at top and bottom of the code
+    tabsize=4, % tab space width
+    numbers=left, % display line numbers on the left
+	showstringspaces=false, % don't mark spaces in strings    
+%    aboveskip=-2em,
+%    belowskip=-1.5
+}
+
 \usepackage[style=british]{csquotes}
 
 \usepackage{tabularx}
@@ -93,6 +103,14 @@ Foram utilizados os algoritmos de ordenação mergesort e pesquisa linear para e
 
 - diagrama de classes
 - diagrama de classes
+\end{frame}
+
+\begin{frame}
+\frametitle{Estrutura de ficheiros}
+\begin{tabular}{p{50mm} p{5mm} p{50mm}}
+	Person & & \\	
+	{\tiny \lstinputlisting[firstline=6,lastline=7]{./codigo/data/services/services.txt} } & &
+\end{tabular}
 \end{frame}
 
 \begin{frame}
