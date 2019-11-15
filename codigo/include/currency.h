@@ -22,41 +22,41 @@ public:
      */
     explicit Currency(double amount = 0.0L);
 
-    /// @brief Overload of <em> operator+ </em>.
+    /// @brief Overload of \a operator+ .
     Currency  operator+ (const Currency &c) const;
-    /// @brief Overload of <em> operator- </em>.
+    /// @brief Overload of \a operator- .
     Currency  operator- (const Currency &c) const;
-    /// @brief Overload of <em> operator+ </em> for sign changing.
+    /// @brief Overload of \a operator+ for sign changing.
     Currency  operator+ ()                  const;
-    /// @brief Overload of <em> operator- </em> for sign changing.
+    /// @brief Overload of \a operator- for sign changing.
     Currency  operator- ()                  const;
-    /// @brief Overload of <em> operator+= </em>.
+    /// @brief Overload of \a operator+= .
     Currency& operator+=(const Currency &c);
-    /// @brief Overload of <em> operator-= </em>.
+    /// @brief Overload of \a operator-= .
     Currency& operator-=(const Currency &c);
 
-    /// @brief Overload of <em> operator== </em>.
+    /// @brief Overload of \a operator== .
     bool      operator==(const Currency &c) const;
-    /// @brief Overload of <em> operator!= </em>.
+    /// @brief Overload of \a operator!= .
     bool      operator!=(const Currency &c) const;
-    /// @brief Overload of <em> operator<  </em>.
+    /// @brief Overload of \a operator< .
     bool      operator< (const Currency &c) const;
-    /// @brief Overload of <em> operator>  </em>.
+    /// @brief Overload of \a operator> .
     bool      operator> (const Currency &c) const;
-    /// @brief Overload of <em> operator<= </em>.
+    /// @brief Overload of \a operator<= .
     bool      operator<=(const Currency &c) const;
-    /// @brief Overload of <em> operator>= </em>.
+    /// @brief Overload of \a operator>= .
     bool      operator>=(const Currency &c) const;
 
-    /// @brief Assignment with double
+    /// @brief Assignment with \a double
     Currency& operator=(const double &n);
-    /// @brief Conversion to double
+    /// @brief Conversion to \a double
     explicit operator double() const;
 
-    /** @brief   Overload of <em> operator>> </em>. */
+    /** @brief   Overload of \a operator>> . */
     friend std::istream& operator>>(std::istream &is,       Currency &c);
 
-    /** @brief   Overload of <em> operator<< </em>. */
+    /** @brief   Overload of \a operator<< . */
     friend std::ostream& operator<<(std::ostream &os, const Currency &c);
 
     /** @brief Gets the amount of money in cents.*/
