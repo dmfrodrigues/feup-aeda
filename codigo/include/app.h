@@ -292,12 +292,51 @@ private:
      */
     bool deleteService(const User *user);
 
+    /**
+     * @brief Filter vector of users by user type.
+     * @param v     Vector of users
+     * @param t     Filter type
+     * @return  Vector of users filtered by type
+     */
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const;
+    /**
+     * @brief Filter vector of services by client.
+     * @param v          Vector of services
+     * @param client     Client to filter vector by
+     * @return  Vector of services filtered by client
+     */
     std::vector<Service*> filter_services_by_client(const std::vector<Service*> &v, const Client *client) const;
+    /**
+     * @brief Filter vector of services by driver.
+     * @param v          Vector of services
+     * @param driver     Driver to filter vector by
+     * @return  Vector of services filtered by driver
+     */
     std::vector<Service*> filter_services_by_driver(const std::vector<Service*> &v, const Driver *driver) const;
+    /**
+     * @brief Find user in agency.
+     * @param u Username (ID) of user to find
+     * @return Pointer to user if it exists, else NULL
+     */
     User* find_user(const User::Username &u) const;
+    /**
+     * @brief Find truck in agency.
+     * @param np Number plate (ID) of truck to find
+     * @return Pointer to truck if it exists, else NULL
+     */
     Truck* find_truck(const Truck::NumberPlate &np) const;
+    /**
+     * @brief Find service in agency.
+     * @param u ID of service to find
+     * @return Pointer to service if it exists, else NULL
+     */
     Service* find_service(const Service::ID &id) const;
+    /**
+     * @brief Verifies user credentials.
+     * @param username Username (ID) of user
+     * @param password Password of user
+     * @return Pointer to user if it exists, else NULL
+     */
     User* verifyUser(const std::string &username, const std::string &password);
 
     //Functions
