@@ -108,26 +108,24 @@ Guarda a lista dos serviços no seguinte formato: ID; nome de utilizador (client
 \end{frame}
  
 \begin{frame}
-\frametitle{Tratamento de exceções}
-Lista das exceçoes + breve explicação de cada uma
-%Time::InvalidTimeFormat::InvalidTimeFormat(const std::string \&fmt)
-%std::invalid_argument::invalid_argument(const std:string \&arg)
-%Temperature::InvalidTemperature::InvalidTemperature(const float \&temp)
-%utils::string_regex::FailedRegex::FailedRegex(const std::string \&s, const std::string \&REGEX_STR)
-%* std::system_error::system_error
-%App::InvalidCredentials::InvalidCredentials(const std::string \&msg)
-%App::RepeatedId::RepeatedId(const std::string \&id)
-%App::InvalidSchedule::InvalidSchedule(const std::string \&id)
+\frametitle{Exceções tratadas}
+InvalidTimeFormat: chamada quando é introduzido uma hora com o formato errado;\\
+InvalidCredentials: chamada quando são introduzidas credenciais erradas (username ou password, durante o login);\\
+InvalidTemperatureRange: chamada quando é introduzida uma gama de temperatura não válida;\\
+FailedRegex: chamada quando a string introduzida não corresponde a regex;\\
+RepeatedId: chamada quando é introduzido um id repetido;\\
+%invalidargument: \\
+%systemerror: 
 \end{frame}
 
 \begin{frame}
 \frametitle{Lista de funcionalidades} 
 Os clientes podem requisitar serviços, com origem, destino, duração da viagem, ...\\
 Mostrar lista de clientes e funcionários; adicionar, editar ou remover clientes e funcionários;\\
-Mostrar lists de camiões; adicionar, editar ou remover camiões; \\
+Mostrar lista de camiões; adicionar, editar ou remover camiões; \\
 Mostrar lista de serviços; adicionar, editar ou remover um serviço;\\
 Login para clientes, gestores e condutores;\\
-Quando um condutor chega ao destino, tem de ter um contacto que pode, ou nao, ser do cliente.\\
+Quando um condutor chega ao destino, tem de ter um contacto que pode, ou não, ser do cliente.\\
 Os gestores podem ver valores mensais de lucro de um camião específico, um tipo de camiões, ou totais;\\
 \end{frame}
 
@@ -182,6 +180,5 @@ Neste trabalho as classes estavam muito interligadas umas com as outras e com a 
 \end{minipage}
 \end{frame}
 \end{document}
-
 
 
