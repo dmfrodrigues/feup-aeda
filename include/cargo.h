@@ -48,13 +48,41 @@ public:
     /// @brief Convert danger level to string to show in tables
     static std::string dangerlevel_string(const DangerLevel &d);
 
+    /**
+     * @brief Input from file to Cargo pointer.
+     *
+     * The first element decides what is the real type of the Cargo, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to Cargo that will be created from the data read
+     * @return      Same as is
+     */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
+    /**
+     * @brief Output to file from Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to cargo to be printed to os
+     * @return      Same as os
+     */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 private:
     Weight W_;
     std::string description_;
 protected:
+    /**
+     * @brief Input from stream to current object.
+     * @param   is  Input stream to read from
+     * @return      Same as is
+     */
     virtual std::istream& input (std::istream &is);
+    /**
+     * @brief Output to stream from current object.
+     * @param   os  Output stream to write to
+     * @return      Same as os
+     */
     virtual std::ostream& output(std::ostream &os) const;
 public:
     /** @brief Default constructor. */
@@ -296,9 +324,12 @@ public:
     CargoTransRefrigerated();
     /// @brief Get type
     virtual Cargo::Type get_type() const;
+    /// @brief Get temperature range
     const TemperatureRange& get_Tr() const;
     virtual const Currency& get_P_B() const;
+    /// @brief Get reference temperature
     const Temperature& get_T0() const;
+    /// @brief Get temperature factor
     const double& get_E_T() const;
 
     /**
@@ -340,9 +371,9 @@ protected:
 public:
     CargoTransDangerous();
 
-    /// @brief Get type
     virtual Cargo::Type get_type() const;
     virtual const Currency& get_P_B    () const;
+    /// @brief Get danger level
     const Cargo::DangerLevel& get_dangerlevel() const;
 
     /**

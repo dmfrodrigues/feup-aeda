@@ -22,21 +22,35 @@ public:
      */
     explicit Currency(double amount = 0.0L);
 
+    /// @brief Overload of <em> operator+ </em>.
     Currency  operator+ (const Currency &c) const;
+    /// @brief Overload of <em> operator- </em>.
     Currency  operator- (const Currency &c) const;
+    /// @brief Overload of <em> operator+ </em> for sign changing.
     Currency  operator+ ()                  const;
+    /// @brief Overload of <em> operator- </em> for sign changing.
     Currency  operator- ()                  const;
+    /// @brief Overload of <em> operator+= </em>.
     Currency& operator+=(const Currency &c);
+    /// @brief Overload of <em> operator-= </em>.
     Currency& operator-=(const Currency &c);
 
+    /// @brief Overload of <em> operator== </em>.
     bool      operator==(const Currency &c) const;
+    /// @brief Overload of <em> operator!= </em>.
     bool      operator!=(const Currency &c) const;
+    /// @brief Overload of <em> operator<  </em>.
     bool      operator< (const Currency &c) const;
+    /// @brief Overload of <em> operator>  </em>.
     bool      operator> (const Currency &c) const;
+    /// @brief Overload of <em> operator<= </em>.
     bool      operator<=(const Currency &c) const;
+    /// @brief Overload of <em> operator>= </em>.
     bool      operator>=(const Currency &c) const;
 
+    /// @brief Assignment with double
     Currency& operator=(const double &n);
+    /// @brief Conversion to double
     explicit operator double() const;
 
     /** @brief   Overload of <em> operator>> </em>. */

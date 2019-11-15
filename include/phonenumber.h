@@ -28,6 +28,7 @@ public:
      */
     explicit PhoneNumber(const std::string &number);
 
+    /// @brief Assignment from string, making appropriate checks.
     PhoneNumber& operator=(const std::string &number);
 };
 

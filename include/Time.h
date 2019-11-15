@@ -60,11 +60,17 @@ public:
      */
     void input_date(const std::string &date);
 
+    /// @brief Overload of <em>operator==</em>.
     bool operator==(const Time &t) const;
+    /// @brief Overload of <em>operator!=</em>.
     bool operator!=(const Time &t) const;
+    /// @brief Overload of <em>operator< </em>.
     bool operator< (const Time &t) const;
+    /// @brief Overload of <em>operator> </em>.
     bool operator> (const Time &t) const;
+    /// @brief Overload of <em>operator<=</em>.
     bool operator<=(const Time &t) const;
+    /// @brief Overload of <em>operator>=</em>.
     bool operator>=(const Time &t) const;
 
     /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Time::DEFAULT_FORMAT. */

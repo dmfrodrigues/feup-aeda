@@ -211,6 +211,7 @@ public:
     /** @brief Empty constructor */
     Employee();
 
+    /// @brief Get base salary of employee.
     const Currency& get_base_salary() const;
 
     /**
