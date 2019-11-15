@@ -178,6 +178,12 @@ private:
      */
            void display(const Service                *p, const User::Type &t) const;
     ///Lists
+    /**
+     * @brief Filters vector by type.
+     * @param v Vector to be filtered
+     * @param t Filter type
+     * @return Vector filtered
+     */
     template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter(const std::vector<const Base*> &v, const Type &t);
     static void list_clients_commands();
     static void list_drivers_commands();
@@ -218,18 +224,72 @@ private:
     template<class Deriv> bool editUser(const User::Type &type); // manager function
     template<class Deriv> bool editUser(User *user); // edit own account
 
+    /**
+     * @brief Adds truck to agency.
+     * @return If truck was added
+     */
     bool addTruck();
+    /**
+     * @brief Choose truck from agency.
+     * @return Pointer to truck chosen, NULL if operation is cancelled
+     */
     Truck* chooseTruck();
+    /**
+     * @brief Deletes truck from agency.
+     * @return If the truck was deleted
+     */
     bool deleteTruck();
+    /**
+     * @brief Edits truck from agency.
+     * @return If the truck was edited
+     */
     bool editTruck();
+    /**
+     * @brief Changes truck from truck to a new cargo (overrides existing cargo).
+     * @param   cargo   Pointer to truck's cargo
+     * @param   type    Type of new cargo
+     * @return  If the truck was changed
+     */
     bool change_truck_cargo(CargoTrans *&cargo, const Cargo::Type &type);
+    /**
+     * @brief Edit truck from truck.
+     * @param   cargo       Pointer to truck's cargo
+     * @param   property    Property to be changed
+     * @return  If the truck was edited
+     */
     bool edit_truck_cargo(CargoTrans *&cargo, int property);
 
+    /**
+     * @brief Adds service to agency.
+     * @return If service was added
+     */
     bool addService();
+    /**
+     * @brief Adds service to agency.
+     * @param user Add service directly linked to user
+     * @return If service was added
+     */
     bool addService(const User *user);
+    /**
+     * @brief Choose service from agency.
+     * @return Pointer to service chosen, NULL if operation is cancelled
+     */
     Service* chooseService();
+    /**
+     * @brief Choose service from agency.
+     * @param user User to filter services linked to user
+     * @return Pointer to service chosen, NULL if operation is cancelled
+     */
     Service* chooseService(const User *user);
+    /**
+     * @brief Deletes service from agency.
+     * @return If the service was deleted
+     */
     bool deleteService();
+    /**
+     * @brief Deletes service from agency.
+     * @return If the service was deleted
+     */
     bool deleteService(const User *user);
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const;
@@ -247,8 +307,23 @@ private:
     std::vector<Truck *> get_available_trucks (const Time &tbegin, const Time &tend, const Cargo *c) const;
 
     // Menus
+    /**
+     * @brief Prints menu to guests.
+     * @param user User to store login account
+     * @return If login was sucessful
+     */
     bool guestMenu(User* &user);
+    /**
+     * @brief Prints menu of user.
+     * @param user User to decide what menu
+     * @return False if any error occurs, true otherwise.
+     */
     bool printUserMenu(User::Type user_type);
+    /**
+     * @brief Main menu for user.
+     * @param user      Pointer to user that did login on agency.
+     * @param user_type Type of user user.
+     */
     bool userMenu(User *user, User::Type user_type);
 public:
     /**
