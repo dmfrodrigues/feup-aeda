@@ -51,42 +51,42 @@ private:
     bool load_all();
     void save_all();
     ///Display
-    static void print_list(const std::vector<const Manager*> &v);
-    static void print_list(const std::vector<const Driver *> &v);
-    static void print_list(const std::vector<const Client *> &v);
-    static void print_list(const std::vector<const Truck  *> &v);
-           void print_list(const std::vector<const Service*> &v) const;
-    static void display(const Client                 *p);
-    static void display(const Driver                 *p);
-    static void display(const Manager                *p);
-    static void display(const Truck                  *p);
-    static void display(const Cargo                  *p);
-    static void display(const CargoAnimal            *p);
-    static void display(const CargoRefrigerated      *p);
-    static void display(const CargoDangerous         *p);
-    static void display(const CargoTrans             *p);
-    static void display(const CargoTransAnimal       *p);
-    static void display(const CargoTransRefrigerated *p);
-    static void display(const CargoTransDangerous    *p);
-           void display(const Service                *p) const;
+    static void print_list(const std::vector<const Manager*> &v, const User::Type &t);
+    static void print_list(const std::vector<const Driver *> &v, const User::Type &t);
+    static void print_list(const std::vector<const Client *> &v, const User::Type &t);
+    static void print_list(const std::vector<const Truck  *> &v, const User::Type &t);
+           void print_list(const std::vector<const Service*> &v, const User::Type &t) const;
+    static void display(const Client                 *p, const User::Type &t);
+    static void display(const Driver                 *p, const User::Type &t);
+    static void display(const Manager                *p, const User::Type &t);
+    static void display(const Truck                  *p, const User::Type &t);
+    static void display(const Cargo                  *p, const User::Type &t);
+    static void display(const CargoAnimal            *p, const User::Type &t);
+    static void display(const CargoRefrigerated      *p, const User::Type &t);
+    static void display(const CargoDangerous         *p, const User::Type &t);
+    static void display(const CargoTrans             *p, const User::Type &t);
+    static void display(const CargoTransAnimal       *p, const User::Type &t);
+    static void display(const CargoTransRefrigerated *p, const User::Type &t);
+    static void display(const CargoTransDangerous    *p, const User::Type &t);
+           void display(const Service                *p, const User::Type &t) const;
     ///Lists
     template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter(const std::vector<const Base*> &v, const Type &t);
     static void list_clients_commands();
     static void list_drivers_commands();
     static void list_managers_commands();
     template<class T> static bool extra_commands(const std::vector<std::string> &s, std::vector<const T*> &v);
-    template<class T> static void list_commands();
-    static void list_sort_getcomp(int i, std::function<bool(const Client *, const Client *)> &cmp);
-    static void list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp);
-    static void list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp);
-    static void list_sort_getcomp(int i, std::function<bool(const Truck  *, const Truck  *)> &cmp);
-    static void list_sort_getcomp(int i, std::function<bool(const Service*, const Service*)> &cmp);
-    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client *)> &cmp);
-    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Driver *)> &cmp);
-    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
-    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Truck  *)> &cmp);
-    static void list_filter_getvalid(int i, const std::string &str, std::function<bool(const Service*)> &cmp);
-    template<class T> void list(std::vector<const T*> v) const;
+    template<class T> static void list_commands(const User::Type &t);
+    static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Client *, const Client *)> &cmp);
+    static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Driver *, const Driver *)> &cmp);
+    static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Manager*, const Manager*)> &cmp);
+    static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Truck  *, const Truck  *)> &cmp);
+    static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Service*, const Service*)> &cmp);
+    static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Client *)> &cmp);
+    static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Driver *)> &cmp);
+    static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
+    static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Truck  *)> &cmp);
+    static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Service*)> &cmp);
+    template<class T> void list(std::vector<const T*> v, const User::Type &t) const;
     ///Commands
     static std::string prompt();
     static void wait();
@@ -224,7 +224,7 @@ template<class Deriv> User* App::chooseUser(const User::Type &type) {
     std::vector<const User*> v(users_.begin(), users_.end());
     std::vector<const Deriv*> users_filter = App::filter<User,Deriv,User::Type>(v, type);
     while (true) {
-        print_list(users_filter);
+        print_list(users_filter, type);
         std::string id;
         if (!utils::input("Choose user (username): ", id, std::cin, std::cout)) return NULL;
         User::Username username = User::Username(id);
@@ -266,7 +266,7 @@ template<class Deriv> bool App::editUser(const User::Type &type) {
     bool is_edited = false;
     while (true) {
         option = 0;
-        App::display(&user_copy);
+        App::display(&user_copy, User::Type::manager);
         if (!utils::input("Choose property to change (type cancel to finish): ", option, std::cin, std::cout)) break;
         if (option <= 0 || option > no_properties) { App::error("Option outside of range."); continue; }
         if(user_copy.edit(option, std::cin, std::cout)) is_edited = true;
@@ -290,7 +290,7 @@ template<class Deriv> bool App::editUser(User *user) {
     bool is_edited = false;
     while (true) {
         option = 0;
-        App::display(&user_copy);
+        App::display(&user_copy, User::Type::manager);
         if (!utils::input("Choose property to change (type cancel to finish): ", option, std::cin, std::cout)) break;
         if (option <= 0 || option > no_properties) { App::error("Option outside of range."); continue; }
         if (user_copy.edit(option, std::cin, std::cout)) is_edited = true;

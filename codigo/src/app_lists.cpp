@@ -17,8 +17,8 @@ template<> bool App::extra_commands<Service>(const std::vector<std::string> &s, 
     }else return false;
 }
 
-template<class T> void App::list_commands(){ T::unimplemented_function; }
-template<> void App::list_commands<Client >(){
+template<class T> void App::list_commands(const User::Type &t){ T::unimplemented_function; }
+template<> void App::list_commands<Client >(const User::Type &t){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-4].\n"
@@ -28,7 +28,7 @@ template<> void App::list_commands<Client >(){
               << "    back                Go back.\n";
     std::cout << std::endl;
 }
-template<> void App::list_commands<Driver >(){
+template<> void App::list_commands<Driver >(const User::Type &t){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-5].\n"
@@ -38,7 +38,7 @@ template<> void App::list_commands<Driver >(){
               << "    back                Go back.\n";
     std::cout << std::endl;
 }
-template<> void App::list_commands<Manager>(){
+template<> void App::list_commands<Manager>(const User::Type &t){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-5].\n"
@@ -48,7 +48,7 @@ template<> void App::list_commands<Manager>(){
               << "    back                Go back.\n";
     std::cout << std::endl;
 }
-template<> void App::list_commands<Truck  >(){
+template<> void App::list_commands<Truck  >(const User::Type &t){
     std::cout << "\n"
               << "COMMANDS:\n\n"
               << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-9].\n"
@@ -58,19 +58,31 @@ template<> void App::list_commands<Truck  >(){
               << "    back                Go back.\n";
     std::cout << std::endl;
 }
-template<> void App::list_commands<Service>(){
-    std::cout << "\n"
-              << "COMMANDS:\n\n"
-              << "    time \033[4mDATE1\033[0m \033[4mDATE2\033[0m    Restrict list to services started between two time points.\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-10,12-13].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-13].\n"
-              << "    details \"\033[4mSTR\033[0m\"       Print details of service with ID \033[4mSTR\033[0m\n"
-              << "    reset               Reset to initial selection.\n"
-              << "    back                Go back.\n";
-    std::cout << std::endl;
+template<> void App::list_commands<Service>(const User::Type &t){
+    if(t == User::Type::client){
+        std::cout << "\n"
+                  << "COMMANDS:\n\n"
+                  << "    time \033[4mDATE1\033[0m \033[4mDATE2\033[0m    Restrict list to services started between two time points.\n"
+                  << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-10,12].\n"
+                  << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-12].\n"
+                  << "    details \"\033[4mSTR\033[0m\"       Print details of service with ID \033[4mSTR\033[0m\n"
+                  << "    reset               Reset to initial selection.\n"
+                  << "    back                Go back.\n\n"
+                  << std::flush;
+    }else{
+        std::cout << "\n"
+                  << "COMMANDS:\n\n"
+                  << "    time \033[4mDATE1\033[0m \033[4mDATE2\033[0m    Restrict list to services started between two time points.\n"
+                  << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-10,12-13].\n"
+                  << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-13].\n"
+                  << "    details \"\033[4mSTR\033[0m\"       Print details of service with ID \033[4mSTR\033[0m\n"
+                  << "    reset               Reset to initial selection.\n"
+                  << "    back                Go back.\n\n"
+                  << std::flush;
+    }
 }
 
-void App::list_sort_getcomp(int i, std::function<bool(const Client *, const Client *)> &cmp){
+void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Client *, const Client *)> &cmp){
     switch(i){
         case 0: cmp = [](const Client *p1, const Client *p2){ return (p1->get_username        () < p2->get_username        ()); }; break;
         case 1: cmp = [](const Client *p1, const Client *p2){ return (p1->get_name            () < p2->get_name            ()); }; break;
@@ -80,7 +92,7 @@ void App::list_sort_getcomp(int i, std::function<bool(const Client *, const Clie
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_sort_getcomp(int i, std::function<bool(const Driver *, const Driver *)> &cmp){
+void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Driver *, const Driver *)> &cmp){
     switch(i){
         case 0: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_username        () < p2->get_username        ()); }; break;
         case 1: cmp = [](const Driver *p1, const Driver *p2){ return (p1->get_name            () < p2->get_name            ()); }; break;
@@ -91,7 +103,7 @@ void App::list_sort_getcomp(int i, std::function<bool(const Driver *, const Driv
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_sort_getcomp(int i, std::function<bool(const Manager*, const Manager*)> &cmp){
+void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Manager*, const Manager*)> &cmp){
     switch(i){
         case 0: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_username        () < p2->get_username        ()); }; break;
         case 1: cmp = [](const Manager *p1, const Manager *p2){ return (p1->get_name            () < p2->get_name            ()); }; break;
@@ -102,7 +114,7 @@ void App::list_sort_getcomp(int i, std::function<bool(const Manager*, const Mana
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_sort_getcomp(int i, std::function<bool(const Truck  *, const Truck  *)> &cmp){
+void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Truck  *, const Truck  *)> &cmp){
     switch(i){
         case 0: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_numberplate      () < p2->get_numberplate      ()); }; break;
         case 1: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_plateregisterdate() < p2->get_plateregisterdate()); }; break;
@@ -117,7 +129,7 @@ void App::list_sort_getcomp(int i, std::function<bool(const Truck  *, const Truc
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_sort_getcomp(int i, std::function<bool(const Service*, const Service*)> &cmp){
+void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Service*, const Service*)> &cmp){
     switch(i){
         case 0 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_id                              () < p2->get_id                              ()); }; break;
         case 1 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_client                          () < p2->get_client                          ()); }; break;
@@ -130,13 +142,14 @@ void App::list_sort_getcomp(int i, std::function<bool(const Service*, const Serv
         case 8 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_distance                        () < p2->get_distance                        ()); }; break;
         case 9 : cmp = [](const Service *p1, const Service *p2){ return (p1->get_cargo()->get_type               () < p2->get_cargo()->get_type               ()); }; break;
         case 10: cmp = [](const Service *p1, const Service *p2){ return (p1->get_cargo()->get_W                  () < p2->get_cargo()->get_W                  ()); }; break;
-        case 12: cmp = [](const Service *p1, const Service *p2){ return (p1->get_cost                            () < p2->get_cost                            ()); }; break;
-        case 13: cmp = [](const Service *p1, const Service *p2){ return (p1->get_revenue                         () < p2->get_revenue                         ()); }; break;
+        case 12: cmp = [](const Service *p1, const Service *p2){ return (p1->get_revenue                         () < p2->get_revenue                         ()); }; break;
+        case 13: if(t == User::Type::client) throw std::invalid_argument("NUM outside range");
+                 cmp = [](const Service *p1, const Service *p2){ return (p1->get_cost                            () < p2->get_cost                            ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
 
-void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Client *)> &cmp){
+void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Client *)> &cmp){
     switch(i){
         case 0: cmp = [str](const Client *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
         case 1: cmp = [str](const Client *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
@@ -146,7 +159,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Driver *)> &cmp){
+void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Driver *)> &cmp){
     switch(i){
         case 0: cmp = [str](const Driver *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
         case 1: cmp = [str](const Driver *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
@@ -157,7 +170,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Manager*)> &cmp){
+void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Manager*)> &cmp){
     switch(i){
         case 0: cmp = [str](const Manager *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
         case 1: cmp = [str](const Manager *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
@@ -168,7 +181,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Truck  *)> &cmp){
+void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Truck  *)> &cmp){
     switch(i){
         case 0: cmp = [str](const Truck *p){ return (std::string(p->get_numberplate())                    .find(str) != std::string::npos); }; break;
         case 1: cmp = [str](const Truck *p){ return (p->get_plateregisterdate().format("%Y/%m/%d")        .find(str) != std::string::npos); }; break;
@@ -183,7 +196,7 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_filter_getvalid(int i, const std::string &str, std::function<bool(const Service*)> &cmp){
+void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Service*)> &cmp){
     switch(i){
         case 0 : cmp = [str](const Service *p){ return (std::string(p->get_id())                   .find(str) != std::string::npos); }; break;
         case 1 : cmp = [str](const Service *p){ return (std::string(p->get_client())               .find(str) != std::string::npos); }; break;
@@ -205,18 +218,19 @@ void App::list_filter_getvalid(int i, const std::string &str, std::function<bool
             }
             return false;
         }; break;
-        case 12: cmp = [str](const Service *p){ return (utils::ftos("%+.2",-double(p->get_cost   ())).find(str) != std::string::npos); }; break;
-        case 13: cmp = [str](const Service *p){ return (utils::ftos("%+.2",+double(p->get_revenue())).find(str) != std::string::npos); }; break;
+        case 12: cmp = [str](const Service *p){ return (utils::ftos("%+.2",+double(p->get_revenue())).find(str) != std::string::npos); }; break;
+        case 13: if(t == User::Type::client) throw std::invalid_argument("NUM outside range");
+                 cmp = [str](const Service *p){ return (utils::ftos("%+.2",-double(p->get_cost   ())).find(str) != std::string::npos); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
 
-template<class T> void App::list(std::vector<const T*> v) const{
+template<class T> void App::list(std::vector<const T*> v, const User::Type &t) const{
     const std::vector<const T*> original = v;
     while(true){
         CLEAR();
-        print_list(v);
-        list_commands<T>();
+        print_list(v, t);
+        list_commands<T>(t);
         std::vector<std::string> s = utils::parse_command(prompt());
         if(s.size() >= 1){
             //====SORT==========================================================
@@ -225,7 +239,7 @@ template<class T> void App::list(std::vector<const T*> v) const{
                 int i; try{ i = utils::stoi(s[1]); } catch(const std::invalid_argument &e){ error("invalid NUM"); continue; }
                 std::function<bool(const T*, const T*)> cmp;
                 try{
-                    list_sort_getcomp(i, cmp);
+                    list_sort_getcomp(t, i, cmp);
                     utils::mergesort(v,cmp);
                 }catch(const std::invalid_argument &e){ error(e.what()); }
             }else
@@ -235,7 +249,7 @@ template<class T> void App::list(std::vector<const T*> v) const{
                 int i; try{ i = utils::stoi(s[1]); } catch(const std::invalid_argument &e){ error("invalid NUM"); continue; }
                 std::function<bool(const T*)> cmp;
                 try{
-                    list_filter_getvalid(i, s[2], cmp);
+                    list_filter_getvalid(t, i, s[2], cmp);
                     v = utils::filter(v,cmp);
                 }catch(const std::invalid_argument &e){ error(e.what()); }
             }else
@@ -247,7 +261,7 @@ template<class T> void App::list(std::vector<const T*> v) const{
                   [&u](const T *p){ return (std::string(p->get_id()) == u); });
                 if(it == v.end()){ error("no such username in table"); continue; }
                 std::cout << std::endl;
-                display(dynamic_cast<const T*>(*it));
+                display(dynamic_cast<const T*>(*it), t);
                 std::cout << std::endl;
                 wait();
             }else
@@ -270,35 +284,35 @@ template<class T> void App::list(std::vector<const T*> v) const{
 void App::list_clients () const{
     std::vector<const User*> v(users_.begin(), users_.end());
     std::vector<const Client*> w = App::filter<User,Client,User::Type>(v, User::Type::client);
-    list(w);
+    list(w, User::Type::manager);
 }
 void App::list_drivers () const{
     std::vector<const User*> v(users_.begin(), users_.end());
     std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
-    list(w);
+    list(w, User::Type::manager);
 }
 void App::list_managers() const{
     std::vector<const User*> v(users_.begin(), users_.end());
     std::vector<const Manager*> w = App::filter<User,Manager,User::Type>(v, User::Type::manager);
-    list(w);
+    list(w, User::Type::manager);
 }
 void App::list_trucks  () const{
     std::vector<const Truck*> v(trucks_.begin(), trucks_.end());
-    list(v);
+    list(v, User::Type::manager);
 }
 void App::list_services() const{
     std::vector<const Service*> v(services_.begin(), services_.end());
-    list(v);
+    list(v, User::Type::manager);
 }
 void App::list_services(const User *user) const{
     if (user->get_type() == User::Type::client) {
         std::vector<Service*> v = filter_services_by_client(services_, dynamic_cast<const Client*>(user));
         std::vector<const Service*> w(v.begin(), v.end());
-        list(w);
+        list(w, user->get_type());
     } else if (user->get_type() == User::Type::driver) {
         std::vector<Service*> v = filter_services_by_driver(services_, dynamic_cast<const Driver*>(user));
         std::vector<const Service*> w(v.begin(), v.end());
-        list(w);
+        list(w, user->get_type());
     } else {
         list_services();
     }

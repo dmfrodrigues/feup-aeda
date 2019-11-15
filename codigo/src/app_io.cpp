@@ -161,7 +161,7 @@ Truck* App::chooseTruck() {
     std::cout << "Choosing truck.\n";
     std::vector<const Truck*> trucks(trucks_.begin(), trucks_.end());
     while (true) {
-        print_list(trucks);
+        print_list(trucks, User::Type::manager);
         std::string id;
         if (!utils::input("Choose truck (number plate): ", id, std::cin, std::cout)) return NULL;
         try {
@@ -216,7 +216,7 @@ bool App::editTruck() {
         return false;
     }
     while (true) {
-        App::display(truck_copy);
+        App::display(truck_copy, User::Type::manager);
         if (!utils::input("To change/edit cargo use command (changing cargo will override the existing cargo):\n"
                           "     change cargo \033[4mtype\033[0m           Change cargo in truck to a new cargo with type specified.\n"
                           "     edit   cargo \033[4mproperty\033[0m       Edit existing cargo in truck, property should be the number of the parameter you want to edit.\n"
@@ -345,7 +345,7 @@ Service* App::chooseService() {
     std::cout << "Choosing service.\n";
     std::vector<const Service*> services(services_.begin(), services_.end());
     while (true) {
-        print_list(services);
+        print_list(services, User::Type::manager);
         std::string id;
         if (!utils::input("Choose service id: ", id, std::cin, std::cout)) return NULL;
         Service *it = find_service(id);
@@ -366,7 +366,7 @@ Service* App::chooseService(const User *user) {
     std::vector<const Service*> services(filtered.begin(), filtered.end());
 
     while (true) {
-        print_list(services);
+        print_list(services, user->get_type());
         std::string id;
         if (!utils::input("Choose service id: ", id, std::cin, std::cout)) return NULL;
         Service *it = find_service(id);
