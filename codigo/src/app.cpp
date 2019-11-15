@@ -165,14 +165,24 @@ std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const U
     return ret;
 }
 
-std::vector<Service*> App::filter_services_by_user(const std::vector<Service*> &v, const User *user) const {
+std::vector<Service*> App::filter_services_by_client(const std::vector<Service*> &v, const Client *client) const {
     std::vector<Service*> ret;
     for (Service *s : v)
-        if (s->get_client() == user->get_username())
+        if (s->get_client() == client->get_username())
             ret.push_back(s);
 
     return ret;
 }
+
+std::vector<Service*> App::filter_services_by_driver(const std::vector<Service*> &v, const Driver *driver) const {
+    std::vector<Service*> ret;
+    for (Service *s : v)
+        if (std::find(s->get_drivers().begin(), s->get_drivers().end(), driver->get_username()) != s->get_drivers().end())
+            ret.push_back(s);
+
+    return ret;
+}
+
 
 User* App::find_user(const User::Username &u) const{
     auto it = utils::find_if(users_.begin(), users_.end(), [u](const User *m){ return (m->get_username() == u); });
@@ -352,7 +362,7 @@ bool App::userMenu(User *user, User::Type user_type) {
             } else if (user_type == User::Type::driver) {
                 switch (option) {
                 //INFORMATION VISUALIZATION                                     //ACCOUNT MANAGEMENT
-                case 11: list_services();                            break;     case 21: editUser<Driver>(user); wait();                    break;
+                case 11: list_services(user);                        break;     case 21: editUser<Driver>(user); wait();                    break;
                 case 12: list_trucks();                              break;     case 22: CLEAR(); App::display(dynamic_cast<Driver*>(user)); wait(); break;
                 case 13:                                             break;
                 //OTHER OPERATIONS

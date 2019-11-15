@@ -291,7 +291,15 @@ void App::list_services() const{
     list(v);
 }
 void App::list_services(const User *user) const{
-    std::vector<Service*> v = filter_services_by_user(services_, user);
-    std::vector<const Service*> w(v.begin(), v.end());
-    list(w);
+    if (user->get_type() == User::Type::client) {
+        std::vector<Service*> v = filter_services_by_client(services_, dynamic_cast<const Client*>(user));
+        std::vector<const Service*> w(v.begin(), v.end());
+        list(w);
+    } else if (user->get_type() == User::Type::driver) {
+        std::vector<Service*> v = filter_services_by_driver(services_, dynamic_cast<const Driver*>(user));
+        std::vector<const Service*> w(v.begin(), v.end());
+        list(w);
+    } else {
+        list_services();
+    }
 }

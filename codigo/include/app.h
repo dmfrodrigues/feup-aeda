@@ -124,7 +124,8 @@ private:
     bool deleteService(const User *user);
 
     std::vector<User*> filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const;
-    std::vector<Service*> filter_services_by_user(const std::vector<Service*> &v, const User *user) const;
+    std::vector<Service*> filter_services_by_client(const std::vector<Service*> &v, const Client *client) const;
+    std::vector<Service*> filter_services_by_driver(const std::vector<Service*> &v, const Driver *driver) const;
     User* find_user(const User::Username &u) const;
     Truck* find_truck(const Truck::NumberPlate &np) const;
     Service* find_service(const Service::ID &id) const;

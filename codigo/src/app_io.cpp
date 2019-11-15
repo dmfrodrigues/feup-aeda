@@ -356,7 +356,7 @@ Service* App::chooseService() {
 
 Service* App::chooseService(const User *user) {
     std::cout << "Choosing service.\n";
-    std::vector<Service*> filtered = filter_services_by_user(services_, user);
+    std::vector<Service*> filtered = filter_services_by_client(services_, dynamic_cast<const Client*>(user));
     std::vector<const Service*> services(filtered.begin(), filtered.end());
 
     while (true) {
