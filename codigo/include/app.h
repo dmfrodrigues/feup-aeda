@@ -41,33 +41,141 @@ private:
     const std::string trucks_path_  ;
     const std::string services_path_;
     //Vectors
+    /// @brief Existing user accounts on agency.
     std::vector<User*> users_ ;
+    /// @brief Existing trucks on agency.
     std::vector<Truck*> trucks_  ;
+    /// @brief Existing services on agency.
     std::vector<Service*> services_;
     ///PRIVATE FUNCTIONS
     ///File IO
+    /**
+     * @brief Loads data file.
+     * @param is    Input data file
+     * @param m_in  Vector to store all data
+     * @return Number of objects of Base loaded
+     * @throws  App::RepeatedId If a repeated object gets loaded (objects with same identification)
+     */
     template<class Base, class Deriv, class ID> static size_t load_ptr(std::ifstream &is,       std::vector<Base*> &m_in );
+    /**
+     * @brief Saves information into data file.
+     * @param os    Output data file
+     * @param m_in  Vector containing all data
+     * @return Number of objects of Base saved
+     */
     template<class Base, class Deriv          > static size_t save_ptr(std::ofstream &os, const std::vector<Base*> &m_out);
+    /// @brief Loads all information stored in data files specified in constructor.
     bool load_all();
+    /// @brief Saves all current information stored in runtime to data files.
     void save_all();
     ///Display
+    /**
+     * @brief Prints list of all managers in the vector.
+     * @param v     Vector containing all the managers
+     * @param t     Type of user that information will be displayed to
+     */
     static void print_list(const std::vector<const Manager*> &v, const User::Type &t);
+    /**
+     * @brief Prints list of all drivers in the vector.
+     * @param v     Vector containing all the drivers
+     * @param t     Type of user that information will be displayed to
+     */
     static void print_list(const std::vector<const Driver *> &v, const User::Type &t);
+    /**
+     * @brief Prints list of all clients in the vector.
+     * @param v     Vector containing all the clients
+     * @param t     Type of user that information will be displayed to
+     */
     static void print_list(const std::vector<const Client *> &v, const User::Type &t);
+    /**
+     * @brief Prints list of all trucks in the vector.
+     * @param v     Vector containing all the trucks
+     * @param t     Type of user that information will be displayed to
+     */
     static void print_list(const std::vector<const Truck  *> &v, const User::Type &t);
+    /**
+     * @brief Prints list of all services in the vector.
+     * @param v     Vector containing all the services
+     * @param t     Type of user that information will be displayed to
+     */
            void print_list(const std::vector<const Service*> &v, const User::Type &t) const;
+    /**
+     * @brief Prints detailed information about one client.
+     * @param p     Client to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const Client                 *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one driver.
+     * @param p     Driver to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const Driver                 *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one manager.
+     * @param p     Manager to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const Manager                *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one truck.
+     * @param p     Truck to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const Truck                  *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const Cargo                  *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const CargoAnimal            *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const CargoRefrigerated      *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const CargoDangerous         *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const CargoTrans             *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const CargoTransAnimal       *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const CargoTransRefrigerated *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
     static void display(const CargoTransDangerous    *p, const User::Type &t);
+    /**
+     * @brief Prints detailed information about one cargo.
+     * @param p     Cargo to be displayed
+     * @param t     Type of user that information will be displayed to
+     */
            void display(const Service                *p, const User::Type &t) const;
     ///Lists
     template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter(const std::vector<const Base*> &v, const Type &t);
