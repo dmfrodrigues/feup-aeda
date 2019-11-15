@@ -12,23 +12,19 @@
  */
 class PhoneNumber: public utils::string_regex{
 public:
-    /**
-     * @brief   Regular expression string that describes a valid phone number.
-     */
+    /// @brief   Regular expression string that describes a valid phone number.
     static const std::string REGEX_STR;
-    /**
-     * @brief   Empty constructor.
-     */
+    /// @brief   Empty constructor.
     explicit PhoneNumber();
     /**
-     * @brief   Constructs from string containing phone number.
+     * @brief   Constructs from \a std::string containing phone number.
      *
-     * @param   number  String with phone number
-     * @exception InvalidPhoneNumber    When phone number does not match regular expression
+     * @param   number  \a std::string with phone number
+     * @exception utils::string_regex::FailedRegex    When phone number does not match regular expression
      */
     explicit PhoneNumber(const std::string &number);
 
-    /// @brief Assignment from string, making appropriate checks.
+    /// @brief Assignment from \a std::string, making appropriate checks.
     PhoneNumber& operator=(const std::string &number);
 };
 
