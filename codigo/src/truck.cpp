@@ -83,6 +83,9 @@ Truck::Fuel Truck::processFuel(const std::string &s) {
 }
 
 Truck* Truck::deep_copy(const Truck *truck) {
+
+    if (truck == NULL) throw std::invalid_argument("truck is a null pointer");
+
     Truck *copy = new Truck();
 
     copy->number_plate_         = truck->number_plate_;
@@ -92,6 +95,8 @@ Truck* Truck::deep_copy(const Truck *truck) {
     copy->category_             = truck->category_;
 
     CargoTrans *cargo = truck->cargo_;
+    if (cargo == NULL) throw std::invalid_argument("Truck has no cargo (cargo_ is a null pointer)");
+
     CargoTrans *cargo_copy;
     Cargo::Type cargo_type = cargo->get_type();
     switch(cargo_type) {
@@ -113,10 +118,10 @@ Truck* Truck::deep_copy(const Truck *truck) {
             break;
         default:
             delete copy;
-            return NULL;
+            throw std::invalid_argument("Cargo has an invalid cargo type.");
     }
     if (cargo_copy != NULL)     copy->cargo_ = cargo_copy;
-    else { delete copy; return NULL; }
+    else { delete copy; throw std::invalid_argument("Couldn't copy cargo."); }
     return copy;
 }
 

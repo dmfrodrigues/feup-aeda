@@ -27,6 +27,7 @@ void CLEAR();
 /** @brief Main class of the application. */
 class App{
 public:
+    /** @brief Profit rate of the agency */
     static const float rate;
 private:
     ///PRIVATE VARIABLES
@@ -142,13 +143,24 @@ private:
     bool printUserMenu(User::Type user_type);
     bool userMenu(User *user, User::Type user_type);
 public:
+    /**
+     * @brief Constructor.
+     * @param base      Base path to all data files.
+     * @param managers  Path from base to manager data file.
+     * @param drivers   Path from base to drivers data file.
+     * @param clients   Path from base to clients data file.
+     * @param trucks    Path from base to trucks data file.
+     * @param services  Path from base to services data file.
+     */
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
         const std::string &clients ,
         const std::string &trucks  , const std::string &services);
 
+    /** @brief Destructor. */
     ~App();
 
+    /** @brief Runs main application */
     void start();
 
     /** @brief Exception class to report invalid credentials */
@@ -156,7 +168,9 @@ public:
     private:
         std::string msg_;
     public:
+        /** @brief Constructor accepting an information message to explain what caused exception */
         InvalidCredentials(const std::string &msg);
+        /// @brief Get information message about the exception.
         const std::string& getMsg() const;
     };
 
@@ -165,7 +179,12 @@ public:
     private:
         std::string id_;
     public:
+        /**
+         * @brief Constructor accepting ID that caused the exception.
+         * @param   id  ID that caused the exception
+         */
         RepeatedId(const std::string &id);
+        /// @brief Get ID that caused the exception
         const std::string& get_id() const;
     };
 

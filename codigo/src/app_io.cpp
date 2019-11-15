@@ -208,12 +208,18 @@ bool App::editTruck() {
     bool is_edited = false;
     truck = *it;
     std::string command;
-    Truck *truck_copy = Truck::deep_copy(truck);
+    Truck *truck_copy;
+    try {
+        truck_copy = Truck::deep_copy(truck);
+    } catch (std::invalid_argument &ia) {
+        error(ia.what());
+        return false;
+    }
     while (true) {
         App::display(truck_copy);
         if (!utils::input("To change/edit cargo use command (changing cargo will override the existing cargo):\n"
-                          "     change cargo \033[4mtype\033[0m\n"
-                          "     edit cargo \033[4mproperty\033[0m\n"
+                          "     change cargo \033[4mtype\033[0m           Change cargo in truck to a new cargo with type specified.\n"
+                          "     edit   cargo \033[4mproperty\033[0m       Edit existing cargo in truck, property should be the number of the parameter you want to edit.\n"
                           "Types available: Normal, Animal, Refrigerated, Dangerous.\n"
                           "Choose property to change (type cancel to finish): ", command, std::cin, std::cout)) break;
         if (command == "0") { error("Property that can't be changed."); continue; }

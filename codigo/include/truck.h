@@ -100,6 +100,7 @@ private:
     CargoTrans *cargo_ = NULL;
 
 public:
+    /** @brief Default Constructor. */
     Truck();
     /** @brief Destructor */
     virtual ~Truck();
@@ -123,8 +124,20 @@ public:
     /// @brief Get type of vehicle (always Truck)
     virtual Type get_type(void) const;
 
+    /**
+     * @brief Converts string into %Fuel.
+     * @param s   String containing the type of fuel
+     * @return Type of %Fuel
+     * @throws std::invalid_argument If type of fuel is invalid
+     */
     static Fuel processFuel(const std::string &s);
 
+    /**
+     * @brief Creates a complete copy of a truck.
+     * @param truck   Truck to be copied
+     * @return Pointer to a new Truck object that's a copy of the original
+     * @throws std::invalid_argument If any error occurs while copying
+     */
     static Truck* deep_copy(const Truck *truck);
 
     /** @brief   Overload of <em> operator>> </em>. */

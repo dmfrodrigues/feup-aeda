@@ -90,9 +90,9 @@ public:
     /** @brief Destructor */
     virtual ~Cargo();
     /// @brief Get weight
-    const Weight&      get_W          () const;
+    const Weight&       get_W          () const;
     /// @brief Get description
-    const std::string& get_description() const;
+    const std::string&  get_description() const;
     /// @brief Get type
     virtual Cargo::Type get_type      () const;
 
@@ -277,9 +277,11 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
+    /** @brief Default Constructor. */
     CargoTransAnimal();
     /// @brief Get type
     virtual Cargo::Type get_type() const;
+    /// @brief Get base price of cargo.
     virtual const Currency& get_P_B() const;
 
     /**
@@ -310,9 +312,9 @@ public:
  * @brief Description of refrigerated cargo that a truck can transport.
  */
 class CargoTransRefrigerated: public CargoTrans{
+private:
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
-private:
     static const Currency P_B_;
     static const Temperature T0_;
     double E_T_;
@@ -321,15 +323,16 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
+    /** @brief Default Constructor. */
     CargoTransRefrigerated();
-    /// @brief Get type
+    /// @brief Get type.
     virtual Cargo::Type get_type() const;
-    /// @brief Get temperature range
+    /// @brief Get temperature range.
     const TemperatureRange& get_Tr() const;
     virtual const Currency& get_P_B() const;
-    /// @brief Get reference temperature
+    /// @brief Get reference temperature.
     const Temperature& get_T0() const;
-    /// @brief Get temperature factor
+    /// @brief Get temperature factor.
     const double& get_E_T() const;
 
     /**
@@ -369,9 +372,15 @@ protected:
     virtual std::istream& input (std::istream &is);
     virtual std::ostream& output(std::ostream &os) const;
 public:
+    /** @brief Default Constructor. */
     CargoTransDangerous();
 
+    /**
+     * @brief Get cargo type
+     * @return Cargo::Type::Dangerous
+     */
     virtual Cargo::Type get_type() const;
+    /// @brief Get base price of cargo.
     virtual const Currency& get_P_B    () const;
     /// @brief Get danger level
     const Cargo::DangerLevel& get_dangerlevel() const;
