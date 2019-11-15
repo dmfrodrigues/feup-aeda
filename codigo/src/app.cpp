@@ -293,7 +293,6 @@ bool App::printUserMenu(User::Type user_type) {
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│  Service list                          [11] │  Edit account                          [21] │\n"
                             "│  Truck list                            [12] │  View account                          [22] │\n"
-                            "│  Statistics                            [13] │                                             │\n"
                             "╞═════════════════════════════════════════════╡                                             │\n"
                             "│                Other operations             │                                             │\n"
                             "╞═════════════════════════════════════════════╡                                             │\n"
@@ -321,7 +320,6 @@ bool App::printUserMenu(User::Type user_type) {
                             "│  Delete manager                        [53] │  Client list                           [63] │\n"
                             "│                                             │  Driver list                           [64] │\n"
                             "│                                             │  Manager list                          [65] │\n"
-                            "│                                             │  Statistics                            [66] │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│               Account Management            │                Other operations             │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
@@ -364,7 +362,6 @@ bool App::userMenu(User *user, User::Type user_type) {
                 //INFORMATION VISUALIZATION                                     //ACCOUNT MANAGEMENT
                 case 11: list_services(user);                        break;     case 21: editUser<Driver>(user); wait();                    break;
                 case 12: list_trucks();                              break;     case 22: CLEAR(); App::display(dynamic_cast<Driver*>(user), User::Type::manager); wait(); break;
-                case 13:                                             break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
                 default:
@@ -390,7 +387,6 @@ bool App::userMenu(User *user, User::Type user_type) {
                 case 53: deleteUser<Manager>(User::Type::manager); wait();  break;      case 63: list_clients();                                    break;
                                                                                 case 64: list_drivers();                                    break;
                                                                                 case 65: list_managers();                                   break;
-                                                                                case 66:                                                    break;
 
                 //ACCOUNT MANAGEMENT                                            //OTHER OPERATIONS
                 case 71: editUser<Manager>(user); wait(); wait();                       break;  case 81: save_all();                                    break;
@@ -409,12 +405,6 @@ bool App::userMenu(User *user, User::Type user_type) {
 }
 
 void App::start(){
-    /*
-    User *user = NULL;
-    if (!guestMenu(user)) return;
-
-    std::cout << "Check 1(login)\n";
-    std::cout << "Check 1(login)\n";*/
     #ifdef TELMO
 
         Time t = Time();
