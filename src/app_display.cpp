@@ -247,11 +247,11 @@ void App::display(const CargoDangerous *p){
 }
 
 void App::display(const CargoTrans             *p){
-    std::cout << "│ [0] Weight (kg)   │ " << utils::ljust(utils::ftos("%.0f",(double)p->get_W())  ,81) << "\t │\n"
-              << "│ [1] Description   │ " << utils::ljust(p->get_description()                    ,81) << "\t │\n"
-              << "| [2] Price base €  │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_P_B()),81) << "\t │\n"
-              << "│ [3] Dist factor   │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_E_D()),81) << "\t │\n"
-              << "│ [4] Weight factor │ " << utils::ljust(utils::ftos("%.2f",(double)p->get_E_W()),81) << "\t │\n";
+    std::cout << "│ [0] Weight (kg)   │ " << utils::ljust(utils::ftos("%.1f",(double)p->get_W())              ,81) << "\t │\n"
+              << "│ [1] Description   │ " << utils::ljust(p->get_description()                                ,81) << "\t │\n"
+              << "| [2] Price base €  │ " << utils::ljust(utils::ftos("%+.2f",(double)p->get_P_B())           ,81) << "\t │\n"
+              << "│ [3] Dist factor   │ " << utils::ljust(utils::ftos("%.4f",(double)p->get_E_D())            ,81) << "\t │\n"
+              << "│ [4] Weight factor │ " << utils::ljust(utils::ftos("%.3fE-4",(double)p->get_E_W()*10000.0L),81) << "\t │\n";
     switch(p->get_type()){
         case Cargo::Animal      : display(dynamic_cast<const CargoTransAnimal      *>(p)); break;
         case Cargo::Refrigerated: display(dynamic_cast<const CargoTransRefrigerated*>(p)); break;
