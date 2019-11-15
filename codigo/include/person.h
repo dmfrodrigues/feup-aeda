@@ -21,17 +21,18 @@ protected:
     /**
      * @brief Allows Person fields to be filled from info in input stream.
      * @param   is  Input stream
+     * @return      Same as \p is.
      */
     virtual std::istream& input(std::istream &is);
 public:
-    /** @brief Empty constructor */
+    /// @brief Empty constructor.
     Person();
-    /** @brief Destructor */
+    /// @brief Destructor.
     virtual ~Person();
 
-    /** @brief Get name of person. */
+    /// @brief Get name of person.
     virtual const std::string& get_name() const final;
-    /** @brief Get phonenumber. */
+    /// @brief Get phonenumber.
     virtual const PhoneNumber& get_phonenumber() const final;
 
     /**
@@ -50,9 +51,9 @@ public:
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
-    /** @brief Overload of <em> operator>> </em>. */
+    /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       Person &p);
-    /** @brief Overload of <em> operator<< </em>. */
+    /// @brief Overload of \a operator<< .
     friend std::ostream& operator<<(std::ostream &os, const Person &p);
 };
 
@@ -66,25 +67,25 @@ public:
     /** @brief %Username class. */
     class Username: public utils::string_regex{
     public:
-        /** @brief Regex a username is supposed to match. */
+        /// @brief Regex a username is supposed to match.
         static const std::string REGEX_STR;
-        /** @brief Empty constructor. */
+        /// @brief Empty constructor.
         explicit Username();
-        /** @brief Constructor accepting string as argument for construction. */
+        /// @brief Constructor accepting \a std::string as argument for construction.
         explicit Username(const std::string &username);
-        /** @brief Overload of operator= */
+        /// @brief Overload of \a operator= .
         Username& operator=(const std::string &s);
     };
     /** @brief %Password class. */
     class Password: public utils::string_regex{
     public:
-        /** @brief Regex a password is supposed to match. */
+        /// @brief Regex a password is supposed to match.
         static const std::string REGEX_STR;
-        /** @brief Empty constructor. */
+        /// @brief Empty constructor.
         explicit Password();
-        /** @brief Constructor accepting string as argument for construction. */
+        /// @brief Constructor accepting string as argument for construction.
         explicit Password(const std::string &password);
-        /** @brief Overload of operator= */
+        /// @brief Overload of \a operator= .
         Password& operator=(const std::string &s);
     };
 
@@ -106,16 +107,16 @@ protected:
      */
     virtual std::istream& input(std::istream &is);
 public:
-    /** @brief Empty constructor */
+    /// @brief Empty constructor.
     User();
 
-    /** @brief Get username. */
+    /// @brief Get username.
     const Username& get_username() const;
-    /** @brief Get id (which in this case is the username).*/
+    /// @brief Get id (which in this case is the username).
     const Username& get_id      () const;
-    /** @brief Get address. */
+    /// @brief Get address.
     const Address&  get_address () const;
-    /** @brief Get VAT number */
+    /// @brief Get VAT number.
     const VAT&      get_vat     () const;
     /**
      * @brief Gets the type of user.
@@ -146,9 +147,9 @@ public:
      */
     bool verifyCredentials(const std::string &password) const;
 
-    /** @brief Overload of <em> operator>> </em>. */
+    /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       User &p);
-    /** @brief Overload of <em> operator<< </em>. */
+    /// @brief Overload of \a operator<< .
     friend std::ostream& operator<<(std::ostream &os, const User &p);
 };
 
@@ -166,7 +167,7 @@ protected:
      */
     virtual std::istream& input(std::istream &is);
 public:
-    /** @brief Empty constructor */
+    /// @brief Empty constructor.
     Client();
 
     /**
@@ -191,9 +192,9 @@ public:
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
-    /** @brief Overload of <em> operator>> </em>. */
+    /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       Client &p);
-    /** @brief Overload of <em> operator<< </em>. */
+    /// @brief Overload of \a operator<< .
     friend std::ostream& operator<<(std::ostream &os, const Client &p);
 };
 
@@ -208,7 +209,7 @@ private:
 protected:
     virtual std::istream& input(std::istream &is);
 public:
-    /** @brief Empty constructor */
+    /// @brief Empty constructor
     Employee();
 
     /// @brief Get base salary of employee.
@@ -237,9 +238,9 @@ public:
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
 
-    /** @brief Overload of <em> operator>> </em>. */
+    /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       Employee &p);
-    /** @brief Overload of <em> operator<< </em>. */
+    /// @brief Overload of \a operator<< .
     friend std::ostream& operator<<(std::ostream &os, const Employee &p);
 };
 
@@ -252,7 +253,7 @@ class Manager: public Employee {
 protected:
     virtual std::istream& input(std::istream &is);
 public:
-    /** @brief Empty constructor */
+    /// @brief Empty constructor.
     Manager();
 
     /**
@@ -278,9 +279,9 @@ public:
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
-    /** @brief Overload of <em> operator>> </em>. */
+    /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       Manager &p);
-    /** @brief Overload of <em> operator<< </em>. */
+    /// @brief Overload of \a operator<< .
     friend std::ostream& operator<<(std::ostream &os, const Manager &p);
 };
 
@@ -293,7 +294,7 @@ class Driver: public Employee {
 protected:
     virtual std::istream& input(std::istream &is);
 public:
-    /** @brief Empty constructor */
+    /// @brief Empty constructor.
     Driver();
 
     /**
@@ -318,9 +319,9 @@ public:
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 
-    /** @brief Overload of <em> operator>> </em>. */
+    /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       Driver &p);
-    /** @brief Overload of <em> operator<< </em>. */
+    /// @brief Overload of \a operator<< .
     friend std::ostream& operator<<(std::ostream &os, const Driver &p);
 };
 
