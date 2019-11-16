@@ -227,6 +227,10 @@ namespace utils {
             const T& get_ufloat() const;
         };
     };
+    /** @brief %Weight */
+    typedef ufloat<double> Weight;
+    /** @brief %Distance */
+    typedef ufloat<double> Distance;
     /**
      * @brief String restricted by regex. Throws @ref FailedRegex when assigned with non-conformant string
      */
@@ -364,11 +368,6 @@ namespace utils {
      */
     template<class T, class Func> bool input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os);
 }
-
-/** @brief %Weight */
-typedef utils::ufloat<double> Weight;
-/** @brief %Distance */
-typedef utils::ufloat<double> Distance;
 
 template<class T, class Valid> std::vector<T*> utils::filter(const std::vector<T*> &v, Valid valid){
     std::vector<T*> ret;
