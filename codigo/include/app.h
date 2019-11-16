@@ -172,12 +172,14 @@ private:
      */
     static void display(const CargoTransDangerous    *p, const User::Type &t);
     /**
-     * @brief Prints detailed information about one cargo.
-     * @param p     Cargo to be displayed
+     * @brief Prints detailed information about one service.
+     * @param p     Service to be displayed
      * @param t     Type of user that information will be displayed to
      */
            void display(const Service                *p, const User::Type &t) const;
-    ///Lists
+           
+    //Lists
+
     /**
      * @brief Filters vector by type.
      * @param v Vector to be filtered
