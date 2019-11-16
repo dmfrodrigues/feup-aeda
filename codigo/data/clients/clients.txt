@@ -1,4 +1,4 @@
-15
+17
 
 Ant%C3%B3nio%20Afonso%20Adamante
 91%20801%2097%2053
@@ -134,3 +134,21 @@ Rua%20da%20Coordoaria%2055
 4010-080 PORTO
 Porto Portugal
 888372712
+
+Lu%C3%ADs%20Francisco%20Macieira%20Almeida
+91
+lfma
+lololol
+Rua%20da%20Coordoaria%20128
+4200-201 GAIA
+Porto Portugal
+299918281
+
+Jos%C3%A9%20Manuel%20Pereira%20Fernandes
+%2B351
+joseman
+aminhapass
+Travessa%2025%20Abril%20192
+3200-301 LISBOA
+Lisboa Portugal
+293818291
