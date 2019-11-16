@@ -177,7 +177,7 @@ private:
      * @param t     Type of user that information will be displayed to
      */
            void display(const Service                *p, const User::Type &t) const;
-           
+
     //Lists
 
     /**
@@ -434,20 +434,6 @@ public:
          * @param   id  ID that caused the exception
          */
         RepeatedId(const std::string &id);
-        /// @brief Get ID that caused the exception
-        const std::string& get_id() const;
-    };
-
-    /** @brief Exception class to report an invalid schedule */
-    class InvalidSchedule: public std::logic_error {
-    private:
-        std::string id_;
-    public:
-        /**
-         * @brief Constructor accepting ID that caused the exception.
-         * @param   id  ID that caused the exception
-         */
-        InvalidSchedule(const std::string &id);
         /// @brief Get ID that caused the exception
         const std::string& get_id() const;
     };

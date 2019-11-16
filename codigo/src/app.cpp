@@ -458,7 +458,3 @@ const std::string& App::InvalidCredentials::getMsg() const { return msg_; }
 App::RepeatedId::RepeatedId(const std::string &id):
     runtime_error("Repeated id "+id), id_(id){}
 const std::string& App::RepeatedId::get_id() const{ return id_; }
-
-App::InvalidSchedule::InvalidSchedule(const std::string &id):
-    logic_error("Invalid schedule "+id), id_(id){}
-const std::string& App::InvalidSchedule::get_id() const{ return id_; }
