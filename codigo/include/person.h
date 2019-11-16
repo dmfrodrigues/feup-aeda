@@ -15,7 +15,9 @@
  */
 class Person {
 private:
+    /// @brief Name of the person.
     std::string name_;
+    /// @brief Phone number of the person.
     PhoneNumber phonenumber_;
 protected:
     /**
@@ -96,9 +98,13 @@ public:
         manager
     };
 private:
+    /// @brief Username used in login and as identifier of user.
     Username username_;
+    /// @brief Password used in login and validation of crucial information.
     Password password_;
+    /// @brief Address of user.
     Address address_;
+    /// @brief VAT of user.
     VAT vat_;
 protected:
     /**
@@ -212,6 +218,7 @@ public:
  */
 class Employee: public User {
 private:
+    /// @brief Base salary of employee.
     Currency base_salary_;
 protected:
     virtual std::istream& input(std::istream &is);

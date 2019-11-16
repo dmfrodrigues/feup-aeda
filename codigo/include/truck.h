@@ -42,6 +42,7 @@ public:
         };
         */
     private:
+        /// @brief Number of the plate.
         Number number_;
         //Country country_;
     public:
@@ -90,13 +91,18 @@ public:
     };
 private:
     //std::vector<Event> logs_;
+    /// @brief Number plate of the truck.
     NumberPlate number_plate_;
+    /// @brief Time when plate number of the truck was registered.
     Time plate_register_date_;
+    /// @brief Type of fuel of the truck @ref Fuel
     Fuel fuel_;
+    /// @brief Maximum distance that truck can travel.
     Distance max_reach_;
+    /// @brief Category of the truck.
     Category category_; //A,B,C,D
 
-    //second in pair is cost per kilometer of transporting a given Cargo
+    /// Cargo that can be transported by the truck.
     CargoTrans *cargo_ = NULL;
 
 public:

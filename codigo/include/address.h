@@ -25,10 +25,15 @@ public:
         PostalCode& operator=(const std::string &postal_code);
     };
 private:
+    /// @brief Name of the street of the address.
     std::string street_;
+    /// @brief Postal Code of the address.
     PostalCode postal_code_;
+    /// @brief City of the address.
     std::string city_;
+    /// @brief District of the address.
     std::string district_;
+    /// @brief Country of the address.
     std::string country_;
 public:
     /**

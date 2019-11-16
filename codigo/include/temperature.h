@@ -12,6 +12,7 @@
  */
 class Temperature{
 private:
+    /// @brief Temperature value
     double temp_;
 public:
     /// @brief Empty constructor
@@ -53,6 +54,7 @@ public:
      */
     class InvalidTemperature: public std::invalid_argument{
     private:
+        /// @brief Temperature value that caused exception.
         double temp_;
     public:
         /**
@@ -94,7 +96,10 @@ public:
      */
     class InvalidTemperatureRange: public std::invalid_argument{
     private:
-        Temperature min, max;
+        /// @brief Minimum temperature of pair of values that caused exception.
+        Temperature min;
+        /// @brief Maximum temperature of pair of values that caused exception.
+        Temperature max;
     public:
         /**
          * @brief Constructor accepting the extreme values of the range that caused the exception.

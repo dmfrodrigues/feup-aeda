@@ -20,19 +20,33 @@ public:
     /** @brief ID type */
     typedef std::string ID;
 private:
+    /// @brief Service ID.
     ID id_;
+    /// @brief Service ID.
     Client::Username client_user_;
+    /// @brief Person to contact on pick-up of merchandise.
     Person contact1_;
+    /// @brief Person to contact on delivery of merchandise.
     Person contact2_;
+    /// @brief Time to begin the service.
     Time t_begin_;
+    /// @brief Time that service should be finished.
     Time t_end_;
+    /// @brief Address to pick-up merchandise.
     Address a_begin_;
+    /// @brief Address to delivery merchandise.
     Address a_end_;
+    /// @brief Total distance travelled the service will take.
     Distance distance_;
+    /// @brief Merchandise request on the service.
     Cargo *cargo_ = NULL;
+    /// @brief Trucks allocated by the agency to this service.
     std::vector<Truck ::NumberPlate> trucks_;
+    /// @brief Drivers that will drive the trucks.
     std::vector<Driver::Username   > drivers_;
+    /// @brief Cost to the agency to make this service.
     Currency cost_;
+    /// @brief Revenue gained by the agency upon completion of the service.
     Currency revenue_;
 public:
     /** @brief ID of next service*/

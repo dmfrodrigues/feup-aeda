@@ -14,6 +14,7 @@
  */
 class Time {
 private:
+    /// @brief Time struct containing date and hour.
     std::tm t_;
 public:
     /**
@@ -55,7 +56,7 @@ public:
      * @brief Allows input of date in a friendly user way.
      * Default format for time is: YYYY-mm-dd.
      * The hours, minutes and seconds will be set to the 00:00:00.
-     * @param hour String containing input from user
+     * @param date String containing input from user
      * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time
      */
     void input_date(const std::string &date);
@@ -83,6 +84,7 @@ public:
      */
     class InvalidTimeFormat: public std::invalid_argument{
     private:
+        /// @brief Time format that caused exception.
         std::string fmt_;
     public:
         /**
@@ -104,13 +106,14 @@ public:
      */
     class InvalidTime: public std::invalid_argument {
     private:
+        /// @brief Date that caused exception.
         std::string date_;
     public:
         /**
          * @brief Constructor accepting the time format that caused the exception.
          *
          * Also sets the string returned by <em> std::exception::what() </em>.
-         * @param   fmt     Time format
+         * @param   date     String containing date that caused exception.
          */
         InvalidTime(const std::string &date);
         /**

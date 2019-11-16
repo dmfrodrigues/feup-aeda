@@ -142,6 +142,7 @@ namespace utils {
     template<class T>
     class ufloat{
     private:
+        /// @brief Value of the unsigned floating point number (no precision specified).
         T u_;
     public:
         /**
@@ -184,6 +185,7 @@ namespace utils {
         /** @brief Exception class for reporting invalid UFloat (usually because it is negative) */
         class InvalidUFloat: public std::invalid_argument{
         private:
+            /// @brief Value that caused exception.
             T u_;
         public:
             /**
@@ -203,7 +205,9 @@ namespace utils {
      */
     class string_regex{
     private:
+        /// @brief String stored.
         std::string s_;
+        /// @brief Regular expression that string must follow.
         std::string REGEX_STR_;
     public:
         /**
@@ -238,7 +242,9 @@ namespace utils {
 
         class FailedRegex: public std::invalid_argument{
         private:
+            /// @brief String that caused exception.
             const std::string s_;
+            /// @brief Regular expression that string should've matched.
             const std::string REGEX_STR_;
         public:
             /**
@@ -290,8 +296,34 @@ namespace utils {
      * @return If the string equals the string "cancel"
      */
     inline bool isCancel(const std::string &s) { return s == "cancel"; }
+    /**
+     * @brief Allows input from user into an object T with descriptive message.
+     * @param msg       Message to be displayed before input
+     * @param object    Object where input will be stored
+     * @param is        Input stream
+     * @param os        Output stream
+     * @return True if input is valid, false if operation is cancelled
+     */
     template<class T> bool input(const std::string &msg, T &object, std::istream &is, std::ostream &os);
+    /**
+     * @brief Allows input from user into a string with descriptive message.
+     *        Specialization for objects of type string.
+     * @param msg       Message to be displayed before input
+     * @param object    String where input will be stored
+     * @param is        Input stream
+     * @param os        Output stream
+     * @return True if input is valid, false if operation is cancelled
+     */
     template<> bool input<std::string>(const std::string &msg, std::string &object, std::istream &is, std::ostream &os);
+    /**
+     * @brief Allows input from user into an object T with descriptive message.
+     * @param msg       Message to be displayed before input
+     * @param f         Function that will be used to store the input in the object instaed of default insertion operator
+     * @param object    Object where input will be stored
+     * @param is        Input stream
+     * @param os        Output stream
+     * @return True if input is valid, false if operation is cancelled
+     */
     template<class T, class Func> bool input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os);
 }
 

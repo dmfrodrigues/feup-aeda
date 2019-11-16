@@ -14,6 +14,7 @@
  */
 class Currency{
 private:
+    /// @brief Value of currency in cents (euro cents).
     long long int cents_;
 public:
     /**

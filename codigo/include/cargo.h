@@ -69,7 +69,9 @@ public:
      */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 private:
+    /// @brief Cargo weight.
     Weight W_;
+    /// @brief Description of the cargo.
     std::string description_;
 protected:
     /**
@@ -123,7 +125,25 @@ public:
  * @brief Description of animal cargo that a client may request to transport.
  */
 class CargoAnimal: public Cargo{
+    /**
+     * @brief Input from file to CargoAnimal pointer.
+     *
+     * The first element decides what is the real type of the Cargo, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to Cargo that will be created from the data read
+     * @return      Same as \p is
+     */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
+    /**
+     * @brief Output to file from @ref Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of \p c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to cargo to be printed to \p os
+     * @return      Same as \p os
+     */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 protected:
     /**
@@ -169,7 +189,25 @@ public:
  * @brief Description of refrigerated cargo that a client may request to transport.
  */
 class CargoRefrigerated: public Cargo{
+    /**
+     * @brief Input from file to CargoRefrigerated pointer.
+     *
+     * The first element decides what is the real type of the Cargo, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to Cargo that will be created from the data read
+     * @return      Same as \p is
+     */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
+    /**
+     * @brief Output to file from @ref Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of \p c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to cargo to be printed to \p os
+     * @return      Same as \p os
+     */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 private:
     /// @brief Range of temperature that cargo must be kept on.
@@ -220,9 +258,28 @@ public:
  * @brief Description of dangerous cargo that a client may request to transport.
  */
 class CargoDangerous: public Cargo{
+    /**
+     * @brief Input from file to CargoDangerous pointer.
+     *
+     * The first element decides what is the real type of the Cargo, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to Cargo that will be created from the data read
+     * @return      Same as \p is
+     */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
+    /**
+     * @brief Output to file from @ref Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of \p c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to cargo to be printed to \p os
+     * @return      Same as \p os
+     */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 private:
+    /// @brief Level of danger of cargo. Danger Level follows the Dangerous Goods classification @ref DangerLevel
     DangerLevel danger_level_;
 protected:
     /**
@@ -291,8 +348,11 @@ class CargoTrans: public Cargo{
      */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
+    /// @brief Base price to transport a normal cargo.
     static const Currency P_B_;
+    /// @brief Distance factor that will increase the costs.
     double E_D_;
+    /// @brief Weight factor that will increase the costs.
     double E_W_;
 protected:
     /**
@@ -350,9 +410,28 @@ public:
  * @brief Description of animal cargo that a truck can transport.
  */
 class CargoTransAnimal: public CargoTrans{
+    /**
+     * @brief Input from file to CargoTrans pointer.
+     *
+     * The first element decides what is the real type of the CargoTrans, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to CargoTrans that will be created from the data read
+     * @return      Same as \p is
+     */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
+    /**
+     * @brief Output to file from Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to CargoTrans to be printed to \p os
+     * @return      Same as \p os
+     */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
+    /// @brief Base price to transport an animal cargo.
     static const Currency P_B_;
 protected:
     /**
@@ -407,11 +486,33 @@ public:
  */
 class CargoTransRefrigerated: public CargoTrans{
 private:
+    /**
+     * @brief Input from file to CargoTrans pointer.
+     *
+     * The first element decides what is the real type of the CargoTrans, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to CargoTrans that will be created from the data read
+     * @return      Same as \p is
+     */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
+    /**
+     * @brief Output to file from Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to CargoTrans to be printed to \p os
+     * @return      Same as \p os
+     */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
+    /// @brief Base price to transport a refrigerated cargo.
     static const Currency P_B_;
+    /// @brief Base temperature (reference temperature of refrigerated cargo).
     static const Temperature T0_;
+    /// @brief Temperature factor that will increase the costs of transportation.
     double E_T_;
+    /// @brief Temperature range that cargo can be transported.
     TemperatureRange Tr_;
 protected:
     /**
@@ -470,10 +571,30 @@ public:
  * @brief Description of dangerous that a truck can transport.
  */
 class CargoTransDangerous: public CargoTrans{
+    /**
+     * @brief Input from file to CargoTrans pointer.
+     *
+     * The first element decides what is the real type of the CargoTrans, thus
+     * allowing for a dynamic_cast and a call to the correct input function.
+     * @param   is  Input stream to extract data from
+     * @param   c   Pointer to CargoTrans that will be created from the data read
+     * @return      Same as \p is
+     */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
+    /**
+     * @brief Output to file from Cargo pointer.
+     *
+     * The appropriate checks are made to determine the real type of c, and
+     * call the correct output function.
+     * @param   os  Output stream to insert data to
+     * @param   c   Pointer to CargoTrans to be printed to \p os
+     * @return      Same as \p os
+     */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
+    /// @brief Base price to transport a dangerous cargo.
     static const Currency P_B_;
+    /// @brief Level of danger of cargo. Danger Level follows the Dangerous Goods classification @ref DangerLevel
     DangerLevel danger_level_;
 protected:
     /**

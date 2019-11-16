@@ -31,14 +31,20 @@ public:
     static const float rate;
 private:
     ///PRIVATE VARIABLES
-    // Command string
+    /// @brief Operation string displayed before any command input.
     static const std::string OPSTR;
     //Paths
+    /// @brief Base path for data files of application.
     const std::string base_path_    ;
+    /// @brief Path from base to managers data files of application.
     const std::string managers_path_;
+    /// @brief Path from base to drivers data files of application.
     const std::string drivers_path_ ;
+    /// @brief Path from base to clients data files of application.
     const std::string clients_path_ ;
+    /// @brief Path from base to trucks data files of application.
     const std::string trucks_path_  ;
+    /// @brief Path from base to services data files of application.
     const std::string services_path_;
     //Vectors
     /// @brief Existing user accounts on agency.
@@ -60,7 +66,7 @@ private:
     /**
      * @brief Saves information into data file.
      * @param os    Output data file
-     * @param m_in  Vector containing all data
+     * @param m_out  Vector containing all data
      * @return Number of objects of Base saved
      */
     template<class Base, class Deriv          > static size_t save_ptr(std::ofstream &os, const std::vector<Base*> &m_out);
@@ -187,24 +193,105 @@ private:
      * @return Vector filtered
      */
     template<class Base, class Deriv, class Type> static std::vector<const Deriv*> filter(const std::vector<const Base*> &v, const Type &t);
-    static void list_clients_commands();
-    static void list_drivers_commands();
-    static void list_managers_commands();
+    /**
+     * @brief Process extra commands (outside of the main commands).
+     * @param s     Vector containing all parts of the command
+     * @param v     Vector to process depending on command
+     * @return  If command is valid
+     */
     template<class T> static bool extra_commands(const std::vector<std::string> &s, std::vector<const T*> &v);
+    /**
+     * @brief Lists all commands.
+     * @param t Type of user that commands will be displayed to
+     */
     template<class T> static void list_commands(const User::Type &t);
+    /**
+     * @brief Get comparison function to sort clients.
+     * @param t User type
+     * @param i Property of user that will be used in comparison function
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Client *, const Client *)> &cmp);
+    /**
+     * @brief Get comparison function to sort drivers.
+     * @param t User type
+     * @param i Property of user that will be used in comparison function
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Driver *, const Driver *)> &cmp);
+    /**
+     * @brief Get comparison function to sort managers.
+     * @param t User type
+     * @param i Property of user that will be used in comparison function
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Manager*, const Manager*)> &cmp);
+    /**
+     * @brief Get comparison function to sort trucks.
+     * @param t User type
+     * @param i Property of truck that will be used in comparison function
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Truck  *, const Truck  *)> &cmp);
+    /**
+     * @brief Get comparison function to sort services.
+     * @param t User type
+     * @param i Property of service that will be used in comparison function
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Service*, const Service*)> &cmp);
+
+    /**
+     * @brief Get comparison function to filter clients.
+     * @param t     User type
+     * @param i     Property of user to be used in comparison function
+     * @param str   Value of property to filter.
+     * @param cmp   Reference to function where comparison function will be stored
+     */
     static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Client *)> &cmp);
+    /**
+     * @brief Get comparison function to filter drivers.
+     * @param t User type
+     * @param i Property of user to be used in comparison function
+     * @param str   Value of property to filter.
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Driver *)> &cmp);
+    /**
+     * @brief Get comparison function to filter managers.
+     * @param t User type
+     * @param i Property of user to be used in comparison function
+     * @param str   Value of property to filter.
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Manager*)> &cmp);
+    /**
+     * @brief Get comparison function to filter trucks.
+     * @param t User type
+     * @param i Property of truck to be used in comparison function
+     * @param str   Value of property to filter.
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Truck  *)> &cmp);
+    /**
+     * @brief Get comparison function to filter services.
+     * @param t User type
+     * @param i Property of service to be used in comparison function
+     * @param str   Value of property to filter.
+     * @param cmp Reference to function where comparison function will be stored
+     */
     static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Service*)> &cmp);
+
+    /**
+     * @brief Lists all objects of T, and allows list to be modified according to commands available in %ref list_commands (and %ref extra_commands in some cases).
+     * @param v     Vector of objects T to be listed
+     * @param t     Type of user that list will be displayed to
+     */
     template<class T> void list(std::vector<const T*> v, const User::Type &t) const;
     ///Commands
+    /** @brief Application operation input system */
     static std::string prompt();
+    /** @brief Wait for user input before continuing program flow */
     static void wait();
     /**
      * @brief Confirms user input via a yes/no validation.
@@ -213,17 +300,58 @@ private:
      */
     static bool confirm(const std::string &msg);
     ///Operations
+    /** @brief Lists all clients in agency */
     void list_clients () const;
+    /** @brief Lists all drivers in agency */
     void list_drivers () const;
+    /** @brief Lists all managers in agency */
     void list_managers() const;
+    /** @brief Lists all trucks in agency */
     void list_trucks  () const;
+    /** @brief Lists all services in agency */
     void list_services() const;
+    /**
+     * @brief Lists all services linked to user in agency
+     * @param user  User to filter services
+     */
     void list_services(const User *user) const;
+
+    /**
+     * @brief Adds user to agency.
+     * @param user_type  Type of user to be added
+     * @return If truck was added
+     */
     bool addUser(const User::Type &user_type);
+    /**
+     * @brief Delete user from agency.
+     * @param type  Type of user to be deleted
+     * @return If truck was added
+     */
     template<class Deriv> bool deleteUser(const User::Type &type);
+    /**
+     * @brief Displays list of users and asks to choose user by ID.
+     * @param type  Type of user to be chosen
+     * @return User chosen, NULL if operation is cancelled
+     */
     template<class Deriv> User* chooseUser(const User::Type &type);
+    /**
+     * @brief Edit user from agency.
+     * @param type  Type of user to be edited
+     * @return If user was edited
+     */
     template<class Deriv> bool editUser(const User::Type &type); // manager function
-    template<class Deriv> bool editUser(User *user); // edit own account
+    /**
+     * @brief Edit own user account.
+     * @param user  User account to be edited
+     * @return If user was edited
+     */
+    template<class Deriv> bool editUser(User *user);
+
+    /**
+     * @brief Change password of user account.
+     * @param user  User which password will be changed
+     * @return If password was changed
+     */
     bool changePassword(User *user);
 
     /**
@@ -329,7 +457,7 @@ private:
     Truck* find_truck(const Truck::NumberPlate &np) const;
     /**
      * @brief Find service in agency.
-     * @param u ID of service to find
+     * @param id ID of service to find
      * @return Pointer to service if it exists, else NULL
      */
     Service* find_service(const Service::ID &id) const;
@@ -382,7 +510,7 @@ private:
     bool guestMenu(User* &user);
     /**
      * @brief Prints menu of user.
-     * @param user User to decide what menu
+     * @param user_type User type that menu will be displayed to
      * @return False if any error occurs, true otherwise.
      */
     bool printUserMenu(User::Type user_type);
@@ -390,6 +518,7 @@ private:
      * @brief Main menu for user.
      * @param user      Pointer to user that did login on agency.
      * @param user_type Type of user user.
+     * @return False if any error occurs, true otherwise.
      */
     bool userMenu(User *user, User::Type user_type);
 public:
@@ -422,6 +551,7 @@ public:
     /** @brief Exception class to report invalid credentials */
     class InvalidCredentials: public std::runtime_error {
     private:
+        /// @brief Message that explains what caused exception.
         std::string msg_;
     public:
         /** @brief Constructor accepting an information message to explain what caused exception */
@@ -433,6 +563,7 @@ public:
     /** @brief Exception class to report repeated IDs */
     class RepeatedId: public std::runtime_error {
     private:
+        /// @brief ID that caused exception.
         std::string id_;
     public:
         /**
