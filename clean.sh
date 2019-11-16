@@ -1,10 +1,7 @@
-cd codigo
+cd codigo/
 make clean
-cd ..
+cd ../
 rm -rf documentacao/
-doxygen doxygen.config
-pdflatex apresentacao.tex
-pdflatex apresentacao.tex
 rm -f apresentacao.synctex.gz
 rm -f apresentacao.aux
 rm -f apresentacao.log
@@ -13,5 +10,5 @@ rm -f apresentacao.out
 rm -f apresentacao.snm
 rm -f apresentacao.toc
 rm -f apresentacao.vrb
+rm -f apresentacao.pdf
 rm -f AEDA1920_Turma5_G3.zip
-zip AEDA1920_Turma5_G3.zip codigo/ documentacao/ apresentacao.pdf README.md
