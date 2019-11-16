@@ -243,15 +243,21 @@ bool App::guestMenu(User* &user) {
                 case 1:
                 {
                     std::string username, password;
-                    std::cout << "Username: "; std::getline(std::cin, username);
-                    std::cout << "Password: "; std::getline(std::cin, password);
+                    if (!utils::input("Username: ", username, std::cin, std::cout)) break;
+                    if (!utils::input("Password: ", password, std::cin, std::cout)) break;
                     try {
                         user = verifyUser(username, password);
                         std::cout << "Login Success\n";
                         return true;
                     } catch (App::InvalidCredentials &ic) {
                         error(ic.getMsg());
-                        continue;
+                        break;
+                    } catch (utils::string_regex::FailedRegex &fr) {
+                        error(fr.what());
+                        break;
+                    } catch (std::exception &ex) {
+                        error(ex.what());
+                        break;
                     }
                 }
                 break;
@@ -260,12 +266,14 @@ bool App::guestMenu(User* &user) {
                     break;
                 default:
                     error("Invalid operation.");
-                    continue;
+                    break;
             }
-            wait();
-            // CREATE ACCOUNT PROCESS
         }
+    } catch (std::exception &ex) {
+        error(std::string("Unexpected error ") + ex.what());
+        return false;
     } catch (...) {
+        error("Unknown error");
         return false;
     }
     return true;
