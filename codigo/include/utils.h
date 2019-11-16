@@ -151,7 +151,7 @@ namespace utils {
      * @param   v       vector of pointers
      * @param   valid   Boolean function to filter vector
      * @return          vector of elements of v that evaluated true
-     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
+     * @throws  Throws if any of the function calls, the assignments throws.
      */
     template<class T, class Valid> std::vector<T*> filter(const std::vector<T*> &v, Valid valid);
 
@@ -168,6 +168,7 @@ namespace utils {
         explicit ufloat():u_(0){}
         /**
          * @brief Constructor accepting value to be assigned to it.
+         * @throws utils::ufloat<T>::InvalidUFloat If value is negative
          */
         explicit ufloat(const T &u);
 
@@ -186,7 +187,10 @@ namespace utils {
 
         /** @brief Overload of operator+= */
         ufloat<T>& operator+=(const ufloat<T> &t);
-        /** @brief overload of operator- */
+        /**
+         * @brief overload of operator-
+         * @throws utils::ufloat<T>::InvalidUFloat If operation results in an negative number.
+         */
         ufloat<T> operator-(const ufloat<T> &t) const;
 
         /**
@@ -194,9 +198,15 @@ namespace utils {
          */
         explicit operator T() const;
 
-        /** @brief Overload of operator>> */
+        /**
+         * @brief Overload of operator>>
+         * @throws If extract operator throws.
+         */
         friend std::istream& operator>> <>(std::istream &is,       utils::ufloat<T> &u);
-        /** @brief Overload of operator<< */
+        /**
+         * @brief Overload of operator<<
+         * @throws If insert operator throws
+         */
         friend std::ostream& operator<< <>(std::ostream &os, const utils::ufloat<T> &u);
 
         /** @brief Exception class for reporting invalid UFloat (usually because it is negative) */
@@ -288,6 +298,7 @@ namespace utils {
      * @param   l       First element to be sorted in v
      * @param   r       Past-the-last element to be sorted in v
      * @param   comp    Comparison function, receiving arguments of the same type as the vector
+     * @throws  Throws if any of the function calls throws.
      */
     template<class T, class Compare> void mergesort(std::vector<T> &v, const size_t &l, const size_t &r, Compare comp);
     /** @overload*/
@@ -300,6 +311,8 @@ namespace utils {
      * @param   l       First iterator
      * @param   r       Past-the-last iterator
      * @param   pred    Boolean function with the same argument type as the type the iterators point to
+     * @return      Iterator to object that first met the condition specified. If not found returns r.
+     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
      */
     template<class Iterator, class Pred> Iterator find_if(Iterator l, Iterator r, Pred pred);
     /**
@@ -307,6 +320,8 @@ namespace utils {
      * @param   l   First iterator
      * @param   r   Past-the-last iterator
      * @param   obj Object to find
+     * @return      Iterator to object that first met the condition specified. If not found returns r.
+     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
      */
     template<class Iterator, class T   > Iterator find   (Iterator l, Iterator r, T obj);
 
@@ -323,6 +338,7 @@ namespace utils {
      * @param is        Input stream
      * @param os        Output stream
      * @return True if input is valid, false if operation is cancelled
+     * @throws  Throws if any of the function calls, the assignments before input throws.
      */
     template<class T> bool input(const std::string &msg, T &object, std::istream &is, std::ostream &os);
     /**
@@ -333,6 +349,7 @@ namespace utils {
      * @param is        Input stream
      * @param os        Output stream
      * @return True if input is valid, false if operation is cancelled
+     * @throws  Throws if any of the function calls, the assignments before input throws.
      */
     template<> bool input<std::string>(const std::string &msg, std::string &object, std::istream &is, std::ostream &os);
     /**
@@ -343,6 +360,7 @@ namespace utils {
      * @param is        Input stream
      * @param os        Output stream
      * @return True if input is valid, false if operation is cancelled
+     * @throws  Throws if any of the function calls, the assignments before input throws.
      */
     template<class T, class Func> bool input(const std::string &msg, Func f ,T &object, std::istream &is, std::ostream &os);
 }
