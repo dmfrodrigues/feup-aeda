@@ -242,14 +242,12 @@ namespace utils {
             const std::string REGEX_STR_;
         public:
             /**
-             * @brief Constructor accepting failing string and regex it was supposed to match.
-             * @param   s           Infringing string
-             * @param   REGEX_STR   Regex string s was supposed to match
+             * @brief   Constructor accepting failing string and regex it was supposed to match.
+             * @param   s           Failing string
+             * @param   REGEX_STR   Regex string \a s was supposed to match
              */
             FailedRegex(const std::string &s, const std::string &REGEX_STR);
-            /**
-             * @brief Get infringing string.
-             */
+            /** @brief Get infringing string. */
             const std::string& get_string()const{ return s_; }
         };
     };
