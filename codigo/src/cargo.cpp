@@ -5,11 +5,11 @@
 
 #include "app.h"
 
-const Currency    CargoTrans  ::P_B_(100.0);
-const Currency    CargoTransAnimal ::P_B_(150.0);
-const Currency    CargoTransRefrigerated::P_B_(200.0);
+const Currency    CargoTrans  ::P_B_(25.0);
+const Currency    CargoTransAnimal ::P_B_(35.0);
+const Currency    CargoTransRefrigerated::P_B_(50.0);
 const Temperature CargoTransRefrigerated::T0_(20.0);
-const Currency    CargoTransDangerous   ::P_B_(300.0);
+const Currency    CargoTransDangerous   ::P_B_(75.0);
 
 std::string Cargo::type_string(const Type &t){
     switch(t){
