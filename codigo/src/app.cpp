@@ -126,7 +126,7 @@ std::vector<Driver*> App::get_available_drivers(const Time &tbegin, const Time &
         assert(get_schedule(q, v));
         bool available = true;
         for(const auto &r:v){
-            if(std::min(tbegin, r.first.first) < std::max(tend, r.first.second)){
+            if(std::max(tbegin, r.first.first) < std::min(tend, r.first.second)){
                 available = false;
                 break;
             }
@@ -140,12 +140,18 @@ std::vector<Truck *> App::get_available_trucks (const Time &tbegin, const Time &
     std::vector<Truck*> tv = utils::filter(trucks_, [c](const Truck *p){
         return (p->get_cargo()->can_carry(c));
     });
-    for(Truck *p:tv){
+    std::cout << "SIZE====" << tv.size() << std::endl;
+    std::cout << tbegin.format("%Y/%m/%d %H:%M:%S") << ", "
+              << tend  .format("%Y/%m/%d %H:%M:%S") << "\n";
+    for(Truck *p:tv){ std::cout << "Truck " << p->get_numberplate() << std::endl;
         std::vector<std::pair<std::pair<Time,Time>, Service::ID> > v;
         assert(get_schedule(p, v));
         bool available = true;
         for(const auto &r:v){
-            if(std::min(tbegin, r.first.first) < std::max(tend, r.first.second)){
+            std::cout << r.first.first.format("%Y/%m/%d %H:%M:%S") << ", "
+                      << r.first.second.format("%Y/%m/%d %H:%M:%S") << "\n";
+            if(std::max(tbegin, r.first.first) < std::min(tend, r.first.second)){
+                std::cout << "Fucked up" << std::endl;
                 available = false;
                 break;
             }
