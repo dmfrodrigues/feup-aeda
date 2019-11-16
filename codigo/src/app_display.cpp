@@ -92,8 +92,8 @@ void App::print_list(const std::vector<const Truck  *> &v, const User::Type &t){
 void App::print_list(const std::vector<const Service*> &v, const User::Type &t) const{
     Currency EXPENSES(0), PRICE(0);
     for(const Service *p:v){
-        EXPENSES += p->get_cost();
-        PRICE += p->get_revenue();
+        EXPENSES += p->get_cost   (); std::cout << double(p->get_cost()) << " " << double(EXPENSES) << std::endl;
+        PRICE    += p->get_revenue();
     }
     if(t == User::Type::manager){
         EXPENSES = -EXPENSES;
@@ -144,8 +144,8 @@ void App::print_list(const std::vector<const Service*> &v, const User::Type &t) 
             }
         }
         std::cout << "╘═════╧══════════════╧═══════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n"
-                  << "                                                                                                                         │                     TOTAL │ "+utils::rjust(utils::ftos("%+.2f", double(EXPENSES)), 11)
-                                                                                                                                                                                      +" │ "+utils::rjust(utils::ftos("%+.2f", double(PRICE)), 11)+" │\n"
+                  << "                                                                                                                         │                     TOTAL │ "+utils::rjust(utils::ftos("%+.2f", double(PRICE)), 11)
+                                                                                                                                                                                      +" │ "+utils::rjust(utils::ftos("%+.2f", double(EXPENSES)), 11)+" │\n"
                   << "                                                                                                                         ╘═══════════════════════════╧═════════════╧═════════════╛\n"
                   << std::flush;
     }else{

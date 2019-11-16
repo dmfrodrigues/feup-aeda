@@ -7,8 +7,8 @@ Currency::Currency(double amount):cents_(100.0L*amount+(amount > 0.0L ? 0.5L : -
 
 Currency  Currency::operator+ (const Currency &c) const { return Currency(cents_+c.cents_); }
 Currency  Currency::operator- (const Currency &c) const { return Currency(cents_-c.cents_); }
-Currency  Currency::operator+ ()                  const { return Currency(+cents_); }
-Currency  Currency::operator- ()                  const { return Currency(-cents_); }
+Currency  Currency::operator+ ()                  const { Currency c; c.cents_ = +cents_; return c; }
+Currency  Currency::operator- ()                  const { Currency c; c.cents_ = -cents_; return c; }
 Currency& Currency::operator+=(const Currency &c)       { cents_ += c.cents_; return *this; }
 Currency& Currency::operator-=(const Currency &c)       { cents_ -= c.cents_; return *this; }
 
