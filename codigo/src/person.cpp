@@ -70,13 +70,10 @@ User::Password& User::Password::operator=(const std::string &s){
 }
 //User
 std::istream& User::input(std::istream &is){
-    Person::input(is);
-    std::string s;
+    Person::input(is); std::string s;
     try{
-        is >> username_;
-        is >> password_;
-        is >> address_;
-        is >> vat_;
+        is >> username_ >> password_
+           >> address_  >> vat_;
     }catch(...){
         is.setstate(std::ios::failbit);
     }

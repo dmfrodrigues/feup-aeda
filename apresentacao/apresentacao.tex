@@ -183,7 +183,7 @@ $\vcenter{\hbox{\includegraphics[scale=0.3]{{classutils_1_1string__regex__inheri
 \begin{frame}
 \frametitle{Estrutura de ficheiros}
 \begin{center}
-\begin{minipage}{0.35\textwidth}
+\begin{minipage}{0.45\textwidth}
 	\small
 	\dirtree{%
 		.1 data.
@@ -196,14 +196,18 @@ $\vcenter{\hbox{\includegraphics[scale=0.3]{{classutils_1_1string__regex__inheri
 		.2 services.
 		.3 services.txt.
 	}
+	\begin{center}\begin{minipage}{0.93\textwidth}
+		\lstinputlisting[language=C++,firstline=72,lastline=81]{../codigo/src/person.cpp}
+	\end{minipage} \end{center}
 \end{minipage}
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.53\textwidth}
 \textbf{URL-encoding}\\
 Codificar todos os caracteres exceto \texttt{[a-aA-Z0-9\_-.~]} com o seu código ASCII hexadecimal antecedido de \texttt{\%}.
 \begin{itemize}
 	\item Resolve problema de ler linha completa de ficheiros
 	\item Formato portável e independente da codificação do ficheiro
 \end{itemize}
+Convencionámos que, para as classes que implementámos, os operadores \texttt{<<}, \texttt{>>} seriam utilizados para I/O de ficheiros, em vez de I/O para o utilizador/linha de comandos
 \end{minipage}
 \end{center}
 \end{frame}
