@@ -89,6 +89,7 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         trucks_.push_back(tv[i]->get_numberplate());
         drivers_.push_back(dv[i]->get_username());
         done += tv[i]->get_cargo()->get_W();
+        i++;
     }
     if(done < cargo_->get_W() && !utils::feq(double(done), double(cargo_->get_W()), 1.0)){
         trucks_.clear();

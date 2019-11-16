@@ -107,7 +107,8 @@ void App::print_list(const std::vector<const Service*> &v, const User::Type &t) 
                      "│ [0] │              │ Contact 2 [3]                     │ Time end   [5]   │ Address end   [7]          │ Type   [ 9]   │                           │ [12]        │ [13]        │\n"
                      "│     │              │                                   │                  │ Distance (km) [8]          │ Weight [10]   │                           │             │             │\n"
                      "╞═════╪══════════════╪═══════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n";
-        for(const Service* p:v){
+        for(size_t k = 0; k < v.size(); ++k){
+            const Service* p = v[k];
             const User *c = App::find_user(p->get_client());
             const std::vector<Truck::NumberPlate> &tv = p->get_trucks ();
             const std::vector<Driver::Username  > &dv = p->get_drivers();
@@ -142,6 +143,8 @@ void App::print_list(const std::vector<const Service*> &v, const User::Type &t) 
                 std::cout << "│     │              │                                   │                  │                            │               │ "
                           << utils::ljust(std::string(tv[i]), 12) + " " + utils::ljust(std::string(dv[i]), 12) << " │             │             │\n";
             }
+            ///LAST LINE =======================================================
+            if(k+1 != v.size()) std::cout << "├─────┼──────────────┼───────────────────────────────────┼──────────────────┼────────────────────────────┼───────────────┼───────────────────────────┼─────────────┼─────────────┤\n";
         }
         std::cout << "╘═════╧══════════════╧═══════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n"
                   << "                                                                                                                         │                     TOTAL │ "+utils::rjust(utils::ftos("%+.2f", double(PRICE)), 11)
