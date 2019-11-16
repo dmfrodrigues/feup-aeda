@@ -68,6 +68,9 @@ public:
      * @return      Same as \p os
      */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
+
+    /** @brief %Weight */
+    typedef utils::ufloat<double> Weight;
 private:
     /// @brief Cargo weight.
     Weight W_;

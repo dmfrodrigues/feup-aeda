@@ -19,6 +19,8 @@ class Service{
 public:
     /** @brief ID type */
     typedef std::string ID;
+    /** @brief %Distance */
+    typedef utils::ufloat<double> Distance;
 private:
     /// @brief Service ID.
     ID id_;
