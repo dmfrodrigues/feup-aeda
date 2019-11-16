@@ -9,12 +9,20 @@
 #endif
 
 int main(){
-    ENABLEPT();
-    App app("data/","managers/managers.txt",
-                    "drivers/drivers.txt",
-                    "clients/clients.txt",
-                    "trucks/trucks.txt",
-                    "services/services.txt");
-    app.start();
+    try {
+        ENABLEPT();
+        App app("data/","managers/managers.txt",
+                        "drivers/drivers.txt",
+                        "clients/clients.txt",
+                        "trucks/trucks.txt",
+                        "services/services.txt");
+        app.start();
+    } catch (std::ios_base::failure &fail) {
+        App::error(fail.what());
+        return 1;
+    } catch (std::exception &ex) {
+        App::error(ex.what());
+        return 1;
+    }
     return 0;
 }

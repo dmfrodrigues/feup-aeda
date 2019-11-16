@@ -147,6 +147,13 @@ public:
      */
     bool verifyCredentials(const std::string &password) const;
 
+    /**
+     * @brief Changes password of user.
+     * @param password New password
+     * @throws utils::string_regex::FailedRegex If password is invalid
+     */
+    void change_password(const std::string &password);
+
     /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       User &p);
     /// @brief Overload of \a operator<< .

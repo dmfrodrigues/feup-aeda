@@ -131,7 +131,15 @@ bool User::edit(int property, std::istream&is, std::ostream &os) {
 }
 
 bool User::verifyCredentials(const std::string &password) const{
-    return this->password_ == Password(password);
+    try {
+        return this->password_ == Password(password);
+    } catch (utils::string_regex::FailedRegex &fr) {
+        return false;
+    }
+}
+
+void User::change_password(const std::string &password) {
+    this->password_ = Password(password);
 }
 
 std::istream& operator>>(std::istream &is,       User &p){ return p.input(is); }

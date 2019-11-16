@@ -210,7 +210,6 @@ private:
      * @return True if input is 'yes', false if inputs a 'no'
      */
     static bool confirm(const std::string &msg);
-    static void error(const std::string &s);
     ///Operations
     void list_clients () const;
     void list_drivers () const;
@@ -223,6 +222,7 @@ private:
     template<class Deriv> User* chooseUser(const User::Type &type);
     template<class Deriv> bool editUser(const User::Type &type); // manager function
     template<class Deriv> bool editUser(User *user); // edit own account
+    bool changePassword(User *user);
 
     /**
      * @brief Adds truck to agency.
@@ -407,6 +407,12 @@ public:
 
     /** @brief Destructor. */
     ~App();
+
+    /**
+     * @brief Outputs error message.
+     * @param s     Error message
+     */
+    static void error(const std::string &s);
 
     /** @brief Runs main application */
     void start();

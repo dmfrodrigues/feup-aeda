@@ -141,6 +141,30 @@ bool App::addUser(const User::Type &user_type) {
     return true;
 }
 
+bool App::changePassword(User *user) {
+    CLEAR();
+    std::cout << "Chaning password.\n";
+    while (true) {
+        try {
+            std::string new_pass, new_pass_repeat, current_pass;
+            if (!utils::input("Enter new password: ", new_pass, std::cin, std::cout)            ||
+                !utils::input("Re-enter new password: ", new_pass_repeat, std::cin, std::cout)  ||
+                !utils::input("Enter current password: ", current_pass, std::cin, std::cout))   return false;
+
+            if (new_pass != new_pass_repeat) { error("New password don't match."); continue; }
+            if (!user->verifyCredentials(current_pass)) { error("Current password doesn't match."); continue; }
+            if (confirm("Confirm change of password (yes/no): ")) {
+                user->change_password(new_pass);
+                std::cout << "Password changed.\n";
+                return true;
+            } else return false;
+        } catch (utils::string_regex::FailedRegex &fr) {
+            error("Invalid password.\n");
+            continue;
+        }
+    }
+}
+
 bool App::addTruck() {
     CLEAR();
     std::cout << "Adding truck.\n";

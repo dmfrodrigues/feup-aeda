@@ -280,7 +280,7 @@ bool App::printUserMenu(User::Type user_type) {
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│  Request service                       [11] │  Edit account                          [21] │\n"
                             "│  Cancel service                        [12] │  View account                          [22] │\n"
-                            "│  Service list                          [13] │                                             │\n"
+                            "│  Service list                          [13] │  Change password                       [23] │\n"
                             "╞═════════════════════════════════════════════╡                                             │\n"
                             "│                Other operations             │                                             │\n"
                             "╞═════════════════════════════════════════════╡                                             │\n"
@@ -293,7 +293,7 @@ bool App::printUserMenu(User::Type user_type) {
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│  Service list                          [11] │  Edit account                          [21] │\n"
                             "│  Truck list                            [12] │  View account                          [22] │\n"
-                            "╞═════════════════════════════════════════════╡                                             │\n"
+                            "╞═════════════════════════════════════════════╡  Change password                       [23] │\n"
                             "│                Other operations             │                                             │\n"
                             "╞═════════════════════════════════════════════╡                                             │\n"
                             "│  Log out                               [31] │                                             │\n"
@@ -325,6 +325,7 @@ bool App::printUserMenu(User::Type user_type) {
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│  Edit account                          [71] │  Save                                  [81] │\n"
                             "│  View account                          [72] │  Log out                               [82] │\n"
+                            "│  Change password                       [73] │                                             │\n"
                             "╘═════════════════════════════════════════════╧═════════════════════════════════════════════╛\n"
                             "                                                                                             \n";
         }
@@ -349,7 +350,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 //SERVICE MANAGEMENT                                            //ACCOUNT MANAGEMENT
                 case 11: addService(user); wait();                   break;     case 21: editUser<Client>(user); wait();                    break;
                 case 12: deleteService(user); wait();                break;     case 22: CLEAR(); App::display(dynamic_cast<Client*>(user), User::Type::manager); wait(); break;
-                case 13: list_services(user);                        break;
+                case 13: list_services(user);                        break;     case 23: changePassword(user); wait();  break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
                 default:
@@ -362,6 +363,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 //INFORMATION VISUALIZATION                                     //ACCOUNT MANAGEMENT
                 case 11: list_services(user);                        break;     case 21: editUser<Driver>(user); wait();                    break;
                 case 12: list_trucks();                              break;     case 22: CLEAR(); App::display(dynamic_cast<Driver*>(user), User::Type::manager); wait(); break;
+                                                                                case 23: changePassword(user); wait();  break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
                 default:
@@ -391,6 +393,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 //ACCOUNT MANAGEMENT                                            //OTHER OPERATIONS
                 case 71: editUser<Manager>(user); wait(); wait();                       break;  case 81: save_all();                                    break;
                 case 72: CLEAR(); App::display(dynamic_cast<Manager*>(user), User::Type::manager); wait();    break;  case 82: return true;                                   break;
+                case 73: changePassword(user); wait();  break;
 
                 default:
                     error("Invalid operation.");
@@ -438,6 +441,8 @@ void App::start(){
         User *user = NULL;
         while (true) {
             if (!guestMenu(user)) break;
+
+            if (user == NULL) continue;
 
             User::Type user_type = user->get_type();
 
