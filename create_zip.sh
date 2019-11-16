@@ -11,5 +11,6 @@ rm -f apresentacao.nav
 rm -f apresentacao.out
 rm -f apresentacao.snm
 rm -f apresentacao.toc
+rm -f apresentacao.vrb
 rm -f AEDA1920_Turma5_G3.zip
 zip AEDA1920_Turma5_G3.zip codigo/ documentacao/ apresentacao.pdf README.md
