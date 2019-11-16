@@ -43,9 +43,15 @@ public:
         Toxic,
         Radioactive,
     };
-    /// @brief Convert @ref Cargo::Type to \a std::string to show in tables.
+    /**
+     * @brief Convert @ref Cargo::Type to \a std::string to show in tables.
+     * @throws std::invalid_argument If cargo type is invalid
+     */
     static std::string type_string(const Type &t);
-    /// @brief Convert @ref Cargo::DangerLevel to \a std::string to show in tables.
+    /**
+     * @brief Convert @ref Cargo::DangerLevel to \a std::string to show in tables.
+     * @throws std::invalid_argument If danger level is invalid
+     */
     static std::string dangerlevel_string(const DangerLevel &d);
 
     /**
@@ -56,6 +62,7 @@ public:
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to @ref Cargo that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     /**
@@ -66,6 +73,7 @@ public:
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to cargo to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 private:
@@ -78,12 +86,14 @@ protected:
      * @brief Input from \a std::istream to current object.
      * @param   is  Input stream to read from
      * @return      Same as \p is
+     * @throws      If istream is set to throw on failbit
      */
     virtual std::istream& input (std::istream &is);
     /**
      * @brief Output to \a std::ostream from current object.
      * @param   os  Output stream to write to
      * @return      Same as \p os
+     * @throws  Throws if any of the function calls throws.
      */
     virtual std::ostream& output(std::ostream &os) const;
 public:

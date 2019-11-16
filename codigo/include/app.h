@@ -596,8 +596,9 @@ template<class Deriv> User* App::chooseUser(const User::Type &type) {
     std::cout << "Choosing user.\n";
     std::vector<const User*> v(users_.begin(), users_.end());
     std::vector<const Deriv*> users_filter = App::filter<User,Deriv,User::Type>(v, type);
+
+    print_list(users_filter, type);
     while (true) {
-        print_list(users_filter, type);
         std::string id;
         if (!utils::input("Choose user (username): ", id, std::cin, std::cout)) return NULL;
         User::Username username = User::Username(id);

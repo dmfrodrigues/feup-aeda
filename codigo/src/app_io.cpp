@@ -184,8 +184,9 @@ bool App::addTruck() {
 Truck* App::chooseTruck() {
     std::cout << "Choosing truck.\n";
     std::vector<const Truck*> trucks(trucks_.begin(), trucks_.end());
+
+    print_list(trucks, User::Type::manager);
     while (true) {
-        print_list(trucks, User::Type::manager);
         std::string id;
         if (!utils::input("Choose truck (number plate): ", id, std::cin, std::cout)) return NULL;
         try {
@@ -368,8 +369,9 @@ bool App::edit_truck_cargo(CargoTrans *&cargo, int property) {
 Service* App::chooseService() {
     std::cout << "Choosing service.\n";
     std::vector<const Service*> services(services_.begin(), services_.end());
+
+    print_list(services, User::Type::manager);
     while (true) {
-        print_list(services, User::Type::manager);
         std::string id;
         if (!utils::input("Choose service id: ", id, std::cin, std::cout)) return NULL;
         Service *it = find_service(id);
@@ -389,8 +391,8 @@ Service* App::chooseService(const User *user) {
     std::vector<Service*> filtered = filter_services_by_client(services_, dynamic_cast<const Client*>(user));
     std::vector<const Service*> services(filtered.begin(), filtered.end());
 
+    print_list(services, user->get_type());
     while (true) {
-        print_list(services, user->get_type());
         std::string id;
         if (!utils::input("Choose service id: ", id, std::cin, std::cout)) return NULL;
         Service *it = find_service(id);
