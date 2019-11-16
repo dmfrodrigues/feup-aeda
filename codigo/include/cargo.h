@@ -118,6 +118,7 @@ public:
      * @param is Input stream
      * @param os Output stream
      * @return If the input was sucessful
+     * @throws  Throws if any of the function calls before input throws.
      */
     virtual bool in(std::istream &is, std::ostream &os);
 
@@ -127,6 +128,7 @@ public:
      * @param is Input stream
      * @param os Output stream
      * @return If the edit was sucessful
+     * @throws  Throws if any of the function calls before input throws.
      */
     virtual bool edit(int property, std::istream&is, std::ostream &os);
 };
@@ -143,6 +145,7 @@ class CargoAnimal: public Cargo{
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to Cargo that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     /**
@@ -153,6 +156,7 @@ class CargoAnimal: public Cargo{
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to cargo to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 protected:
@@ -207,6 +211,7 @@ class CargoRefrigerated: public Cargo{
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to Cargo that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     /**
@@ -217,6 +222,7 @@ class CargoRefrigerated: public Cargo{
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to cargo to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 private:
@@ -276,6 +282,7 @@ class CargoDangerous: public Cargo{
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to Cargo that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_Cargo (std::istream &is,       Cargo *&c);
     /**
@@ -286,6 +293,7 @@ class CargoDangerous: public Cargo{
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to cargo to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo *c);
 private:
@@ -345,6 +353,7 @@ class CargoTrans: public Cargo{
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to CargoTrans that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     /**
@@ -355,6 +364,7 @@ class CargoTrans: public Cargo{
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to CargoTrans to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
@@ -428,6 +438,7 @@ class CargoTransAnimal: public CargoTrans{
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to CargoTrans that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     /**
@@ -438,6 +449,7 @@ class CargoTransAnimal: public CargoTrans{
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to CargoTrans to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:
@@ -504,6 +516,7 @@ private:
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to CargoTrans that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     /**
@@ -514,6 +527,7 @@ private:
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to CargoTrans to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
     /// @brief Base price to transport a refrigerated cargo.
@@ -589,6 +603,7 @@ class CargoTransDangerous: public CargoTrans{
      * @param   is  Input stream to extract data from
      * @param   c   Pointer to CargoTrans that will be created from the data read
      * @return      Same as \p is
+     * @throws      std::ios_base::failure If istream is set to throw on failbit
      */
     friend std::istream& input_CargoTrans (std::istream &is,       CargoTrans *&c);
     /**
@@ -599,6 +614,7 @@ class CargoTransDangerous: public CargoTrans{
      * @param   os  Output stream to insert data to
      * @param   c   Pointer to CargoTrans to be printed to \p os
      * @return      Same as \p os
+     * @throws      std::invalid_argument If pointer to cargo is NULL
      */
     friend std::ostream& output_CargoTrans(std::ostream &os, const CargoTrans *c);
 private:

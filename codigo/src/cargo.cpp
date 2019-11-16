@@ -100,7 +100,7 @@ const std::string& Cargo::get_description() const{ return description_  ;      }
 
 bool Cargo::in(std::istream &is, std::ostream &os) {
     if (!utils::input("Weight: ", W_, is, os)||
-    !utils::input("Description: ", description_, is, os)) return false;
+        !utils::input("Description: ", description_, is, os)) return false;
     return true;
 }
 bool Cargo::edit(int property, std::istream &is, std::ostream &os) {
