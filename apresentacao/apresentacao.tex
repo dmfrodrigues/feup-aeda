@@ -114,7 +114,7 @@ Um só tipo de camiões (\texttt{Truck}), que pode carregar uma carga (\texttt{C
 	\item Perigoso (\texttt{Dangerous})
 \end{itemize}
 
-Quando um serviço (\texttt{Service}) é criado, são automaticamente alocados os camiões e condutores necessários. 
+Quando um serviço (\texttt{Service}) é criado, são automaticamente atribuídos os camiões e condutores necessários. 
 \end{frame}
 
 \begin{frame}
@@ -133,7 +133,7 @@ Quando um serviço (\texttt{Service}) é criado, são automaticamente alocados o
 
 \textbf{Condutor}
 \begin{itemize}
-	\item Visualizar os serviços que lhe foram alocados
+	\item Visualizar os serviços que lhe foram atribuídos
 	\item Visualizar a lista de camiões
 \end{itemize}
 
@@ -146,7 +146,7 @@ Quando um serviço (\texttt{Service}) é criado, são automaticamente alocados o
 \end{frame}
 
 \begin{frame}
-\frametitle{Diagrama de herança}
+\frametitle{Diagramas de herança}
 \begin{center}
 \centering
 $\vcenter{\hbox{\includegraphics[scale=0.3]{{inherit_graph_2}}}}$ \hspace*{12px}
@@ -161,22 +161,22 @@ $\vcenter{\hbox{\includegraphics[scale=0.3]{{classutils_1_1string__regex__inheri
 \end{frame}
 
 \begin{frame}
-\frametitle{Diagrama de classes Cargo e Truck}
+\frametitle{Diagrama de classes \texttt{Cargo} e \texttt{Truck}}
 \begin{center} \includegraphics[scale=0.36]{{Cargo_Truck_class_diagram}} \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Diagrama de classes Person}
+\frametitle{Diagrama de classes \texttt{Person}}
 \begin{center} \includegraphics[scale=0.35]{{Person_class_diagram}} \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Diagrama de classes Service}
+\frametitle{Diagrama de classes \texttt{Service}}
 \begin{center} \includegraphics[scale=0.37]{{Service_class_diagram}} \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Diagrama de classes utils::string\_regex}
+\frametitle{Diagrama de classes \texttt{utils::string\_regex}}
 \begin{center} \includegraphics[scale=0.40]{{string_regex_class_diagram}} \end{center}
 \end{frame}
 
@@ -335,18 +335,39 @@ Sistema de login com nome de utilizador (\texttt{Username}) e palavra-passe (\te
 \frametitle{Destaque de funcionalidades: tabelas}
 \begin{center} \includegraphics[scale=0.26]{feature1.png} \end{center}
 \end{frame}
-\begin{frame}
-\begin{center} \includegraphics[scale=0.26]{feature1.png} \end{center}
-\end{frame}
+
 \begin{frame}
 \begin{center} \includegraphics[scale=0.26]{feature1.png} \end{center}
 \end{frame}
 
 \begin{frame}
+\begin{center} \includegraphics[scale=0.26]{feature1.png} \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Destaque de funcionalidades: atribuição de serviços}
+\begin{center}
+\scalebox{.85}{
+\lstinputlisting[language=C++, aboveskip=-1em, belowskip=-1em, caption={service.cpp, L81-111}, firstline=81, lastline=111]{../codigo/src/service.cpp}
+}
+\end{center}
+\end{frame}
+
+\begin{frame}
 \frametitle{Dificuldades}
-Trabalho de grupo = colaboração + trabalho individual\\
-Neste trabalho as classes estavam muito interligadas umas com as outras e com a estrutura da aplicação, pelo que foi dificil compartimentar tarefas e classes/funções\\
-Gerir o tempo na aplicação? Pagar salários no início do mês? complicado...
+Trabalho de grupo
+\begin{itemize}
+	\item Componente colaborativa
+	\item Componente individual
+\end{itemize}
+Existem muitas dependências entre classes e com a estrutura da aplicação.\\
+Divisão de tarefas para componente individual mais difícil.\\
+\textbf{Tempo}
+\begin{itemize}
+	\item Como gerir o tempo na aplicação?
+	\item Pagar salários, notificar condutores dos seus futuros serviços
+	\item Marcar serviços como concluídos, não concluídos, atrasados...
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -360,7 +381,7 @@ Gerir o tempo na aplicação? Pagar salários no início do mês? complicado...
 		\item I/O ficheiros
 		\item \texttt{App}: tabelas, opções das tabelas e mostrar detalhes de entidades
 		\item \texttt{Time}, \texttt{Address}, \texttt{Phonenumber}, \texttt{Temperature}, \texttt{VAT}
-		\item \texttt{Service} e função de alocação
+		\item \texttt{Service} e função de atribuição
 	\end{itemize} }
 \end{minipage}%
 \begin{minipage}[t]{0.33\linewidth}

@@ -83,8 +83,7 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         return (p1->get_cargo()->get_W() > p2->get_cargo()->get_W());
     });
     size_t sz = std::min(tv.size(), dv.size());
-    utils::Weight done(0.0);
-    size_t i = 0;
+    utils::Weight done(0.0); size_t i = 0;
     while(i < sz && done < cargo_->get_W() && !utils::feq(double(done), double(cargo_->get_W()), 1.0)){
         trucks_.push_back(tv[i]->get_numberplate());
         drivers_.push_back(dv[i]->get_username());
@@ -92,16 +91,12 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         i++;
     }
     if(done < cargo_->get_W() && !utils::feq(double(done), double(cargo_->get_W()), 1.0)){
-        trucks_.clear();
-        drivers_.clear();
-        return false;
+        trucks_.clear(); drivers_.clear(); return false;
     }else{
         cost_ = 0.0;
-        utils::Weight W(0.0);
-        utils::Weight dW;
+        utils::Weight W(0.0), dW;
         for(const Truck *t:tv){
-            dW = std::min(t->get_cargo()->get_W(),
-                          cargo_->get_W() - W);
+            dW = std::min(t->get_cargo()->get_W(), cargo_->get_W() - W);
             if(t->get_cargo()->get_type() == Cargo::Type::Refrigerated){
                 const CargoTransRefrigerated *p = dynamic_cast<const CargoTransRefrigerated*>(t->get_cargo());
                 const CargoRefrigerated      *q = dynamic_cast<const CargoRefrigerated     *>(cargo_);
@@ -110,10 +105,8 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
             }else{
                 cost_    += t->get_cargo()->get_E(distance_, dW);
                 revenue_ += t->get_cargo()->get_P(distance_, dW);
-            }
-            W += dW;
-        }
-        return true;
+            } W += dW;
+        } return true;
     }
 }
 
