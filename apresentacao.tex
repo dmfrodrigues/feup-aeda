@@ -19,12 +19,28 @@
 \usepackage{listings}
 \lstset{
     frame=tb, % draw frame at top and bottom of the code
-    tabsize=4, % tab space width
     numbers=left, % display line numbers on the left
-	showstringspaces=false, % don't mark spaces in strings    
-%    aboveskip=-2em,
-%    belowskip=-1.5
+	aboveskip=-1em,
+    belowskip=-1.5em
 }
+\lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {Ã}{{\~A}}1 {ã}{{\~a}}1 {Õ}{{\~O}}1 {õ}{{\~o}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+}
+
+\usepackage{dirtree}
 
 \usepackage[style=british]{csquotes}
 
@@ -107,22 +123,104 @@ Foram utilizados os algoritmos de ordenação mergesort e pesquisa linear para e
 
 \begin{frame}
 \frametitle{Estrutura de ficheiros}
-\begin{tabular}{p{50mm} p{5mm} p{50mm}}
-	Person & & \\	
-	{\tiny \lstinputlisting[firstline=6,lastline=7]{./codigo/data/services/services.txt} } & &
-\end{tabular}
+\begin{center}
+\begin{minipage}{0.35\textwidth}
+	\small
+	\dirtree{%
+		.1 data.
+		.2 clients.
+		.3 clients.txt.
+		.2 drivers.
+		.3 drivers.txt.
+		.2 managers.
+		.3 managers.txt.
+		.2 services.
+		.3 services.txt.
+	}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+\textbf{URL-encoding}\\
+Codificar todos os caracteres exceto \texttt{[a-aA-Z0-9\_-.~]} com o seu código ASCII hexadecimal antecedido de \texttt{\%}.
+\begin{itemize}
+	\item Resolve problema de ler linha completa de ficheiros
+	\item Formato portável e independente da codificação do ficheiro
+\end{itemize}
+\end{minipage}
+\end{center}
 \end{frame}
 
-\begin{frame}
-\frametitle{Estrutura de ficheiros}
-clients.txt\\
-Guarda a lista de todos os usuários no seguinte formato: Nome; Número de telemóvel; Nome de utilizador; Password; Morada (Rua e número; Código-Postal; Distrito e País); NIF;\\
-drivers.txt/managers.txt\\
-Guarda a lista de todos os condutores no mesmo formato dos clientes, com uma linha extra equivalente ao salário.
-trucks.txt\\
-Guarda a lista de todos os camiões da empresa no seguinte formato: Matrícula; Data da matrícula; Combustível (de 0 a 6, de acordo com o tipo); Alcance (em km); Categoria; Número de cargas; Lista de cargas (Peso; Descrição; Preço por km; custo de refrigeração ou nível de perigo, caso se aplique);\\
-services.txt\\
-Guarda a lista dos serviços no seguinte formato: ID; nome de utilizador (cliente); nome e número de telemóvel do contacto 1; nome e número de telefone do contacto 2; hora de início; hora de fim; distância; tipo de carga; peso da carga; descriçao da carga; número de condutores alocados para esse serviço; Info dos condutores (matricula e nome de utilizador); custo do serviço; preço cobrado ao cliente;
+\begin{frame}[fragile]
+\begin{center}
+\begin{tabular}{p{63mm} p{0mm} p{43mm}}
+	\texttt{Person} & & \\	
+	\lstinputlisting[firstline=6,lastline=7,basicstyle=\tiny]{./codigo/data/services/services.txt} & &
+\begin{lstlisting}[basicstyle=\tiny]
+Nome
+Número de telemóvel
+\end{lstlisting} \\
+	\texttt{Client} & & \\
+	\lstinputlisting[firstline=30,lastline=37,basicstyle=\tiny]{./codigo/data/clients/clients.txt} & &
+\begin{lstlisting}[basicstyle=\tiny]
+Nome
+Número de telemóvel
+Username
+Password
+Rua/porta
+Código postal/Localidade
+Região/País
+NIF
+\end{lstlisting} \\
+	\texttt{Driver/Manager} & & \\
+	\lstinputlisting[firstline=3,lastline=11,basicstyle=\tiny]{./codigo/data/managers/managers.txt} & &
+\begin{lstlisting}[basicstyle=\tiny]
+Nome
+Número de telemóvel
+Username
+Password
+Rua/porta
+Código postal/Localidade
+Região/País
+NIF
+Salário base
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{center}
+\begin{tabular}{p{63mm} p{0mm} p{43mm}}
+	\texttt{Person} & & \\	
+	\lstinputlisting[firstline=1,lastline=25,basicstyle=\tiny]{./codigo/data/services/services.txt} & &
+\begin{lstlisting}[basicstyle=\tiny]
+ID do próx. serviço a adicionar
+Número de serviços
+
+ID do serviço
+Username do cliente
+  Nome do contacto 1
+  Núm. telemóvel do contacto 1
+  Nome do contacto 2
+  Núm. telemóvel do contacto 2
+Tempo de início
+Tempo de fim
+Morada de início: rua/porta
+  Código postal/Localidade
+  Região/País
+Morada de fim: rua/porta
+  Código postal/Localidade
+  Região/País
+Distância
+  Tipo de carga (0 = Normal)
+  Peso em quilogramas
+  Descrição
+  Número de camiões/condutores
+    Camião / Condutor
+  Custos para empresa
+  Receita com serviço
+\end{lstlisting}
+\end{tabular}
+\end{center}
 \end{frame}
  
 \begin{frame}
