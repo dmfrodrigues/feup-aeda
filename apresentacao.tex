@@ -105,22 +105,30 @@ Quando um serviço (\texttt{Service}) é criado, são automaticamente alocados o
 
 \begin{frame}
 \frametitle{Permissões}
-Todos os utilizadores:
+\textbf{Todos os utilizadores}
 \begin{itemize}
 	\item Visualizar e alterar os seus dados pessoais
 \end{itemize}
 
-Cliente:
+\textbf{Cliente}
 \begin{itemize}
-	\item Stuff	
+	\item Criar um novo serviço em seu nome
+	\item Eliminar um serviço em seu nome
+	\item Visualizar os seus serviços
 \end{itemize}
 
-O cliente pode ver e editar os seus serviços ativos, ou requisitar um novo. 
-O condutor pode ver e editar os seus serviços ativos, bem como ver a lista de camiões disponíveis e as suas estatísticas mensais.
+\textbf{Condutor}
+\begin{itemize}
+	\item Visualizar os serviços que lhe foram alocados
+	\item Visualizar a lista de camiões
+\end{itemize}
 
-O gestor pode fazer tudo isto e ainda ver as listas de clientes e funcionários (completas ou filtradas por um argumento específico), com possibilidade de edição para qualquer um destes, além de poder ver os valores mensais de toda a empresa e outras estatísticas.\\
-Quando um cliente requisita um serviço, são atribuídos automaticamente condutores e camiões.
-Foram utilizados os algoritmos de ordenação mergesort e pesquisa linear para este efeito.
+\textbf{Gestor}
+\begin{itemize}
+	\item Criar e eliminar serviço em nome de qualquer cliente
+	\item Criar, editar e eliminar clientes, condutores, gestores e camiões
+	\item Visualizar todos os clientes, condutores, gestores, camiões e serviços
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -235,6 +243,12 @@ Distância
  
 \begin{frame}
 \frametitle{Exceções tratadas}
+\begin{tabular}{p{35mm} | p{40mm} p{40mm} }
+	App::InvalidCredentials & & \\
+	App::RepeatedId & & \\
+	
+\end{tabular}
+
 InvalidTimeFormat: chamada quando é introduzido uma hora com o formato errado;\\
 InvalidCredentials: chamada quando são introduzidas credenciais erradas (username ou password, durante o login);\\
 InvalidTemperatureRange: chamada quando é introduzida uma gama de temperatura não válida;\\
@@ -246,6 +260,10 @@ RepeatedId: chamada quando é introduzido um id repetido;\\
 
 \begin{frame}
 \frametitle{Lista de funcionalidades} 
+O gestor pode fazer tudo isto e ainda ver as listas de clientes e funcionários (completas ou filtradas por um argumento específico),
+
+
+
 Os clientes podem requisitar serviços, com origem, destino, duração da viagem, ...\\
 Mostrar lista de clientes e funcionários; adicionar, editar ou remover clientes e funcionários;\\
 Mostrar lista de camiões; adicionar, editar ou remover camiões; \\
