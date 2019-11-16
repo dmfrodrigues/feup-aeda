@@ -87,6 +87,9 @@ public:
 
     /**
      * @brief Allocate service to the necessary number of trucks and drivers
+     * @param   tv  \a std::vector of pointers to Truck, available trucks
+     * @param   dv  \a std::vector of pointers to Drivers, available drivers
+     * @return  True if succeeded to allocate service, false otherwise
      */
     bool allocate(std::vector<const Truck*> tv, std::vector<const Driver*> dv);
 

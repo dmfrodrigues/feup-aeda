@@ -339,8 +339,21 @@ private:
      */
     User* verifyUser(const std::string &username, const std::string &password);
 
-    //Functions
+    /**
+     * @brief Get schedule of a Driver.
+     * @param   p   Pointer to Driver for which we want the schedule
+     * @param   ret Vector with pairs of time ranges and ID's, representing the services
+     *              the driver has to complete in the given times
+     * @return  True if the driver's schedule is valid, false otherwise
+     */
     bool get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
+    /**
+     * @brief Get schedule of a Truck.
+     * @param   p   Pointer to Truck for which we want the schedule
+     * @param   ret Vector with pairs of time ranges and ID's, representing the services
+     *              the truck has to complete in the given times
+     * @return  True if the truck's schedule is valid, false otherwise
+     */
     bool get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
     /**
      * @brief Get available drivers to go to a service.
