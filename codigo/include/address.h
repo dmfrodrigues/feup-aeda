@@ -19,9 +19,15 @@ public:
         static const std::string REGEX_STR;
         /// @brief Empty constructor.
         explicit PostalCode();
-        /// @brief Constructor accepting postal code as \p std::string.
+        /**
+         * @brief Constructor accepting postal code as \p std::string.
+         * @throws utils::string_regex::FailedRegex If string to construct Postal Code doesn't match with regular expression
+         */
         explicit PostalCode(const std::string &postal_code);
-        /// @brief Overload of \a operator= .
+        /**
+         * @brief Overload of \a operator= .
+         * @throws utils::string_regex::FailedRegex If string to construct Postal Code doesn't match with regular expression
+         */
         PostalCode& operator=(const std::string &postal_code);
     };
 private:
