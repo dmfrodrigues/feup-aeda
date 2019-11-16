@@ -92,7 +92,7 @@ void App::print_list(const std::vector<const Truck  *> &v, const User::Type &t){
 void App::print_list(const std::vector<const Service*> &v, const User::Type &t) const{
     Currency EXPENSES(0), PRICE(0);
     for(const Service *p:v){
-        EXPENSES += p->get_cost   (); std::cout << double(p->get_cost()) << " " << double(EXPENSES) << std::endl;
+        EXPENSES += p->get_cost   ();
         PRICE    += p->get_revenue();
     }
     if(t == User::Type::manager){
@@ -107,7 +107,8 @@ void App::print_list(const std::vector<const Service*> &v, const User::Type &t) 
                      "│ [0] │              │ Contact 2 [3]                     │ Time end   [5]   │ Address end   [7]          │ Type   [ 9]   │                           │ [12]        │ [13]        │\n"
                      "│     │              │                                   │                  │ Distance (km) [8]          │ Weight [10]   │                           │             │             │\n"
                      "╞═════╪══════════════╪═══════════════════════════════════╪══════════════════╪════════════════════════════╪═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n";
-        for(const Service* p:v){
+        for(size_t k = 0; k < v.size(); ++k){
+            const Service* p = v[k];
             const User *c = App::find_user(p->get_client());
             const std::vector<Truck::NumberPlate> &tv = p->get_trucks ();
             const std::vector<Driver::Username  > &dv = p->get_drivers();
@@ -130,18 +131,20 @@ void App::print_list(const std::vector<const Service*> &v, const User::Type &t) 
                       << p->get_tend  ().format("%Y/%m/%d %H:%M")                                                                                <<   " │ "
                       << utils::ljust(p->get_aend  ().format("(%district) %city")                                                           ,25) << "\t │ "
                       << utils::rjust(utils::ftos("%.1fT", double(p->get_cargo()->get_W())/1000.0)                                          ,13) <<   " │ ";
-            if(tv.size() > 1) std::cout << utils::ljust(std::string(tv[1]), 12) + " " + utils::ljust(std::string(dv[1]), 12) << " │               │               │\n";
+            if(tv.size() > 1) std::cout << utils::ljust(std::string(tv[1]), 12) + " " + utils::ljust(std::string(dv[1]), 12) << " │             │             │\n";
             else              std::cout << "                          │             │             │\n";
             ///LINE 3 ==============================================================
             std::cout << "│     │              │                                   │                  │"
                       << utils::rjust(utils::ftos("%.1f", double(p->get_distance())), 25) << "\t │               │ ";
-            if(tv.size() > 2) std::cout << utils::ljust(std::string(tv[2]), 12) + " " + utils::ljust(std::string(dv[2]), 12) << " │               │               │\n";
+            if(tv.size() > 2) std::cout << utils::ljust(std::string(tv[2]), 12) + " " + utils::ljust(std::string(dv[2]), 12) << " │             │             │\n";
             else              std::cout << "                          │             │             │\n";
             ///LINE >=4 ============================================================
             for(size_t i = 3; i < tv.size(); ++i){
-                std::cout << "│        │              │                                   │                  │                            │                       │ "
-                          << utils::ljust(std::string(tv[i]), 12) + " " + utils::ljust(std::string(dv[i]), 13) << " │               │               │\n";
+                std::cout << "│     │              │                                   │                  │                            │               │ "
+                          << utils::ljust(std::string(tv[i]), 12) + " " + utils::ljust(std::string(dv[i]), 12) << " │             │             │\n";
             }
+            ///LAST LINE =======================================================
+            if(k+1 != v.size()) std::cout << "├─────┼──────────────┼───────────────────────────────────┼──────────────────┼────────────────────────────┼───────────────┼───────────────────────────┼─────────────┼─────────────┤\n";
         }
         std::cout << "╘═════╧══════════════╧═══════════════════════════════════╧══════════════════╧════════════════════════════╧═══════════════╪═══════════════════════════╪═════════════╪═════════════╡\n"
                   << "                                                                                                                         │                     TOTAL │ "+utils::rjust(utils::ftos("%+.2f", double(PRICE)), 11)
