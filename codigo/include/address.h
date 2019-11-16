@@ -65,6 +65,7 @@ public:
      *              <em> city      </em> | City associated to postal code
      *              <em> district  </em> | District, province or state
      *              <em> country   </em> | Country
+     * @throws  Throws if any of the function calls throws.
      */
     std::string format(const std::string &fmt = DEFAULT_FORMAT) const;
 
@@ -73,12 +74,19 @@ public:
      * @param is Input stream
      * @param os Output stream
      * @return If the input was sucessful
+     * @throws  Throws if any of the function calls before input throws.
      */
     bool in(std::istream &is, std::ostream &os);
 
-    /** @brief   Overload of \a operator>>. Expects input in @ref Address::DEFAULT_FORMAT. */
+    /**
+     * @brief   Overload of \a operator>>. Expects input in @ref Address::DEFAULT_FORMAT.
+     * @throws  Throws if any of the function calls throws.
+     */
     friend std::istream& operator>>(std::istream &is, Address &a);
-    /** @brief   Overload of \a operator<<. Prints in @ref Address::DEFAULT_FORMAT.*/
+    /**
+     * @brief   Overload of \a operator<<. Prints in @ref Address::DEFAULT_FORMAT.
+     * @throws  Throws if any of the function calls throws.
+     */
     friend std::ostream& operator<<(std::ostream &os, const Address &a);
 };
 
