@@ -65,7 +65,7 @@ const Truck::NumberPlate& Truck::get_numberplate      () const{ return number_pl
 const Truck::NumberPlate& Truck::get_id               () const{ return get_numberplate()   ; }
 const Time&               Truck::get_plateregisterdate() const{ return plate_register_date_; }
 const Truck::Fuel&        Truck::get_fuel             () const{ return fuel_               ; }
-const Distance&           Truck::get_range            () const{ return max_reach_          ; }
+const utils::Distance&    Truck::get_range            () const{ return max_reach_          ; }
 const Truck::Category&    Truck::get_category         () const{ return category_           ; }
 const CargoTrans*         Truck::get_cargo            () const{ return cargo_              ; }
 CargoTrans*&              Truck::get_cargo_nc         ()      { return cargo_              ; }

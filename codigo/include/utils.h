@@ -217,6 +217,10 @@ namespace utils {
             const T& get_ufloat() const;
         };
     };
+    /** @brief %Weight */
+    typedef ufloat<double> Weight;
+    /** @brief %Distance */
+    typedef ufloat<double> Distance;
     /**
      * @brief String restricted by regex. Throws @ref FailedRegex when assigned with non-conformant string
      */

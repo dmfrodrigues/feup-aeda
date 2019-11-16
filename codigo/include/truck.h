@@ -98,7 +98,7 @@ private:
     /// @brief Type of fuel of the truck @ref Fuel
     Fuel fuel_;
     /// @brief Maximum distance that truck can travel.
-    Distance max_reach_;
+    utils::Distance max_reach_;
     /// @brief Category of the truck.
     Category category_; //A,B,C,D
 
@@ -120,7 +120,7 @@ public:
     /// @brief Get fuel.
     const Fuel&        get_fuel             () const;
     /// @brief Get maximum reach/range of the truck.
-    const Distance&    get_range            () const;
+    const utils::Distance&    get_range            () const;
     /// @brief Get category.
     const Category&    get_category         () const;
     /// @brief Get cargo pointer.

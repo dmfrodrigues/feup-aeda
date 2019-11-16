@@ -19,8 +19,6 @@ class Service{
 public:
     /** @brief ID type */
     typedef std::string ID;
-    /** @brief %Distance */
-    typedef utils::ufloat<double> Distance;
 private:
     /// @brief Service ID.
     ID id_;
@@ -39,7 +37,7 @@ private:
     /// @brief Address to delivery merchandise.
     Address a_end_;
     /// @brief Total distance travelled the service will take.
-    Distance distance_;
+    utils::Distance distance_;
     /// @brief Merchandise request on the service.
     Cargo *cargo_ = NULL;
     /// @brief Trucks allocated by the agency to this service.
@@ -81,7 +79,7 @@ public:
     /// @brief Get unloading address
     const Address&          get_aend    () const;
     /// @brief Get distance between the two addresses
-    const Distance&         get_distance() const;
+    const utils::Distance&         get_distance() const;
     /// @brief Get pointer to cargo
     const Cargo*            get_cargo   () const;
     /// @brief Get trucks assigned to this service
