@@ -17,7 +17,7 @@ const Time&             Service::get_tbegin  () const{ return t_begin_    ; }
 const Time&             Service::get_tend    () const{ return t_end_      ; }
 const Address&          Service::get_abegin  () const{ return a_begin_    ; }
 const Address&          Service::get_aend    () const{ return a_end_      ; }
-const Distance&         Service::get_distance() const{ return distance_   ; }
+const utils::Distance&  Service::get_distance() const{ return distance_   ; }
 const Cargo*            Service::get_cargo   () const{ return cargo_      ; }
 const std::vector<Truck ::NumberPlate>& Service::get_trucks () const{ return trucks_ ; }
 const std::vector<Driver::Username   >& Service::get_drivers() const{ return drivers_; }
@@ -83,7 +83,7 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         return (p1->get_cargo()->get_W() > p2->get_cargo()->get_W());
     });
     size_t sz = std::min(tv.size(), dv.size());
-    Weight done(0.0);
+    utils::Weight done(0.0);
     size_t i = 0;
     while(i < sz && done < cargo_->get_W() && !utils::feq(double(done), double(cargo_->get_W()), 1.0)){
         trucks_.push_back(tv[i]->get_numberplate());
@@ -96,8 +96,8 @@ bool Service::allocate(std::vector<const Truck*> tv, std::vector<const Driver*> 
         return false;
     }else{
         cost_ = 0.0;
-        Weight W(0.0);
-        Weight dW;
+        utils::Weight W(0.0);
+        utils::Weight dW;
         for(const Truck *t:tv){
             dW = std::min(t->get_cargo()->get_W(),
                           cargo_->get_W() - W);

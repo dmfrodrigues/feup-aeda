@@ -70,7 +70,7 @@ public:
     friend std::ostream& output_Cargo(std::ostream &os, const Cargo * c);
 private:
     /// @brief Cargo weight.
-    Weight W_;
+    utils::Weight W_;
     /// @brief Description of the cargo.
     std::string description_;
 protected:
@@ -98,7 +98,7 @@ public:
      */
     virtual Cargo::Type get_type      () const;
     /// @brief Get weight.
-    const Weight&       get_W          () const;
+    const utils::Weight&       get_W          () const;
     /// @brief Get description.
     const std::string&  get_description() const;
 
@@ -401,9 +401,9 @@ public:
     /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
     /// @brief Get real amount of expenses per km.
-    virtual Currency get_E(Distance D, Weight W) const;
+    virtual Currency get_E(utils::Distance D, utils::Weight W) const;
     /// @brief Get real price.
-    virtual Currency get_P(Distance D, Weight W) const;
+    virtual Currency get_P(utils::Distance D, utils::Weight W) const;
 };
 
 /**
@@ -476,9 +476,9 @@ public:
     /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
     /// @brief Get real amount of expenses per km.
-    virtual Currency get_E(Distance D, Weight W) const;
+    virtual Currency get_E(utils::Distance D, utils::Weight W) const;
     /// @brief Get real price.
-    virtual Currency get_P(Distance D, Weight W) const;
+    virtual Currency get_P(utils::Distance D, utils::Weight W) const;
 };
 
 /**
@@ -562,9 +562,9 @@ public:
     /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
     /// @brief Get real amount of expenses.
-    virtual Currency get_E(Distance D, Weight W, TemperatureRange Tr) const;
+    virtual Currency get_E(utils::Distance D, utils::Weight W, TemperatureRange Tr) const;
     /// @brief Get real price.
-    virtual Currency get_P(Distance D, Weight W, TemperatureRange Tr) const;
+    virtual Currency get_P(utils::Distance D, utils::Weight W, TemperatureRange Tr) const;
 };
 
 /**
@@ -642,9 +642,9 @@ public:
     /// @brief Return true if this cargo description can carry a given cargo
     virtual bool can_carry(const Cargo *p) const;
     /// @brief Get real amount of expenses per km.
-    virtual Currency get_E(Distance D, Weight W) const;
+    virtual Currency get_E(utils::Distance D, utils::Weight W) const;
     /// @brief Get real price.
-    virtual Currency get_P(Distance D, Weight W) const;
+    virtual Currency get_P(utils::Distance D, utils::Weight W) const;
 };
 
 #endif // CARGO_H_INCLUDED

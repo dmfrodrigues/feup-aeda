@@ -94,7 +94,7 @@ Cargo::Cargo(): W_(0){}
 Cargo::~Cargo(){}
 
 Cargo::Type        Cargo::get_type       () const{ return Cargo::Type::Normal; }
-const Weight&      Cargo::get_W          () const{ return W_  ;                }
+const utils::Weight&      Cargo::get_W          () const{ return W_  ;                }
 const std::string& Cargo::get_description() const{ return description_  ;      }
 
 
@@ -483,15 +483,15 @@ bool CargoTransDangerous   ::can_carry(const Cargo *p) const{
     }else return false;
 }
 
-Currency CargoTrans            ::get_E(Distance D, Weight W) const{ return Currency(double(D)*(get_E_D()+double(W)*get_E_W())); }
-Currency CargoTransAnimal      ::get_E(Distance D, Weight W) const{ return Currency(double(D)*(get_E_D()+double(W)*get_E_W())); }
-Currency CargoTransRefrigerated::get_E(Distance D, Weight W, TemperatureRange Tr) const{
+Currency CargoTrans            ::get_E(utils::Distance D, utils::Weight W) const{ return Currency(double(D)*(get_E_D()+double(W)*get_E_W())); }
+Currency CargoTransAnimal      ::get_E(utils::Distance D, utils::Weight W) const{ return Currency(double(D)*(get_E_D()+double(W)*get_E_W())); }
+Currency CargoTransRefrigerated::get_E(utils::Distance D, utils::Weight W, TemperatureRange Tr) const{
     double DT = std::fabs(std::min(Tr_.max, Tr.max)-get_T0());
     return Currency(double(D)*(get_E_D()+double(W)*get_E_W())*(DT*get_E_T()));
 }
-Currency CargoTransDangerous   ::get_E(Distance D, Weight W) const{ return Currency(double(D)*(get_E_D()+double(W)*get_E_W()));}
+Currency CargoTransDangerous   ::get_E(utils::Distance D, utils::Weight W) const{ return Currency(double(D)*(get_E_D()+double(W)*get_E_W()));}
 
-Currency CargoTrans            ::get_P(Distance D, Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
-Currency CargoTransAnimal      ::get_P(Distance D, Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
-Currency CargoTransRefrigerated::get_P(Distance D, Weight W, TemperatureRange Tr) const{ return Currency(double(get_E(D,W,Tr))*(1.0L+App::rate))+get_P_B(); }
-Currency CargoTransDangerous   ::get_P(Distance D, Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
+Currency CargoTrans            ::get_P(utils::Distance D, utils::Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
+Currency CargoTransAnimal      ::get_P(utils::Distance D, utils::Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
+Currency CargoTransRefrigerated::get_P(utils::Distance D, utils::Weight W, TemperatureRange Tr) const{ return Currency(double(get_E(D,W,Tr))*(1.0L+App::rate))+get_P_B(); }
+Currency CargoTransDangerous   ::get_P(utils::Distance D, utils::Weight W) const{ return Currency(double(get_E(D,W))*(1.0L+App::rate))+get_P_B(); }
