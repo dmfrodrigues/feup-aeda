@@ -22,7 +22,7 @@ const PhoneNumber& Person::get_phonenumber() const { return phonenumber_; }
 
 bool Person::in(std::istream &is, std::ostream &os) {
     if (!utils::input("Name: ",         name_,        is, os)||
-        !utils::input("Phone Number: ", phonenumber_, is, os)) return false;
+        !utils::input("Phone Number: ", [](PhoneNumber &pn, const std::string &s) { pn = PhoneNumber(s); }, phonenumber_, is, os)) return false;
     return true;
 }
 bool Person::edit(int property, std::istream&is, std::ostream &os) {
@@ -32,8 +32,8 @@ bool Person::edit(int property, std::istream&is, std::ostream &os) {
         else                                                        return true;
         break;
     case 1:
-        if (!utils::input("Phone Number: ", phonenumber_, is, os))  return false;
-        else                                                        return true;
+        if (!utils::input("Phone Number: ", [](PhoneNumber &pn, const std::string &s) { pn = PhoneNumber(s); }, phonenumber_, is, os))  return false;
+        else                                                                                                                                            return true;
         break;
     default:
         return false;

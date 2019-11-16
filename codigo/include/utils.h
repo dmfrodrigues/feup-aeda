@@ -25,24 +25,28 @@ namespace utils {
     /**
      * @brief Trims all spaces from the start of the string (in-place).
      * @param s String to be trimmed
+     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
      */
     void ltrim(std::string &s);
 
     /**
      * @brief Trims all spaces from the end of the string (in-place).
      * @param s String to be trimmed
+     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
      */
     void rtrim(std::string &s);
 
     /**
      * @brief Trims all spaces from both ends of the string (in-place).
      * @param s String to be trimmed
+     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
      */
     void trim(std::string &s);
 
     /**
      * @brief Converts all characters in string to lowercase.
      * @param s String to be transformed
+     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
      */
     void to_lower(std::string &s);
 
@@ -50,6 +54,7 @@ namespace utils {
      * @brief       Convert integer to string.
      * @param   i   Integer to convert
      * @return      String that resulted from converting \a i.
+     * @throws  Throws if extractor operator on stringstream throws.
      */
     std::string itos(const long long int &i);
 
@@ -58,6 +63,7 @@ namespace utils {
      * @param   fmt Format to output
      * @param   n   Number to convert to std::string
      * @return      Converted std::string
+     * @throws      Throws if string constructor throws.
      */
     std::string ftos(const std::string &fmt, const double &n);
 
@@ -65,6 +71,8 @@ namespace utils {
      * @brief       Convert string to integer.
      * @param   str String containing integer
      * @return      Result of the conversion to integer
+     * @throws      std::invalid_argument If string can't be converted to number.
+                    std::out_of_range If number can't be representable in int.
      */
     int stoi(const std::string &str);
 
@@ -74,6 +82,8 @@ namespace utils {
      * @param   fr  String to be replaced
      * @param   to  String to replace \a fr
      * @return      String with replaced occurences
+     * @throws  Throws if any of the function calls, the assignments throws.
+                If string isn't long enough, it causes undefined behaviour.
      */
     std::string strrep(const std::string &s, const std::string &fr, const std::string &to);
 
@@ -81,6 +91,7 @@ namespace utils {
      * @brief       URL-encode string.
      * @param   s   Original string
      * @return      URL-encoded string
+     * @throws  Throws if any of the function calls, the assignments throws.
      */
      std::string urlencode(const std::string &s);
 
@@ -88,6 +99,8 @@ namespace utils {
      * @brief       URL-decode string.
      * @param   s   URL-encoded string
      * @return      Decoded string
+     * @throws      std::invalid_argument On receiving invalid URL code on string.
+                    Also throws if any of the function calls, the assignments throws.
      */
     std::string urldecode(const std::string &s);
 
@@ -97,6 +110,7 @@ namespace utils {
     @param  s   string to left-justify
     @param  sz  size of the returned string
     @return     string padded with spaces at the end
+    @throws     std::invalid_argument If size of final string is less than 3.
     */
     std::string ljust(std::string s, size_t sz);
 
@@ -106,6 +120,7 @@ namespace utils {
     @param  s   string to right-justify
     @param  sz  size of the returned string
     @return     string padded with spaces at the beginning
+    @throws     std::invalid_argument If size of final string is less than 3.
     */
     std::string rjust(std::string s, size_t sz);
 
@@ -113,6 +128,7 @@ namespace utils {
      * @brief        Parse string into a vector of arguments, similar to how shell parsing works.
      * @param    s   Command to parse with arguments
      * @return       Vector with command elements
+     * @throws  Throws if any of the function calls, the assignments throws.
      */
     std::vector<std::string> parse_command(const std::string &s);
 
@@ -135,6 +151,7 @@ namespace utils {
      * @param   v       vector of pointers
      * @param   valid   Boolean function to filter vector
      * @return          vector of elements of v that evaluated true
+     * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.
      */
     template<class T, class Valid> std::vector<T*> filter(const std::vector<T*> &v, Valid valid);
 
@@ -215,7 +232,10 @@ namespace utils {
          * @param   REGEX_STR   Regex the strings are supposed to match.
          */
         explicit string_regex(const std::string &REGEX_STR):REGEX_STR_(REGEX_STR){}
-        /** @brief Overload of operator= */
+        /**
+         * @brief Overload of operator=
+         * @throws utils::string_regex::FailedRegex If input string doesn't match regular expression
+         */
         string_regex& operator=(const std::string &s);
 
         /** @brief Conversion of regex-checked string to std::string. */
@@ -234,12 +254,14 @@ namespace utils {
         /** @brief Overload of operator<= .*/
         bool operator>=(const utils::string_regex &s) const;
 
-        /** @brief Overload of operator>>. */
+        /**
+         * @brief Overload of operator>>.
+         * @throws utils::string_regex::FailedRegex If input doesn't match with regex, std::invalid_argument if input has invalid URL-encoding.
+         */
         friend std::istream& operator>>(std::istream &is,       utils::string_regex &s);
         /** @brief Overload of operator<<. */
         friend std::ostream& operator<<(std::ostream &os, const utils::string_regex &s);
         /** @brief Exception thrown when string does not match regex */
-
         class FailedRegex: public std::invalid_argument{
         private:
             /// @brief String that caused exception.
