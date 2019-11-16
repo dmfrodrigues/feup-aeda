@@ -16,12 +16,23 @@
 {\footnotesize \texttt{\href{mailto:#1}{#1}} }
 }
 
+\usepackage{caption}
+\DeclareCaptionFont{black}{\color{black}}
+\DeclareCaptionFormat{listing}{{\tiny \textbf{#1}#2#3}}
+\captionsetup[lstlisting]{format=listing,labelfont=black,textfont=black}
+
 \usepackage{listings}
 \lstset{
     frame=tb, % draw frame at top and bottom of the code
+    basewidth  = {0.5em,0.5em},
     numbers=left, % display line numbers on the left
-	aboveskip=-1em,
-    belowskip=-1.5em
+    showstringspaces=false, % don't mark spaces in strings  
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red}, % string color
+	aboveskip=-0.2em,
+    belowskip=-0.2em,
+    basicstyle=\tiny
 }
 \lstset{literate=
   {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
@@ -169,16 +180,16 @@ Codificar todos os caracteres exceto \texttt{[a-aA-Z0-9\_-.~]} com o seu código
 
 \begin{frame}[fragile]
 \begin{center}
-\begin{tabular}{p{63mm} p{0mm} p{43mm}}
+\begin{tabular}{p{60mm} p{0mm} p{40mm}}
 	\texttt{Person} & & \\	
-	\lstinputlisting[firstline=6,lastline=7,basicstyle=\tiny]{./codigo/data/services/services.txt} & &
-\begin{lstlisting}[basicstyle=\tiny]
+	\lstinputlisting[aboveskip=-1em, belowskip=-1em, firstline=6, lastline=7]{./codigo/data/services/services.txt} & &
+\begin{lstlisting}[aboveskip=-1em,belowskip=-1em]
 Nome
 Número de telemóvel
 \end{lstlisting} \\
 	\texttt{Client} & & \\
-	\lstinputlisting[firstline=30,lastline=37,basicstyle=\tiny]{./codigo/data/clients/clients.txt} & &
-\begin{lstlisting}[basicstyle=\tiny]
+	\lstinputlisting[aboveskip=-1em, belowskip=-1em, firstline=30,lastline=37]{./codigo/data/clients/clients.txt} & &
+\begin{lstlisting}[aboveskip=-1em,belowskip=-1em]
 Nome
 Número de telemóvel
 Username
@@ -189,8 +200,8 @@ Região/País
 NIF
 \end{lstlisting} \\
 	\texttt{Driver/Manager} & & \\
-	\lstinputlisting[firstline=3,lastline=11,basicstyle=\tiny]{./codigo/data/managers/managers.txt} & &
-\begin{lstlisting}[basicstyle=\tiny]
+	\lstinputlisting[aboveskip=-1em, belowskip=-1em, firstline=3,lastline=11]{./codigo/data/managers/managers.txt} & &
+\begin{lstlisting}[aboveskip=-1em,belowskip=-1em]
 Nome
 Número de telemóvel
 Username
@@ -207,10 +218,10 @@ Salário base
 
 \begin{frame}[fragile]
 \begin{center}
-\begin{tabular}{p{63mm} p{0mm} p{43mm}}
+\begin{tabular}{p{60mm} p{0mm} p{40mm}}
 	\texttt{Person} & & \\	
-	\lstinputlisting[firstline=1,lastline=25,basicstyle=\tiny]{./codigo/data/services/services.txt} & &
-\begin{lstlisting}[basicstyle=\tiny]
+	\lstinputlisting[firstline=1,lastline=25]{./codigo/data/services/services.txt} & &
+\begin{lstlisting}
 ID do próx. serviço a adicionar
 Número de serviços
 
@@ -243,19 +254,24 @@ Distância
  
 \begin{frame}
 \frametitle{Exceções tratadas}
-\begin{tabular}{p{35mm} | p{40mm} p{40mm} }
-	App::InvalidCredentials & & \\
-	App::RepeatedId & & \\
-	
-\end{tabular}
+\texttt{App::InvalidCredentials}: introduzidas credenciais erradas\\
+\texttt{App::RepeatedId}: detetado um ID repetido quando o ID é único\\
+\texttt{Temperature::InvalidTemperature}\\
+\texttt{TemperatureRange::InvalidTemperatureRange}: gama de temperaturas inválida\\
+\texttt{Time::InvalidTimeFormat}: formato errado\\
+\texttt{Time::InvalidTime}\\
+\texttt{utils::ufloat<T>::InvalidUFloat}\\
+\texttt{utils::string\_regex::FailedRegex}: string introduzida não corresponde a regex\\
+\texttt{std::invalid\_argument}\\
+\texttt{std::system\_error} 
+\end{frame}
 
-InvalidTimeFormat: chamada quando é introduzido uma hora com o formato errado;\\
-InvalidCredentials: chamada quando são introduzidas credenciais erradas (username ou password, durante o login);\\
-InvalidTemperatureRange: chamada quando é introduzida uma gama de temperatura não válida;\\
-FailedRegex: chamada quando a string introduzida não corresponde a regex;\\
-RepeatedId: chamada quando é introduzido um id repetido;\\
-%invalidargument: \\
-%systemerror: 
+\begin{frame}
+\frametitle{Exemplo de exceção: \texttt{utils::string\_regex::FailedRegex}}
+\begin{center} \begin{minipage}{0.95\linewidth}
+\lstinputlisting[language=C++, caption={utils.h, L239-254}, firstline=239, lastline=254]{./codigo/include/utils.h}
+\lstinputlisting[language=C++, caption={utils.cpp, L129-134}, firstline=129, lastline=134]{./codigo/src/utils.cpp}
+\end{minipage} \end{center}
 \end{frame}
 
 \begin{frame}
