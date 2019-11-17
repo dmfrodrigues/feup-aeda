@@ -16,6 +16,31 @@ cd codigo
 ./bin/main.app
 ```
 
+## Give it a try!
+
+Some sample logins:
+
+Client
+
+```
+aadamante
+aiadam
+```
+
+Driver
+
+```
+brunoss
+brunopt
+```
+
+Manager
+
+```
+carlita
+carlita123
+```
+
 ## Cleaning up
 
 ```bash

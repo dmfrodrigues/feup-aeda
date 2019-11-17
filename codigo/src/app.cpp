@@ -416,51 +416,20 @@ bool App::userMenu(User *user, User::Type user_type) {
 }
 
 void App::start(){
-    #ifdef TELMO
+    User *user = NULL;
+    while (true) {
+        if (!guestMenu(user)) break;
 
-        Time t = Time();
+        if (user == NULL) continue;
 
-        t.input_time("2019/06/22 23:43:05");
+        User::Type user_type = user->get_type();
 
-        std::cout << t << "\n";
-
-        t.input_date("2019/11/13");
-
-        std::cout << t << "\n";
-
-    #endif
-    #ifdef DIOGO
-        save_all();
-        //list_clients();
-        //list_drivers();
-        //list_managers();
-        //list_trucks();
-        //print_list(std::vector<const Service*>(services_.begin(), services_.end()), User::Type::client);
-        //list_services();
-        //list_services();
-        //addService();
-        //wait();
-        //list_services();
-        //save_all();
-    #endif
-
-    #if !defined(TELMO) && !defined(DIOGO)
-    // main app
-        User *user = NULL;
-        while (true) {
-            if (!guestMenu(user)) break;
-
-            if (user == NULL) continue;
-
-            User::Type user_type = user->get_type();
-
-            if (!userMenu(user, user_type)) {
-                error("Unexpected error.");
-                break;
-            }
+        if (!userMenu(user, user_type)) {
+            error("Unexpected error.");
+            break;
         }
-        save_all();
-    #endif
+    }
+    save_all();
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):
