@@ -11,8 +11,8 @@
 - [x] User data should be saved in files, to use in future executions
 - [x] Conveniently treat possible exceptions
 - [x] Use search and sorting algorithms
-- [ ] Implemented classes should be documented
-- [ ] Allow for basic operations CRUD (create, read, update, delete)
+- [x] Implemented classes should be documented
+- [x] Allow for basic operations CRUD (create, read, update, delete)
 - [x] Use linear structures to manage entities
 - [x] Allow for total and partial listings with user-defined criteria
 - [x] Use different ordering criteria in the listings
@@ -32,7 +32,7 @@
 - [x] Allow clients and managers to add services
 - [x] Show list of clients
 - [x] Show list of trucks
-- [ ] Show to a driver a list of his services
+- [x] Show to a driver a list of his services
 
 #### Services
 - [ ] Allocate services to trucks and drivers in the most efficient way (less expenses):
