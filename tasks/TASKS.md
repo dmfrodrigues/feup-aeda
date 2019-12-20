@@ -21,6 +21,15 @@
 - [x] List clients
 - [x] List services
 
+- [ ] Use hash tables
+- [ ] Use BSTs
+- [ ] Use priority queues
+- [ ] Implement worker schedule, with counting of how many hours he works each day
+- [ ] Update salary system
+- [ ] Drivers are supposed to be stored in a set, ordered by number of work hours
+- [ ] Implement truck maintenance, with priority queue for repair shops ordered by availability
+- [ ] Table for inactive clients
+
 ## ToDo
 
 ### Most priority
