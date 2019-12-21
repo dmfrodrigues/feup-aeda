@@ -4,10 +4,14 @@
 
 int Service::next_id_ = 0;
 
-Service::Service():cost_(0), revenue_(0){}
+Service::Service():Service(Client::Username("")){}
 Service::Service(const Client::Username &client_user):
-    id_(utils::itos(next_id_++)), client_user_(client_user), cost_(0), revenue_(0){}
+    cost_(0), revenue_(0), id_(utils::itos(-1)), client_user_(client_user){}
 Service::~Service() { if(cargo_ != NULL) delete cargo_; }
+
+void Service::assign_new_id(){
+    id_ = utils::itos(next_id_++);
+}
 
 const std::string&      Service::get_id      () const{ return id_         ; }
 const Client::Username& Service::get_client  () const{ return client_user_; }

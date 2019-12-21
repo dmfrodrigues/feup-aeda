@@ -8,6 +8,7 @@
 #include "person.h"
 #include "truck.h"
 #include "service.h"
+#include "schedule.h"
 
 #include <fstream>
 
@@ -476,7 +477,7 @@ private:
      *              the driver has to complete in the given times
      * @return  True if the driver's schedule is valid, false otherwise
      */
-    bool get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
+    bool get_schedule(const Driver *p, Schedule &sch) const;
     /**
      * @brief Get schedule of a Truck.
      * @param   p   Pointer to Truck for which we want the schedule
@@ -484,14 +485,14 @@ private:
      *              the truck has to complete in the given times
      * @return  True if the truck's schedule is valid, false otherwise
      */
-    bool get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const;
+    bool get_schedule(const Truck  *p, Schedule &sch) const;
     /**
      * @brief Get available drivers to go to a service.
      * @param tbegin    Time when service begin
      * @param tend      Time when service ends
      * @return  Vector containing the available drivers
      */
-    std::vector<Driver*> get_available_drivers(const Time &tbegin, const Time &tend) const;
+    std::vector<Driver*> get_available_drivers(const Service *s) const;
     /**
      * @brief Get available trucks to go to a service.
      * @param tbegin    Time when service begin
@@ -499,7 +500,7 @@ private:
      * @param c         Cargo that needs to be transported
      * @return  Vector containing the available drivers
      */
-    std::vector<Truck *> get_available_trucks (const Time &tbegin, const Time &tend, const Cargo *c) const;
+    std::vector<Truck *> get_available_trucks (const Service *s) const;
 
     // Menus
     /**

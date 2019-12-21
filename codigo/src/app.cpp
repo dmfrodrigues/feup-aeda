@@ -71,7 +71,7 @@ void App::error(const std::string &s){
     wait();
 }
 
-bool App::get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const{
+bool App::get_schedule(const Driver *p, Schedule &sch) const{
     Driver::Username u = p->get_username();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
@@ -81,20 +81,11 @@ bool App::get_schedule(const Driver *p, std::vector<std::pair<std::pair<Time,Tim
         });
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
-    ret.clear();
-    for(const Service *q:vs){
-        ret.push_back(std::make_pair(std::make_pair(q->get_tbegin(),q->get_tend()),q->get_id()));
-    }
-    utils::mergesort(ret);
-    for(size_t i = 0; i+1 < ret.size(); ++i)
-        if(ret[i+1].first.first < ret[i].first.second){ //if the next service starts before the previous ends
-            ret.clear();
-            return false;
-        }
+    for(const Service *q:vs) if(!sch.add_service(q)) return false;
     return true;
 }
 
-bool App::get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Time>, Service::ID> > &ret) const{
+bool App::get_schedule(const Truck  *p, Schedule &sch) const{
     Truck::NumberPlate u = p->get_numberplate();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
@@ -104,52 +95,32 @@ bool App::get_schedule(const Truck  *p, std::vector<std::pair<std::pair<Time,Tim
         });
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
-    ret.clear();
-    for(const Service *q:vs){
-        ret.push_back(std::make_pair(std::make_pair(q->get_tbegin(),q->get_tend()),q->get_id()));
-    }
-    utils::mergesort(ret);
-    for(size_t i = 0; i+1 < ret.size(); ++i)
-        if(ret[i+1].first.first < ret[i].first.second){ //if the next service starts before the previous ends
-            ret.clear();
-            return false;
-        }
+    for(const Service *q:vs) if(!sch.add_service(q)) return false;
     return true;
 }
 
-std::vector<Driver*> App::get_available_drivers(const Time &tbegin, const Time &tend) const{
+std::vector<Driver*> App::get_available_drivers(const Service *s) const{
     std::vector<Driver*> ret;
     std::vector<User*> dv = App::filter_user_by_type(users_, User::Type::driver);
     for(User *p:dv){
         Driver *q = dynamic_cast<Driver*>(p);
-        std::vector<std::pair<std::pair<Time,Time>, Service::ID> > v;
-        assert(get_schedule(q, v));
-        bool available = true;
-        for(const auto &r:v){
-            if(std::max(tbegin, r.first.first) < std::min(tend, r.first.second)){
-                available = false;
-                break;
-            }
-        }
+        Schedule sch;
+        assert(get_schedule(q, sch));
+        bool available = sch.is_available(s);
         if(available) ret.push_back(q);
     }
     return ret;
 }
-std::vector<Truck *> App::get_available_trucks (const Time &tbegin, const Time &tend, const Cargo *c) const{
+std::vector<Truck *> App::get_available_trucks (const Service *s) const{
     std::vector<Truck*> ret;
+    const Cargo *c = s->get_cargo();
     std::vector<Truck*> tv = utils::filter(trucks_, [c](const Truck *p){
         return (p->get_cargo()->can_carry(c));
     });
     for(Truck *p:tv){
-        std::vector<std::pair<std::pair<Time,Time>, Service::ID> > v;
-        assert(get_schedule(p, v));
-        bool available = true;
-        for(const auto &r:v){
-            if(std::max(tbegin, r.first.first) < std::min(tend, r.first.second)){
-                available = false;
-                break;
-            }
-        }
+        Schedule sch;
+        assert(get_schedule(p, sch));
+        bool available = sch.is_available(s);
         if(available) ret.push_back(p);
     }
     return ret;

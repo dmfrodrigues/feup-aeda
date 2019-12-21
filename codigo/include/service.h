@@ -20,6 +20,10 @@ public:
     /** @brief ID type */
     typedef std::string ID;
 private:
+    /// @brief Cost to the agency to make this service.
+    Currency cost_;
+    /// @brief Revenue gained by the agency upon completion of the service.
+    Currency revenue_;
     /// @brief Service ID.
     ID id_;
     /// @brief Service ID.
@@ -44,10 +48,6 @@ private:
     std::vector<Truck ::NumberPlate> trucks_;
     /// @brief Drivers that will drive the trucks.
     std::vector<Driver::Username   > drivers_;
-    /// @brief Cost to the agency to make this service.
-    Currency cost_;
-    /// @brief Revenue gained by the agency upon completion of the service.
-    Currency revenue_;
 public:
     /** @brief ID of next service*/
     static int next_id_;
@@ -61,6 +61,8 @@ public:
     Service(const Client::Username &client_user);
     /** @brief Destructor */
     ~Service();
+
+    void assign_new_id();
 
     /// @brief Get ID
     const std::string&      get_id      () const;
@@ -79,7 +81,7 @@ public:
     /// @brief Get unloading address
     const Address&          get_aend    () const;
     /// @brief Get distance between the two addresses
-    const utils::Distance&         get_distance() const;
+    const utils::Distance&  get_distance() const;
     /// @brief Get pointer to cargo
     const Cargo*            get_cargo   () const;
     /// @brief Get trucks assigned to this service

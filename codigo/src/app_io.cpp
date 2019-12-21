@@ -66,12 +66,12 @@ bool App::load_all(){
         {
             std::vector<const User*> v(users_.begin(), users_.end());
             std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
-            std::vector<std::pair<std::pair<Time,Time>, Service::ID> > tmp;
-            for(const Driver *p:w) if(!get_schedule(p, tmp)) return false;
+            Schedule sch;
+            for(const Driver *p:w) if(!get_schedule(p, sch)) return false;
         }
         {
-            std::vector<std::pair<std::pair<Time,Time>, Service::ID> > tmp;
-            for(const Truck *p:trucks_) if(!get_schedule(p, tmp)) return false;
+            Schedule sch;
+            for(const Truck *p:trucks_) if(!get_schedule(p, sch)) return false;
         }
     }
     return true;
@@ -451,12 +451,13 @@ bool App::addService() {
       [service](const Service* s){ return (s->get_id() == service->get_id()); }) != services_.end()){
         delete service;
         error("Repeated ID (service with same ID already exists).");
-        Service::next_id_--; //infelizmente
+        //Service::next_id_--; //infelizmente
         return false;
     }
-    std::vector<Truck*> tv = get_available_trucks(service->get_tbegin(), service->get_tend(), service->get_cargo());
-    std::vector<Driver*> dv = get_available_drivers(service->get_tbegin(), service->get_tend());
+    std::vector<Truck *> tv = get_available_trucks(service);
+    std::vector<Driver*> dv = get_available_drivers(service);
     if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
+        service->assign_new_id();
         services_.push_back(service);
         std::cout << "Service added.\n";
         return true;
@@ -476,12 +477,13 @@ bool App::addService(const User *user) {
       [service](const Service* s){ return (s->get_id() == service->get_id()); }) != services_.end()){
         delete service;
         error("Repeated ID (service with same ID already exists).");
-        Service::next_id_--; //infelizmente
+        //Service::next_id_--; //infelizmente
         return false;
     }
-    std::vector<Truck*> tv = get_available_trucks(service->get_tbegin(), service->get_tend(), service->get_cargo());
-    std::vector<Driver*> dv = get_available_drivers(service->get_tbegin(), service->get_tend());
+    std::vector<Truck *> tv = get_available_trucks(service);
+    std::vector<Driver*> dv = get_available_drivers(service);
     if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
+        service->assign_new_id();
         services_.push_back(service);
         std::cout << "Service added.\n";
         return true;
