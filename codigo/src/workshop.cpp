@@ -1,5 +1,17 @@
 #include "../include/workshop.h"
 
+//ID
+const std::string Workshop::ID::ID_STR = "^\\w*$";
+Workshop::ID::ID(): string_regex(Workshop::ID::ID_STR) {}
+Workshop::ID::ID(const std::string &id): ID() {
+    *this = id;
+}
+ID& Workshop::ID::operator=(const std::string &s) {
+    string_regex::operator=(s);
+    return *this;
+}
+
+//Workshop
 std::istream & Workshop::input(std::istream &is) {
     std::string s; is >> s;
     try {
