@@ -13,7 +13,7 @@
 #include <utility>
 
 /**
- * @brief Superclass of all transports of the company.
+ * @brief Class representing the trucks of the company.
  * @ref   Cargo
  */
 class Truck {
