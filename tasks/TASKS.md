@@ -21,14 +21,14 @@
 - [x] List clients
 - [x] List services
 
-- [ ] Use hash tables
-- [ ] Use BSTs
-- [ ] Use priority queues
-- [ ] Implement worker schedule, with counting of how many hours he works each day
-- [ ] Update salary system
-- [ ] Drivers are supposed to be stored in a set, ordered by number of work hours
-- [ ] Implement truck maintenance, with priority queue for repair shops ordered by availability
-- [ ] Table for inactive clients
+- [ ] Use hash tables (LUÍS)
+- [ ] Use BSTs (LUÍS)
+- [ ] Use priority queues (LUÍS)
+- [ ] Implement worker schedule, with counting of how many hours he works each day (DIOGO)
+- [ ] Update salary system (DIOGO)
+- [ ] Drivers are supposed to be stored in a set, ordered by number of work hours (DIOGO)
+- [ ] Implement truck maintenance, with priority queue for repair shops ordered by availability (TELMO)
+- [ ] Table for inactive clients (TELMO)
 
 ## ToDo
 
