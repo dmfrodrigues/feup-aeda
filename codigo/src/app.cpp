@@ -93,7 +93,8 @@ void App::error(const std::string &s){
     wait();
 }
 
-bool App::get_schedule(const Driver *p, Schedule &sch) const{
+Schedule App::get_schedule(const Driver *p) const{
+    Schedule sch;
     Driver::Username u = p->get_username();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
@@ -104,10 +105,11 @@ bool App::get_schedule(const Driver *p, Schedule &sch) const{
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
     for(const Service *q:vs) sch.add_service(q);
-    return bool(sch);
+    return sch;
 }
 
-bool App::get_schedule(const Truck  *p, Schedule &sch) const{
+Schedule App::get_schedule(const Truck  *p) const{
+    Schedule sch;
     Truck::NumberPlate u = p->get_numberplate();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
@@ -118,7 +120,7 @@ bool App::get_schedule(const Truck  *p, Schedule &sch) const{
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
     for(const Service *q:vs) sch.add_service(q);
-    return bool(sch);
+    return sch;
 }
 
 std::vector<Driver*> App::get_available_drivers(const Service *s) const{
@@ -126,8 +128,7 @@ std::vector<Driver*> App::get_available_drivers(const Service *s) const{
     std::vector<User*> dv = App::filter_user_by_type(users_, User::Type::driver);
     for(User *p:dv){
         Driver *q = dynamic_cast<Driver*>(p);
-        Schedule sch;
-        assert(get_schedule(q, sch));
+        Schedule sch = get_schedule(q); assert(bool(sch));
         bool available = sch.is_available(s);
         if(available) ret.push_back(q);
     }
@@ -140,8 +141,7 @@ std::vector<Truck *> App::get_available_trucks (const Service *s) const{
         return (p->get_cargo()->can_carry(c));
     });
     for(Truck *p:tv){
-        Schedule sch;
-        assert(get_schedule(p, sch));
+        Schedule sch = get_schedule(p); assert(bool(sch));
         bool available = sch.is_available(s);
         if(available) ret.push_back(p);
     }

@@ -67,14 +67,14 @@ void App::load_all(){
             std::vector<const User*> v(users_.begin(), users_.end());
             std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
             for(const Driver *p:w){
-                Schedule sch;
-                if(!get_schedule(p, sch)) throw std::logic_error("Invalid schedule for driver "+std::string(p->get_id()));
+                Schedule sch = get_schedule(p);
+                if(!bool(sch)) throw std::logic_error("Invalid schedule for driver "+std::string(p->get_id()));
             }
         }
         {
             for(const Truck *p:trucks_){
-                Schedule sch;
-                if(!get_schedule(p, sch)) throw std::logic_error("Invalid schedule for truck "+std::string(p->get_id()));
+                Schedule sch = get_schedule(p);
+                if(!bool(sch)) throw std::logic_error("Invalid schedule for truck "+std::string(p->get_id()));
             }
         }
     }
