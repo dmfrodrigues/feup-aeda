@@ -8,10 +8,12 @@ class Schedule{
 private:
     static bool cmp(const Service *s1, const Service *s2);
     std::set<const Service *, bool(*)(const Service*, const Service*)> st;
+    bool valid;
 public:
     Schedule();
     bool is_available(const Service *s) const;
-    bool add_service (const Service *s);
+    void add_service (const Service *s);
+    operator bool() const;
 };
 
 #endif //SCHEDULE_H_INCLUDED

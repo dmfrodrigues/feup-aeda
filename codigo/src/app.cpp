@@ -103,8 +103,8 @@ bool App::get_schedule(const Driver *p, Schedule &sch) const{
         });
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
-    for(const Service *q:vs) if(!sch.add_service(q)) return false;
-    return true;
+    for(const Service *q:vs) sch.add_service(q);
+    return bool(sch);
 }
 
 bool App::get_schedule(const Truck  *p, Schedule &sch) const{
@@ -117,8 +117,8 @@ bool App::get_schedule(const Truck  *p, Schedule &sch) const{
         });
         vs = std::vector<const Service*>(v.begin(), v.end());
     }
-    for(const Service *q:vs) if(!sch.add_service(q)) return false;
-    return true;
+    for(const Service *q:vs) sch.add_service(q);
+    return bool(sch);
 }
 
 std::vector<Driver*> App::get_available_drivers(const Service *s) const{
