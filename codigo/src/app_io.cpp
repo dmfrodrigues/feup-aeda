@@ -30,7 +30,7 @@ size_t App::save_ptr(std::ofstream &os, const std::vector<Base*> &m_out){
     return m_out.size();
 }
 
-bool App::load_all(){
+void App::load_all(){
     for(const User *p:users_) delete p;
     users_ = std::vector<User*>();
     {
@@ -68,18 +68,17 @@ bool App::load_all(){
             std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
             for(const Driver *p:w){
                 Schedule sch;
-                if(!get_schedule(p, sch)) return false;
+                if(!get_schedule(p, sch)) throw std::logic_error("Invalid schedule for driver "+std::string(p->get_id()));
             }
         }
         {
             for(const Truck *p:trucks_){
                 Schedule sch;
-                if(!get_schedule(p, sch)) return false;
+                if(!get_schedule(p, sch)) throw std::logic_error("Invalid schedule for truck "+std::string(p->get_id()));
             }
         }
     }
     load_inactive_clients();
-    return true;
 }
 
 void App::save_all(){

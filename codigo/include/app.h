@@ -83,7 +83,7 @@ private:
      */
     template<class Base, class Deriv          > static size_t save_ptr(std::ofstream &os, const std::vector<Base*> &m_out);
     /// @brief Loads all information stored in data files specified in constructor.
-    bool load_all();
+    void load_all();
     /// @brief Saves all current information stored in runtime to data files.
     void save_all();
     ///Loading Function
