@@ -1,4 +1,4 @@
-#include "app.h"
+#include "../include/app.h"
 
 #include <cassert> //#DEV
 
@@ -285,6 +285,10 @@ void App::list_clients () const{
     std::vector<const User*> v(users_.begin(), users_.end());
     std::vector<const Client*> w = App::filter<User,Client,User::Type>(v, User::Type::client);
     list(w, User::Type::manager);
+}
+void App::list_inactive_clients() const {
+    std::vector<const Client*> v(inactive_clients_.begin(), inactive_clients_.end());
+    list(v, User::Type::manager);
 }
 void App::list_drivers () const{
     std::vector<const User*> v(users_.begin(), users_.end());

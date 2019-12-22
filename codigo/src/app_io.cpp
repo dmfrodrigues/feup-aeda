@@ -1,4 +1,4 @@
-#include "app.h"
+#include "../include/app.h"
 
 #include <algorithm>
 
@@ -74,6 +74,7 @@ bool App::load_all(){
             for(const Truck *p:trucks_) if(!get_schedule(p, sch)) return false;
         }
     }
+    load_inactive_clients();
     return true;
 }
 

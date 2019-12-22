@@ -28,7 +28,7 @@
 - [ ] Update salary system (DIOGO)
 - [ ] Drivers are supposed to be stored in a set, ordered by number of work hours (DIOGO)
 - [ ] Implement truck maintenance, with priority queue for repair shops ordered by availability (TELMO)
-- [ ] Table for inactive clients (TELMO)
+- [x] Table for inactive clients (TELMO)
 
 ## ToDo
 

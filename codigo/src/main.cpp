@@ -1,4 +1,4 @@
-#include "app.h"
+#include "../include/app.h"
 
 #ifdef _WIN32
     #include <windows.h>

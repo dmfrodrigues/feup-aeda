@@ -5,7 +5,7 @@
 #ifndef VAT_H_INCLUDED
 #define VAT_H_INCLUDED
 
-#include "utils.h"
+#include "../include/utils.h"
 
 /**
  * @brief %VAT number.

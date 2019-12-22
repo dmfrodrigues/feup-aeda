@@ -1,6 +1,6 @@
-#include "person.h"
+#include "../include/person.h"
 
-#include "utils.h"
+#include "../include/utils.h"
 
 ///PERSON
 std::istream& Person::input(std::istream &is){

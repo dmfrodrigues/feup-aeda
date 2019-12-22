@@ -49,6 +49,22 @@ public:
     Time(const std::string &s = DEFAULT_TIME);
 
     /**
+     * @brief Get the current date.
+     * @return Current date.
+     * @throws std::runtime_error If it fails to get the system current time.
+     */
+    static Time get_current_date(void);
+
+    /// @brief Get year.
+    int get_year(void) const;
+
+    /**
+     * @brief Change Time year.
+     * @param year  Year to be set to.
+     */
+    void set_year(int year);
+
+    /**
      * @brief Format date with format string.
      * @param   fmt Format string
      * @return  string with formatted date

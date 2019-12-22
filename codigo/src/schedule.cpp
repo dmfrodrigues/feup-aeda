@@ -1,4 +1,4 @@
-#include "schedule.h"
+#include "../include/schedule.h"
 
 bool Schedule::cmp(const Service *s1, const Service *s2){
     return (s1->get_tbegin() < s2->get_tbegin());

@@ -5,15 +5,15 @@
 #ifndef TRUCK_H_INCLUDED
 #define TRUCK_H_INCLUDED
 
-#include "currency.h"
-#include "cargo.h"
-#include "Time.h"
+#include "../include/currency.h"
+#include "../include/cargo.h"
+#include "../include/Time.h"
 
 #include <vector>
 #include <utility>
 
 /**
- * @brief Superclass of all transports of the company.
+ * @brief Class representing the trucks of the company.
  * @ref   Cargo
  */
 class Truck {
