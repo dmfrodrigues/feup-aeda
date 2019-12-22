@@ -59,6 +59,16 @@ void Time::input_date(const std::string &date) {
     }
 }
 
+int num_month[] = {0,3,2,5,0,3,5,1,4,6,2,4};
+Time::DayOfWeek Time::get_dayofweek() const{
+    int y = 1900+t_.tm_year;
+    int m = t_.tm_mon + 1;
+    int d = t_.tm_mday;
+    y -= (m < 3);
+    int ret = (y+y/4-y/100+y/400+num_month[m-1]+d+6)%7;
+    return static_cast<Time::DayOfWeek>(ret);
+}
+
 bool Time::operator==(const Time &t) const{ return (format() == t.format()); }
 bool Time::operator!=(const Time &t) const{ return !(*this == t); }
 bool Time::operator< (const Time &t) const{ return (format() < t.format()); }
