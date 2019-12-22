@@ -5,10 +5,10 @@
 #ifndef PERSON_H_INCLUDED
 #define PERSON_H_INCLUDED
 
-#include "../include/address.h"
-#include "../include/vat.h"
-#include "../include/phonenumber.h"
-#include "../include/currency.h"
+#include "address.h"
+#include "vat.h"
+#include "phonenumber.h"
+#include "currency.h"
 
 /**
  * @brief %Person class.

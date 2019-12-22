@@ -1,6 +1,6 @@
-#include "../include/temperature.h"
+#include "temperature.h"
 
-#include "../include/utils.h"
+#include "utils.h"
 
 ///TEMPERATURE
 Temperature::Temperature():Temperature(20.0){}

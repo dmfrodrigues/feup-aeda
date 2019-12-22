@@ -1,4 +1,4 @@
-#include "../include/cargo.h"
+#include "cargo.h"
 
 #include <cmath>
 #include <algorithm>

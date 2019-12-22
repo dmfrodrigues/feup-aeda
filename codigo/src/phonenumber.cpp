@@ -1,4 +1,4 @@
-#include "../include/phonenumber.h"
+#include "phonenumber.h"
 
 const std::string PhoneNumber::REGEX_STR = "^[+-a-zA-Z0-9 *#()/,.;]*$";
 

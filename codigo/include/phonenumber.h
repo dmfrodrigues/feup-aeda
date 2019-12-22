@@ -5,7 +5,7 @@
 #ifndef PHONENUMBER_H_INCLUDED
 #define PHONENUMBER_H_INCLUDED
 
-#include "../include/utils.h"
+#include "utils.h"
 
 /**
  * @brief Class to store phone number.

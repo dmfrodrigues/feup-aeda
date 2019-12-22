@@ -1,4 +1,4 @@
-#include "../include/app.h"
+#include "app.h"
 
 #include <stdexcept>
 #include <cassert>
@@ -412,7 +412,7 @@ bool App::userMenu(User *user, User::Type user_type) {
 
 void App::start(){
     User *user = NULL;
-    
+
     while (true) {
         if (!guestMenu(user)) break;
 

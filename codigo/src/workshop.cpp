@@ -1,4 +1,4 @@
-#include "../include/workshop.h"
+#include "workshop.h"
 
 //ID
 const std::string Workshop::ID::ID_STR = "^\\w*$";

@@ -1,7 +1,7 @@
 #ifndef SCHEDULE_H_INCLUDED
 #define SCHEDULE_H_INCLUDED
 
-#include "../include/service.h"
+#include "service.h"
 #include <set>
 
 class Schedule{
