@@ -1,10 +1,10 @@
-#include "Time.h"
+#include "../include/Time.h"
 
 #include <sstream>
 #include <iomanip>
 #include <regex>
 #include <chrono>
-#include "utils.h"
+#include "../include/utils.h"
 
 const std::string Time::DEFAULT_FORMAT = "%Y%m%d_%H%M%S";
 const std::string Time::DEFAULT_TIME_REGEX = "^(\\d{4})/(\\d{2})/(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})$";
@@ -21,6 +21,27 @@ Time::Time(const std::string &s){
         t_.tm_mday  >  31 ||
         t_.tm_mon   >= 12)
         throw InvalidTime(s);
+}
+
+Time Time::get_current_date(void) {
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+
+
+    std::time_t time_now = std::chrono::system_clock::to_time_t(now);
+
+    std::tm *tm_p = std::localtime(&time_now);
+
+    if (tm_p == NULL) throw std::runtime_error("Failed to get current time.");
+
+    std::string tm_formatted = utils::itos(tm_p->tm_year + 1900) + utils::itos(tm_p->tm_mon + 1) + utils::itos(tm_p->tm_mday) + "_000000";
+
+    return Time(tm_formatted);
+}
+
+int Time::get_year(void) const { return t_.tm_year + 1900; }
+
+void Time::set_year(int year) {
+    t_.tm_year = year - 1900;
 }
 
 std::string Time::format(const std::string &fmt) const{

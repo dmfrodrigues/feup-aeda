@@ -1,4 +1,4 @@
-#include "app.h"
+#include "../include/app.h"
 
 #include <stdexcept>
 #include <cassert>
@@ -52,6 +52,28 @@ void App::wait(){
     std::string b;
     std::cout << "(Press 'Enter' to continue)";
     std::getline(std::cin, b);
+}
+
+bool App::UserEq::operator()(const User *u1, const User *u2) const {
+    return u1->get_id() == u2->get_id();
+}
+
+void App::load_inactive_clients(void) {
+    std::vector<User*> clients = filter_user_by_type(users_, User::Type::client);
+
+    Time last_year = Time::get_current_date();
+    last_year.set_year(last_year.get_year() - 1);
+
+    for (User *client : clients) {
+        bool inactive = true;
+        for (const Service *service : services_) {
+            if (service->get_client() == client->get_id() && service->get_tend() >= last_year) {
+                inactive = false;
+                break;
+            }
+        }
+        if (inactive) { inactive_clients_.insert(dynamic_cast<Client*>(client)); std::cout << "INACTIVE\n";}
+    }
 }
 
 bool App::confirm(const std::string &msg) {
@@ -297,8 +319,9 @@ bool App::printUserMenu(User::Type user_type) {
                             "│  Add manager                           [51] │  Service list                          [61] │\n"
                             "│  Edit manager                          [52] │  Truck list                            [62] │\n"
                             "│  Delete manager                        [53] │  Client list                           [63] │\n"
-                            "│                                             │  Driver list                           [64] │\n"
-                            "│                                             │  Manager list                          [65] │\n"
+                            "│                                             │  Inactive client list                  [64] │\n"
+                            "│                                             │  Driver list                           [65] │\n"
+                            "│                                             │  Manager list                          [66] │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│               Account Management            │                Other operations             │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
@@ -352,27 +375,28 @@ bool App::userMenu(User *user, User::Type user_type) {
 
             } else if (user_type == User::Type::manager) {
                 switch (option) {
-                //SERVICE MANAGEMENT                                            //TRUCK MAANAGEMENT
-                case 11: addService(); wait();                      break;      case 21: addTruck(); wait();                                break;
-                case 12: deleteService(); wait();                   break;      case 22: editTruck(); wait();                               break;
-                                                                                case 23: deleteTruck(); wait();                             break;
+                //SERVICE MANAGEMENT                                                //TRUCK MAANAGEMENT
+                case 11: addService(); wait();                              break;  case 21: addTruck(); wait();                                break;
+                case 12: deleteService(); wait();                           break;  case 22: editTruck(); wait();                               break;
+                                                                                    case 23: deleteTruck(); wait();                             break;
 
-                //CLIENT MANAGEMENT                                             //DRIVER MANAGEMENT
-                case 31: addUser(User::Type::client); wait();       break;      case 41: addUser(User::Type::driver); wait();                      break;
-                case 32: editUser<Client>(User::Type::client); wait(); break;      case 42: editUser<Driver>(User::Type::driver); wait();             break;
-                case 33: deleteUser<Client>(User::Type::client); wait(); break;      case 43: deleteUser<Driver>(User::Type::driver); wait();           break;
+                //CLIENT MANAGEMENT                                                 //DRIVER MANAGEMENT
+                case 31: addUser(User::Type::client); wait();               break;  case 41: addUser(User::Type::driver); wait();               break;
+                case 32: editUser<Client>(User::Type::client); wait();      break;  case 42: editUser<Driver>(User::Type::driver); wait();      break;
+                case 33: deleteUser<Client>(User::Type::client); wait();    break;  case 43: deleteUser<Driver>(User::Type::driver); wait();    break;
 
                 //MANAGER MANAGEMENT                                            //INFORMATION VISUALIZATION
-                case 51: addUser(User::Type::manager); wait();             break;      case 61: list_services();                                   break;
-                case 52: editUser<Manager>(User::Type::manager); wait();    break;      case 62: list_trucks();                                     break;
-                case 53: deleteUser<Manager>(User::Type::manager); wait();  break;      case 63: list_clients();                                    break;
-                                                                                case 64: list_drivers();                                    break;
-                                                                                case 65: list_managers();                                   break;
+                case 51: addUser(User::Type::manager); wait();              break;  case 61: list_services();                                   break;
+                case 52: editUser<Manager>(User::Type::manager); wait();    break;  case 62: list_trucks();                                     break;
+                case 53: deleteUser<Manager>(User::Type::manager); wait();  break;  case 63: list_clients();                                    break;
+                                                                                    case 64: list_inactive_clients();                           break;
+                                                                                    case 65: list_drivers();                                    break;
+                                                                                    case 66: list_managers();                                   break;
 
-                //ACCOUNT MANAGEMENT                                            //OTHER OPERATIONS
-                case 71: editUser<Manager>(user); wait(); wait();                       break;  case 81: save_all();                                    break;
-                case 72: CLEAR(); App::display(dynamic_cast<Manager*>(user), User::Type::manager); wait();    break;  case 82: return true;                                   break;
-                case 73: changePassword(user); wait();  break;
+                //ACCOUNT MANAGEMENT                                                                                //OTHER OPERATIONS
+                case 71: editUser<Manager>(user); wait(); wait();                                           break;  case 81: save_all();                            break;
+                case 72: CLEAR(); App::display(dynamic_cast<Manager*>(user), User::Type::manager); wait();  break;  case 82: return true;                           break;
+                case 73: changePassword(user); wait();                                                      break;
 
                 default:
                     error("Invalid operation.");
@@ -388,6 +412,7 @@ bool App::userMenu(User *user, User::Type user_type) {
 
 void App::start(){
     User *user = NULL;
+    
     while (true) {
         if (!guestMenu(user)) break;
 

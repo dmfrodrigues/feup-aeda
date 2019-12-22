@@ -1,4 +1,4 @@
-#include "vat.h"
+#include "../include/vat.h"
 
 const std::string VAT::REGEX_STR = "^[A-Z0-9]{2,15}$";
 

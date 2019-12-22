@@ -8,7 +8,7 @@
 #include <string.h>
 #include <set.h>
 
-#include "utils.h"
+#include "../include/utils.h"
 
 /**
  * @brief Class representing a workshop.

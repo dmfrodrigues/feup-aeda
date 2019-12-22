@@ -5,11 +5,12 @@
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
 
-#include "person.h"
-#include "truck.h"
-#include "service.h"
-#include "schedule.h"
+#include "../include/person.h"
+#include "../include/truck.h"
+#include "../include/service.h"
+#include "../include/schedule.h"
 
+#include <unordered_set>
 #include <fstream>
 
 #if defined(_WIN32)
@@ -54,6 +55,16 @@ private:
     std::vector<Truck*> trucks_  ;
     /// @brief Existing services on agency.
     std::vector<Service*> services_;
+    //Hash Tables
+    /// @brief Hash Function for User (pointer)
+    typedef std::hash<User*> UserHash;
+    /// @brief Equality Function for User (pointer)
+    struct UserEq {
+        bool operator() (const User* u1, const User* u2) const;
+    };
+    /// @brief Inactive clients on agency.
+    std::unordered_set<Client*, UserHash, UserEq> inactive_clients_;
+
     ///PRIVATE FUNCTIONS
     ///File IO
     /**
@@ -75,6 +86,8 @@ private:
     bool load_all();
     /// @brief Saves all current information stored in runtime to data files.
     void save_all();
+    ///Loading Function
+    void load_inactive_clients(void);
     ///Display
     /**
      * @brief Prints list of all managers in the vector.
@@ -303,6 +316,8 @@ private:
     ///Operations
     /** @brief Lists all clients in agency */
     void list_clients () const;
+    /** @brief List all inactive clients in agency */
+    void list_inactive_clients() const;
     /** @brief Lists all drivers in agency */
     void list_drivers () const;
     /** @brief Lists all managers in agency */
@@ -621,6 +636,7 @@ template<class Deriv> bool App::deleteUser(const User::Type &type) {
         if (user == NULL) return false;
         std::vector<User*>::iterator user_it = std::find(users_.begin(), users_.end(), user);
         if (!confirm("Confirm the deletion of user \'" + std::string((*user_it)->get_username()) + "\' (yes/no): ")) return false;
+        inactive_clients_.erase(dynamic_cast<Client*>(*user_it));
         delete *user_it;
         users_.erase(user_it);
         std::cout << "User deleted.\n";

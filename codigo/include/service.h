@@ -7,10 +7,10 @@
 
 #include <vector>
 
-#include "person.h"
-#include "Time.h"
-#include "cargo.h"
-#include "truck.h"
+#include "../include/person.h"
+#include "../include/Time.h"
+#include "../include/cargo.h"
+#include "../include/truck.h"
 
 /**
  * @brief Class to store all the information concerning a transport service.
