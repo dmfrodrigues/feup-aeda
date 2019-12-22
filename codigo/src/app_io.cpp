@@ -66,12 +66,16 @@ bool App::load_all(){
         {
             std::vector<const User*> v(users_.begin(), users_.end());
             std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
-            Schedule sch;
-            for(const Driver *p:w) if(!get_schedule(p, sch)) return false;
+            for(const Driver *p:w){
+                Schedule sch;
+                if(!get_schedule(p, sch)) return false;
+            }
         }
         {
-            Schedule sch;
-            for(const Truck *p:trucks_) if(!get_schedule(p, sch)) return false;
+            for(const Truck *p:trucks_){
+                Schedule sch;
+                if(!get_schedule(p, sch)) return false;
+            }
         }
     }
     load_inactive_clients();
