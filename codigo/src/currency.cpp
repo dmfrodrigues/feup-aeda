@@ -1,4 +1,4 @@
-#include "../include/currency.h"
+#include "currency.h"
 
 #include <iomanip>
 #include <sstream>

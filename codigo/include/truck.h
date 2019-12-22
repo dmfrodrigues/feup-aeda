@@ -5,9 +5,9 @@
 #ifndef TRUCK_H_INCLUDED
 #define TRUCK_H_INCLUDED
 
-#include "../include/currency.h"
-#include "../include/cargo.h"
-#include "../include/Time.h"
+#include "currency.h"
+#include "cargo.h"
+#include "Time.h"
 
 #include <vector>
 #include <utility>

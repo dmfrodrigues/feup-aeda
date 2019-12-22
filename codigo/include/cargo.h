@@ -5,9 +5,9 @@
 #ifndef CARGO_H_INCLUDED
 #define CARGO_H_INCLUDED
 
-#include "../include/currency.h"
-#include "../include/temperature.h"
-#include "../include/utils.h"
+#include "currency.h"
+#include "temperature.h"
+#include "utils.h"
 
 #include <utility>
 #include <stdexcept>

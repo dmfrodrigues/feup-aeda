@@ -1,8 +1,8 @@
-#include "../include/truck.h"
+#include "truck.h"
 
-#include "../include/utils.h"
+#include "utils.h"
 
-#include "../include/app.h"
+#include "app.h"
 
 ///NUMBERPLATE NUMBER
 const std::string Truck::NumberPlate::Number::REGEX_STR = "^[A-Z0-9 -|.]{4,12}*$";

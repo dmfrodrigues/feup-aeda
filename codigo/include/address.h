@@ -5,7 +5,7 @@
 #ifndef ADDRESS_H_INCLUDED
 #define ADDRESS_H_INCLUDED
 
-#include "../include/utils.h"
+#include "utils.h"
 
 /**
  * @brief Class for real-world address.

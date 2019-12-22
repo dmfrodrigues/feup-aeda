@@ -5,10 +5,10 @@
 #ifndef APP_H_INCLUDED
 #define APP_H_INCLUDED
 
-#include "../include/person.h"
-#include "../include/truck.h"
-#include "../include/service.h"
-#include "../include/schedule.h"
+#include "person.h"
+#include "truck.h"
+#include "service.h"
+#include "schedule.h"
 
 #include <unordered_set>
 #include <fstream>
