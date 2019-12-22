@@ -17,6 +17,16 @@ private:
     /// @brief Time struct containing date and hour.
     std::tm t_;
 public:
+    enum DayOfWeek{
+        Mon = 0,
+        Tue,
+        Wed,
+        Thu,
+        Fri,
+        Sat,
+        Sun
+    };
+
     /**
      * @brief Default date format for input from files
      */
@@ -76,6 +86,8 @@ public:
      * @throws Time::InvalidTimeFormat If input doesn't follow format rules, Time::InvalidTime if input is invalid time
      */
     void input_date(const std::string &date);
+
+    Time::DayOfWeek get_dayofweek() const;
 
     /// @brief Overload of <em>operator==</em>.
     bool operator==(const Time &t) const;
