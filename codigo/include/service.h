@@ -93,6 +93,8 @@ public:
     /// @brief Get revenue from this service
     const Currency& get_revenue() const;
 
+    void set_tbegin(const Time &t);
+
     /**
      * @brief Allows input field by field with descriptive messages.
      * @param is Input stream

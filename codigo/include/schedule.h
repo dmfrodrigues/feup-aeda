@@ -2,6 +2,7 @@
 #define SCHEDULE_H_INCLUDED
 
 #include "service.h"
+#include "Time.h"
 #include <set>
 
 class Schedule{
@@ -14,7 +15,7 @@ public:
     bool is_available(const Service *s) const;
     void add_service (const Service *s);
     operator bool() const;
-    double work_hours_month(const Time &t) const;
+    Time::TimeDiff work_month(const Time &t) const;
 };
 
 #endif //SCHEDULE_H_INCLUDED

@@ -28,6 +28,8 @@ const std::vector<Driver::Username   >& Service::get_drivers() const{ return dri
 const Currency& Service::get_cost   () const { return cost_; }
 const Currency& Service::get_revenue() const { return revenue_   ; }
 
+void Service::set_tbegin(const Time &t){ t_begin_ = t; }
+
 bool Service::in(std::istream &is, std::ostream &os) {
     os << "Person to contact on pick-up of merchandise:\n";
     if (!contact1_.in(is, os)) return false;

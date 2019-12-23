@@ -6,6 +6,24 @@
 #include <chrono>
 #include "../include/utils.h"
 
+
+Time::TimeDiff::TimeDiff(double Dt):dt(Dt){}
+Time::TimeDiff Time::TimeDiff::operator+(const TimeDiff &t) const{
+    TimeDiff ret;
+    ret.dt = dt + t.dt;
+    return ret;
+}
+Time::TimeDiff& Time::TimeDiff::operator+=(const TimeDiff &t){
+    *this = *this+t;
+    return *this;
+}
+double Time::TimeDiff::hours() const{
+    return dt/3600.0;
+}
+bool Time::TimeDiff::operator<(const Time::TimeDiff &t) const{
+    return (dt < t.dt);
+}
+
 const std::string Time::DEFAULT_FORMAT = "%Y%m%d_%H%M%S";
 const std::string Time::DEFAULT_TIME_REGEX = "^(\\d{4})/(\\d{2})/(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})$";
 const std::string Time::DEFAULT_DATE_REGEX = "^(\\d{4})/(\\d{2})/(\\d{2})$";
@@ -90,12 +108,56 @@ Time::DayOfWeek Time::get_dayofweek() const{
     return static_cast<Time::DayOfWeek>(ret);
 }
 
+bool Time::is_leap_year() const{
+    int y = 1900+t_.tm_year;
+    bool isLeapYear = false;
+    if (y % 4 == 0) {
+       if (y % 100 == 0) {
+          if (y % 400 == 0) {
+             isLeapYear = true;
+          }
+       }
+       else isLeapYear = true;
+    }
+    return isLeapYear;
+}
+
+int Time::days_in_month() const{
+    static const int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    return days[t_.tm_mon] + (is_leap_year() && t_.tm_mon == 1 ? 1 : 0);
+}
+
+Time Time::first_day_month() const{
+    Time t = *this;
+    t.t_.tm_mday = 1;
+    t.t_.tm_hour = 0;
+    t.t_.tm_min  = 0;
+    t.t_.tm_sec  = 0;
+    return t;
+}
+
+Time Time::last_day_month() const{
+    Time t = *this;
+    t.t_.tm_mday = days_in_month();
+    t.t_.tm_hour = 0;
+    t.t_.tm_min  = 0;
+    t.t_.tm_sec  = 0;
+    return t;
+}
+
 bool Time::operator==(const Time &t) const{ return (format() == t.format()); }
 bool Time::operator!=(const Time &t) const{ return !(*this == t); }
 bool Time::operator< (const Time &t) const{ return (format() < t.format()); }
 bool Time::operator> (const Time &t) const{ return (t < *this); }
 bool Time::operator<=(const Time &t) const{ return !(*this > t); }
 bool Time::operator>=(const Time &t) const{ return !(*this < t); }
+
+Time::TimeDiff Time::operator-(const Time &t) const{
+    tm t1 = t_, t2 = t.t_;
+    time_t time_t1 = mktime(&t1);
+    time_t time_t2 = mktime(&t2);
+    return TimeDiff(difftime(time_t1, time_t2));
+}
 
 std::istream& operator>>(std::istream &is,       Time &t){
     std::string s;

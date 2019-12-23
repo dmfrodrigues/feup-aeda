@@ -128,7 +128,7 @@ App::comp_drivers::comp_drivers(const App *p_):p(p_){}
 bool App::comp_drivers::operator()(const Driver *d1, const Driver *d2) const{
         Schedule sch1 = p->get_schedule(d1);
         Schedule sch2 = p->get_schedule(d2);
-        return (sch1.work_hours_month(p->today) < sch2.work_hours_month(p->today));
+        return (sch1.work_month(p->today) < sch2.work_month(p->today));
 }
 
 std::multiset<Driver*, App::comp_drivers> App::get_available_drivers(const Service *s) const{

@@ -17,6 +17,18 @@ private:
     /// @brief Time struct containing date and hour.
     std::tm t_;
 public:
+
+    class TimeDiff{
+    private:
+        double dt;
+    public:
+        TimeDiff(double Dt = 0.0);
+        TimeDiff operator+(const TimeDiff &t) const;
+        TimeDiff& operator+=(const TimeDiff &t);
+        double hours() const;
+        bool operator<(const TimeDiff &t) const;
+    };
+
     enum DayOfWeek{
         Mon = 0,
         Tue,
@@ -89,6 +101,14 @@ public:
 
     Time::DayOfWeek get_dayofweek() const;
 
+    bool is_leap_year() const;
+
+    int days_in_month() const;
+
+    Time first_day_month() const;
+
+    Time last_day_month() const;
+
     /// @brief Overload of <em>operator==</em>.
     bool operator==(const Time &t) const;
     /// @brief Overload of <em>operator!=</em>.
@@ -101,6 +121,8 @@ public:
     bool operator<=(const Time &t) const;
     /// @brief Overload of <em>operator>=</em>.
     bool operator>=(const Time &t) const;
+
+    TimeDiff operator-(const Time &t) const;
 
     /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Time::DEFAULT_FORMAT. */
     friend std::istream& operator>>(std::istream &is,       Time &t);
