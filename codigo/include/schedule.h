@@ -15,6 +15,8 @@ public:
     bool is_available(const Service *s) const;
     void add_service (const Service *s);
     operator bool() const;
+    Time::TimeDiff work() const;
+    Time::TimeDiff work(const Time &l, const Time &r) const;
     Time::TimeDiff work_month(const Time &t) const;
 };
 

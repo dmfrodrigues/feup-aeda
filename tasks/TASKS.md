@@ -24,9 +24,8 @@
 - [ ] Use hash tables (LUÍS)
 - [ ] Use BSTs (LUÍS)
 - [ ] Use priority queues (LUÍS)
-- [ ] Implement worker schedule, with counting of how many hours he works each day (DIOGO)
-- [ ] Update salary system (DIOGO)
-- [ ] Drivers are supposed to be stored in a set, ordered by number of work hours (DIOGO)
+- [x] Store drivers sorted by total service time (DIOGO)
+- [ ] Check how many hours each worker works each day (DIOGO)
 - [ ] Implement truck maintenance, with priority queue for repair shops ordered by availability (TELMO)
 - [x] Table for inactive clients (TELMO)
 
@@ -59,6 +58,8 @@
 
 ### Mid priority
 
+- [ ] Implement worker schedule (DIOGO)
+- [ ] Update salary system (DIOGO)
 - [ ] NumberPlate is identified by Number and Country
 - [ ] Allocate services to trucks and drivers in the most efficient way (less expenses):
 - To the driver with the least qualifications

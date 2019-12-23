@@ -110,7 +110,7 @@ private:
      * @param v     Vector containing all the drivers
      * @param t     Type of user that information will be displayed to
      */
-    static void print_list(const std::vector<const Driver *> &v, const User::Type &t);
+           void print_list(const std::vector<const Driver *> &v, const User::Type &t) const;
     /**
      * @brief Prints list of all clients in the vector.
      * @param v     Vector containing all the clients

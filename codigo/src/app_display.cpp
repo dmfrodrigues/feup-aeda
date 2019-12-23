@@ -21,25 +21,29 @@ void App::print_list(const std::vector<const Client *> &v, const User::Type &t){
     std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╛\n"
               << std::flush;
 }
-void App::print_list(const std::vector<const Driver *> &v, const User::Type &t){
+void App::print_list(const std::vector<const Driver *> &v, const User::Type &t) const{
     std::cout << "\n"
                  " ┌─╮┌─╮ ┬ ╷  ╭─╴┌─╮╭─╴ \n"
                  " │ │├┬╯ │ │ ╱├─╴├┬╯╰─╮ \n"
                  " └─╯╵╰  ┴ │╱ ╰─╴╵╰ ╶─╯ \n"
                  "\n"
-                 "╒════════════════╤═══════════════════════════════════════╤═══════════════════════════════╤═══════════════════════╤══════════════════╤═════════════════╕\n"
-                 "│ Username [0]   │ Name [1]                              │ Address [2]                   │ Phone number [3]      │ VAT [4]          │ Base salary [5] │\n"
-                 "╞════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪══════════════════╪═════════════════╡\n";
+                 "╒════════════════╤═══════════════════════════════════════╤═══════════════════════════════╤═══════════════════════╤══════════════════╤════════════╤═══════════╤════════════════╕\n"
+                 "│ Username [0]   │ Name [1]                              │ Address [2]                   │ Phone number [3]      │ VAT [4]          │ Base       │ Work      │ Work hours     │\n"
+                 "│                │                                       │                               │                       │                  │ salary [5] │ hours [6] │ this month [7] │\n"
+                 "╞════════════════╪═══════════════════════════════════════╪═══════════════════════════════╪═══════════════════════╪══════════════════╪════════════╪═══════════╪════════════════╡\n";
     for(const Driver* p:v){
+        Schedule sch = get_schedule(p);
         std::cout << "│ "
                   << utils::ljust((std::string)p->get_username()                  ,13) << "\t │ "
                   << utils::ljust((std::string)p->get_name()                      ,36) << "\t │ "
                   << utils::ljust((std::string)p->get_address().format("%street") ,28) << "\t │ "
                   << utils::ljust((std::string)p->get_phonenumber()               ,20) << "\t │ "
                   << utils::rjust((std::string)p->get_vat()                       ,16) <<   " │ "
-                  << utils::rjust(utils::ftos("%.2f",(double)p->get_base_salary()),15) <<   " │\n";
+                  << utils::rjust(utils::ftos("%.2f",(double)p->get_base_salary()),10) <<   " │ "
+                  << utils::rjust(utils::ftos("%.1f",sch.work      (     ).hours()), 9) <<   " │ "
+                  << utils::rjust(utils::ftos("%.1f",sch.work_month(today).hours()),14) <<   " │\n";
     }
-    std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧═════════════════╛\n"
+    std::cout << "╘════════════════╧═══════════════════════════════════════╧═══════════════════════════════╧═══════════════════════╧══════════════════╧════════════╧═══════════╧════════════════╛\n"
               << std::flush;
 }
 void App::print_list(const std::vector<const Manager*> &v, const User::Type &t){
