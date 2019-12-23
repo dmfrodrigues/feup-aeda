@@ -17,6 +17,7 @@ App::App(const std::string &base      ,
          const std::string &managers  , const std::string &drivers ,
          const std::string &clients   ,
          const std::string &trucks    , const std::string &services):
+         today(utils::get_now()),
          managers_path_(base+managers), drivers_path_ (base+drivers ),
          clients_path_ (base+clients ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
@@ -123,14 +124,22 @@ Schedule App::get_schedule(const Truck  *p) const{
     return sch;
 }
 
-std::vector<Driver*> App::get_available_drivers(const Service *s) const{
-    std::vector<Driver*> ret;
+App::comp_drivers::comp_drivers(const App *p_):p(p_){}
+bool App::comp_drivers::operator()(const Driver *d1, const Driver *d2) const{
+        Schedule sch1 = p->get_schedule(d1);
+        Schedule sch2 = p->get_schedule(d2);
+        return (sch1.work_hours_month(p->today) < sch2.work_hours_month(p->today));
+}
+
+std::multiset<Driver*, App::comp_drivers> App::get_available_drivers(const Service *s) const{
+    comp_drivers cmp(this);
+    std::multiset<Driver*, comp_drivers> ret(cmp);
     std::vector<User*> dv = App::filter_user_by_type(users_, User::Type::driver);
     for(User *p:dv){
         Driver *q = dynamic_cast<Driver*>(p);
         Schedule sch = get_schedule(q); assert(bool(sch));
         bool available = sch.is_available(s);
-        if(available) ret.push_back(q);
+        if(available) ret.insert(q);
     }
     return ret;
 }
@@ -411,7 +420,6 @@ bool App::userMenu(User *user, User::Type user_type) {
 }
 
 void App::start(){
-    /*
     User *user = NULL;
 
     while (true) {
@@ -427,11 +435,6 @@ void App::start(){
         }
     }
     save_all();
-    */
-    std::vector<const User*> v(users_.begin(), users_.end());
-    std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
-    Schedule sch = get_schedule(w[0]);
-    sch.print_week(std::cout, Time("20191120_010000"));
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):

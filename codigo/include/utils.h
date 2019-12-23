@@ -23,6 +23,11 @@ template<class T> std::ostream& operator<<(std::ostream &os, const utils::ufloat
 /** @brief Utilities */
 namespace utils {
     /**
+     * Get date and time now, as a string.
+     * @return Time as string in format "%YYYY%mm%dd_%HH%MM%SS"
+     */
+    std::string get_now();
+    /**
      * @brief Trims all spaces from the start of the string (in-place).
      * @param s String to be trimmed
      * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.

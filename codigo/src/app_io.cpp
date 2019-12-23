@@ -458,8 +458,8 @@ bool App::addService() {
         //Service::next_id_--; //infelizmente
         return false;
     }
-    std::vector<Truck *> tv = get_available_trucks(service);
-    std::vector<Driver*> dv = get_available_drivers(service);
+    std::vector  <Truck *                   > tv = get_available_trucks(service);
+    std::multiset<Driver*, App::comp_drivers> dv = get_available_drivers(service);
     if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
         service->assign_new_id();
         services_.push_back(service);
@@ -484,8 +484,8 @@ bool App::addService(const User *user) {
         //Service::next_id_--; //infelizmente
         return false;
     }
-    std::vector<Truck *> tv = get_available_trucks(service);
-    std::vector<Driver*> dv = get_available_drivers(service);
+    std::vector  <Truck *                   > tv = get_available_trucks(service);
+    std::multiset<Driver*, App::comp_drivers> dv = get_available_drivers(service);
     if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
         service->assign_new_id();
         services_.push_back(service);

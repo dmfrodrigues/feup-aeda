@@ -14,7 +14,7 @@ public:
     bool is_available(const Service *s) const;
     void add_service (const Service *s);
     operator bool() const;
-    std::ostream& print_week(std::ostream &os, const Time &t) const;
+    double work_hours_month(const Time &t) const;
 };
 
 #endif //SCHEDULE_H_INCLUDED

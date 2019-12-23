@@ -6,6 +6,16 @@
 #include <iostream>
 #include <cctype>
 
+std::string utils::get_now(){
+    time_t rawtime;
+    tm *info = nullptr;
+    char buffer[80];
+    time( &rawtime );
+    info = localtime( &rawtime );
+    strftime(buffer,80,"%Y%m%d_%H%M%S", info);
+    return std::string(buffer);
+}
+
 void utils::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
 }

@@ -31,10 +31,20 @@ class App{
 public:
     /** @brief Profit rate of the agency */
     static const float rate;
+
+    struct comp_drivers{
+    private:
+        const App *p;
+    public:
+        comp_drivers(const App *p_);
+        bool operator()(const Driver *d1, const Driver *d2) const;
+    };
 private:
     ///PRIVATE VARIABLES
     /// @brief Operation string displayed before any command input.
     static const std::string OPSTR;
+    /// @brief Today
+    const Time today;
     //Paths
     /// @brief Base path for data files of application.
     const std::string base_path_    ;
@@ -484,26 +494,13 @@ private:
      * @return Pointer to user if it exists, else NULL
      */
     User* verifyUser(const std::string &username, const std::string &password);
-
-    /**
-     * @brief Get schedule of a Driver.
-     * @param   p   Pointer to Driver for which we want the schedule
-     * @return  Schedule for driver
-     */
-    Schedule get_schedule(const Driver *p) const;
-    /**
-     * @brief Get schedule of a Truck.
-     * @param   p   Pointer to Truck for which we want the schedule
-     * @return  Schedule for truck
-     */
-    Schedule get_schedule(const Truck  *p) const;
     /**
      * @brief Get available drivers to go to a service.
      * @param tbegin    Time when service begin
      * @param tend      Time when service ends
-     * @return  Vector containing the available drivers
+     * @return  Multiset containing the available drivers, ordered by least work hours in current month
      */
-    std::vector<Driver*> get_available_drivers(const Service *s) const;
+    std::multiset<Driver*, App::comp_drivers> get_available_drivers(const Service *s) const;
     /**
      * @brief Get available trucks to go to a service.
      * @param tbegin    Time when service begin
@@ -559,6 +556,19 @@ public:
 
     /** @brief Runs main application */
     void start();
+
+    /**
+     * @brief Get schedule of a Driver.
+     * @param   p   Pointer to Driver for which we want the schedule
+     * @return  Schedule for driver
+     */
+    Schedule get_schedule(const Driver *p) const;
+    /**
+     * @brief Get schedule of a Truck.
+     * @param   p   Pointer to Truck for which we want the schedule
+     * @return  Schedule for truck
+     */
+    Schedule get_schedule(const Truck  *p) const;
 
     /** @brief Exception class to report invalid credentials */
     class InvalidCredentials: public std::runtime_error {
