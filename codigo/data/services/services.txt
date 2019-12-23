@@ -1,5 +1,5 @@
 18
-9
+8
 
 0
 joanammf
@@ -118,29 +118,6 @@ Cattle
 08-BG-20 camilaferr
 1070.00
 1172.09
-
-9
-ricas94
-Martim%20Jos%C3%A9%20Coelho%20Pinto
-%2B351%2096%20300%2029%2038
-Ricardo%20Martim%20Fonseca%20Pereira
-93%20691%2010%2055
-20191201_080000
-20191201_080000
-Avenida%20Fern%C3%A3o%20Magalh%C3%A3es%2029
-4300-730 RIO%20TINTO
-Porto Portugal
-Rua%2025%20de%20Abril%2013
-5400-390 CHAVES
-Vila-Real Portugal
-300
-0
-7000
-Non-Perishable%20Goods
-1
-66-38-LH diogocc
-831.00
-955.93
 
 12
 marialves

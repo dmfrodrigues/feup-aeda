@@ -60,6 +60,7 @@
 
 - [ ] Implement worker schedule (DIOGO)
 - [ ] Update salary system (DIOGO)
+- [ ] Lookup table for distances (DIOGO)
 - [ ] NumberPlate is identified by Number and Country
 - [ ] Allocate services to trucks and drivers in the most efficient way (less expenses):
 - To the driver with the least qualifications
