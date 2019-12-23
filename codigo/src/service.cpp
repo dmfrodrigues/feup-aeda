@@ -1,6 +1,7 @@
 #include "service.h"
 
 #include "utils.h"
+#include "time.h"
 
 int Service::next_id_ = 0;
 
@@ -41,15 +42,24 @@ bool Service::in(std::istream &is, std::ostream &os) {
     os << "Address to delivery merchandise:\n";
     if (!a_end_.in(is, os)) return false;
 
+    if (!utils::input("Distance: ", distance_, is, os)) return false;
+
     while (true) {
         if (!utils::input("Time to start the service (YYYY/mm/dd HH:MM:SS): ", [](Time &time, const std::string &input) { time.input_time(input); }, t_begin_, is, os)||
             !utils::input("Time to end service (YYYY/mm/dd HH:MM:SS): ",       [](Time &time, const std::string &input) { time.input_time(input); }, t_end_,   is, os)) return false;
 
-        if (t_begin_ <= t_end_) break;
-        std::cout << "Error: Initial time must be before end time\n";
+        if (t_begin_ > t_end_) {
+            os << "Error: Initial time must be before end time\n";
+            continue;
+        }
+        Time::TimeDiff diff = t_end_ - t_begin_;
+        if (diff.hours() < 0.5) {
+            os << "Error: Service duration must be atleast 30 minutes.\n";
+            continue;
+        }
+        if ((double)(distance_)/diff.hours() <= 150) break;
+        os << "Error: Time too short, our trucks can't surpass 150km/h.\n";
     }
-
-    if (!utils::input("Distance: ", distance_, is, os)) return false;
 
     std::string type;
     while (true) {
@@ -132,7 +142,14 @@ std::istream& operator>>(std::istream &is,       Service &s){
     for(size_t i = 0; i < sz; ++i) is >> s.trucks_[i] >> s.drivers_[i];
     is >> s.cost_
        >> s.revenue_;
-    return is;
+
+   if (s.t_begin_ > s.t_end_) is.setstate(std::ios::failbit);
+   else {
+       Time::TimeDiff diff = s.t_end_ - s.t_begin_;
+       if (diff.hours() < 0.5) is.setstate(std::ios::failbit);
+       else if ((double)s.distance_/diff.hours() > 150) is.setstate(std::ios::failbit);
+   }
+   return is;
 }
 std::ostream& operator<<(std::ostream &os, const Service &s){
     os << s.id_           << "\n"
