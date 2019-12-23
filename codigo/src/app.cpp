@@ -98,7 +98,7 @@ Schedule App::get_schedule(const Driver *p) const{
     Driver::Username u = p->get_username();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
-            for(const Driver::Username &d:q->get_drivers()){
+            for(const auto &d:q->get_drivers()){
                 if(d == u) return true;
             } return false;
         });
@@ -113,7 +113,7 @@ Schedule App::get_schedule(const Truck  *p) const{
     Truck::NumberPlate u = p->get_numberplate();
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
-            for(const Truck::NumberPlate &d:q->get_trucks()){
+            for(const auto &d:q->get_trucks()){
                 if(d == u) return true;
             } return false;
         });
@@ -411,6 +411,7 @@ bool App::userMenu(User *user, User::Type user_type) {
 }
 
 void App::start(){
+    /*
     User *user = NULL;
 
     while (true) {
@@ -426,6 +427,11 @@ void App::start(){
         }
     }
     save_all();
+    */
+    std::vector<const User*> v(users_.begin(), users_.end());
+    std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
+    Schedule sch = get_schedule(w[0]);
+    sch.print_week(std::cout, Time("20191120_010000"));
 }
 
 App::InvalidCredentials::InvalidCredentials(const std::string &msg):
