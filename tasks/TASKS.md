@@ -25,13 +25,15 @@
 - [ ] Use BSTs (LUÍS)
 - [ ] Use priority queues (LUÍS)
 - [x] Store drivers sorted by total service time (DIOGO)
-- [ ] Check how many hours each worker works each day (DIOGO)
+- [x] Table showing work hours in past month and since ever (DIOGO)
 - [ ] Implement truck maintenance, with priority queue for repair shops ordered by availability (TELMO)
 - [x] Table for inactive clients (TELMO)
 
 ## ToDo
 
 ### Most priority
+
+- [ ] Calendar with many things, including work hours (DIOGO)
 
 #### Entities
 - [x] Login for clients, managers and drivers
