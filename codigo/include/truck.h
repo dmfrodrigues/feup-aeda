@@ -8,6 +8,7 @@
 #include "currency.h"
 #include "cargo.h"
 #include "Time.h"
+#include "brand.h"
 
 #include <vector>
 #include <utility>
@@ -101,6 +102,8 @@ private:
     utils::Distance max_reach_;
     /// @brief Category of the truck.
     Category category_; //A,B,C,D
+    /// @brief Brand of the truck.
+    Brand brand_;
 
     /// Cargo that can be transported by the truck.
     CargoTrans *cargo_ = NULL;
@@ -123,6 +126,8 @@ public:
     const utils::Distance&    get_range            () const;
     /// @brief Get category.
     const Category&    get_category         () const;
+    /// @brief Get brand.
+    const Brand&        get_brand           () const;
     /// @brief Get cargo pointer.
     const CargoTrans*  get_cargo            () const;
     /// @brief Get cargo pointer (non-const)

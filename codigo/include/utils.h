@@ -56,6 +56,15 @@ namespace utils {
     void to_lower(std::string &s);
 
     /**
+     * @brief Capitalizes the first letter of each word in the string.
+     * String must be trimmed, this is no space characters in the beginning nor at the end of the string.
+     * @param   s   String to be capatilized, original string isn't changed.
+     * @throws  Throws if any of the function calls throws, can be caused due to non-trimmed strings.
+     * @return  The string capitilized.
+     */
+    std::string capitalize(const std::string &s);
+
+    /**
      * @brief       Convert integer to string.
      * @param   i   Integer to convert
      * @return      String that resulted from converting \a i.

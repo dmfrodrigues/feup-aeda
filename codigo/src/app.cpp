@@ -15,11 +15,11 @@ const std::string App::OPSTR = "Operation$ ";
 
 App::App(const std::string &base      ,
          const std::string &managers  , const std::string &drivers ,
-         const std::string &clients   ,
+         const std::string &clients   , const std::string &brands  ,
          const std::string &trucks    , const std::string &services):
          today(utils::get_now()),
          managers_path_(base+managers), drivers_path_ (base+drivers ),
-         clients_path_ (base+clients ),
+         clients_path_ (base+clients ), brands_path_  (base+brands  ),
          trucks_path_  (base+trucks  ), services_path_(base+services){
     std::cout << "Starting app..." << std::endl;
     load_all();

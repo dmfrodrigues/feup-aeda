@@ -32,6 +32,20 @@ void utils::to_lower(std::string &s) {
     std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) -> unsigned char { return std::tolower(c); });
 }
 
+std::string utils::capitalize(const std::string &s) {
+    if (s.empty()) return "";
+    std::string res; res.push_back(std::toupper((char)s[0]));
+    for (size_t i = 1; i < s.size(); i++) {
+        if (s.at(i) == ' ') {
+            res.push_back(s.at(i));
+            res.push_back(std::toupper((char)s[++i]));
+        } else {
+            res.push_back(std::tolower((char)s[i]));
+        }
+    }
+    return res;
+}
+
 std::string utils::itos(const long long int &i){
     std::stringstream ss;
     ss << i;

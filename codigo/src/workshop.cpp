@@ -50,7 +50,7 @@ std::ostream& operator<<(std::ostream &os, const Workshop &w){
        << w.id_                     << "\n"
        << w.brands_.size()          << "\n";
     for (auto it = w.brands_.begin(); it != w.brands_.end(); it++)
-        os << *it << "\n";
+        os << utils::urlencode(*it) << "\n";
     os << w.availability_;
     return os;
 }

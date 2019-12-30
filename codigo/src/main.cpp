@@ -14,6 +14,7 @@ int main(){
         App app("data/","managers/managers.txt",
                         "drivers/drivers.txt",
                         "clients/clients.txt",
+                        "brands/brands.txt",
                         "trucks/trucks.txt",
                         "services/services.txt");
         app.start();

@@ -19,12 +19,32 @@ size_t App::load_ptr(std::ifstream &is, std::vector<Base*> &m_in){
     return N;
 }
 
+size_t App::load_str(std::ifstream &is, std::vector<std::string> &m_in){
+    is.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
+    size_t N; is >> N;
+    for (size_t i = 0; i < N; i++){
+        std::string s; is >> s;
+        m_in.push_back(utils::urldecode(s));
+    }
+    return N;
+}
+
 template<class Base, class Deriv>
 size_t App::save_ptr(std::ofstream &os, const std::vector<Base*> &m_out){
     os.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
     os << m_out.size() << "\n";
     for(const Base* p:m_out){
         os << "\n" << *dynamic_cast<const Deriv*>(p) << "\n";
+    }
+    os << std::flush;
+    return m_out.size();
+}
+
+size_t App::save_str(std::ofstream &os, const std::vector<std::string> &m_out){
+    os.exceptions(std::ifstream::eofbit | std::ifstream::badbit | std::ifstream::failbit);
+    os << m_out.size() << "\n";
+    for (const std::string &s:m_out){
+        os << "\n" << utils::urlencode(s) << "\n";
     }
     os << std::flush;
     return m_out.size();
@@ -50,6 +70,16 @@ void App::load_all(){
         std::ifstream is(clients_path_ );
         size_t sz = load_ptr<User,Client ,User::Username>(is, users_ );
         std::cout << " loaded " << sz << std::endl;
+    }
+    {
+        std::vector<std::string> aux;
+        std::cout << "Loading brands  ..." << std::flush;
+        std::ifstream is(brands_path_  );
+        size_t sz = load_str(is, aux);
+        size_t sz1 = Brand::set_brands(aux);
+        std::cout << " loaded " << sz << std::endl;
+        std::cout << " loaded with sucess " << sz1 << std::endl;
+
     }
     {
         std::cout << "Loading trucks  ..." << std::flush;
@@ -98,6 +128,14 @@ void App::save_all(){
         std::cout << "Saving clients ...";
         std::ofstream os(clients_path_ );
         size_t sz = save_ptr<User,Client >(os, filter_user_by_type(users_, User::Type::client ));
+        std::cout << " saved " << sz << std::endl;
+    }
+    {
+        std::cout << "Saving brands ...";
+        std::ofstream os(brands_path_ );
+        std::vector<std::string> aux;
+        Brand::brands_to_vector(aux);
+        size_t sz = save_str(os, aux);
         std::cout << " saved " << sz << std::endl;
     }
     {

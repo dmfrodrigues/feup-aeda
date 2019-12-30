@@ -67,6 +67,7 @@ const Time&               Truck::get_plateregisterdate() const{ return plate_reg
 const Truck::Fuel&        Truck::get_fuel             () const{ return fuel_               ; }
 const utils::Distance&    Truck::get_range            () const{ return max_reach_          ; }
 const Truck::Category&    Truck::get_category         () const{ return category_           ; }
+const Brand&              Truck::get_brand            () const{ return brand_              ; }
 const CargoTrans*         Truck::get_cargo            () const{ return cargo_              ; }
 CargoTrans*&              Truck::get_cargo_nc         ()      { return cargo_              ; }
 Truck::Type               Truck::get_type             () const{ return Truck::Type::truck  ; }
@@ -93,6 +94,7 @@ Truck* Truck::deep_copy(const Truck *truck) {
     copy->fuel_                 = truck->fuel_;
     copy->max_reach_            = truck->max_reach_;
     copy->category_             = truck->category_;
+    copy->brand_                = truck->brand_;
 
     CargoTrans *cargo = truck->cargo_;
     if (cargo == NULL) throw std::invalid_argument("Truck has no cargo (cargo_ is a null pointer)");
@@ -131,6 +133,7 @@ std::istream& operator>>(std::istream &is,       Truck &t){
     int i; is >> i; t.fuel_ = static_cast<Truck::Fuel>(i);
     is >> t.max_reach_;
     is >> t.category_;
+    is >> t.brand_;
     t.cargo_ = NULL;
     input_CargoTrans(is, t.cargo_);
     return is;
@@ -140,7 +143,8 @@ std::ostream& operator<<(std::ostream &os, const Truck &t){
        << t.plate_register_date_  << "\n"
        << (int)t.fuel_            << "\n"
        << t.max_reach_            << "\n"
-       << t.category_             << "\n";
+       << t.category_             << "\n"
+       << t.brand_                << "\n";
     output_CargoTrans(os, t.cargo_);
     return os;
 }
@@ -150,7 +154,8 @@ bool Truck::in(std::istream &is, std::ostream &os) {
         !utils::input("Plate Register Date: ", [](Time &time, const std::string &input) { time.input_date(input); },  plate_register_date_, is, os)|
         !utils::input("Fuel: ", [](Truck::Fuel &fuel, const std::string &s) { fuel = Truck::processFuel(s); }, fuel_, is, os)|
         !utils::input("Maximum reach: ", max_reach_, is, os)|
-        !utils::input("Category: ",[](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os)) return false;
+        !utils::input("Category: ",[](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os)|
+        !utils::input("Brand: ", [](Brand &brand, const std::string &s) { brand = s; }, brand_, is, os)) return false;
 
     std::string type;
     while (true) {
@@ -206,6 +211,10 @@ bool Truck::edit(int property, std::istream &is, std::ostream &os) {
     break;
     case 4:
         if (!utils::input("Category :", [](Truck::Category &cat, const std::string &s) { cat = Truck::Category(s); }, category_, is, os))   return false;
+        else                                                                                                                                return true;
+    break;
+    case 5:
+        if (!utils::input("Brand: ", [](Brand &brand, const std::string &s) { brand = s; }, brand_, is, os))                                return false;
         else                                                                                                                                return true;
     break;
     default:

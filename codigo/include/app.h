@@ -54,6 +54,8 @@ private:
     const std::string drivers_path_ ;
     /// @brief Path from base to clients data files of application.
     const std::string clients_path_ ;
+    /// @brief Path from base to brands data files of application.
+    const std::string brands_path_  ;
     /// @brief Path from base to trucks data files of application.
     const std::string trucks_path_  ;
     /// @brief Path from base to services data files of application.
@@ -86,12 +88,27 @@ private:
      */
     template<class Base, class Deriv, class ID> static size_t load_ptr(std::ifstream &is,       std::vector<Base*> &m_in );
     /**
+     * @brief Loads data file.
+     * @param is    Input data file
+     * @param m_in  Vector to store all data
+     * @return Number of objects of T loaded
+     * @throws  App::RepeatedId If a repeated object gets loaded (objects with same identification)
+     */
+    size_t load_str(std::ifstream &is, std::vector<std::string> &m_in);
+    /**
      * @brief Saves information into data file.
      * @param os    Output data file
      * @param m_out  Vector containing all data
      * @return Number of objects of Base saved
      */
     template<class Base, class Deriv          > static size_t save_ptr(std::ofstream &os, const std::vector<Base*> &m_out);
+    /**
+     * @brief Saves information into data file.
+     * @param os    Output data file
+     * @param m_out  Vector containing all data
+     * @return Number of objects of Base saved
+     */
+    size_t save_str(std::ofstream &os, const std::vector<std::string> &m_out);
     /// @brief Loads all information stored in data files specified in constructor.
     void load_all();
     /// @brief Saves all current information stored in runtime to data files.
@@ -542,7 +559,7 @@ public:
      */
     App(const std::string &base    ,
         const std::string &managers, const std::string &drivers ,
-        const std::string &clients ,
+        const std::string &clients , const std::string &brands  ,
         const std::string &trucks  , const std::string &services);
 
     /** @brief Destructor. */

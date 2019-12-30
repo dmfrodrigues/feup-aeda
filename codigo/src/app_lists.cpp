@@ -116,16 +116,17 @@ void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const
 }
 void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Truck  *, const Truck  *)> &cmp){
     switch(i){
-        case 0: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_numberplate      () < p2->get_numberplate      ()); }; break;
-        case 1: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_plateregisterdate() < p2->get_plateregisterdate()); }; break;
-        case 2: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_fuel             () < p2->get_fuel             ()); }; break;
-        case 3: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_range            () < p2->get_range            ()); }; break;
-        case 4: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_category         () < p2->get_category         ()); }; break;
-        case 5: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_type() < p2->get_cargo()->get_type()); }; break;
-        case 6: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_W   () < p2->get_cargo()->get_W   ()); }; break;
-        case 7: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_P_B () < p2->get_cargo()->get_P_B ()); }; break;
-        case 8: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_E_D () < p2->get_cargo()->get_E_D ()); }; break;
-        case 9: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_E_W () < p2->get_cargo()->get_E_W ()); }; break;
+        case 0 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_numberplate      () < p2->get_numberplate      ()); }; break;
+        case 1 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_plateregisterdate() < p2->get_plateregisterdate()); }; break;
+        case 2 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_fuel             () < p2->get_fuel             ()); }; break;
+        case 3 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_range            () < p2->get_range            ()); }; break;
+        case 4 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_category         () < p2->get_category         ()); }; break;
+        case 5 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_brand            () < p2->get_brand            ()); }; break;
+        case 6 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_type() < p2->get_cargo()->get_type()); }; break;
+        case 7 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_W   () < p2->get_cargo()->get_W   ()); }; break;
+        case 8 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_P_B () < p2->get_cargo()->get_P_B ()); }; break;
+        case 9 : cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_E_D () < p2->get_cargo()->get_E_D ()); }; break;
+        case 10: cmp = [](const Truck *p1, const Truck *p2){ return (p1->get_cargo()->get_E_W () < p2->get_cargo()->get_E_W ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
