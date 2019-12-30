@@ -23,9 +23,9 @@ $(ODIR)/%.o: $(SDIR)/%.cpp
 
 makelib: makefolders $(LDIR)/libapp.a
 
-$(LDIR)/libapp.a:           $(ODIR)/app.o $(ODIR)/app_display.o $(ODIR)/app_io.o $(ODIR)/app_lists.o $(ODIR)/address.o $(ODIR)/cargo.o $(ODIR)/currency.o $(ODIR)/person.o $(ODIR)/phonenumber.o $(ODIR)/service.o $(ODIR)/schedule.o $(ODIR)/temperature.o $(ODIR)/Time.o $(ODIR)/truck.o $(ODIR)/utils.o $(ODIR)/vat.o $(ODIR)/brand.o
+$(LDIR)/libapp.a:           $(ODIR)/app.o $(ODIR)/app_display.o $(ODIR)/app_io.o $(ODIR)/app_lists.o $(ODIR)/address.o $(ODIR)/cargo.o $(ODIR)/currency.o $(ODIR)/person.o $(ODIR)/phonenumber.o $(ODIR)/service.o $(ODIR)/schedule.o $(ODIR)/temperature.o $(ODIR)/Time.o $(ODIR)/truck.o $(ODIR)/utils.o $(ODIR)/vat.o $(ODIR)/brand.o $(ODIR)/workshop.o
 	rm -f $(LDIR)/libapp.a
-	ar rvs $(LDIR)/libapp.a $(ODIR)/app.o $(ODIR)/app_display.o $(ODIR)/app_io.o $(ODIR)/app_lists.o $(ODIR)/address.o $(ODIR)/cargo.o $(ODIR)/currency.o $(ODIR)/person.o $(ODIR)/phonenumber.o $(ODIR)/service.o $(ODIR)/schedule.o $(ODIR)/temperature.o $(ODIR)/Time.o $(ODIR)/truck.o $(ODIR)/utils.o $(ODIR)/vat.o $(ODIR)/brand.o
+	ar rvs $(LDIR)/libapp.a $(ODIR)/app.o $(ODIR)/app_display.o $(ODIR)/app_io.o $(ODIR)/app_lists.o $(ODIR)/address.o $(ODIR)/cargo.o $(ODIR)/currency.o $(ODIR)/person.o $(ODIR)/phonenumber.o $(ODIR)/service.o $(ODIR)/schedule.o $(ODIR)/temperature.o $(ODIR)/Time.o $(ODIR)/truck.o $(ODIR)/utils.o $(ODIR)/vat.o $(ODIR)/brand.o $(ODIR)/workshop.o
 
 test: makelib
 	g++ $(TDIR)/alltests.cpp $(IFLAGS) -o $(TDIR)/tests.app $(LFLAGS)

@@ -16,11 +16,13 @@ const std::string App::OPSTR = "Operation$ ";
 App::App(const std::string &base      ,
          const std::string &managers  , const std::string &drivers ,
          const std::string &clients   , const std::string &brands  ,
-         const std::string &trucks    , const std::string &services):
+         const std::string &trucks    , const std::string &services,
+         const std::string &workshops                              ):
          today(utils::get_now()),
          managers_path_(base+managers), drivers_path_ (base+drivers ),
          clients_path_ (base+clients ), brands_path_  (base+brands  ),
-         trucks_path_  (base+trucks  ), services_path_(base+services){
+         trucks_path_  (base+trucks  ), services_path_(base+services),
+         workshops_path_(base+workshops){
     std::cout << "Starting app..." << std::endl;
     load_all();
 }
@@ -40,6 +42,12 @@ App::~App() {
         if (service != NULL)
             delete service;
     services_.clear();
+
+    while(!workshops_.empty()) {
+        if (workshops_.top() != NULL)
+            delete workshops_.top();
+        workshops_.pop();
+    }
 }
 
 std::string App::prompt(){
@@ -73,8 +81,12 @@ void App::load_inactive_clients(void) {
                 break;
             }
         }
-        if (inactive) { inactive_clients_.insert(dynamic_cast<Client*>(client)); std::cout << "INACTIVE\n";}
+        if (inactive) inactive_clients_.insert(dynamic_cast<Client*>(client));
     }
+}
+
+bool App::WorkshopCmp::operator() (const Workshop *w1, const Workshop *w2) const {
+    return *w1 < *w2;
 }
 
 bool App::confirm(const std::string &msg) {

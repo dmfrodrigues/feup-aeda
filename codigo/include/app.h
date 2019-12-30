@@ -9,9 +9,11 @@
 #include "truck.h"
 #include "service.h"
 #include "schedule.h"
+#include "workshop.h"
 
 #include <unordered_set>
 #include <fstream>
+#include <queue>
 
 #if defined(_WIN32)
     #define CLEAR_MACRO() system("cls"  )
@@ -47,19 +49,21 @@ private:
     const Time today;
     //Paths
     /// @brief Base path for data files of application.
-    const std::string base_path_    ;
+    const std::string base_path_        ;
     /// @brief Path from base to managers data files of application.
-    const std::string managers_path_;
+    const std::string managers_path_    ;
     /// @brief Path from base to drivers data files of application.
-    const std::string drivers_path_ ;
+    const std::string drivers_path_     ;
     /// @brief Path from base to clients data files of application.
-    const std::string clients_path_ ;
+    const std::string clients_path_     ;
     /// @brief Path from base to brands data files of application.
-    const std::string brands_path_  ;
+    const std::string brands_path_      ;
     /// @brief Path from base to trucks data files of application.
-    const std::string trucks_path_  ;
+    const std::string trucks_path_      ;
     /// @brief Path from base to services data files of application.
-    const std::string services_path_;
+    const std::string services_path_    ;
+    /// @brief Path from base to workshops data files of application.
+    const std::string workshops_path_   ;
     //Vectors
     /// @brief Existing user accounts on agency.
     std::vector<User*> users_ ;
@@ -76,7 +80,13 @@ private:
     };
     /// @brief Inactive clients on agency.
     std::unordered_set<Client*, UserHash, UserEq> inactive_clients_;
-
+    // PRIORITY QUEUES
+    /// @brief Comparator for Workshop (pointer)
+    struct WorkshopCmp {
+        bool operator() (const Workshop *w1, const Workshop *w2) const;
+    };
+    /// @brief Workshops available on agency database.
+    std::priority_queue<Workshop*, std::vector<Workshop*>, WorkshopCmp> workshops_;
     ///PRIVATE FUNCTIONS
     ///File IO
     /**
@@ -557,10 +567,11 @@ public:
      * @param trucks    Path from base to trucks data file.
      * @param services  Path from base to services data file.
      */
-    App(const std::string &base    ,
-        const std::string &managers, const std::string &drivers ,
-        const std::string &clients , const std::string &brands  ,
-        const std::string &trucks  , const std::string &services);
+    App(const std::string &base     ,
+        const std::string &managers , const std::string &drivers ,
+        const std::string &clients  , const std::string &brands  ,
+        const std::string &trucks   , const std::string &services,
+        const std::string &workshops                             );
 
     /** @brief Destructor. */
     ~App();

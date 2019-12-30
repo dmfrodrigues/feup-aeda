@@ -5,9 +5,10 @@
 #ifndef WORKSHOP_H_INCLUDED
 #define WORKSHOP_H_INCLUDED
 
-#include <string.h>
-#include <set.h>
+#include <string>
+#include <set>
 
+#include "brand.h"
 #include "utils.h"
 
 /**
@@ -33,9 +34,9 @@ private:
     /** @brief Workshop display name */
     std::string name_;
     /** @brief Workshop ID */
-    std::string id_;
+    Workshop::ID id_;
     /** @brief Brands that workshop is specialized */
-    std::set<std::string> brands_;
+    std::set<Brand> brands_;
     /** @brief Days until workshop is available */
     int availability_;
 protected:
@@ -50,19 +51,23 @@ public:
     /** @brief Destructor */
     ~Workshop();
 
+    /// @brief Get workshop ID. */
+    const Workshop::ID&         get_id(void)            const;
     /// @brief Get workshop name. */
     const std::string&          get_name(void)          const;
-    /// @brief Get workshop ID. */
-    const std::string&          get_id(void)            const;
     /// @brief Get brands. */
-    const std::set<std::string> get_brands(void)        const;
+    const std::set<Brand>&      get_brands(void)        const;
     /// @brief Get workshop availability. */
     int                         get_availability(void)  const;
+    /// @brief Verify if brand is on the brands that workshop is specialized.
+    bool find_brand(const Brand& brand);
+    /// @brief Overload of \a operator<
+    bool operator<(const Workshop& w) const;
 
     /// @brief Overload of \a operator>> .
-    friend std::istream& operator>>(std::istream &is,       User &p);
+    friend std::istream& operator>>(std::istream &is,       Workshop &p);
     /// @brief Overload of \a operator<< .
-    friend std::ostream& operator<<(std::ostream &os, const User &p);
+    friend std::ostream& operator<<(std::ostream &os, const Workshop &p);
 
 };
 

@@ -6,27 +6,26 @@ Workshop::ID::ID(): string_regex(Workshop::ID::ID_STR) {}
 Workshop::ID::ID(const std::string &id): ID() {
     *this = id;
 }
-ID& Workshop::ID::operator=(const std::string &s) {
+Workshop::ID& Workshop::ID::operator=(const std::string &s) {
     string_regex::operator=(s);
     return *this;
 }
 
 //Workshop
 std::istream & Workshop::input(std::istream &is) {
+    is >> id_;
     std::string s; is >> s;
     try {
         name_ = utils::urldecode(s);
     } catch (...) {
         is.setstate(std::ios::failbit);
     }
-    is >> id_;
     int no_brands = 0;
     is >> no_brands;
     for (int i = 0; i < no_brands; i++) {
-        std::string brand;
-        is >> s;
+        Brand brand;
         try {
-            brand = utils::urldecode(s);
+            is >> brand;
             brands_.insert(brand);
         } catch (...) {
             is.setstate(std::ios::failbit);
@@ -39,18 +38,26 @@ std::istream & Workshop::input(std::istream &is) {
 Workshop::Workshop() {}
 Workshop::~Workshop() {}
 
+const Workshop::ID&     Workshop::get_id()              const { return id_; }
 const std::string&      Workshop::get_name()            const { return name_; }
-const std::string&      Workshop::get_id()              const { return id_; }
-const std::set<string> Workshop::get_brands()           const { return brands_; }
+const std::set<Brand>&  Workshop::get_brands()          const { return brands_; }
 int                     Workshop::get_availability()    const { return availability_; }
+
+bool Workshop::find_brand(const Brand& brand) {
+    return (utils::find(brands_.begin(), brands_.end(), brand) != brands_.end());
+}
+
+bool Workshop::operator<(const Workshop& w) const {
+    return this->availability_ < w.availability_;
+}
 
 std::istream& operator>>(std::istream &is,       Workshop &w){ return w.input(is); }
 std::ostream& operator<<(std::ostream &os, const Workshop &w){
-    os << utils::urlencode(w.name_) << "\n"
-       << w.id_                     << "\n"
+    os << w.id_                     << "\n"
+       << utils::urlencode(w.name_) << "\n"
        << w.brands_.size()          << "\n";
     for (auto it = w.brands_.begin(); it != w.brands_.end(); it++)
-        os << utils::urlencode(*it) << "\n";
+        os << *it << "\n";
     os << w.availability_;
     return os;
 }

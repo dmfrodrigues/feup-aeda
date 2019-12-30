@@ -16,7 +16,8 @@ int main(){
                         "clients/clients.txt",
                         "brands/brands.txt",
                         "trucks/trucks.txt",
-                        "services/services.txt");
+                        "services/services.txt",
+                        "workshops/workshops.txt");
         app.start();
     } catch (std::ios_base::failure &fail) {
         App::error(fail.what());

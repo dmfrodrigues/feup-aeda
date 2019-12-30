@@ -109,6 +109,17 @@ void App::load_all(){
         }
     }
     load_inactive_clients();
+
+    {
+        std::cout << "Loading workhops  ..." << std::flush;
+        std::ifstream is(workshops_path_  );
+        std::vector<Workshop*> aux;
+        size_t sz = load_ptr<Workshop,Workshop ,Workshop::ID>(is, aux);
+        for (Workshop *w : aux)
+            workshops_.push(w);
+        std::cout << " loaded " << sz << std::endl;
+        std::cout << " loaded with sucess " << workshops_.size() << std::endl;
+    }
 }
 
 void App::save_all(){
@@ -149,6 +160,15 @@ void App::save_all(){
         std::ofstream os(services_path_);
         os << Service::next_id_ << "\n";
         size_t sz = save_ptr<Service,Service>(os, services_);
+        std::cout << " saved " << sz << std::endl;
+    }
+    {
+        std::cout << "Saving workshops...";
+        std::ofstream os(workshops_path_);
+        std::vector<Workshop*> aux;
+        std::priority_queue<Workshop*, std::vector<Workshop*>, WorkshopCmp> aux_queue = workshops_;
+        while (!aux_queue.empty()) { aux.push_back(aux_queue.top()); aux_queue.pop(); }
+        size_t sz = save_ptr<Workshop,Workshop>(os, aux);
         std::cout << " saved " << sz << std::endl;
     }
 }
