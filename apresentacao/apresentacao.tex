@@ -127,10 +127,12 @@ Quando um serviço (\texttt{Service}) é criado, são automaticamente atribuído
 \begin{frame}
 \frametitle{Estrutura de ficheiros}
 \begin{center}
-\begin{minipage}{0.45\textwidth}
-	\small
+\begin{minipage}{0.37\textwidth}
+	\footnotesize
 	\dirtree{%
 		.1 data.
+		.2 brands.
+		.3 brands.txt.
 		.2 clients.
 		.3 clients.txt.
 		.2 drivers.
@@ -139,12 +141,14 @@ Quando um serviço (\texttt{Service}) é criado, são automaticamente atribuído
 		.3 managers.txt.
 		.2 services.
 		.3 services.txt.
+		.2 trucks.
+		.3 trucks.txt.
+		.2 workshops.
+		.3 workshops.txt.
 	}
-	\begin{center}\begin{minipage}{0.93\textwidth}
-		\lstinputlisting[language=C++,firstline=72,lastline=81]{../codigo/src/person.cpp}
-	\end{minipage} \end{center}
-\end{minipage}
-\begin{minipage}{0.53\textwidth}
+\end{minipage}%
+\begin{minipage}{0.63\textwidth}
+\small
 \textbf{URL-encoding}\\
 Codificar todos os caracteres exceto \texttt{[a-aA-Z0-9\_-.~]} com o seu código ASCII hexadecimal antecedido de \texttt{\%}.
 \begin{itemize}
@@ -152,6 +156,9 @@ Codificar todos os caracteres exceto \texttt{[a-aA-Z0-9\_-.~]} com o seu código
 	\item Formato portável e independente da codificação do ficheiro
 \end{itemize}
 Convencionámos que, para as classes que implementámos, os operadores \texttt{<<}, \texttt{>>} seriam utilizados para I/O de ficheiros, em vez de I/O para o utilizador/linha de comandos
+\begin{center}\begin{minipage}{0.93\textwidth}
+	\lstinputlisting[language=C++,firstline=72,lastline=77]{../codigo/src/person.cpp}
+\end{minipage} \end{center}
 \end{minipage}
 \end{center}
 \end{frame}
@@ -225,6 +232,37 @@ Distância
     Camião / Condutor
   Custos para empresa
   Receita com serviço
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{center}
+\begin{tabular}{p{55mm} p{0mm} p{45mm}}
+	\texttt{Brand} & & \\
+	\lstinputlisting[aboveskip=-1em, belowskip=-1em, firstline=1,lastline=10]{../codigo/data/brands/brands.txt} & &
+\begin{lstlisting}[aboveskip=-1em,belowskip=-1em]
+Número de marcas
+
+Marca 1
+
+Marca 2
+
+Marca 3
+
+Marca 4
+\end{lstlisting} \\
+	\texttt{Workshop} & & \\
+	\lstinputlisting[aboveskip=-1em, belowskip=-1em, firstline=9,lastline=15]{../codigo/data/workshops/workshops.txt} & &
+\begin{lstlisting}[aboveskip=-1em,belowskip=-1em]
+ID
+Nome da oficina
+Número de marcas especializadas
+1a marca especializada
+2a marca especializada
+3a marca especializada
+Primeiro dia disponível para reparações
 \end{lstlisting}
 \end{tabular}
 \end{center}
