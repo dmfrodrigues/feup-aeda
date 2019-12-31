@@ -44,6 +44,11 @@ public:
         bool operator<(const TimeDiff &t) const;
     };
 
+    /**
+     * @brief Day of week.
+     *
+     * The week is considered to start on a Monday.
+     */
     enum DayOfWeek{
         Mon = 0,
         Tue,
@@ -114,14 +119,30 @@ public:
      */
     void input_date(const std::string &date);
 
+    /**
+     * @brief Get day of week of current Time.
+     * @return Day of week
+     */
     Time::DayOfWeek get_dayofweek() const;
-
+    /**
+     * @brief Check if year is leap year or not.
+     * @return True if leap year, false otherwise
+     */
     bool is_leap_year() const;
-
+    /**
+     * @brief Get number of days in current month.
+     * @return Number of days in the month.
+     */
     int days_in_month() const;
-
+    /**
+     * @brief Get time of the first second of the first day of that month.
+     * @return First day of the month
+     */
     Time first_day_month() const;
-
+    /**
+     * @brief Get first second of the last day of that month.
+     * @return Last day of the month
+     */
     Time last_day_month() const;
 
     /// @brief Overload of <em>operator==</em>.
@@ -136,7 +157,7 @@ public:
     bool operator<=(const Time &t) const;
     /// @brief Overload of <em>operator>=</em>.
     bool operator>=(const Time &t) const;
-
+    /// @brief Overload of <em>operator-</em>.
     TimeDiff operator-(const Time &t) const;
 
     /** @brief   Overload of <em> operator>> </em>. Expects input in @ref Time::DEFAULT_FORMAT. */
