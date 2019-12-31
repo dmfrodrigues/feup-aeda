@@ -252,8 +252,9 @@ void App::list_filter_getvalid(const User::Type &t, int i, const std::string &st
         case 1: cmp = [str](const Workshop *p){ return (p->get_name()                                        .find(str) != std::string::npos); }; break;
         case 2: cmp = [str](const Workshop *p){ return (utils::itos(p->get_availability())                   .find(str) != std::string::npos); }; break;
         case 3: cmp = [str](const Workshop *p){
+            std::string aux = str; utils::to_lower(aux);
             for (const Brand &brand : p->get_brands())
-                if (brand.get_brand() == str) return true;
+                if (brand.get_brand().find(aux) != std::string::npos) return true;
             return false;
         }; break;
         default: throw std::invalid_argument("NUM outisde range");
