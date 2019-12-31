@@ -58,7 +58,7 @@ bool Workshop::find_brand(const std::string& s) const {
 }
 
 bool Workshop::operator<(const Workshop& w) const {
-    return this->availability_ < w.availability_;
+    return this->availability_ > w.availability_;
 }
 
 std::istream& operator>>(std::istream &is,       Workshop &w){ return w.input(is); }
