@@ -34,11 +34,28 @@ public:
     /** @brief Profit rate of the agency */
     static const float rate;
 
+    /** @brief Compare drivers by time of service in current month. */
     struct comp_drivers{
     private:
+        /**
+         * @brief Parent of the comparator.
+         *
+         * The parent is used to get the current time, thus allowing to sort
+         * drivers by the time they worked the current month.
+         */
         const App *p;
     public:
+        /**
+         * @brief Construct from App.
+         * @param   p_  Parent of the comparator
+         */
         comp_drivers(const App *p_);
+        /**
+         * @brief Comparator; overload of <em>operator()</em>.
+         * @param   d1  Driver 1
+         * @param   d2  Driver 2
+         * @return  True if d1 comes before d2, false otherwise
+         */
         bool operator()(const Driver *d1, const Driver *d2) const;
     };
 private:
