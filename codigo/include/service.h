@@ -98,6 +98,10 @@ public:
     /// @brief Get revenue from this service
     const Currency& get_revenue() const;
 
+    /**
+     * @brief Set time the service begins.
+     * @param   t   Time the service begins
+     */
     void set_tbegin(const Time &t);
 
     /**
