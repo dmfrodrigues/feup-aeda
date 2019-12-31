@@ -73,10 +73,10 @@ void App::print_list(const std::vector<const Truck  *> &v, const User::Type &t){
                  "  │ ├┬╯│ ││  │╱ ╰─╮ \n"
                  "  ╵ ╵╰╴╰─╯╰─╴│ ╲╶─╯ \n"
                  "\n"
-                 "╒══════════════╤════════════╤══════════════╤══════════╤══════════╤══════════════╤════════════╤════════════╤════════════════╤════════════╤═════════════╕\n"
-                 "│ Number       │ Date [1]   │ Fuel [2]     │ Range    │ Category │ Brand [5]    │ Cargo type │ Cargo      │ Price base [8] │ Distance   │ Weight      │\n"
-                 "│ plate [0]    │            │              │ (km) [3] │ [4]      │              │ [6]        │ weight [7] │                │ factor [9] │ factor [10] │\n"
-                 "╞══════════════╪════════════╪══════════════╪══════════╪══════════╪══════════════╪════════════╪════════════╪════════════════╪════════════╪═════════════╡\n";
+                 "╒══════════════╤════════════╤══════════════╤══════════╤══════════╤══════════════╤══════════════╤════════════╤════════════════╤════════════╤═════════════╕\n"
+                 "│ Number       │ Date [1]   │ Fuel [2]     │ Range    │ Category │ Brand [5]    │ Cargo type   │ Cargo      │ Price base [8] │ Distance   │ Weight      │\n"
+                 "│ plate [0]    │            │              │ (km) [3] │ [4]      │              │ [6]          │ weight [7] │                │ factor [9] │ factor [10] │\n"
+                 "╞══════════════╪════════════╪══════════════╪══════════╪══════════╪══════════════╪══════════════╪════════════╪════════════════╪════════════╪═════════════╡\n";
     for(const Truck* p:v){
         std::cout << "│ "
                   << utils::ljust((std::string)p->get_numberplate()                     ,12) << " │ "
@@ -84,14 +84,14 @@ void App::print_list(const std::vector<const Truck  *> &v, const User::Type &t){
                   << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,12) << " │ "
                   << utils::rjust(utils::ftos("%.1f", (double)p->get_range())           , 8) << " │ "
                   << utils::ljust(std::string(p->get_category())                        , 8) << " │ "
-                  << utils::ljust(std::string(p->get_brand())                           ,10) << " | "
+                  << utils::ljust(std::string(p->get_brand())                           ,12) << " │ "
                   << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())        ,12) << " │ "
                   << utils::rjust(utils::ftos("%.1f", (double)p->get_cargo()->get_W())  ,10) << " │ "
                   << utils::rjust(utils::ftos("%+.2f",(double)p->get_cargo()->get_P_B()),14) << " │ "
                   << utils::rjust(utils::ftos("%.4f", p->get_cargo()->get_E_D())        ,10) << " │ "
-                  << utils::rjust(utils::ftos("%.3fE-4",p->get_cargo()->get_E_W()*10000),10) << " │\n";
+                  << utils::rjust(utils::ftos("%.3fE-4",p->get_cargo()->get_E_W()*10000),11) << " │\n";
     }
-    std::cout << "╘══════════════╧════════════╧══════════════╧══════════╧══════════╧══════════════╧════════════╧════════════════╧════════════╧════════════╛\n"
+    std::cout << "╘══════════════╧════════════╧══════════════╧══════════╧══════════╧══════════════╧══════════════╧════════════╧════════════════╧════════════╧═════════════╛\n"
               << std::flush;
 }
 void App::print_list(const std::vector<const Service*> &v, const User::Type &t) const{
