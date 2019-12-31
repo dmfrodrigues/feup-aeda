@@ -39,8 +39,8 @@ public:
     explicit Brand(const std::string &s);
     /// @brief Get brand name.
     const std::string& get_brand(void) const;
-    /// @brief Output brand to console.
-    std::string output(void) const;
+    /// @brief Converts brand to string.
+    operator std::string() const;
 
     /// @brief Overload of <em>operator==</em>.
     bool operator==(const Brand &t) const;

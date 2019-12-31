@@ -16,6 +16,15 @@ std::string utils::get_now(){
     return std::string(buffer);
 }
 
+std::string utils::join(const std::vector<std::string>& elems, const std::string &delim){
+    std::string s;
+    for (std::vector<std::string>::const_iterator it = elems.begin(); it != elems.end(); ++it){
+        s += (*it);
+        if (it + 1 != elems.end()) s += delim;
+    }
+    return s;
+}
+
 void utils::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
 }

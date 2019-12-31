@@ -28,6 +28,13 @@ namespace utils {
      */
     std::string get_now();
     /**
+     * @brief Joins a list of words by a delimiter.
+     * @param elems     Vector containing the strings
+     * @param delim     Word delimiter
+     * @return Joined string
+     */
+    std::string join(const std::vector<std::string>& elems, const std::string &delim);
+    /**
      * @brief Trims all spaces from the start of the string (in-place).
      * @param s String to be trimmed
      * @throws  Throws if any of the function calls, the assignments or the operations on iterators throws.

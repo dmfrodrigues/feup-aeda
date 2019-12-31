@@ -328,6 +328,7 @@ bool App::printUserMenu(User::Type user_type) {
                             "│  Add service                           [11] │  Add truck                             [21] │\n"
                             "│  Delete service                        [12] │  Edit truck                            [22] │\n"
                             "│                                             │  Delete truck                          [23] │\n"
+                            "|                                             |  Repair truck                          [24] |\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│              Client management              │               Driver Management             │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
@@ -343,6 +344,7 @@ bool App::printUserMenu(User::Type user_type) {
                             "│                                             │  Inactive client list                  [64] │\n"
                             "│                                             │  Driver list                           [65] │\n"
                             "│                                             │  Manager list                          [66] │\n"
+                            "|                                             |  Workshop list                         [67] |\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
                             "│               Account Management            │                Other operations             │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
@@ -374,6 +376,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 case 11: addService(user); wait();                   break;     case 21: editUser<Client>(user); wait();                    break;
                 case 12: deleteService(user); wait();                break;     case 22: CLEAR(); App::display(dynamic_cast<Client*>(user), User::Type::manager); wait(); break;
                 case 13: list_services(user);                        break;     case 23: changePassword(user); wait();  break;
+                                                                                case 24: break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
                 default:
@@ -413,6 +416,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                                                                                     case 64: list_inactive_clients();                           break;
                                                                                     case 65: list_drivers();                                    break;
                                                                                     case 66: list_managers();                                   break;
+                                                                                    case 67: list_workshops();                                  break;
 
                 //ACCOUNT MANAGEMENT                                                                                //OTHER OPERATIONS
                 case 71: editUser<Manager>(user); wait(); wait();                                           break;  case 81: save_all();                            break;

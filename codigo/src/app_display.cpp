@@ -209,6 +209,28 @@ void App::print_list(const std::vector<const Service*> &v, const User::Type &t) 
     }
 }
 
+void App::print_list(const std::vector<const Workshop  *> &v, const User::Type &t) const {
+    std::cout << "\n"
+                 " ╶┬╴┌─╮╷ ╷╭─╴╷ ╱╭─╴ \n"
+                 "  │ ├┬╯│ ││  │╱ ╰─╮ \n"
+                 "  ╵ ╵╰╴╰─╯╰─╴│ ╲╶─╯ \n"
+                 "\n"
+                 "╒══════════════╤════════════════════════════════════════╤══════════════════╤════════════════════════════════════════════════════════════════════════════════════════════╕\n"
+                 "│ ID [0]       │ Name [1]                               │ Availability [2] │ Brands [3]                                                                                 │\n"
+                 "╞══════════════╪════════════════════════════════════════╪══════════════════╪════════════════════════════════════════════════════════════════════════════════════════════╡\n";
+    for(const Workshop* p:v){
+        std::cout << "│ "
+                  << utils::ljust((std::string)p->get_id()                              ,12) << " │ "
+                  << utils::ljust(p->get_name()                                         ,38) << " │ "
+                  << utils::rjust(utils::itos(p->get_availability())                    ,16) << " │ ";
+        std::vector<std::string> aux;
+        for (const Brand &b : p->get_brands()) aux.push_back((std::string)b);
+        std::cout << utils::rjust(utils::join(aux, ", ")                                ,90) << " │\n";
+    }
+    std::cout << "╘══════════════╧════════════════════════════════════════╧══════════════════╧════════════════════════════════════════════════════════════════════════════════════════════╛\n"
+              << std::flush;
+}
+
 void App::display(const Client  *p, const User::Type &t){
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] Username      │ " << utils::ljust((std::string)p->get_username()                       ,81) << "\t │\n"
@@ -340,4 +362,17 @@ void App::display(const CargoTransRefrigerated *p, const User::Type &t){
 }
 void App::display(const CargoTransDangerous    *p, const User::Type &t){
     std::cout << "│ [5] Danger level  │ " << utils::ljust(Cargo::dangerlevel_string(p->get_dangerlevel())          , 81) << "\t │\n";
+}
+
+void App::display(const Workshop   *p, const User::Type &t) const{
+    std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
+              << "│ [0] ID            │ " << utils::ljust((std::string)p->get_id()                             ,81) << "\t │\n"
+              << "│ [1] Name          │ " << utils::ljust(p->get_name()                                        ,81) << "\t │\n"
+              << "│ [2] Availability  │ " << utils::ljust(utils::itos(p->get_availability())                   ,81) << "\t │\n"
+              << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
+              << "│ [3] Specialized Brands                                                                              \t │\n"
+              << "├────────────────────────────────────────────────────────────────────────────────────────────────────────┤\n";
+              for (const Brand &b : p->get_brands())
+                    std::cout << "| " << utils::ljust((std::string)b                                          ,102) << "\t |\n";
+    std::cout << "╘════════════════════════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
