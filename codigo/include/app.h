@@ -570,16 +570,13 @@ private:
     User* verifyUser(const std::string &username, const std::string &password);
     /**
      * @brief Get available drivers to go to a service.
-     * @param tbegin    Time when service begin
-     * @param tend      Time when service ends
+     * @param s     Service we want to know the availability
      * @return  Multiset containing the available drivers, ordered by least work hours in current month
      */
     std::multiset<Driver*, App::comp_drivers> get_available_drivers(const Service *s) const;
     /**
      * @brief Get available trucks to go to a service.
-     * @param tbegin    Time when service begin
-     * @param tend      Time when service ends
-     * @param c         Cargo that needs to be transported
+     * @param s     Service we want to know the availability
      * @return  Vector containing the available drivers
      */
     std::vector<Truck *> get_available_trucks (const Service *s) const;
@@ -611,8 +608,10 @@ public:
      * @param managers  Path from base to manager data file.
      * @param drivers   Path from base to drivers data file.
      * @param clients   Path from base to clients data file.
+     * @param brands    Path from base to brands data file.
      * @param trucks    Path from base to trucks data file.
      * @param services  Path from base to services data file.
+     * @param workshops Path from base to workshops data file.
      */
     App(const std::string &base     ,
         const std::string &managers , const std::string &drivers ,
