@@ -83,8 +83,8 @@ void App::print_list(const std::vector<const Truck  *> &v, const User::Type &t){
                   << p->get_plateregisterdate().format("%Y/%m/%d")                           << " │ "
                   << utils::ljust(Truck::fuel_string(p->get_fuel())                     ,12) << " │ "
                   << utils::rjust(utils::ftos("%.1f", (double)p->get_range())           , 8) << " │ "
-                  << utils::ljust((std::string)p->get_category()                        , 8) << " │ "
-                  << utils::ljust((p->get_brand()).output()                             ,10) << " | "
+                  << utils::ljust(std::string(p->get_category())                        , 8) << " │ "
+                  << utils::ljust(std::string(p->get_brand())                           ,10) << " | "
                   << utils::ljust(Cargo::type_string(p->get_cargo()->get_type())        ,12) << " │ "
                   << utils::rjust(utils::ftos("%.1f", (double)p->get_cargo()->get_W())  ,10) << " │ "
                   << utils::rjust(utils::ftos("%+.2f",(double)p->get_cargo()->get_P_B()),14) << " │ "
@@ -244,8 +244,8 @@ void App::display(const Truck   *p, const User::Type &t){
               << "│ [1] Date          │ " << utils::ljust(p->get_plateregisterdate().format("%Y/%m/%d")        ,81) << "\t │\n"
               << "│ [2] Fuel          │ " << utils::ljust(Truck::fuel_string(p->get_fuel())                    ,81) << "\t │\n"
               << "│ [3] Range (km)    │ " << utils::ljust(utils::ftos("%.1f", (double)p->get_range())          ,81) << "\t │\n"
-              << "│ [4] Category      │ " << utils::ljust((std::string)p->get_category()                       ,81) << "\t │\n"
-              << "│ [5] Brand         │ " << utils::ljust((p->get_brand()).output()                            ,81) << "\t │\n";
+              << "│ [4] Category      │ " << utils::ljust(std::string(p->get_category())                       ,81) << "\t │\n"
+              << "│ [5] Brand         │ " << utils::ljust(std::string(p->get_brand())                          ,81) << "\t │\n";
     const CargoTrans *q = p->get_cargo();
     std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
               << "│ [6] Cargo         : "<< utils::ljust(Cargo::type_string(q->get_type()), 81) << "\t │\n"

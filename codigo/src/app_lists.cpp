@@ -51,8 +51,8 @@ template<> void App::list_commands<Manager>(const User::Type &t){
 template<> void App::list_commands<Truck  >(const User::Type &t){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-9].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-9].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-10].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-10].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of truck with number plate \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -189,11 +189,12 @@ void App::list_filter_getvalid(const User::Type &t, int i, const std::string &st
         case 2: cmp = [str](const Truck *p){ return (Truck::fuel_string(p->get_fuel())                    .find(str) != std::string::npos); }; break;
         case 3: cmp = [str](const Truck *p){ return (utils::ftos("%.1f", (double)p->get_range())          .find(str) != std::string::npos); }; break;
         case 4: cmp = [str](const Truck *p){ return (std::string(p->get_category())                       .find(str) != std::string::npos); }; break;
-        case 5: cmp = [str](const Truck *p){ return (Cargo::type_string(p->get_cargo()->get_type())       .find(str) != std::string::npos); }; break;
-        case 6: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_W  ()).find(str) != std::string::npos); }; break;
-        case 7: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_P_B()).find(str) != std::string::npos); }; break;
-        case 8: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_E_D()).find(str) != std::string::npos); }; break;
-        case 9: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_E_W()).find(str) != std::string::npos); }; break;
+        case 5: cmp = [str](const Truck *p){ return (std::string(p->get_brand())                          .find(str) != std::string::npos); }; break;
+        case 6: cmp = [str](const Truck *p){ return (Cargo::type_string(p->get_cargo()->get_type())       .find(str) != std::string::npos); }; break;
+        case 7: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_W  ()).find(str) != std::string::npos); }; break;
+        case 8: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_P_B()).find(str) != std::string::npos); }; break;
+        case 9: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_E_D()).find(str) != std::string::npos); }; break;
+        case 10: cmp = [str](const Truck *p){ return (utils::ftos("%.1f",(double)p->get_cargo()->get_E_W()).find(str) != std::string::npos); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
