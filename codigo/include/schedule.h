@@ -20,7 +20,9 @@ private:
      * @return  True if s1 comes before s2, false otherwise
      */
     static bool cmp(const Service *s1, const Service *s2);
+    /// @brief Set of services that make up the schedule, sorted by start time.
     std::set<const Service *, bool(*)(const Service*, const Service*)> st;
+    /// @brief Indication of the validity of the schedule (false if there is overlapping).
     bool valid;
 public:
     /// @brief Empty constructor.

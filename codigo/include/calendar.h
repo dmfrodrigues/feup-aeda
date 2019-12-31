@@ -9,7 +9,9 @@
 template<class T>
 class Calendar{
 private:
+    /// @brief Time indicating month that will be printed.
     Time t;
+    /// @brief Information to be printed in the calendar.
     std::vector<T> info;
 public:
     /**

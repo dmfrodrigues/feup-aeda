@@ -61,7 +61,12 @@ public:
     Service(const Client::Username &client_user);
     /** @brief Destructor */
     ~Service();
-
+    /**
+     * @brief Assign new id to current service.
+     *
+     * In practice it is this function that makes a Service from a collection of
+     * information into an actual service that must be stored.
+     */
     void assign_new_id();
 
     /// @brief Get ID
