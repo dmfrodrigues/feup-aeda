@@ -81,6 +81,16 @@ template<> void App::list_commands<Service>(const User::Type &t){
                   << std::flush;
     }
 }
+template<> void App::list_commands<Workshop  >(const User::Type &t){
+    std::cout << "\n"
+              << "COMMANDS:\n\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-9].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-9].\n"
+              << "    details \"\033[4mSTR\033[0m\"       Print details of workshop with ID \033[4mSTR\033[0m\n"
+              << "    reset               Reset to initial selection.\n"
+              << "    back                Go back.\n";
+    std::cout << std::endl;
+}
 
 void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Client *, const Client *)> &cmp){
     switch(i){
@@ -147,6 +157,16 @@ void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const
         case 13: if(t == User::Type::client) throw std::invalid_argument("NUM outside range");
                  cmp = [](const Service *p1, const Service *p2){ return (p1->get_cost                            () < p2->get_cost                            ()); }; break;
         default: throw std::invalid_argument("NUM outside range");
+    }
+}
+
+void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Workshop*, const Workshop*)> &cmp){
+    switch(i){
+        case 0: cmp = [](const Workshop *p1, const Workshop *p2){ return (p1->get_id            () < p2->get_id             ()); }; break;
+        case 1: cmp = [](const Workshop *p1, const Workshop *p2){ return (p1->get_name          () < p2->get_name           ()); }; break;
+        case 2: cmp = [](const Workshop *p1, const Workshop *p2){ return (p1->get_availability  () < p2->get_availability   ()); }; break;
+        case 3: cmp = [](const Workshop *p1, const Workshop *p2){ return (p1->get_brands        () < p2->get_brands         ()); }; break;
+        default: throw std::invalid_argument("NUM outisde range");
     }
 }
 
@@ -223,6 +243,19 @@ void App::list_filter_getvalid(const User::Type &t, int i, const std::string &st
         case 13: if(t == User::Type::client) throw std::invalid_argument("NUM outside range");
                  cmp = [str](const Service *p){ return (utils::ftos("%+.2",-double(p->get_cost   ())).find(str) != std::string::npos); }; break;
         default: throw std::invalid_argument("NUM outside range");
+    }
+}
+void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Workshop  *)> &cmp){
+    switch(i){
+        case 0: cmp = [str](const Workshop *p){ return (std::string(p->get_id())                             .find(str) != std::string::npos); }; break;
+        case 1: cmp = [str](const Workshop *p){ return (p->get_name()                                        .find(str) != std::string::npos); }; break;
+        case 2: cmp = [str](const Workshop *p){ return (utils::itos(p->get_availability())                   .find(str) != std::string::npos); }; break;
+        case 3: cmp = [str](const Workshop *p){
+            for (const Brand &brand : p->get_brands())
+                if (brand.get_brand() == str) return true;
+            return false;
+        }; break;
+        default: throw std::invalid_argument("NUM outisde range");
     }
 }
 
@@ -321,4 +354,11 @@ void App::list_services(const User *user) const{
     } else {
         list_services();
     }
+}
+
+void App::list_workshops() const{
+    std::vector<const Workshop*> v;
+    std::priority_queue<Workshop*, std::vector<Workshop*>, WorkshopCmp> aux_queue = workshops_;
+    while (!aux_queue.empty()) { v.push_back(aux_queue.top()); aux_queue.pop(); }
+    list(v, User::Type::manager);
 }

@@ -157,6 +157,12 @@ private:
      */
            void print_list(const std::vector<const Service*> &v, const User::Type &t) const;
     /**
+     * @brief Prints list of all services in the vector.
+     * @param v     Vector containing all the services
+     * @param t     Type of user that information will be displayed to
+     */
+    void print_list(const std::vector<const Workshop  *> &v, const User::Type &t) const;
+    /**
      * @brief Prints detailed information about one client.
      * @param p     Client to be displayed
      * @param t     Type of user that information will be displayed to
@@ -233,7 +239,14 @@ private:
      * @param p     Service to be displayed
      * @param t     Type of user that information will be displayed to
      */
-           void display(const Service                *p, const User::Type &t) const;
+     void display(const Service                *p, const User::Type &t) const;
+
+     /**
+      * @brief Prints detailed information about one workshop.
+      * @param p     Workshop to be displayed
+      * @param t     Type of user that information will be displayed to
+      */
+     void display(const Workshop   *p, const User::Type &t) const;
 
     //Lists
 
@@ -291,6 +304,13 @@ private:
      * @param cmp Reference to function where comparison function will be stored
      */
     static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Service*, const Service*)> &cmp);
+    /**
+     * @brief Get comparison function to sort workshops.
+     * @param t User type
+     * @param i Property of workshop that will be used in comparison function
+     * @param cmp Reference to function where comparison function will be stored
+     */
+    static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Workshop*, const Workshop*)> &cmp);
 
     /**
      * @brief Get comparison function to filter clients.
@@ -332,6 +352,14 @@ private:
      * @param cmp Reference to function where comparison function will be stored
      */
     static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Service*)> &cmp);
+    /**
+     * @brief Get comparison function to filter workshops.
+     * @param t User type
+     * @param i Property of workshop to be used in comparison function
+     * @param str   Value of property to filter.
+     * @param cmp Reference to function where comparison function will be stored
+     */
+    static void list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Workshop*)> &cmp);
 
     /**
      * @brief Lists all objects of T, and allows list to be modified according to commands available in %ref list_commands (and %ref extra_commands in some cases).
@@ -368,6 +396,8 @@ private:
      * @param user  User to filter services
      */
     void list_services(const User *user) const;
+    /** @brief Lists all workshops in agency database */
+    void list_workshops() const;
 
     /**
      * @brief Adds user to agency.

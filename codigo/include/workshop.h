@@ -59,8 +59,16 @@ public:
     const std::set<Brand>&      get_brands(void)        const;
     /// @brief Get workshop availability. */
     int                         get_availability(void)  const;
+
+    /// @brief Increase time until workshop is free.
+    void increase_availability(void);
+    /// @brief Decrease time until workshop is free.
+    void decrease_availability(void);
+
     /// @brief Verify if brand is on the brands that workshop is specialized.
-    bool find_brand(const Brand& brand);
+    bool find_brand(const Brand& brand) const;
+    /// @brief Overload of \a find_brand
+    bool find_brand(const std::string& s) const;
     /// @brief Overload of \a operator<
     bool operator<(const Workshop& w) const;
 

@@ -43,8 +43,18 @@ const std::string&      Workshop::get_name()            const { return name_; }
 const std::set<Brand>&  Workshop::get_brands()          const { return brands_; }
 int                     Workshop::get_availability()    const { return availability_; }
 
-bool Workshop::find_brand(const Brand& brand) {
+void Workshop::increase_availability(void){ availability_++; }
+void Workshop::decrease_availability(void){ if (--availability_ < 0) availability_ = 0; }
+
+bool Workshop::find_brand(const Brand& brand) const {
     return (utils::find(brands_.begin(), brands_.end(), brand) != brands_.end());
+}
+
+bool Workshop::find_brand(const std::string& s) const {
+    std::string aux = s;
+    utils::trim(aux); utils::to_lower(aux);
+    for (auto it = brands_.begin(); it != brands_.end(); it++)
+        if (it->get_brand() == s) return true;
 }
 
 bool Workshop::operator<(const Workshop& w) const {

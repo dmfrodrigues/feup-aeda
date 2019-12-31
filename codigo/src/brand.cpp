@@ -38,7 +38,7 @@ bool Brand::operator==(const Brand &t) const {
     return this->brand_ == t.brand_;
 }
 
-std::string Brand::output(void) const {
+Brand::operator std::string() const {
     return utils::capitalize(brand_);
 }
 
