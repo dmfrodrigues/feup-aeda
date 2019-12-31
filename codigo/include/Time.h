@@ -18,14 +18,29 @@ private:
     std::tm t_;
 public:
 
+    /**
+     * @brief Measure time differences
+     */
     class TimeDiff{
     private:
+        /// @brief double containing time difference in seconds.
         double dt;
     public:
+        /**
+         * @brief Construct time difference from value.
+         * @param   Dt  Time difference in seconds
+         */
         TimeDiff(double Dt = 0.0);
-        TimeDiff operator+(const TimeDiff &t) const;
-        TimeDiff& operator+=(const TimeDiff &t);
+        /**
+         * @brief Get time difference as the number of hours
+         * @return  Hours as a double
+         */
         double hours() const;
+        /// @brief Overload of operator+.
+        TimeDiff operator+(const TimeDiff &t) const;
+        /// @brief Overload of operator+=.
+        TimeDiff& operator+=(const TimeDiff &t);
+        /// @brief Overload of operator<.
         bool operator<(const TimeDiff &t) const;
     };
 
