@@ -169,6 +169,58 @@ std::vector<Truck *> App::get_available_trucks (const Service *s) const{
     return ret;
 }
 
+bool App::send_truck_to_workshop() {
+    std::cout << "Choose truck that needs to go to the workshop.\n";
+    Truck *truck = App::chooseTruck();
+    std::string type_of_service;
+    while (true) {
+        if (!utils::input("Choose type of service: "
+                        "     normal \033[4mtype\033[0m           Request a normal service.\n"
+                        "     specialized \033[4mproperty\033[0m       Request a specialized service.\n", type_of_service, std::cin, std::cout)) break;
+        utils::to_lower(type_of_service); utils::trim(type_of_service);
+        if (type_of_service != "specialized" && type_of_service != "normal") {
+            error("Type of service is invalid.");
+            continue;
+        }
+        break;
+    }
+    int increment_days = (type_of_service == "normal" ? 1 : 2);
+
+    if (increment_days == 1) { // normal
+        Workshop *p = workshops_.top();
+
+        if (!App::confirm("Confirm to send the truck \'" + std::string(truck->get_numberplate()) + "\' to this workshop \'" + p->get_name() + "\' (yes/no): ")) return false;
+
+        p->increase_availability(increment_days);
+
+        workshops_.pop();
+        workshops_.push(p);
+
+        return true;
+    } else {
+        std::vector<Workshop*> aux;
+        while (!workshops_.empty()) {
+
+            Workshop *p = workshops_.top();
+            workshops_.pop();
+            aux.push_back(p);
+            if (p->find_brand(truck->get_brand())) {
+                if (App::confirm("Confirm to send the truck \'" + std::string(truck->get_numberplate()) + "\' to this workshop \'" + p->get_name() + "\' (yes/no): ")) {
+                    p->increase_availability(increment_days);
+                    for (Workshop* w : aux) workshops_.push(w);
+                    return true;
+                } else {
+                    for (Workshop* w : aux) workshops_.push(w);
+                    return false;
+                }
+            }
+        }
+        for (Workshop* w : aux) workshops_.push(w);
+        error("Repeated ID (service with same ID already exists).");
+        return false;
+    }
+}
+
 std::vector<User*> App::filter_user_by_type(const std::vector<User*> &v, const User::Type &t) const {
     std::vector<User*> ret;
     for(User *p:v){
@@ -376,7 +428,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 case 11: addService(user); wait();                   break;     case 21: editUser<Client>(user); wait();                    break;
                 case 12: deleteService(user); wait();                break;     case 22: CLEAR(); App::display(dynamic_cast<Client*>(user), User::Type::manager); wait(); break;
                 case 13: list_services(user);                        break;     case 23: changePassword(user); wait();  break;
-                                                                                case 24: break;
+                                                                                case 24: send_truck_to_workshop(); break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
                 default:

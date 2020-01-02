@@ -250,7 +250,7 @@ void App::list_filter_getvalid(const User::Type &t, int i, const std::string &st
     switch(i){
         case 0: cmp = [str](const Workshop *p){ return (std::string(p->get_id())                             .find(str) != std::string::npos); }; break;
         case 1: cmp = [str](const Workshop *p){ return (p->get_name()                                        .find(str) != std::string::npos); }; break;
-        case 2: cmp = [str](const Workshop *p){ return (utils::itos(p->get_availability())                   .find(str) != std::string::npos); }; break;
+        case 2: cmp = [str](const Workshop *p){ return (p->get_availability().format("%Y/%m/%d %H:%M:%S")    .find(str) != std::string::npos); }; break;
         case 3: cmp = [str](const Workshop *p){
             std::string aux = str; utils::to_lower(aux);
             for (const Brand &brand : p->get_brands())

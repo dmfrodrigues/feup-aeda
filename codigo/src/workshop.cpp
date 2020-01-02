@@ -41,10 +41,17 @@ Workshop::~Workshop() {}
 const Workshop::ID&     Workshop::get_id()              const { return id_; }
 const std::string&      Workshop::get_name()            const { return name_; }
 const std::set<Brand>&  Workshop::get_brands()          const { return brands_; }
-int                     Workshop::get_availability()    const { return availability_; }
+Time                    Workshop::get_availability()    const { return availability_; }
 
-void Workshop::increase_availability(void){ availability_++; }
-void Workshop::decrease_availability(void){ if (--availability_ < 0) availability_ = 0; }
+void Workshop::increase_availability(int no_days){
+    Time now = Time::get_current_date();
+    if (now > availability_) {
+        availability_ = now;
+        availability_.incrementDays(no_days);
+    } else {
+        availability_.incrementDays(no_days);
+    }
+}
 
 bool Workshop::find_brand(const Brand& brand) const {
     return (utils::find(brands_.begin(), brands_.end(), brand) != brands_.end());

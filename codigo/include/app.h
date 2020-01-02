@@ -416,6 +416,9 @@ private:
     /** @brief Lists all workshops in agency database */
     void list_workshops() const;
 
+    /** @brief Sends truck to workshop if any can match the service. */
+    bool send_truck_to_workshop();
+
     /**
      * @brief Adds user to agency.
      * @param user_type  Type of user to be added

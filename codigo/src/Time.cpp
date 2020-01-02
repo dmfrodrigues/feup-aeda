@@ -41,6 +41,11 @@ Time::Time(const std::string &s){
         throw InvalidTime(s);
 }
 
+void Time::incrementDays(int no_days) {
+    t_.tm_mday += 2;
+    ::mktime(&t_);
+}
+
 Time Time::get_current_date(void) {
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 
@@ -51,7 +56,15 @@ Time Time::get_current_date(void) {
 
     if (tm_p == NULL) throw std::runtime_error("Failed to get current time.");
 
-    std::string tm_formatted = utils::itos(tm_p->tm_year + 1900) + utils::itos(tm_p->tm_mon + 1) + utils::itos(tm_p->tm_mday) + "_000000";
+    std::string y = utils::itos(tm_p->tm_year + 1900);
+    std::string m = utils::itos(tm_p->tm_mon + 1);
+    std::string d = utils::itos(tm_p->tm_mday);
+
+    y = std::string(4 - y.size(), '0') + y;
+    m = std::string(2 - m.size(), '0') + m;
+    d = std::string(2 - d.size(), '0') + d;
+
+    std::string tm_formatted = y + m + d + "_000000";
 
     return Time(tm_formatted);
 }

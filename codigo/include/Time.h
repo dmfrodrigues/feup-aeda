@@ -81,6 +81,12 @@ public:
     Time(const std::string &s = DEFAULT_TIME);
 
     /**
+     * @brief Increment date by a number of days.
+     * @param no_days   Number of days to be incremented
+     */
+    void incrementDays(int no_days);
+
+    /**
      * @brief Get the current date.
      * @return Current date.
      * @throws std::runtime_error If it fails to get the system current time.

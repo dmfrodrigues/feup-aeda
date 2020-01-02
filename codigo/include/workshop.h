@@ -10,6 +10,7 @@
 
 #include "brand.h"
 #include "utils.h"
+#include "Time.h"
 
 /**
  * @brief Class representing a workshop.
@@ -37,8 +38,8 @@ private:
     Workshop::ID id_;
     /** @brief Brands that workshop is specialized */
     std::set<Brand> brands_;
-    /** @brief Days until workshop is available */
-    int availability_;
+    /** @brief Date when workshop will be available */
+    Time availability_;
 protected:
     /**
      * @brief Allows Workshop fields to be filled from input stream.
@@ -58,12 +59,10 @@ public:
     /// @brief Get brands. */
     const std::set<Brand>&      get_brands(void)        const;
     /// @brief Get workshop availability. */
-    int                         get_availability(void)  const;
+    Time                        get_availability(void)  const;
 
     /// @brief Increase time until workshop is free.
-    void increase_availability(void);
-    /// @brief Decrease time until workshop is free.
-    void decrease_availability(void);
+    void increase_availability(int no_days);
 
     /// @brief Verify if brand is on the brands that workshop is specialized.
     bool find_brand(const Brand& brand) const;

@@ -221,8 +221,13 @@ void App::print_list(const std::vector<const Workshop  *> &v, const User::Type &
     for(const Workshop* p:v){
         std::cout << "│ "
                   << utils::ljust((std::string)p->get_id()                              ,20) << " │ "
-                  << utils::ljust(p->get_name()                                         ,38) << " │ "
-                  << utils::rjust(utils::itos(p->get_availability())                    ,16) << " │ ";
+                  << utils::ljust(p->get_name()                                         ,38) << " │ ";
+        Time now = Time::get_current_date();
+        if (now > p->get_availability()) {
+            std::cout << utils::ljust("Workshop is free"                                ,16) << " | ";
+        } else {
+            std::cout << p->get_availability().format("%Y/%m/%d %H:%M")                      << " │ ";
+        }
         std::vector<std::string> aux;
         for (const Brand &b : p->get_brands()) aux.push_back((std::string)b);
         std::cout << utils::ljust(utils::join(aux, ", ")                                ,90) << " │\n";
@@ -367,9 +372,15 @@ void App::display(const CargoTransDangerous    *p, const User::Type &t){
 void App::display(const Workshop   *p, const User::Type &t) const{
     std::cout << "╒═══════════════════╤════════════════════════════════════════════════════════════════════════════════════╕\n"
               << "│ [0] ID            │ " << utils::ljust((std::string)p->get_id()                             ,81) << "\t │\n"
-              << "│ [1] Name          │ " << utils::ljust(p->get_name()                                        ,81) << "\t │\n"
-              << "│ [2] Availability  │ " << utils::ljust(utils::itos(p->get_availability())                   ,81) << "\t │\n"
-              << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
+              << "│ [1] Name          │ " << utils::ljust(p->get_name()                                        ,81) << "\t │\n";
+
+    Time now = Time::get_current_date();
+    if (now > p->get_availability()) {
+        std::cout << "│ [2] Availability  │ " << utils::ljust("Workshop is free"                                                ,81) << "\t │\n";
+    } else {
+        std::cout << "│ [2] Availability  │ " << utils::ljust(p->get_availability().format("%Y/%m/%d %H:%M")                    ,81) << "\t │\n";
+    }
+    std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
               << "│ [3] Specialized Brands                                                                              \t │\n"
               << "├────────────────────────────────────────────────────────────────────────────────────────────────────────┤\n";
               for (const Brand &b : p->get_brands())

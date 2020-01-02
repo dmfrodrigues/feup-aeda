@@ -4,7 +4,7 @@ marriesberries
 Marries%20Berries%20Workshop
 1
 opel
-5
+20191231_000000
 
 hardworks
 Hard%20Working%20Co.
@@ -12,7 +12,7 @@ Hard%20Working%20Co.
 skoda
 toyota
 volkswagen
-3
+20200112_000000
 
 lagworks
 Lagunas%20Workshop
@@ -22,11 +22,11 @@ audi
 fiat
 ford
 jaguar
-2
+20200115_000000
 
 ikkico
 Ikkis%20Co.
 2
 ferrari
 lamborghini
-0
+20191230_000000
