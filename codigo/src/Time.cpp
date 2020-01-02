@@ -42,7 +42,8 @@ Time::Time(const std::string &s){
 }
 
 void Time::incrementDays(int no_days) {
-    t_.tm_mday += 2;
+    t_.tm_mday += no_days;
+    t_.tm_hour++;
     ::mktime(&t_);
 }
 

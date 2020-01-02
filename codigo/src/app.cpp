@@ -174,9 +174,9 @@ bool App::send_truck_to_workshop() {
     Truck *truck = App::chooseTruck();
     std::string type_of_service;
     while (true) {
-        if (!utils::input("Choose type of service: "
-                        "     normal \033[4mtype\033[0m           Request a normal service.\n"
-                        "     specialized \033[4mproperty\033[0m       Request a specialized service.\n", type_of_service, std::cin, std::cout)) break;
+        if (!utils::input("Choose type of service:\n"
+                        "     \033[4mnormal\033[0m              Request a normal service.\n"
+                        "     \033[4mspecialized\033[0m         Request a specialized service.\n", type_of_service, std::cin, std::cout)) break;
         utils::to_lower(type_of_service); utils::trim(type_of_service);
         if (type_of_service != "specialized" && type_of_service != "normal") {
             error("Type of service is invalid.");
@@ -216,7 +216,7 @@ bool App::send_truck_to_workshop() {
             }
         }
         for (Workshop* w : aux) workshops_.push(w);
-        error("Repeated ID (service with same ID already exists).");
+        error("Coudln't find any workshop available for this service.");
         return false;
     }
 }
@@ -428,7 +428,6 @@ bool App::userMenu(User *user, User::Type user_type) {
                 case 11: addService(user); wait();                   break;     case 21: editUser<Client>(user); wait();                    break;
                 case 12: deleteService(user); wait();                break;     case 22: CLEAR(); App::display(dynamic_cast<Client*>(user), User::Type::manager); wait(); break;
                 case 13: list_services(user);                        break;     case 23: changePassword(user); wait();  break;
-                                                                                case 24: send_truck_to_workshop(); break;
                 //OTHER OPERATIONS
                 case 31: return true;                                break;
                 default:
@@ -455,6 +454,7 @@ bool App::userMenu(User *user, User::Type user_type) {
                 case 11: addService(); wait();                              break;  case 21: addTruck(); wait();                                break;
                 case 12: deleteService(); wait();                           break;  case 22: editTruck(); wait();                               break;
                                                                                     case 23: deleteTruck(); wait();                             break;
+                                                                                    case 24: send_truck_to_workshop(); break;
 
                 //CLIENT MANAGEMENT                                                 //DRIVER MANAGEMENT
                 case 31: addUser(User::Type::client); wait();               break;  case 41: addUser(User::Type::driver); wait();               break;
