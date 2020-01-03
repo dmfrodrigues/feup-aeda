@@ -2,7 +2,7 @@
 
 #include "utils.h"
 
-std::set<std::string> Brand::available_brands_;
+std::unordered_set<std::string> Brand::available_brands_;
 
 size_t Brand::set_brands(const std::vector<std::string> &v) {
     std::string aux;
