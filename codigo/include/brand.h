@@ -5,7 +5,7 @@
 #ifndef BRAND_H_INCLUDED
 #define BRAND_H_INCLUDED
 
-#include <set>
+#include <unordered_set>
 #include <string>
 #include <stdexcept>
 #include <vector>
@@ -13,7 +13,7 @@
 /** @brief Class to store brand of truck */
 class Brand {
     /** @brief Available brands. Any brand that isn't here won't be constructed */
-    static std::set<std::string> available_brands_;
+    static std::unordered_set<std::string> available_brands_;
     /** @brief Brand name. */
     std::string brand_;
 
