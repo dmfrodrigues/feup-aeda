@@ -318,7 +318,8 @@ template<class T> void App::list(std::vector<const T*> v, const User::Type &t) c
 }
 
 void App::list_clients () const{
-    std::vector<const User*> v(users_.begin(), users_.end());
+    std::vector<const User*> v;
+    for (auto p: musers_) v.push_back(p.second);
     std::vector<const Client*> w = App::filter<User,Client,User::Type>(v, User::Type::client);
     list(w, User::Type::manager);
 }
@@ -327,30 +328,36 @@ void App::list_inactive_clients() const {
     list(v, User::Type::manager);
 }
 void App::list_drivers () const{
-    std::vector<const User*> v(users_.begin(), users_.end());
+    std::vector<const User*> v;
+    for (auto p: musers_) v.push_back(p.second);
     std::vector<const Driver*> w = App::filter<User,Driver,User::Type>(v, User::Type::driver);
     list(w, User::Type::manager);
 }
 void App::list_managers() const{
-    std::vector<const User*> v(users_.begin(), users_.end());
+    std::vector<const User*> v;
+    for (auto p: musers_) v.push_back(p.second);
     std::vector<const Manager*> w = App::filter<User,Manager,User::Type>(v, User::Type::manager);
     list(w, User::Type::manager);
 }
 void App::list_trucks  () const{
-    std::vector<const Truck*> v(trucks_.begin(), trucks_.end());
+    std::vector<const Truck*> v;
+    for (auto p: mtrucks_) v.push_back(p.second);
     list(v, User::Type::manager);
 }
 void App::list_services() const{
-    std::vector<const Service*> v(services_.begin(), services_.end());
+    std::vector<const Service*> v;
+    for (auto p: mservices_) v.push_back(p.second);
     list(v, User::Type::manager);
 }
 void App::list_services(const User *user) const{
+    std::vector<Service*> temp;
+    for (auto p: mservices_) temp.push_back(p.second);
     if (user->get_type() == User::Type::client) {
-        std::vector<Service*> v = filter_services_by_client(services_, dynamic_cast<const Client*>(user));
+        std::vector<Service*> v = filter_services_by_client(temp, dynamic_cast<const Client*>(user));
         std::vector<const Service*> w(v.begin(), v.end());
         list(w, user->get_type());
     } else if (user->get_type() == User::Type::driver) {
-        std::vector<Service*> v = filter_services_by_driver(services_, dynamic_cast<const Driver*>(user));
+        std::vector<Service*> v = filter_services_by_driver(temp, dynamic_cast<const Driver*>(user));
         std::vector<const Service*> w(v.begin(), v.end());
         list(w, user->get_type());
     } else {

@@ -68,14 +68,18 @@ bool App::UserEq::operator()(const User *u1, const User *u2) const {
 }
 
 void App::load_inactive_clients(void) {
-    std::vector<User*> clients = filter_user_by_type(users_, User::Type::client);
+    std::vector<User*> v;
+    for (auto p: musers_) v.push_back(p.second);
+    std::vector<User*> clients = filter_user_by_type(v, User::Type::client);
+    std::vector<Service*> w;
+    for (auto p: mservices_) w.push_back(p.second);
 
     Time last_year = Time::get_current_date();
     last_year.set_year(last_year.get_year() - 1);
 
     for (User *client : clients) {
         bool inactive = true;
-        for (const Service *service : services_) {
+        for (const Service *service : w) {
             if (service->get_client() == client->get_id() && service->get_tend() >= last_year) {
                 inactive = false;
                 break;
@@ -109,8 +113,10 @@ void App::error(const std::string &s){
 Schedule App::get_schedule(const Driver *p) const{
     Schedule sch;
     Driver::Username u = p->get_username();
+    std::vector<Service*> w;
+    for (auto p: mservices_) w.push_back(p.second);
     std::vector<const Service*> vs;{
-        std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
+        std::vector<Service*> v = utils::filter(w, [u](const Service *q){
             for(const auto &d:q->get_drivers()){
                 if(d == u) return true;
             } return false;
@@ -124,8 +130,10 @@ Schedule App::get_schedule(const Driver *p) const{
 Schedule App::get_schedule(const Truck  *p) const{
     Schedule sch;
     Truck::NumberPlate u = p->get_numberplate();
+    std::vector<Service*> w;
+    for (auto p: mservices_) w.push_back(p.second);
     std::vector<const Service*> vs;{
-        std::vector<Service*> v = utils::filter(services_, [u](const Service *q){
+        std::vector<Service*> v = utils::filter(w, [u](const Service *q){
             for(const auto &d:q->get_trucks()){
                 if(d == u) return true;
             } return false;
@@ -146,7 +154,9 @@ bool App::comp_drivers::operator()(const Driver *d1, const Driver *d2) const{
 std::multiset<Driver*, App::comp_drivers> App::get_available_drivers(const Service *s) const{
     comp_drivers cmp(this);
     std::multiset<Driver*, comp_drivers> ret(cmp);
-    std::vector<User*> dv = App::filter_user_by_type(users_, User::Type::driver);
+    std::vector<User*> v;
+    for (auto p: musers_) v.push_back(p.second);
+    std::vector<User*> dv = App::filter_user_by_type(v, User::Type::driver);
     for(User *p:dv){
         Driver *q = dynamic_cast<Driver*>(p);
         Schedule sch = get_schedule(q); assert(bool(sch));
@@ -158,7 +168,9 @@ std::multiset<Driver*, App::comp_drivers> App::get_available_drivers(const Servi
 std::vector<Truck *> App::get_available_trucks (const Service *s) const{
     std::vector<Truck*> ret;
     const Cargo *c = s->get_cargo();
-    std::vector<Truck*> tv = utils::filter(trucks_, [c](const Truck *p){
+    std::vector<Truck*> v;
+    for (auto p: mtrucks_) v.push_back(p.second);
+    std::vector<Truck*> tv = utils::filter(v, [c](const Truck *p){
         return (p->get_cargo()->can_carry(c));
     });
     for(Truck *p:tv){
@@ -252,20 +264,26 @@ std::vector<Service*> App::filter_services_by_driver(const std::vector<Service*>
 
 
 User* App::find_user(const User::Username &u) const{
-    auto it = utils::find_if(users_.begin(), users_.end(), [u](const User *m){ return (m->get_username() == u); });
-    if(it != users_.end()) return *it;
+    std::vector<User*> v;
+    for (auto p: musers_) v.push_back(p.second);
+    auto it = utils::find_if(v.begin(), v.end(), [u](const User *m){ return (m->get_username() == u); });
+    if(it != v.end()) return *it;
     else                   return NULL;
 }
 
 Truck* App::find_truck(const Truck::NumberPlate &np) const{
-    auto it = utils::find_if(trucks_.begin(), trucks_.end(), [np](const Truck *truck) { return truck->get_numberplate() == np; });
-    if(it != trucks_.end()) return *it;
+    std::vector<Truck*> v;
+    for (auto p: mtrucks_) v.push_back(p.second);
+    auto it = utils::find_if(v.begin(), v.end(), [np](const Truck *truck) { return truck->get_numberplate() == np; });
+    if(it != v.end()) return *it;
     else                    return NULL;
 }
 
 Service* App::find_service(const std::string &id) const {
-    auto it = utils::find_if(services_.begin(), services_.end(), [id](const Service *service) { return service->get_id() == id; });
-    if(it != services_.end()) return *it;
+    std::vector<Service*> w;
+    for (auto p: mservices_) w.push_back(p.second);
+    auto it = utils::find_if(w.begin(), w.end(), [id](const Service *service) { return service->get_id() == id; });
+    if(it != w.end()) return *it;
     else                    return NULL;
 }
 

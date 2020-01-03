@@ -108,6 +108,13 @@ void App::load_all(){
             }
         }
     }
+    for (User * p : users_)
+        musers_.insert(std::pair<User::Username, User*>(p->get_id(), p));
+    for (Truck * p : trucks_)
+        mtrucks_.insert(std::pair<Truck::NumberPlate, Truck*>(p->get_id(), p));
+    for (Service * p : services_)
+        mservices_.insert(std::pair<Service::ID, Service*>(p->get_id(), p));
+
     load_inactive_clients();
 
     {
@@ -123,6 +130,12 @@ void App::load_all(){
 }
 
 void App::save_all(){
+    users_.clear();
+    trucks_.clear();
+    services_.clear();
+    for (auto p: musers_) users_.push_back(p.second);
+    for (auto p: mtrucks_) trucks_.push_back(p.second);
+    for (auto p: mservices_) services_.push_back(p.second);
     {
         std::cout << "Saving managers...";
         std::ofstream os(managers_path_);
@@ -191,14 +204,15 @@ bool App::addUser(const User::Type &user_type) {
         error("Invalid user type.");
         return false;
     }
-
-    if(utils::find_if(users_.begin(), users_.end(),
-      [user](const User* u){ return (u->get_username() == user->get_username()); }) != users_.end()){
+    std::vector<User*>temp;
+    for (auto p: musers_) temp.push_back(p.second);
+    if(utils::find_if(temp.begin(), temp.end(),
+      [user](const User* u){ return (u->get_username() == user->get_username()); }) != temp.end()){
         delete user;
         error("Repeated username (username already exists).");
         return false;
     }
-    users_.push_back(user);
+    musers_.insert(std::pair<User::Username, User*>(user->get_id(), user));
     std::cout << "User added.\n";
     return true;
 }
@@ -238,14 +252,16 @@ bool App::addTruck() {
         error("Repeated ID (number plate already exists).");
         return false;
     }
-    trucks_.push_back(truck);
+    mtrucks_.insert(std::pair<Truck::NumberPlate, Truck*> (truck->get_id(), truck));
     std::cout << "Truck added.\n";
     return true;
 }
 
 Truck* App::chooseTruck() {
     std::cout << "Choosing truck.\n";
-    std::vector<const Truck*> trucks(trucks_.begin(), trucks_.end());
+    std::vector<Truck*> temp;
+    for (auto p: mtrucks_) temp.push_back(p.second);
+    std::vector<const Truck*> trucks(temp.begin(), temp.end());
 
     print_list(trucks, User::Type::manager);
     while (true) {
@@ -275,10 +291,12 @@ bool App::deleteTruck() {
     while (true) {
         Truck *truck = App::chooseTruck();
         if (truck == NULL) return false;
-        std::vector<Truck*>::iterator truck_it = std::find(trucks_.begin(), trucks_.end(), truck);
+        std::vector<Truck*> temp;
+        for (auto p: mtrucks_) temp.push_back(p.second);
+        std::vector<Truck*>::iterator truck_it = std::find(temp.begin(), temp.end(), truck);
         if (!confirm("Confirm the deletion of truck \'" + std::string((*truck_it)->get_numberplate()) + "\' (yes/no): ")) return false;
         delete *truck_it;
-        trucks_.erase(truck_it);
+        mtrucks_.erase((*truck_it)->get_numberplate());
         std::cout << "Truck deleted.\n";
         return true;
     }
@@ -288,10 +306,12 @@ bool App::deleteTruck() {
 bool App::editTruck() {
     CLEAR();
     std::cout << "Editing truck.\n";
+    std::vector<Truck*> temp;
+    for (auto p: mtrucks_) temp.push_back(p.second);
     Truck *truck = App::chooseTruck();
     if (truck == NULL) return false;
-    std::vector<Truck*>::iterator it = std::find(trucks_.begin(), trucks_.end(), truck);
-    if (it == trucks_.end()) return false;
+    std::vector<Truck*>::iterator it = std::find(temp.begin(), temp.end(), truck);
+    if (it == temp.end()) return false;
     bool is_edited = false;
     truck = *it;
     std::string command;
@@ -430,7 +450,9 @@ bool App::edit_truck_cargo(CargoTrans *&cargo, int property) {
 
 Service* App::chooseService() {
     std::cout << "Choosing service.\n";
-    std::vector<const Service*> services(services_.begin(), services_.end());
+    std::vector<Service*> temp;
+    for (auto p : mservices_) temp.push_back(p.second);
+    std::vector<const Service*> services(temp.begin(), temp.end());
 
     print_list(services, User::Type::manager);
     while (true) {
@@ -450,7 +472,9 @@ Service* App::chooseService() {
 
 Service* App::chooseService(const User *user) {
     std::cout << "Choosing service.\n";
-    std::vector<Service*> filtered = filter_services_by_client(services_, dynamic_cast<const Client*>(user));
+    std::vector<Service*> temp;
+    for (auto p: mservices_) temp.push_back(p.second);
+    std::vector<Service*> filtered = filter_services_by_client(temp, dynamic_cast<const Client*>(user));
     std::vector<const Service*> services(filtered.begin(), filtered.end());
 
     print_list(services, user->get_type());
@@ -471,13 +495,15 @@ Service* App::chooseService(const User *user) {
 bool App::deleteService(const User *user) {
     CLEAR();
     std::cout << "Deleting service.\n";
+    std::vector<Service*> temp;
+    for (auto p: mservices_) temp.push_back(p.second);
     while (true) {
         Service *service = App::chooseService(user);
         if (service == NULL) return false;
-        std::vector<Service*>::iterator service_it = std::find(services_.begin(), services_.end(), service);
+        std::vector<Service*>::iterator service_it = std::find(temp.begin(), temp.end(), service);
         if (!confirm("Confirm the deletion of service \'" + (*service_it)->get_id() + "\' (yes/no): ")) return false;
         delete *service_it;
-        services_.erase(service_it);
+        mservices_.erase((*service_it)->get_id());
         std::cout << "Service deleted.\n";
         return true;
     }
@@ -488,13 +514,15 @@ bool App::deleteService(const User *user) {
 bool App::deleteService() {
     CLEAR();
     std::cout << "Deleting service.\n";
+    std::vector<Service*> temp;
+    for (auto p: mservices_) temp.push_back(p.second);
     while (true) {
         Service *service = App::chooseService();
         if (service == NULL) return false;
-        std::vector<Service*>::iterator service_it = std::find(services_.begin(), services_.end(), service);
+        std::vector<Service*>::iterator service_it = std::find(temp.begin(), temp.end(), service);
         if (!confirm("Confirm the deletion of service \'" + (*service_it)->get_id() + "\' (yes/no): ")) return false;
         delete *service_it;
-        services_.erase(service_it);
+        mservices_.erase((*service_it)->get_id());
         std::cout << "Service deleted.\n";
         return true;
     }
@@ -520,7 +548,7 @@ bool App::addService() {
     std::multiset<Driver*, App::comp_drivers> dv = get_available_drivers(service);
     if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
         service->assign_new_id();
-        services_.push_back(service);
+        mservices_.insert(std::pair<Service::ID, Service*>(service->get_id(), service));
         std::cout << "Service added.\n";
         return true;
     }else{
@@ -546,7 +574,7 @@ bool App::addService(const User *user) {
     std::multiset<Driver*, App::comp_drivers> dv = get_available_drivers(service);
     if(service->allocate(std::vector<const Truck*>(tv.begin(), tv.end()), std::vector<const Driver*>(dv.begin(), dv.end()))){
         service->assign_new_id();
-        services_.push_back(service);
+        mservices_.insert(std::pair<Service::ID, Service*>(service->get_id(), service));
         std::cout << "Service added.\n";
         return true;
     }else{

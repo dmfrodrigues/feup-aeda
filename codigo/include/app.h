@@ -14,6 +14,7 @@
 #include <unordered_set>
 #include <fstream>
 #include <queue>
+#include <map>
 
 #if defined(_WIN32)
     #define CLEAR_MACRO() system("cls"  )
@@ -88,6 +89,13 @@ private:
     std::vector<Truck*> trucks_  ;
     /// @brief Existing services on agency.
     std::vector<Service*> services_;
+	///Maps
+	/// @brief Existing user accounts on agency.
+	std::map<User::Username, User*> musers_;
+	/// @brief Existing trucks on agency.
+	std::map<Truck::NumberPlate, Truck*> mtrucks_;
+	/// @brief Existing services on agency.
+	std::map<Service::ID, Service*> mservices_;
     //Hash Tables
     /// @brief Hash Function for User (pointer)
     typedef std::hash<User*> UserHash;
@@ -693,7 +701,9 @@ std::vector<const Deriv*> App::filter(const std::vector<const Base*> &v, const T
 
 template<class Deriv> User* App::chooseUser(const User::Type &type) {
     std::cout << "Choosing user.\n";
-    std::vector<const User*> v(users_.begin(), users_.end());
+	std::vector<User*> temp;
+	for (auto p: musers_) temp.push_back(p.second);
+    std::vector<const User*> v(temp.begin(), temp.end());
     std::vector<const Deriv*> users_filter = App::filter<User,Deriv,User::Type>(v, type);
 
     print_list(users_filter, type);
@@ -717,11 +727,13 @@ template<class Deriv> bool App::deleteUser(const User::Type &type) {
     while (true) {
         User *user = App::chooseUser<Deriv>(type);
         if (user == NULL) return false;
-        std::vector<User*>::iterator user_it = std::find(users_.begin(), users_.end(), user);
+		std::vector<User*> temp;
+		for (auto p: musers_) temp.push_back(p.second);
+        std::vector<User*>::iterator user_it = std::find(temp.begin(), temp.end(), user);
         if (!confirm("Confirm the deletion of user \'" + std::string((*user_it)->get_username()) + "\' (yes/no): ")) return false;
         inactive_clients_.erase(dynamic_cast<Client*>(*user_it));
         delete *user_it;
-        users_.erase(user_it);
+        musers_.erase((*user_it)->get_username());
         std::cout << "User deleted.\n";
         return true;
     }
