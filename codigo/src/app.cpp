@@ -170,6 +170,7 @@ std::vector<Truck *> App::get_available_trucks (const Service *s) const{
 }
 
 bool App::send_truck_to_workshop() {
+    CLEAR();
     std::cout << "Choose truck that needs to go to the workshop.\n";
     Truck *truck = App::chooseTruck();
     std::string type_of_service;
