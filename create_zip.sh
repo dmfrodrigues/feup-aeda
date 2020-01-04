@@ -2,7 +2,7 @@ cd codigo
 make clean
 cd ..
 rm -rf documentacao/
-doxygen doxygen.config
+doxygen Doxyfile
 cd apresentacao
 pdflatex apresentacao.tex
 pdflatex apresentacao.tex
