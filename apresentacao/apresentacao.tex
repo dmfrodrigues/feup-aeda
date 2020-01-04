@@ -120,8 +120,17 @@ Um só tipo de camiões (\texttt{Truck}), que pode carregar uma carga (\texttt{C
 Quando um serviço (\texttt{Service}) é criado, são automaticamente atribuídos os camiões e condutores necessários. 
 \end{frame}
 
-\begin{frame}
+\begin{frame}{fragile}
 \frametitle{Estruturas de dados não-lineares}
+\begin{itemize}
+	\item	Funções de \textit{hash} e de igualdade
+	\item	Comparadores personalizados
+\end{itemize}
+\begin{center} \begin{minipage}{0.95\linewidth}
+\lstinputlisting[language=C++, caption={app.h, L100-111}, firstline=100, lastline=111]{../codigo/include/app.h}
+\lstinputlisting[language=C++, caption={app.cpp, L66-68}, firstline=66, lastline=68]{../codigo/src/app.cpp}
+\lstinputlisting[language=C++, caption={schedule.cpp, L3-5}, firstline=3, lastline=5]{../codigo/src/schedule.cpp}
+\end{minipage} \end{center}
 \end{frame}
 
 \begin{frame}
@@ -297,6 +306,14 @@ Sistema de login com nome de utilizador (\texttt{Username}) e palavra-passe (\te
 
 \begin{frame}
 \frametitle{Destaque de funcionalidade}
+\textbf{Classe \texttt{Schedule}}\par
+\begin{itemize}
+	\item	Usa um \texttt{std::set} com operação de comparação personalizada
+	\item	Usa operações de pesquisa numa BST
+	\item	Iteração \textit{in-order} sobre uma árvore
+	\item   Ordenação da tabela por tempo de trabalho
+\end{itemize}
+\begin{center} \includegraphics[scale=0.19]{{part2_feature1}} \end{center}
 \end{frame}
 
 \begin{frame}

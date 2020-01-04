@@ -114,7 +114,7 @@ Schedule App::get_schedule(const Driver *p) const{
     Schedule sch;
     Driver::Username u = p->get_username();
     std::vector<Service*> w;
-    for (auto p: mservices_) w.push_back(p.second);
+    for (auto p_: mservices_) w.push_back(p_.second);
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(w, [u](const Service *q){
             for(const auto &d:q->get_drivers()){
@@ -131,7 +131,7 @@ Schedule App::get_schedule(const Truck  *p) const{
     Schedule sch;
     Truck::NumberPlate u = p->get_numberplate();
     std::vector<Service*> w;
-    for (auto p: mservices_) w.push_back(p.second);
+    for (auto p_: mservices_) w.push_back(p_.second);
     std::vector<const Service*> vs;{
         std::vector<Service*> v = utils::filter(w, [u](const Service *q){
             for(const auto &d:q->get_trucks()){
