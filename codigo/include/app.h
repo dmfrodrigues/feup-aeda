@@ -307,7 +307,7 @@ private:
      * @param i Property of user that will be used in comparison function
      * @param cmp Reference to function where comparison function will be stored
      */
-    static void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Driver *, const Driver *)> &cmp);
+    void list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Driver *, const Driver *)> &cmp) const;
     /**
      * @brief Get comparison function to sort managers.
      * @param t User type
