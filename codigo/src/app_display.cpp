@@ -384,6 +384,6 @@ void App::display(const Workshop   *p, const User::Type &t) const{
               << "│ [3] Specialized Brands                                                                              \t │\n"
               << "├────────────────────────────────────────────────────────────────────────────────────────────────────────┤\n";
               for (const Brand &b : p->get_brands())
-                    std::cout << "| " << utils::ljust((std::string)b                                          ,102) << "\t |\n";
+                    std::cout << "│ " << utils::ljust((std::string)b                                          ,94) << "\t │\n";
     std::cout << "╘════════════════════════════════════════════════════════════════════════════════════════════════════════╛" << std::endl;
 }
