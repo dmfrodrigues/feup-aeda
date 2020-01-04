@@ -546,6 +546,27 @@ private:
     bool deleteService(const User *user);
 
     /**
+     * @brief Adds workshop to agency database.
+     * @return If workshop was added
+     */
+    bool addWorkshop();
+    /**
+     * @brief Choose workshop from agency database.
+     * @return Pointer to workshop chosen, NULL if operation is cancelled
+     */
+    Workshop* chooseWorkshop();
+    /**
+     * @brief Edits workshop from agency database.
+     * @return If the workshop was edited
+     */
+    bool editWorkshop();
+    /**
+     * @brief Deletes workshop from agency database.
+     * @return If the workshop was deleted
+     */
+    bool deleteWorkshop();
+
+    /**
      * @brief Filter vector of users by user type.
      * @param v     Vector of users
      * @param t     Filter type
@@ -773,8 +794,9 @@ template<class Deriv> bool App::editUser(const User::Type &type) {
         if (!confirm("Confirm the edition of user \'" + std::string(user_copy.get_username()) + "\' (yes/no): ")) return false;
         *user = user_copy;
         std::cout << "User edited.\n";
+        return true;
     }
-    return true;
+    return false;
 }
 
 template<class Deriv> bool App::editUser(User *user) {
@@ -797,8 +819,9 @@ template<class Deriv> bool App::editUser(User *user) {
         if (!confirm("Confirm the changes (yes/no): ")) return false;
         *user = user_copy;
         std::cout << "Saved changes.\n";
+        return true;
     }
-    return true;
+    return false;
 }
 
 #endif //APP_H_INCLUDED

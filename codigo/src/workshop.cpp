@@ -62,10 +62,28 @@ bool Workshop::find_brand(const std::string& s) const {
     utils::trim(aux); utils::to_lower(aux);
     for (auto it = brands_.begin(); it != brands_.end(); it++)
         if (it->get_brand() == s) return true;
+    return false;
+}
+
+bool Workshop::insert_brand(const Brand &brand) {
+    auto ret = brands_.insert(brand);
+    return ret.second;
+}
+
+bool Workshop::delete_brand(const Brand &brand) {
+    auto it = brands_.find(brand);
+    if (it == brands_.end()) return false;
+
+    brands_.erase(it);
+    return true;
 }
 
 bool Workshop::operator<(const Workshop& w) const {
     return this->availability_ > w.availability_;
+}
+
+bool Workshop::operator==(const Workshop &w) const {
+    return this->id_ == w.id_;
 }
 
 std::istream& operator>>(std::istream &is,       Workshop &w){ return w.input(is); }
@@ -77,4 +95,42 @@ std::ostream& operator<<(std::ostream &os, const Workshop &w){
         os << *it << "\n";
     os << w.availability_;
     return os;
+}
+
+bool Workshop::in(std::istream &is, std::ostream &os) {
+    if (!utils::input("Workshop ID: ", [](Workshop::ID &id, const std::string &s) { id = Workshop::ID(s); }, id_, is, os)|
+        !utils::input("Name: ",         name_,        is, os)|
+        !utils::input("Availability (YYYY/mm/dd): ", [](Time &time, const std::string &input) { time.input_date(input); }, availability_, is, os)) return false;
+
+    int no_brands = 0;
+    if (!utils::input("Number of brands: ",         no_brands,        is, os)) return false;
+    for (int i = 0; i < no_brands; i++) {
+        Brand brand;
+        if (!utils::input("Brand " + utils::itos(i+1) + ": ", [](Brand &b, const std::string &s) { b = s; }, brand, is, os)) return false;
+
+        brands_.insert(brand);
+    }
+    return true;
+}
+
+bool Workshop::edit(int property, std::istream &is, std::ostream &os) {
+    switch (property) {
+    case 0:
+        if(!!utils::input("Workshop ID: ", [](Workshop::ID &id, const std::string &s) { id = Workshop::ID(s); }, id_, is, os))              return false;
+        else                                                                                                                                return true;
+    break;
+    case 1:
+        if (!utils::input("Name: ",         name_,        is, os))                                                                          return false;
+        else                                                                                                                                return true;
+    break;
+    case 2:
+        if (utils::input("Availability: ", [](Time &time, const std::string &input) { time.input_date(input); }, availability_, is, os))    return false;
+        else                                                                                                                                return true;
+    break;
+    default:
+        std::cout << "Error: invalid command\n";
+        return false;
+        break;
+    }
+    return true;
 }

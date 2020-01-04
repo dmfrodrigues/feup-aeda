@@ -417,11 +417,17 @@ bool App::printUserMenu(User::Type user_type) {
                             "│                                             │  Manager list                          [66] │\n"
                             "|                                             |  Workshop list                         [67] |\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
-                            "│               Account Management            │                Other operations             │\n"
+                            "│            Workshop management              │               Account Management            │\n"
                             "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
-                            "│  Edit account                          [71] │  Save                                  [81] │\n"
-                            "│  View account                          [72] │  Log out                               [82] │\n"
-                            "│  Change password                       [73] │                                             │\n"
+                            "│  Add workshop                          [71] │  Edit account                          [81] │\n"
+                            "│  Edit workshop                         [72] │  View account                          [82] │\n"
+                            "│  Delete workshop                       [73] │  Change password                       [83] │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│                Other operations             │                                             │\n"
+                            "╞═════════════════════════════════════════════╪═════════════════════════════════════════════╡\n"
+                            "│  Save                                  [91] │                                             │\n"
+                            "│  Log out                               [92] │                                             │\n"
+                            "│                                             │                                             │\n"
                             "╘═════════════════════════════════════════════╧═════════════════════════════════════════════╛\n"
                             "                                                                                             \n";
         }
@@ -489,10 +495,14 @@ bool App::userMenu(User *user, User::Type user_type) {
                                                                                     case 66: list_managers();                                   break;
                                                                                     case 67: list_workshops();                                  break;
 
+                case 71: addWorkshop(); wait(); break;
+                case 72: editWorkshop(); wait(); break;
+                case 73: deleteWorkshop(); wait(); break;
+
                 //ACCOUNT MANAGEMENT                                                                                //OTHER OPERATIONS
-                case 71: editUser<Manager>(user); wait(); wait();                                           break;  case 81: save_all();                            break;
-                case 72: CLEAR(); App::display(dynamic_cast<Manager*>(user), User::Type::manager); wait();  break;  case 82: return true;                           break;
-                case 73: changePassword(user); wait();                                                      break;
+                case 81: editUser<Manager>(user); wait(); wait();                                           break;  case 91: save_all();                            break;
+                case 82: CLEAR(); App::display(dynamic_cast<Manager*>(user), User::Type::manager); wait();  break;  case 92: return true;                           break;
+                case 83: changePassword(user); wait();                                                      break;
 
                 default:
                     error("Invalid operation.");

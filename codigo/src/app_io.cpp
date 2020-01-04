@@ -582,3 +582,153 @@ bool App::addService(const User *user) {
         return false;
     }
 }
+
+bool App::addWorkshop() {
+    CLEAR();
+    std::cout << "Adding workshop.\n";
+    Workshop *workshop = new Workshop();
+    if (!workshop->in(std::cin, std::cout)) { delete workshop; return false;}
+    std::priority_queue<Workshop*, std::vector<Workshop*>, WorkshopCmp> aux_queue = workshops_;
+    while (!aux_queue.empty()) {
+        Workshop *p = aux_queue.top();
+        aux_queue.pop();
+        if (*p == *workshop) {
+            delete workshop;
+            error("Repeated workshop (ID already exists).");
+            return false;
+        }
+    }
+    workshops_.push(workshop);
+    std::cout << "Workshop added.\n";
+    return true;
+}
+
+Workshop* App::chooseWorkshop() {
+    std::cout << "Choosing truck.\n";
+    std::vector<Workshop*> w;
+    std::vector<const Workshop*> v;
+    std::priority_queue<Workshop*, std::vector<Workshop*>, WorkshopCmp> aux_queue = workshops_;
+    while (!aux_queue.empty()) { v.push_back(aux_queue.top()); w.push_back(aux_queue.top()); aux_queue.pop(); }
+
+    print_list(v, User::Type::manager);
+    while (true) {
+        std::string s;
+        if (!utils::input("Choose workshop (id): ", s, std::cin, std::cout)) return NULL;
+        try {
+            Workshop::ID id = Workshop::ID(s);
+
+            auto it = utils::find_if(w.begin(), w.end(), [&id](const Workshop *p) { return p->get_id() == id; });
+
+            if (it == w.end()) {
+                error("Workshop doesn't exist (id doesn't have matches).");
+                continue;
+            } else {
+                return *it;
+            }
+        } catch (utils::string_regex::FailedRegex &fr) {
+            error(std::string(fr.what()) + std::string(" (invalid id)."));
+            continue;
+        }
+    }
+    return NULL;
+}
+
+bool App::editWorkshop() {
+    CLEAR();
+    std::cout << "Editing workshop.\n";
+    Workshop *workshop = chooseWorkshop();
+    if (workshop == NULL) return false;
+    int option;
+    Workshop workshop_copy = *workshop;
+    bool is_edited = false;
+    std::string command;
+    while (true) {
+        App::display(&workshop_copy, User::Type::manager);
+        if (!utils::input("To change/edit brands use command:\n"
+                          "     add    brand \033[4mname\033[0m       Add brand to workshop.\n"
+                          "     remove brand \033[4mname\033[0m       Remove brand from workshop.\n"
+                          "Choose property to change (type cancel to finish): ", command, std::cin, std::cout)) break;
+        if (command == "0") { error("Property that can't be changed."); continue; }
+        std::vector<std::string> cmd = utils::parse_command(command);
+        try {
+            if (cmd.size() == 1) {
+                int property = utils::stoi(cmd.at(0));
+                if (workshop_copy.edit(property, std::cin, std::cout)) is_edited = true;
+            } else if (cmd.size() >= 3) {
+                if (cmd.at(0) == "add" && cmd.at(1) == "brand") {
+                    std::vector<std::string> b_str(cmd.begin()+2, cmd.end());
+                    std::string str = utils::join(b_str, " ");
+                    Brand brand = Brand(str);
+                    if (workshop_copy.insert_brand(brand)) {
+                        std::cout << "Brand added.\n";
+                        is_edited = true;
+                    } else {
+                        error("Brand already exists.");
+                    }
+                    continue;
+                } else if (cmd.at(0) == "remove" && cmd.at(1) == "brand") {
+                    std::vector<std::string> b_str(cmd.begin()+2, cmd.end());
+                    std::string str = utils::join(b_str, " ");
+                    Brand brand = Brand(str);
+                    if (workshop_copy.delete_brand(brand)) {
+                        std::cout << "Brand deleted.\n";
+                        is_edited = true;
+                    } else {
+                        error("Brand doesn't exist.");
+                    }
+                    continue;
+                } else {
+                    error("Invalid command.\n");
+                    continue;
+                }
+            } else {
+                error("Invalid command.\n");
+                continue;
+            }
+        } catch (std::invalid_argument &ia) {
+            error("Invalid command.\n");
+            continue;
+        } catch (std::exception &ex) {
+            error(ex.what());
+            continue;
+        }
+    }
+    if (is_edited) {
+        if (!confirm("Confirm the edition of workshop \'" + std::string(workshop_copy.get_id()) + "\' (yes/no): ")) return false;
+        std::vector<Workshop*> w;
+        while (!workshops_.empty()) { w.push_back(workshops_.top()); workshops_.pop(); }
+        *workshop = workshop_copy;
+        for (Workshop *p : w) {
+            workshops_.push(p);
+        }
+        std::cout << "Workshop edited.\n";
+        return true;
+    }
+    return false;
+}
+
+bool App::deleteWorkshop() {
+    CLEAR();
+    std::cout << "Deleting workshop.\n";
+    while (true) {
+        Workshop *workshop = App::chooseWorkshop();
+        if (workshop == NULL) return false;
+        std::vector<Workshop*> w;
+        while (!workshops_.empty()) { w.push_back(workshops_.top()); workshops_.pop(); }
+        auto it = utils::find(w.begin(), w.end(), workshop);
+        if (!confirm("Confirm the deletion of workshop \'" + std::string((*it)->get_id()) + "\' (yes/no): ")) {
+            for (Workshop *p : w) {
+                workshops_.push(p);
+            }
+            return false;
+        }
+        delete *it;
+        w.erase(it);
+        for (Workshop *p : w) {
+            workshops_.push(p);
+        }
+        std::cout << "Workshop deleted.\n";
+        return true;
+    }
+    return false;
+}

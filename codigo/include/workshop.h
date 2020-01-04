@@ -65,16 +65,51 @@ public:
     void increase_availability(int no_days);
 
     /// @brief Verify if brand is on the brands that workshop is specialized.
+    /**
+     * @brief Verify if brand is on the brands that workshop is specialized.
+     * @param   brand       Brand to be searched.
+     * @return If brand was found.
+     */
     bool find_brand(const Brand& brand) const;
     /// @brief Overload of \a find_brand
     bool find_brand(const std::string& s) const;
+    /**
+     * @brief Inserts brand to workshop brands, if possible.
+     * @param   brand       Brand to be inserted.
+     * @return If brand was inserted with success.
+     */
+    bool insert_brand(const Brand &brand);
+    /**
+     * @brief Deletes brand from workshop brands, if possible.
+     * @param   brand       Brand to be deleted.
+     * @return If brand was deleted with success.
+     */
+    bool delete_brand(const Brand &brand);
     /// @brief Overload of \a operator<
     bool operator<(const Workshop& w) const;
+    /// @brief Overload of \a operator==
+    bool operator==(const Workshop &w) const;
 
     /// @brief Overload of \a operator>> .
     friend std::istream& operator>>(std::istream &is,       Workshop &p);
     /// @brief Overload of \a operator<< .
     friend std::ostream& operator<<(std::ostream &os, const Workshop &p);
+
+    /**
+     * @brief Allows input field by field with descriptive messages.
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the input was sucessful
+     */
+    bool in(std::istream &is, std::ostream &os);
+    /**
+     * @brief Allows edition of property specified.
+     * @param property Property to be edited
+     * @param is Input stream
+     * @param os Output stream
+     * @return If the edit was sucessful
+     */
+    bool edit(int property, std::istream &is, std::ostream &os);
 
 };
 

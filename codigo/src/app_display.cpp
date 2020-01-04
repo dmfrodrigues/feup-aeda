@@ -226,7 +226,7 @@ void App::print_list(const std::vector<const Workshop  *> &v, const User::Type &
         if (now > p->get_availability()) {
             std::cout << utils::ljust("Workshop is free"                                ,16) << " | ";
         } else {
-            std::cout << p->get_availability().format("%Y/%m/%d %H:%M")                      << " │ ";
+            std::cout << p->get_availability().format("%Y/%m/%d")                      << " │ ";
         }
         std::vector<std::string> aux;
         for (const Brand &b : p->get_brands()) aux.push_back((std::string)b);
@@ -378,7 +378,7 @@ void App::display(const Workshop   *p, const User::Type &t) const{
     if (now > p->get_availability()) {
         std::cout << "│ [2] Availability  │ " << utils::ljust("Workshop is free"                                                ,81) << "\t │\n";
     } else {
-        std::cout << "│ [2] Availability  │ " << utils::ljust(p->get_availability().format("%Y/%m/%d %H:%M")                    ,81) << "\t │\n";
+        std::cout << "│ [2] Availability  │ " << utils::ljust(p->get_availability().format("%Y/%m/%d")                    ,81) << "\t │\n";
     }
     std::cout << "├───────────────────┴────────────────────────────────────────────────────────────────────────────────────┤\n"
               << "│ [3] Specialized Brands                                                                              \t │\n"
