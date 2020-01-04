@@ -101,6 +101,12 @@ private:
     typedef std::hash<User*> UserHash;
     /// @brief Equality Function for User (pointer)
     struct UserEq {
+        /**
+         * @brief Function comparator of two pointers for User.
+         * @param u1    Pointer to first user.
+         * @param u2    Pointer to second user.
+         * @return The return value of operator< for User.
+         */
         bool operator() (const User* u1, const User* u2) const;
     };
     /// @brief Inactive clients on agency.
@@ -108,6 +114,12 @@ private:
     // PRIORITY QUEUES
     /// @brief Comparator for Workshop (pointer)
     struct WorkshopCmp {
+        /**
+         * @brief Function comparator of two pointers for Workshops.
+         * @param w1    Pointer to first workshop.
+         * @param w2    Pointer to second workshop.
+         * @return The return value of operator< for Workshop.
+         */
         bool operator() (const Workshop *w1, const Workshop *w2) const;
     };
     /// @brief Workshops available on agency database.
