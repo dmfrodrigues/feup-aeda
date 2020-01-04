@@ -31,8 +31,8 @@ template<> void App::list_commands<Client >(const User::Type &t){
 template<> void App::list_commands<Driver >(const User::Type &t){
     std::cout << "\n"
               << "COMMANDS:\n\n"
-              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-5].\n"
-              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-5].\n"
+              << "    sort \033[4mNUM\033[0m            Sort by property \033[4mNUM\033[0m [0-7].\n"
+              << "    search \033[4mNUM\033[0m \"\033[4mSTR\033[0m\"    Restrict list to elements that contain \033[4mSTR\033[0m in property \033[4mNUM\033[0m [0-7].\n"
               << "    details \"\033[4mSTR\033[0m\"       Print details of driver with username \033[4mSTR\033[0m\n"
               << "    reset               Reset to initial selection.\n"
               << "    back                Go back.\n";
@@ -104,13 +104,14 @@ void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const
 }
 void App::list_sort_getcomp(const User::Type &t, int i, std::function<bool(const Driver *, const Driver *)> &cmp) const{
     switch(i){
-        case 0: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_username        () < p2->get_username        ()); }; break;
-        case 1: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_name            () < p2->get_name            ()); }; break;
-        case 2: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_address().format() < p2->get_address().format()); }; break;
-        case 3: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_phonenumber     () < p2->get_phonenumber     ()); }; break;
-        case 4: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_vat             () < p2->get_vat             ()); }; break;
-        case 5: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_base_salary     () < p2->get_base_salary     ()); }; break;
-        case 6: cmp = [this](const Driver *p1, const Driver *p2){ return (get_schedule(p1).work   () < get_schedule(p2).work   ()); }; break;
+        case 0: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_username          () < p2->get_username          ()); }; break;
+        case 1: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_name              () < p2->get_name              ()); }; break;
+        case 2: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_address().format  () < p2->get_address().format  ()); }; break;
+        case 3: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_phonenumber       () < p2->get_phonenumber       ()); }; break;
+        case 4: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_vat               () < p2->get_vat               ()); }; break;
+        case 5: cmp = [    ](const Driver *p1, const Driver *p2){ return (p1->get_base_salary       () < p2->get_base_salary       ()); }; break;
+        case 6: cmp = [this](const Driver *p1, const Driver *p2){ return (get_schedule(p1).work(     ) < get_schedule(p2).work(     )); }; break;
+        case 7: cmp = [this](const Driver *p1, const Driver *p2){ return (get_schedule(p1).work_month(today) < get_schedule(p2).work_month(today)); }; break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
@@ -181,14 +182,16 @@ void App::list_filter_getvalid(const User::Type &t, int i, const std::string &st
         default: throw std::invalid_argument("NUM outside range");
     }
 }
-void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Driver *)> &cmp){
+void App::list_filter_getvalid(const User::Type &t, int i, const std::string &str, std::function<bool(const Driver *)> &cmp) const{
     switch(i){
-        case 0: cmp = [str](const Driver *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
-        case 1: cmp = [str](const Driver *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
-        case 2: cmp = [str](const Driver *p){ return (p->get_address().format()        .find(str) != std::string::npos); }; break;
-        case 3: cmp = [str](const Driver *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }; break;
-        case 4: cmp = [str](const Driver *p){ return (std::string(p->get_vat        ()).find(str) != std::string::npos); }; break;
-        case 5: cmp = [str](const Driver *p){ return (Currency(std::stod(str))                    ==p->get_base_salary());};break;
+        case 0: cmp = [str     ](const Driver *p){ return (std::string(p->get_username   ()).find(str) != std::string::npos); }; break;
+        case 1: cmp = [str     ](const Driver *p){ return (std::string(p->get_name       ()).find(str) != std::string::npos); }; break;
+        case 2: cmp = [str     ](const Driver *p){ return (p->get_address().format()        .find(str) != std::string::npos); }; break;
+        case 3: cmp = [str     ](const Driver *p){ return (std::string(p->get_phonenumber()).find(str) != std::string::npos); }; break;
+        case 4: cmp = [str     ](const Driver *p){ return (std::string(p->get_vat        ()).find(str) != std::string::npos); }; break;
+        case 5: cmp = [str     ](const Driver *p){ return (Currency(std::stod(str))                    ==p->get_base_salary());};break;
+        case 6: cmp = [str,this](const Driver *p){ return (utils::ftos("%.2f", get_schedule(p).work().hours()).find(str) != std::string::npos);};break;
+        case 7: cmp = [str,this](const Driver *p){ return (utils::ftos("%.2f", get_schedule(p).work_month(today).hours()).find(str) != std::string::npos);};break;
         default: throw std::invalid_argument("NUM outside range");
     }
 }
