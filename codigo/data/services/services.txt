@@ -24,6 +24,76 @@ Carnival%20costumes.
 250.00
 300.00
 
+12
+marialves
+Maria%20Teresa%20Alves%20Fernandes
+91%20381%2088%2067
+Jo%C3%A3o%20Miguel%20Gon%C3%A7alves
+91%20271%2082%2040
+20191120_140000
+20191121_080000
+Rua%20da%20Coordoaria%2055
+4400-102 PORTO
+Porto Portugal
+Rua%20Manuel%20Pequeno%2040
+4900-029 OUTEIRO
+Viana%20do%20Castelo Portugal
+300
+0
+5000
+Personal%20Belongings
+1
+LT-98-17 manel0101
+603.00
+696.09
+
+14
+joseman
+Jos%C3%A9%20Manuel%20Pereira%20Fernandes
+%2B351%2091%20939%2010%2020
+Jos%C3%A9%20Alberto%20Martins%20Caeiro
+%2B351%2092%20391%2002%2094
+20191123_100000
+20191124_180000
+Travessa%2025%20Abril%20192
+2300-320 AMARANTE
+Porto Portugal
+Rua%20Francisco%20Domingues%20391
+8400-290 SANTA%20EUF%C3%89MIA
+Leiria Portugal
+400
+0
+23000
+Construction%20Materials
+2
+25-33-XQ brunoss
+02-52-FF aaaf23
+2232.00
+2448.96
+
+16
+lfma
+Lu%C3%ADs%20Francisco%20Macieira%20Almeida
+91%20193%2059%2054
+Joana%20Miguel%20Almeida%20Costa
+91%20827%2046%2034
+20191203_090000
+20191204_090000
+Rua%20da%20Coordoaria%20128
+4400-958 PORTO
+Porto Portugal
+Travessa%20do%20Pinheiro%20Velho%2010
+6300-020 COIMBRA
+Coimbra Portugal
+200
+1
+5000
+Chickens
+1
+87-XQ-99 brunoss
+301.00
+380.03
+
 4
 aadamante
 Ant%C3%B3nio%20Afonso%20Adamante
@@ -118,73 +188,3 @@ Cattle
 08-BG-20 camilaferr
 1070.00
 1172.09
-
-12
-marialves
-Maria%20Teresa%20Alves%20Fernandes
-91%20381%2088%2067
-Jo%C3%A3o%20Miguel%20Gon%C3%A7alves
-91%20271%2082%2040
-20191120_140000
-20191121_080000
-Rua%20da%20Coordoaria%2055
-4400-102 PORTO
-Porto Portugal
-Rua%20Manuel%20Pequeno%2040
-4900-029 OUTEIRO
-Viana%20do%20Castelo Portugal
-300
-0
-5000
-Personal%20Belongings
-1
-LT-98-17 manel0101
-603.00
-696.09
-
-14
-joseman
-Jos%C3%A9%20Manuel%20Pereira%20Fernandes
-%2B351%2091%20939%2010%2020
-Jos%C3%A9%20Alberto%20Martins%20Caeiro
-%2B351%2092%20391%2002%2094
-20191123_100000
-20191124_180000
-Travessa%2025%20Abril%20192
-2300-320 AMARANTE
-Porto Portugal
-Rua%20Francisco%20Domingues%20391
-8400-290 SANTA%20EUF%C3%89MIA
-Leiria Portugal
-400
-0
-23000
-Construction%20Materials
-2
-25-33-XQ brunoss
-02-52-FF aaaf23
-2232.00
-2448.96
-
-16
-lfma
-Lu%C3%ADs%20Francisco%20Macieira%20Almeida
-91%20193%2059%2054
-Joana%20Miguel%20Almeida%20Costa
-91%20827%2046%2034
-20191203_090000
-20191204_090000
-Rua%20da%20Coordoaria%20128
-4400-958 PORTO
-Porto Portugal
-Travessa%20do%20Pinheiro%20Velho%2010
-6300-020 COIMBRA
-Coimbra Portugal
-200
-1
-5000
-Chickens
-1
-87-XQ-99 brunoss
-301.00
-380.03

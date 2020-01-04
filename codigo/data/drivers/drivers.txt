@@ -1,15 +1,5 @@
 8
 
-Bruno%20Sousa%20Santos
-%28%2B351%29%2091%20399%2098%2073
-brunoss
-brunopt
-Rua%20Doutor%20Alfredo%20Freitas%2055
-3050-333 MEALHADA
-Aveiro Portugal
-288383828
-875.21
-
 Alberta%20Andreia%20Alves%20Fernandes
 96%20202%2011%2017
 aaaf23
@@ -18,26 +8,6 @@ Avenida%20Afonso%20Henriques%20192
 3510-768 VISEU
 Viseu Portugal
 399498743
-754.75
-
-Marina%20Dias%20Martins
-%28%2B351%29%2093%20345%2064%2053
-marinamartins
-passmarina
-Avenida%20Paris%2033
-4740-225 ESPOSENDE
-Braga Portugal
-388340492
-665.02
-
-Marcos%20Rodrigo%20Albuquerque%20Martins
-96%20335%2012%2012
-marmartins21
-marcos21
-Travessa%20da%20Aldeia%20Velha%2021
-4500-212 GONDOMAR
-Porto Portugal
-110293392
 754.75
 
 Afonso%20Miguel%20Paiva%20Rodrigues
@@ -49,6 +19,16 @@ Rua%20Municipal%20da%20Venda%20Nova
 Beja Portugal
 993818283
 665.02
+
+Bruno%20Sousa%20Santos
+%28%2B351%29%2091%20399%2098%2073
+brunoss
+brunopt
+Rua%20Doutor%20Alfredo%20Freitas%2055
+3050-333 MEALHADA
+Aveiro Portugal
+288383828
+875.21
 
 Camila%20Barbosa%20Ferreira
 %28%2B351%29%2091%20123%2013%2083
@@ -78,4 +58,24 @@ Rua%20Gago%20Coutinho%2029
 4500-038 ESPINHO
 Aveiro Portugal
 993821920
+754.75
+
+Marina%20Dias%20Martins
+%28%2B351%29%2093%20345%2064%2053
+marinamartins
+passmarina
+Avenida%20Paris%2033
+4740-225 ESPOSENDE
+Braga Portugal
+388340492
+665.02
+
+Marcos%20Rodrigo%20Albuquerque%20Martins
+96%20335%2012%2012
+marmartins21
+marcos21
+Travessa%20da%20Aldeia%20Velha%2021
+4500-212 GONDOMAR
+Porto Portugal
+110293392
 754.75
