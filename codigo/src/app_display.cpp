@@ -224,9 +224,9 @@ void App::print_list(const std::vector<const Workshop  *> &v, const User::Type &
                   << utils::ljust(p->get_name()                                         ,38) << " │ ";
         Time now = Time::get_current_date();
         if (now > p->get_availability()) {
-            std::cout << utils::ljust("Workshop is free"                                ,16) << " | ";
+            std::cout << utils::ljust("Workshop is free"                                ,16) << " │ ";
         } else {
-            std::cout << p->get_availability().format("%Y/%m/%d")                      << " │ ";
+            std::cout << utils::ljust(p->get_availability().format("%Y/%m/%d")          ,16) << " │ ";
         }
         std::vector<std::string> aux;
         for (const Brand &b : p->get_brands()) aux.push_back((std::string)b);
