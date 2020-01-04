@@ -120,8 +120,17 @@ Um só tipo de camiões (\texttt{Truck}), que pode carregar uma carga (\texttt{C
 Quando um serviço (\texttt{Service}) é criado, são automaticamente atribuídos os camiões e condutores necessários. 
 \end{frame}
 
-\begin{frame}
+\begin{frame}{fragile}
 \frametitle{Estruturas de dados não-lineares}
+\begin{itemize}
+	\item	Funções de \textit{hash} e de igualdade
+	\item	Comparadores personalizados
+\end{itemize}
+\begin{center} \begin{minipage}{0.95\linewidth}
+\lstinputlisting[language=C++, caption={app.h, L100-111}, firstline=100, lastline=111]{../codigo/include/app.h}
+\lstinputlisting[language=C++, caption={app.cpp, L66-68}, firstline=66, lastline=68]{../codigo/src/app.cpp}
+\lstinputlisting[language=C++, caption={schedule.cpp, L3-5}, firstline=3, lastline=5]{../codigo/src/schedule.cpp}
+\end{minipage} \end{center}
 \end{frame}
 
 \begin{frame}
