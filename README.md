@@ -1,22 +1,39 @@
 # Transportes SML {#mainpage}
 
-Assuming you're always on feup-aeda/.
+- **Project name:** Transportes SML
+- **Short description:** Console-based program to manage a transportation company
+- **Environment:** Unix/Windows console
+- **Tools:** C++
+- **Institution:** [FEUP](https://sigarra.up.pt/feup/en/web_page.Inicial)
+- **Course:** [AEDA](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=436433) (Algorithms and Data Structures)
+- **Group members:**
+    - Diogo Miguel Ferreira Rodrigues (diogo.rodrigues@fe.up.pt / up201806429@fe.up.pt)
+    - Telmo Alexandre Espirito Santo Baptista (up201806554@fe.up.pt)
+    - Luís Paulo da Rocha Miranda (up201306340@fe.up.pt)
 
-## Compiling
+## Media
 
-```bash
+## Make commands
+### Compile
+
+```sh
 cd codigo
 make
 ```
 
-## Running
+### Cleanup
 
-```bash
+```sh
+cd codigo
+make clean
+```
+
+## Run me
+
+```sh
 cd codigo
 ./bin/main.app
 ```
-
-## Give it a try!
 
 Some sample logins:
 
@@ -39,11 +56,4 @@ Manager
 ```
 carlita
 carlita123
-```
-
-## Cleaning up
-
-```bash
-cd codigo
-make clean
 ```
