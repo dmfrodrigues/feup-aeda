@@ -14,49 +14,25 @@
 
 ## Media
 
-<div align="center">
-    <table>
-        <tr align="center">
-            <th>
-                Services table
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="https://raw.githubusercontent.com/dmfrodrigues/feup-aeda/master/apresentacao/images/feature2.png">
-            </td>
-        </tr>
-    </table>
-    <table>
-        <tr align="center">
-            <th>
-                Drivers table
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="https://raw.githubusercontent.com/dmfrodrigues/feup-aeda/master/apresentacao/images/part2_feature1.png">
-            </td>
-        </tr>
-    </table>
-</div>
+| Services table |
+|----------------|
+| ![](https://raw.githubusercontent.com/dmfrodrigues/feup-aeda/master/apresentacao/images/feature2.png) |
 
-## Make commands
-### Compile
+| Drivers table |
+|---------------|
+| ![](https://raw.githubusercontent.com/dmfrodrigues/feup-aeda/master/apresentacao/images/part2_feature1.png) |
+
+## Install
+
+### Make commands
 
 ```sh
 cd codigo
-make
+make        # Compile all files
+make clean  # Cleanup files
 ```
 
-### Cleanup
-
-```sh
-cd codigo
-make clean
-```
-
-## Run me
+## Usage
 
 ```sh
 cd codigo
@@ -65,23 +41,17 @@ cd codigo
 
 Some sample logins:
 
-Client
+| Type    | Username    | Password     |
+|---------|-------------|--------------|
+| Client  | `aadamante` | `aiadam`     |
+| Driver  | `brunoss`   | `brunopt`    |
+| Manager | `carlita`   | `carlita123` |
 
-```
-aadamante
-aiadam
-```
+## License
 
-Driver
+© 2020 Diogo Rodrigues, Telmo Baptista, Luís Paulo Miranda
 
-```
-brunoss
-brunopt
-```
+All files are licensed under [GNU General Public License v3](LICENSE), to the exception of:
+- `.pdf` tasks file, which was authored by the lecturers
 
-Manager
-
-```
-carlita
-carlita123
-```
+The files not authored by us are presented as a fundamental complement to this project, and are made available under *fair use for education*.
