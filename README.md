@@ -2,6 +2,8 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+![docs](https://github.com/dmfrodrigues/feup-aeda-proj/workflows/docs/badge.svg)
+
 - **Project name:** Transportes SML
 - **Short description:** Console-based program to manage a transportation company, with automatic job scheduling
 - **Environment:** Unix/Windows console
