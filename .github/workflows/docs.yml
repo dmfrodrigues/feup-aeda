@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install LaTeX
-      run: sudo apt install -y texlive-latex-extra latexmk #texlive-science  curl
+      run: sudo apt install -y texlive-latex-extra texlive-lang-portuguese latexmk #texlive-science  curl
 
     - name: Make all documents
       run: make
