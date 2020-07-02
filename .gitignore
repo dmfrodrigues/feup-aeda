@@ -15,4 +15,6 @@ documentacao/
 *.zip
 *.pdf
 *.vrb
+*.fls
+*.fdb_latexmk
 .vs/
