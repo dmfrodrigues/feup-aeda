@@ -28,5 +28,5 @@ jobs:
     - name: Upload pres2
       uses: actions/upload-artifact@v2
       with:
-        name: AEDA_proj_pres1.pdf
-        path: apresentacao/AEDA_proj_pres1.pdf
+        name: AEDA_proj_pres2.pdf
+        path: apresentacao/AEDA_proj_pres2.pdf
