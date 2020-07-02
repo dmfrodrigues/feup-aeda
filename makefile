@@ -1,6 +1,6 @@
 RM=rm -f
 RMDIR=rm -rf
-LATEX=latexmk -synctex=1 -interaction=nonstopmode
+LATEX=latexmk -synctex=1 -interaction=nonstopmode -pdf
 
 DDIR=./documentacao
 DOC_INDEX= $(DDIR)/index.html
