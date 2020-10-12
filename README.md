@@ -3,6 +3,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ![docs](https://github.com/dmfrodrigues/feup-aeda-proj/workflows/docs/badge.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/23d7e362e69648478fd9a8d19bdbb8f6)](https://www.codacy.com/gh/dmfrodrigues/feup-aeda-proj/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dmfrodrigues/feup-aeda-proj&amp;utm_campaign=Badge_Grade)
 
 - **Project name:** Transportes SML
 - **Short description:** Console-based program to manage a transportation company, with automatic job scheduling
